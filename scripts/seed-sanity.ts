@@ -265,46 +265,16 @@ async function seed() {
 
     const transaction = client.transaction()
     for (const doc of batch) {
-      transaction.createOrReplace(doc)
+      transaction.createOrReplace(doc as any)
     }
 
     try {
-      const result = await transaction.commit({ visibility: 'async' })
+      await transaction.commit({ visibility: 'async' })
       console.log(`   ✅ Created/replaced ${batch.length} documents`)
     } catch (err: any) {
       console.error(`   ❌ Batch ${batchIndex + 1} failed:`, err.message)
       process.exit(1)
     }
-  }
-
-  // Publish all documents
-  console.log('\n📢 Publishing all documents...')
-  const allIds = batches.flat().map((d) => d._id)
-
-  for (const id of allIds) {
-    try {
-      await client.patch(id).set({ _id: id }).commit()
-      // Publishing via mutations API
-      await client
-        .transaction()
-        .patch(id, (p) => p.set({}))
-        .commit()
-    } catch {
-      // Already published or no changes — skip
-    }
-  }
-
-  // Use the mutations API to publish drafts
-  const mutations = allIds.map((id) => ({
-    publish: { id },
-  }))
-
-  try {
-    await (client as any).mutate(mutations)
-    console.log(`   ✅ Published ${allIds.length} documents`)
-  } catch (err: any) {
-    // Some clients don't have mutate — use the REST approach
-    console.log('   ℹ️  Documents created as drafts — publish them via /studio')
   }
 
   console.log('\n✨ Seed complete!')

@@ -18,7 +18,17 @@
       "mcp__Sanity__get_sanity_rules",
       "mcp__Sanity__query_documents",
       "mcp__Sanity__create_documents_from_json",
-      "mcp__Sanity__publish_documents"
+      "mcp__Sanity__publish_documents",
+      "mcp__Sanity__add_cors_origin",
+      "Bash(node -e \"const m = require\\(''''next-sanity/studio''''\\); console.log\\(Object.keys\\(m\\)\\)\")",
+      "Bash(node -e \"const d=require\\(''''/dev/stdin''''\\); console.log\\(d.version, JSON.stringify\\(d.exports?.[''''./studio'''']\\)\\)\")",
+      "Bash(node -e \"const p = require\\(''./node_modules/next-sanity/package.json''\\); console.log\\(p.version\\)\")",
+      "Bash(node -e \"const p = require\\(''''./node_modules/next-sanity/package.json''''\\); console.log\\(JSON.stringify\\(p.exports, null, 2\\)\\)\")",
+      "Bash(node -e \"const m = require\\(''./node_modules/next-sanity/dist/studio/client-component.js''\\); console.log\\(Object.keys\\(m\\)\\)\")",
+      "Bash(node -e \"const m = require\\(''./node_modules/next-sanity/dist/studio.js''\\); console.log\\(Object.keys\\(m\\)\\)\")",
+      "Bash(node -e \"const p = require\\(''./node_modules/next-sanity/package.json''\\); const keys = Object.keys\\(p.exports\\); console.log\\(keys.filter\\(k => k.includes\\(''studio''\\)\\)\\)\")",
+      "Bash(node -e \"const p = require\\(''./node_modules/next-sanity/package.json''\\); console.log\\(JSON.stringify\\(p.exports[''./studio/client-component''], null, 2\\)\\)\")",
+      "Bash(npx tsc:*)"
     ]
   }
 }
