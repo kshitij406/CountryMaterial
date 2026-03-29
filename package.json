@@ -6,18 +6,22 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "seed": "tsx scripts/seed-sanity.ts"
   },
   "dependencies": {
     "@sanity/client": "^6.22.2",
     "@sanity/image-url": "^1.0.2",
     "@sanity/vision": "^3.99.0",
     "clsx": "^2.1.1",
+    "framer-motion": "^12.38.0",
     "gsap": "^3.12.5",
+    "lucide-react": "^1.7.0",
     "next": "14.2.35",
     "next-sanity": "^9.8.11",
     "react": "^18",
     "react-dom": "^18",
+    "resend": "^6.9.4",
     "sanity": "^3.68.2",
     "styled-components": "^6.1.13",
     "tailwind-merge": "^2.5.5"
@@ -33,10 +37,12 @@
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "autoprefixer": "^10.0.1",
+    "dotenv": "^17.3.1",
     "eslint": "^8",
     "eslint-config-next": "14.2.35",
     "postcss": "^8",
     "tailwindcss": "^3.4.1",
+    "tsx": "^4.21.0",
     "typescript": "^5"
   }
 }

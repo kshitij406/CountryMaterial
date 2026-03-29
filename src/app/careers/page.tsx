@@ -1,19 +1,23 @@
 import type { Metadata } from 'next'
+import { client } from '@/sanity/lib/client'
+import { openCareersQuery } from '@/sanity/lib/queries'
 import PageHeader from '@/components/ui/PageHeader'
 import AnimatedSection from '@/components/animations/AnimatedSection'
 import SectionLabel from '@/components/ui/SectionLabel'
 import JobListing from '@/components/sections/JobListing'
 import CtaBanner from '@/components/sections/CtaBanner'
 
+export const revalidate = 60
+
 export const metadata: Metadata = {
   title: 'Careers',
-  description: 'Join the Country Materials team. Explore open positions in logistics, hardware, waste management, and operations in Dar es Salaam.',
+  description:
+    'Join the Country Materials team. Explore open positions in logistics, hardware, waste management, and operations in Dar es Salaam.',
 }
 
-// Static placeholder — will be replaced with Sanity fetch once connected
-const placeholderJobs = [
+const fallbackJobs = [
   {
-    _id: '1',
+    _id: 'fallback-1',
     title: 'Logistics Coordinator',
     department: 'Transportation',
     location: 'Dar es Salaam',
@@ -29,7 +33,7 @@ const placeholderJobs = [
     closingDate: '2026-04-30',
   },
   {
-    _id: '2',
+    _id: 'fallback-2',
     title: 'Waste Collection Supervisor',
     department: 'Waste Management',
     location: 'Dar es Salaam',
@@ -46,8 +50,9 @@ const placeholderJobs = [
   },
 ]
 
-export default function CareersPage() {
-  const hasJobs = placeholderJobs.length > 0
+export default async function CareersPage() {
+  const jobs = await client.fetch(openCareersQuery).catch(() => null)
+  const displayJobs = jobs?.length ? jobs : fallbackJobs
 
   return (
     <>
@@ -104,9 +109,9 @@ export default function CareersPage() {
               </h2>
             </AnimatedSection>
 
-            {hasJobs ? (
+            {displayJobs.length > 0 ? (
               <div className="space-y-4">
-                {placeholderJobs.map((job) => (
+                {displayJobs.map((job: any) => (
                   <AnimatedSection key={job._id}>
                     <JobListing job={job} />
                   </AnimatedSection>
@@ -117,8 +122,8 @@ export default function CareersPage() {
                 <div className="text-5xl mb-5">📭</div>
                 <h3 className="font-heading text-2xl text-navy mb-3">No Open Positions Right Now</h3>
                 <p className="font-body text-slate/70 max-w-md mx-auto mb-6">
-                  We are not actively hiring at the moment, but we always welcome expressions of interest
-                  from talented individuals.
+                  We are not actively hiring at the moment, but we always welcome expressions of
+                  interest from talented individuals.
                 </p>
                 <a
                   href="mailto:info@countrymaterial.com?subject=General Career Inquiry"

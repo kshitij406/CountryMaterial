@@ -1,48 +1,64 @@
 import type { Metadata } from 'next'
+import { client } from '@/sanity/lib/client'
+import { aboutPageQuery } from '@/sanity/lib/queries'
 import PageHeader from '@/components/ui/PageHeader'
 import AnimatedSection from '@/components/animations/AnimatedSection'
 import SectionLabel from '@/components/ui/SectionLabel'
 import CtaBanner from '@/components/sections/CtaBanner'
 
+export const revalidate = 60
+
 export const metadata: Metadata = {
   title: 'About Us',
-  description: 'Learn about Country Materials Ltd — our story, vision, mission, and the values driving our work in Tanzania.',
+  description:
+    'Learn about Country Materials Ltd — our story, vision, mission, and the values driving our work in Tanzania.',
 }
 
-const whyChooseUs = [
-  {
-    icon: '◈',
-    title: 'Quality Assurance',
-    description:
-      'Every product we supply meets rigorous quality standards. We partner only with certified manufacturers and maintain strict sourcing criteria.',
-  },
-  {
-    icon: '◉',
-    title: 'Innovation',
-    description:
-      'We continuously adopt modern practices — from waste-to-energy solutions to digital logistics management — to deliver smarter outcomes.',
-  },
-  {
-    icon: '◎',
-    title: 'Customer-Centric Approach',
-    description:
-      'Our clients are partners. We listen, adapt, and go the extra mile to ensure every engagement exceeds expectations.',
-  },
-  {
-    icon: '◆',
-    title: 'Sustainability',
-    description:
-      'Through responsible waste management and environmentally conscious operations, we are actively building a greener Tanzania.',
-  },
+const fallbackValues = [
+  { _key: 'v1', icon: '◈', title: 'Quality Excellence', desc: 'Uncompromising standards across every product and service we deliver.' },
+  { _key: 'v2', icon: '◉', title: 'Community & Environmental Responsibility', desc: 'We measure success not just in profit, but in the positive impact we leave on communities and the environment.' },
+  { _key: 'v3', icon: '◎', title: 'Team Collaboration', desc: 'Our strength lies in the collective effort of our team and the partnerships we build with clients and suppliers.' },
 ]
 
-export default function AboutPage() {
+const fallbackWhyChooseUs = [
+  { icon: '◈', title: 'Quality Assurance', description: 'Every product we supply meets rigorous quality standards. We partner only with certified manufacturers and maintain strict sourcing criteria.' },
+  { icon: '◉', title: 'Innovation', description: 'We continuously adopt modern practices — from waste-to-energy solutions to digital logistics management — to deliver smarter outcomes.' },
+  { icon: '◎', title: 'Customer-Centric Approach', description: 'Our clients are partners. We listen, adapt, and go the extra mile to ensure every engagement exceeds expectations.' },
+  { icon: '◆', title: 'Sustainability', description: 'Through responsible waste management and environmentally conscious operations, we are actively building a greener Tanzania.' },
+]
+
+export default async function AboutPage() {
+  const data = await client.fetch(aboutPageQuery).catch(() => null)
+
+  const vision =
+    data?.vision ??
+    'Become a leading Steel Waste Management company in the region with presence across the country.'
+  const mission =
+    data?.mission ??
+    'Bridge the gap between scrap informal vendors, steel manufacturers and constructors through a steel waste management company.'
+
+  const values = (data?.values ?? fallbackValues).map((v: any) => ({
+    _key: v._key,
+    icon: v.icon ?? '◆',
+    title: v.title,
+    desc: v.description ?? v.desc,
+  }))
+
+  const whyChooseUs = (data?.whyChooseUs ?? fallbackWhyChooseUs).map((w: any) => ({
+    icon: w.icon ?? '◆',
+    title: w.title,
+    description: w.description,
+  }))
+
   return (
     <>
       <PageHeader
         label="Our Story"
-        title="Building Stronger Foundations for Tanzania"
-        subtitle="A Dar es Salaam-based company committed to quality materials, responsible waste management, and reliable logistics."
+        title={data?.heading ?? 'Building Stronger Foundations for Tanzania'}
+        subtitle={
+          data?.intro ??
+          'A Dar es Salaam-based company committed to quality materials, responsible waste management, and reliable logistics.'
+        }
       />
 
       {/* Story section */}
@@ -71,19 +87,19 @@ export default function AboutPage() {
               </AnimatedSection>
               <AnimatedSection delay={0.1}>
                 <p className="font-body text-slate leading-relaxed mb-5">
-                  Country Materials Ltd was established to bridge a critical gap in Tanzania's industrial
-                  landscape — connecting scrap informal vendors, steel manufacturers, and constructors
-                  through a unified, professional service model.
+                  Country Materials Ltd was established to bridge a critical gap in Tanzania&apos;s
+                  industrial landscape — connecting scrap informal vendors, steel manufacturers, and
+                  constructors through a unified, professional service model.
                 </p>
                 <p className="font-body text-slate leading-relaxed mb-5">
-                  Headquartered at Babecov Complex on Buguruni Mandela Road in Dar es Salaam, we operate
-                  across three complementary business lines: hardware supply, waste management, and
-                  transportation logistics.
+                  Headquartered at Babecov Complex on Buguruni Mandela Road in Dar es Salaam, we
+                  operate across three complementary business lines: hardware supply, waste management,
+                  and transportation logistics.
                 </p>
                 <p className="font-body text-slate leading-relaxed">
-                  Our partnerships with Tanzania's leading steel companies — Lake Steel, Kamal Steel,
-                  Steelmast, and others — reflect the trust the industry places in our ability to deliver
-                  consistently and professionally.
+                  Our partnerships with Tanzania&apos;s leading steel companies — Lake Steel, Kamal
+                  Steel, Steelmast, and others — reflect the trust the industry places in our ability
+                  to deliver consistently and professionally.
                 </p>
               </AnimatedSection>
             </div>
@@ -101,11 +117,7 @@ export default function AboutPage() {
                 <h3 className="font-heading text-3xl lg:text-4xl text-white mb-5 leading-tight">
                   Leading Steel Waste Management in the Region
                 </h3>
-                <p className="font-body text-white/65 leading-relaxed">
-                  Become a leading Steel Waste Management company in the region with presence across
-                  the country — setting the benchmark for how industrial waste is collected, processed,
-                  and transformed into value.
-                </p>
+                <p className="font-body text-white/65 leading-relaxed">{vision}</p>
               </div>
             </AnimatedSection>
 
@@ -115,11 +127,7 @@ export default function AboutPage() {
                 <h3 className="font-heading text-3xl lg:text-4xl text-white mb-5 leading-tight">
                   Connecting the Full Value Chain
                 </h3>
-                <p className="font-body text-white/65 leading-relaxed">
-                  Bridge the gap between scrap informal vendors, steel manufacturers, and constructors
-                  through a professional steel waste management company — creating efficiencies, fair
-                  pricing, and environmental benefits for all stakeholders.
-                </p>
+                <p className="font-body text-white/65 leading-relaxed">{mission}</p>
               </div>
             </AnimatedSection>
           </div>
@@ -137,12 +145,8 @@ export default function AboutPage() {
           </AnimatedSection>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              { icon: '◈', title: 'Quality Excellence', desc: 'Uncompromising standards across every product and service we deliver.' },
-              { icon: '◉', title: 'Community & Environmental Responsibility', desc: 'We measure success not just in profit, but in the positive impact we leave on communities and the environment.' },
-              { icon: '◎', title: 'Team Collaboration', desc: 'Our strength lies in the collective effort of our team and the partnerships we build with clients and suppliers.' },
-            ].map((v, i) => (
-              <AnimatedSection key={i} delay={i * 0.1}>
+            {values.map((v: any, i: number) => (
+              <AnimatedSection key={v._key ?? i} delay={i * 0.1}>
                 <div className="bg-white border border-sand p-8 lg:p-10 h-full">
                   <div className="text-4xl text-gold mb-6 font-heading">{v.icon}</div>
                   <h3 className="font-heading text-xl text-navy mb-3">{v.title}</h3>
@@ -165,7 +169,7 @@ export default function AboutPage() {
           </AnimatedSection>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 lg:gap-10">
-            {whyChooseUs.map((item, i) => (
+            {whyChooseUs.map((item: any, i: number) => (
               <AnimatedSection key={i} delay={i * 0.08}>
                 <div className="flex gap-6 group">
                   <div className="shrink-0 w-12 h-12 bg-cream border border-sand flex items-center justify-center text-gold text-xl font-heading group-hover:bg-gold group-hover:border-gold group-hover:text-navy transition-all duration-300">

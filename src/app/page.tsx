@@ -1,26 +1,86 @@
 import type { Metadata } from 'next'
+import { client, urlFor } from '@/sanity/lib/client'
+import { homepageQuery, allServicesQuery } from '@/sanity/lib/queries'
 import Hero from '@/components/sections/Hero'
 import IntroSection from '@/components/sections/IntroSection'
 import ValuesGrid from '@/components/sections/ValuesGrid'
 import ServicesGrid from '@/components/sections/ServicesGrid'
 import ProductsGrid from '@/components/sections/ProductsGrid'
-import PartnersMarquee from '@/components/sections/PartnersMarquee'
+import PartnersSection from '@/components/sections/PartnersSection'
 import CtaBanner from '@/components/sections/CtaBanner'
+
+export const revalidate = 60
 
 export const metadata: Metadata = {
   title: 'Country Materials Ltd — Hardware, Waste Management & Logistics',
 }
 
-export default function HomePage() {
+export default async function HomePage() {
+  const [homepage, services] = await Promise.all([
+    client.fetch(homepageQuery).catch(() => null),
+    client.fetch(allServicesQuery).catch(() => null),
+  ])
+
+  // Build hero slides from Sanity images — fall back to undefined (Hero uses built-in defaults)
+  const heroSlides =
+    homepage?.heroImages?.length
+      ? homepage.heroImages.map((img: any) => ({
+          image: urlFor(img).width(1920).height(900).url(),
+          heading: homepage?.heroHeading ?? "Building Tanzania's Industrial Future",
+          subheading:
+            homepage?.heroSubheading ??
+            'Premium hardware materials, waste management, and logistics solutions for a growing nation.',
+        }))
+      : undefined
+
+  // Map Sanity values to ValuesGrid format
+  const values = homepage?.values?.map((v: any) => ({
+    icon: v.icon,
+    title: v.title,
+    description: v.description,
+  }))
+
+  // Map Sanity services to ServicesGrid format
+  const featuredServices = (homepage?.featuredServices ?? services)?.map((s: any) => ({
+    _id: s._id,
+    slug: s.slug,
+    title: s.title,
+    excerpt: s.excerpt,
+    coverImage: s.coverImage,
+  }))
+
+  // Map Sanity partner logos if they have images; otherwise PartnersSection uses its own defaults
+  const partnerLogos = homepage?.partnerLogos
+    ?.filter((p: any) => p.logo?.asset)
+    .map((p: any) => ({
+      src: urlFor(p.logo).width(200).url(),
+      alt: p.name,
+      height: 24,
+    }))
+
   return (
     <>
-      <Hero />
+      <Hero slides={heroSlides} />
       <IntroSection />
-      <ServicesGrid dark heading="Three Pillars of Our Business" />
-      <ValuesGrid />
+      <ServicesGrid
+        dark
+        heading="Three Pillars of Our Business"
+        services={featuredServices ?? undefined}
+      />
+      <ValuesGrid values={values ?? undefined} />
       <ProductsGrid />
-      <PartnersMarquee />
-      <CtaBanner />
+      <PartnersSection partners={partnerLogos?.length ? partnerLogos : undefined} />
+      <CtaBanner
+        heading={homepage?.ctaHeading ?? 'Ready to Work With Us?'}
+        subtext={
+          homepage?.ctaSubtext ??
+          'Whether you need construction materials, waste management services, or reliable logistics — we are here to deliver.'
+        }
+        primaryLabel={homepage?.ctaButtonText ?? 'Contact Us Today'}
+        primaryHref="/contact"
+        secondaryLabel="View Our Services"
+        secondaryHref="/services"
+      />
     </>
   )
 }

@@ -1,14 +1,21 @@
 import type { Metadata } from 'next'
+import { client } from '@/sanity/lib/client'
+import { allServicesQuery } from '@/sanity/lib/queries'
 import PageHeader from '@/components/ui/PageHeader'
 import ServicesGrid from '@/components/sections/ServicesGrid'
 import CtaBanner from '@/components/sections/CtaBanner'
 
+export const revalidate = 60
+
 export const metadata: Metadata = {
   title: 'Our Services',
-  description: 'Explore Country Materials\' full range of services: transportation & logistics, hardware materials, and waste management in Tanzania.',
+  description:
+    "Explore Country Materials' full range of services: transportation & logistics, hardware materials, and waste management in Tanzania.",
 }
 
-export default function ServicesPage() {
+export default async function ServicesPage() {
+  const services = await client.fetch(allServicesQuery).catch(() => null)
+
   return (
     <>
       <PageHeader
@@ -20,6 +27,7 @@ export default function ServicesPage() {
       <ServicesGrid
         label="Our Service Lines"
         heading="Comprehensive Industrial Solutions"
+        services={services ?? undefined}
       />
 
       {/* Detail callouts */}

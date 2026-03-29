@@ -1,57 +1,70 @@
-'use client'
-
-import { useState } from 'react'
 import type { Metadata } from 'next'
+import { client } from '@/sanity/lib/client'
+import { allProductsQuery, productCategoriesQuery } from '@/sanity/lib/queries'
 import PageHeader from '@/components/ui/PageHeader'
-import { formatCurrency } from '@/lib/utils'
+import ShopClient from '@/components/sections/ShopClient'
 import CtaBanner from '@/components/sections/CtaBanner'
-import SectionLabel from '@/components/ui/SectionLabel'
 
-const categories = ['All', 'Building Materials', 'Steel & Metals', 'Paints & Finishes']
+export const revalidate = 60
 
-const products = [
+export const metadata: Metadata = {
+  title: 'Online Shop',
+  description:
+    'Browse construction materials, steel products, and hardware supplies from Country Materials Ltd. Prices in Tanzanian Shillings.',
+}
+
+const fallbackProducts = [
   {
-    id: '1',
+    _id: 'fallback-1',
     name: 'Gypsum Board',
-    category: 'Building Materials',
+    slug: { current: 'gypsum-board' },
     price: 13000,
     priceRange: null,
     hasVariants: false,
     inStock: true,
-    description: 'Standard gypsum wallboard for interior partitions, ceilings, and dry-wall systems. Available in standard sheet sizes.',
-    unit: 'per sheet',
+    description:
+      'Standard gypsum wallboard for interior partitions, ceilings, and dry-wall systems. Available in standard sheet sizes.',
+    images: [],
+    category: { name: 'Building Materials', slug: { current: 'building-materials' } },
   },
   {
-    id: '2',
+    _id: 'fallback-2',
     name: 'Marine Board',
-    category: 'Building Materials',
+    slug: { current: 'marine-board' },
     price: 38000,
     priceRange: null,
     hasVariants: false,
     inStock: true,
-    description: 'High-grade marine plywood engineered for moisture resistance. Ideal for formwork, flooring, and demanding construction environments.',
-    unit: 'per sheet',
+    description:
+      'High-grade marine plywood engineered for moisture resistance. Ideal for formwork, flooring, and demanding construction environments.',
+    images: [],
+    category: { name: 'Building Materials', slug: { current: 'building-materials' } },
   },
   {
-    id: '3',
+    _id: 'fallback-3',
     name: 'High Tensile Reinforcement Bars BS 500',
-    category: 'Steel & Metals',
+    slug: { current: 'rebar-bs500' },
     price: null,
     priceRange: '11,666 – 120,000',
     hasVariants: true,
     inStock: true,
-    description: 'British Standard BS 500 compliant high-tensile deformed steel bars for structural reinforcement. Available in multiple diameters from 6mm to 32mm.',
-    unit: 'per bar (varies by diameter)',
+    description:
+      'British Standard BS 500 compliant high-tensile deformed steel bars for structural reinforcement. Available in multiple diameters from 6mm to 32mm.',
+    images: [],
+    category: { name: 'Steel & Metals', slug: { current: 'steel-metals' } },
   },
 ]
 
-export default function ShopPage() {
-  const [activeCategory, setActiveCategory] = useState('All')
-  const [inquiryProduct, setInquiryProduct] = useState<string | null>(null)
+export default async function ShopPage() {
+  const [products, categories] = await Promise.all([
+    client.fetch(allProductsQuery).catch(() => null),
+    client.fetch(productCategoriesQuery).catch(() => null),
+  ])
 
-  const filtered = activeCategory === 'All'
-    ? products
-    : products.filter((p) => p.category === activeCategory)
+  const displayProducts = products?.length ? products : fallbackProducts
+  const categoryNames: string[] = categories?.length
+    ? categories.map((c: any) => c.name)
+    : ['Building Materials', 'Steel & Metals']
 
   return (
     <>
@@ -63,97 +76,19 @@ export default function ShopPage() {
 
       <section className="bg-cream py-section">
         <div className="max-w-container mx-auto px-6 lg:px-10">
-          {/* Note banner */}
+          {/* Catalog-only notice */}
           <div className="bg-gold/10 border border-gold/30 px-6 py-4 mb-10 flex items-center gap-4">
             <span className="text-gold text-lg shrink-0">ℹ</span>
             <p className="font-body text-sm text-navy/80">
               This is a display catalog. To place an order or request a bulk quotation, please{' '}
-              <a href="/contact" className="text-gold hover:underline font-semibold">contact us directly</a>.
+              <a href="/contact" className="text-gold hover:underline font-semibold">
+                contact us directly
+              </a>
+              .
             </p>
           </div>
 
-          {/* Category filter */}
-          <div className="flex flex-wrap gap-3 mb-10">
-            {categories.map((cat) => (
-              <button
-                key={cat}
-                onClick={() => setActiveCategory(cat)}
-                className={`font-body text-sm px-5 py-2.5 border transition-all duration-200 ${
-                  activeCategory === cat
-                    ? 'bg-navy text-white border-navy'
-                    : 'bg-white text-slate border-sand hover:border-navy hover:text-navy'
-                }`}
-              >
-                {cat}
-              </button>
-            ))}
-          </div>
-
-          {/* Product grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-            {filtered.map((product) => (
-              <div
-                key={product.id}
-                className="bg-white border border-sand hover:border-gold/40 hover:shadow-xl hover:shadow-navy/8 transition-all duration-400 group"
-              >
-                {/* Image placeholder */}
-                <div className="relative h-52 bg-navy/5 flex items-center justify-center overflow-hidden">
-                  <span className="font-heading text-8xl text-navy/10 select-none">{product.name[0]}</span>
-                  <span className="absolute top-3 left-3 font-body text-xs bg-navy text-gold px-3 py-1 tracking-wider uppercase">
-                    {product.category}
-                  </span>
-                  {product.inStock ? (
-                    <span className="absolute top-3 right-3 font-body text-xs bg-green-700 text-white px-2.5 py-1">
-                      In Stock
-                    </span>
-                  ) : (
-                    <span className="absolute top-3 right-3 font-body text-xs bg-slate/60 text-white px-2.5 py-1">
-                      Out of Stock
-                    </span>
-                  )}
-                </div>
-
-                <div className="p-6">
-                  <h3 className="font-heading text-xl text-navy mb-2 group-hover:text-gold transition-colors duration-200">
-                    {product.name}
-                  </h3>
-                  <p className="font-body text-sm text-slate/70 leading-relaxed mb-4 line-clamp-3">
-                    {product.description}
-                  </p>
-
-                  <div className="pt-4 border-t border-sand flex items-end justify-between gap-4">
-                    <div>
-                      <div className="font-body text-xs text-slate/50 mb-1 uppercase tracking-wide">Price</div>
-                      {product.hasVariants && product.priceRange ? (
-                        <div className="font-heading text-lg text-navy">
-                          TZS {product.priceRange} /=
-                        </div>
-                      ) : product.price ? (
-                        <div className="font-heading text-lg text-navy">
-                          {formatCurrency(product.price)} /=
-                        </div>
-                      ) : null}
-                      {product.unit && (
-                        <div className="font-body text-xs text-slate/50 mt-0.5">{product.unit}</div>
-                      )}
-                    </div>
-                    <a
-                      href={`mailto:info@countrymaterial.com?subject=Product Inquiry: ${encodeURIComponent(product.name)}`}
-                      className="shrink-0 px-5 py-2.5 bg-gold hover:bg-gold-light text-navy font-body text-xs font-semibold tracking-wide transition-colors duration-200"
-                    >
-                      Inquire
-                    </a>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {filtered.length === 0 && (
-            <div className="text-center py-20">
-              <p className="font-heading text-2xl text-navy/40">No products in this category yet.</p>
-            </div>
-          )}
+          <ShopClient products={displayProducts} categoryNames={categoryNames} />
         </div>
       </section>
 

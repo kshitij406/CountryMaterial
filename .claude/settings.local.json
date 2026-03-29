@@ -12,7 +12,13 @@
       "Bash(pnpm build:*)",
       "Bash(rm:*)",
       "Bash(pnpm add:*)",
-      "Bash(timeout 15 pnpm dev)"
+      "Bash(timeout 15 pnpm dev)",
+      "mcp__Sanity__list_sanity_rules",
+      "mcp__Sanity__list_projects",
+      "mcp__Sanity__get_sanity_rules",
+      "mcp__Sanity__query_documents",
+      "mcp__Sanity__create_documents_from_json",
+      "mcp__Sanity__publish_documents"
     ]
   }
 }
