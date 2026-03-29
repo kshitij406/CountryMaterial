@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "Sanity": {
+      "url": "https://mcp.sanity.io",
+      "headers": {
+        "Authorization": "skB7q8qyRugTknOoEx5wEptJC6191sGR12bMvRhDqPnGSwPXfDecsAYBrLZg0KeMxzhReVJHcISyPplnfVX2iCpDNOvKilxfAdfGcC9UFAKYfko2vgUB79YkGoHRZmDeY4gfVxw8HW3zsVMxsijhxR35yYncEJzrwFifNE8qhhR6MluP2YzN"
+      }
+    }
+  }
+}
