@@ -134,9 +134,10 @@ export default async function ServiceDetailPage({
     ? ptToText(sanity.contentSections[0].body)
     : fallback?.intro ?? ''
 
-  // Build features from Sanity contentSections or fall back to static list
-  const features: string[] = fallback?.features ?? []
-  const highlights = fallback?.highlights ?? []
+  // Prefer Sanity fields; fall back to static list
+  const features: string[] = sanity?.features?.length ? sanity.features : (fallback?.features ?? [])
+  const highlights: Array<{ stat: string; label: string }> =
+    sanity?.highlights?.length ? sanity.highlights : (fallback?.highlights ?? [])
 
   // If Sanity has multiple sections, show them as content blocks
   const sanitySection =

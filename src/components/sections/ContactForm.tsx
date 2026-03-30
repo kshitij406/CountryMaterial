@@ -4,7 +4,7 @@ import { useState, FormEvent } from 'react'
 
 export default function ContactForm() {
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
-  const [form, setForm] = useState({ name: '', email: '', phone: '', message: '' })
+  const [form, setForm] = useState({ name: '', email: '', phone: '', subject: '', message: '' })
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }))
@@ -22,7 +22,7 @@ export default function ContactForm() {
       })
       if (res.ok) {
         setStatus('success')
-        setForm({ name: '', email: '', phone: '', message: '' })
+        setForm({ name: '', email: '', phone: '', subject: '', message: '' })
       } else {
         setStatus('error')
       }
@@ -83,6 +83,21 @@ export default function ContactForm() {
 
       <div>
         <label className="block font-body text-xs text-slate/60 tracking-widest uppercase mb-2">
+          Subject <span className="text-gold">*</span>
+        </label>
+        <input
+          type="text"
+          name="subject"
+          required
+          value={form.subject}
+          onChange={handleChange}
+          placeholder="What is this regarding?"
+          className={inputClass}
+        />
+      </div>
+
+      <div>
+        <label className="block font-body text-xs text-slate/60 tracking-widest uppercase mb-2">
           Message <span className="text-gold">*</span>
         </label>
         <textarea
@@ -107,12 +122,12 @@ export default function ContactForm() {
       </div>
 
       {status === 'success' && (
-        <p className="font-body text-sm text-green-700 bg-green-50 border border-green-200 px-5 py-4">
+        <p className="font-body text-sm text-navy bg-gold/10 border border-gold/40 px-5 py-4">
           Thank you! Your message has been received. We will get back to you shortly.
         </p>
       )}
       {status === 'error' && (
-        <p className="font-body text-sm text-red-700 bg-red-50 border border-red-200 px-5 py-4">
+        <p className="font-body text-sm text-navy bg-navy/5 border border-navy/20 px-5 py-4">
           Something went wrong. Please try again or email us directly at info@countrymaterial.com
         </p>
       )}

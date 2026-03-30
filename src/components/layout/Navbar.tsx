@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
 
@@ -14,7 +15,12 @@ const navLinks = [
   { label: 'Contact', href: '/contact' },
 ]
 
-export default function Navbar() {
+interface NavbarProps {
+  logoUrl?: string
+  companyName?: string
+}
+
+export default function Navbar({ logoUrl, companyName }: NavbarProps) {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const pathname = usePathname()
@@ -53,10 +59,21 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-18 py-4">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3 group">
-            <div className="flex flex-col leading-none">
-              <span className="font-heading text-white text-xl tracking-tight">Country</span>
-              <span className="font-heading text-gold text-xl tracking-tight">Materials</span>
-            </div>
+            {logoUrl ? (
+              <Image
+                src={logoUrl}
+                alt={companyName ?? 'Country Materials Ltd'}
+                width={120}
+                height={46}
+                className="h-10 w-auto object-contain"
+                priority
+              />
+            ) : (
+              <div className="flex flex-col leading-none">
+                <span className="font-heading text-white text-xl tracking-tight">Country</span>
+                <span className="font-heading text-gold text-xl tracking-tight">Materials</span>
+              </div>
+            )}
           </Link>
 
           {/* Desktop nav */}

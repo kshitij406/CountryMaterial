@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { client } from '@/sanity/lib/client'
+import { client, urlFor } from '@/sanity/lib/client'
 import { aboutPageQuery } from '@/sanity/lib/queries'
 import PageHeader from '@/components/ui/PageHeader'
 import AnimatedSection from '@/components/animations/AnimatedSection'
@@ -8,10 +8,23 @@ import CtaBanner from '@/components/sections/CtaBanner'
 
 export const revalidate = 60
 
-export const metadata: Metadata = {
-  title: 'About Us',
-  description:
-    'Learn about Country Materials Ltd — our story, vision, mission, and the values driving our work in Tanzania.',
+export async function generateMetadata(): Promise<Metadata> {
+  const data = await client.fetch(aboutPageQuery).catch(() => null)
+  return {
+    title: data?.heading ?? 'About Us',
+    description:
+      data?.intro ??
+      'Learn about Country Materials Ltd — our story, vision, mission, and the values driving our work in Tanzania.',
+  }
+}
+
+// Extract plain-text paragraphs from Sanity portable text blocks
+function ptToParagraphs(blocks: any[] | null | undefined): string[] {
+  if (!blocks?.length) return []
+  return blocks
+    .filter((b: any) => b._type === 'block')
+    .map((b: any) => (b.children ?? []).map((c: any) => c.text ?? '').join(''))
+    .filter(Boolean)
 }
 
 const fallbackValues = [
@@ -36,6 +49,12 @@ export default async function AboutPage() {
   const mission =
     data?.mission ??
     'Bridge the gap between scrap informal vendors, steel manufacturers and constructors through a steel waste management company.'
+
+  const storyImageUrl = data?.images?.[0]
+    ? urlFor(data.images[0]).width(800).height(800).url()
+    : '/images/about-main.jpg'
+
+  const bodyParagraphs = ptToParagraphs(data?.body)
 
   const values = (data?.values ?? fallbackValues).map((v: any) => ({
     _key: v._key,
@@ -69,7 +88,7 @@ export default async function AboutPage() {
               <div className="relative aspect-square max-w-lg">
                 <div
                   className="absolute inset-0 bg-cover bg-center"
-                  style={{ backgroundImage: "url('/images/about-main.jpg')" }}
+                  style={{ backgroundImage: `url('${storyImageUrl}')` }}
                 />
                 <div className="absolute -bottom-6 -right-6 w-2/3 h-2/3 border-2 border-gold/40 -z-10" />
                 <div className="absolute -top-4 -left-4 bg-gold w-24 h-24 flex items-center justify-center">
@@ -86,21 +105,29 @@ export default async function AboutPage() {
                 </h2>
               </AnimatedSection>
               <AnimatedSection delay={0.1}>
-                <p className="font-body text-slate leading-relaxed mb-5">
-                  Country Materials Ltd was established to bridge a critical gap in Tanzania&apos;s
-                  industrial landscape — connecting scrap informal vendors, steel manufacturers, and
-                  constructors through a unified, professional service model.
-                </p>
-                <p className="font-body text-slate leading-relaxed mb-5">
-                  Headquartered at Babecov Complex on Buguruni Mandela Road in Dar es Salaam, we
-                  operate across three complementary business lines: hardware supply, waste management,
-                  and transportation logistics.
-                </p>
-                <p className="font-body text-slate leading-relaxed">
-                  Our partnerships with Tanzania&apos;s leading steel companies — Lake Steel, Kamal
-                  Steel, Steelmast, and others — reflect the trust the industry places in our ability
-                  to deliver consistently and professionally.
-                </p>
+                {bodyParagraphs.length > 0 ? (
+                  bodyParagraphs.map((p, i) => (
+                    <p key={i} className="font-body text-slate leading-relaxed mb-5 last:mb-0">{p}</p>
+                  ))
+                ) : (
+                  <>
+                    <p className="font-body text-slate leading-relaxed mb-5">
+                      Country Materials Ltd was established to bridge a critical gap in Tanzania&apos;s
+                      industrial landscape — connecting scrap informal vendors, steel manufacturers, and
+                      constructors through a unified, professional service model.
+                    </p>
+                    <p className="font-body text-slate leading-relaxed mb-5">
+                      Headquartered at Babecov Complex on Buguruni Mandela Road in Dar es Salaam, we
+                      operate across three complementary business lines: hardware supply, waste management,
+                      and transportation logistics.
+                    </p>
+                    <p className="font-body text-slate leading-relaxed">
+                      Our partnerships with Tanzania&apos;s leading steel companies — Lake Steel, Kamal
+                      Steel, Steelmast, and others — reflect the trust the industry places in our ability
+                      to deliver consistently and professionally.
+                    </p>
+                  </>
+                )}
               </AnimatedSection>
             </div>
           </div>

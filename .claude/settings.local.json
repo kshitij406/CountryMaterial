@@ -28,7 +28,16 @@
       "Bash(node -e \"const m = require\\(''./node_modules/next-sanity/dist/studio.js''\\); console.log\\(Object.keys\\(m\\)\\)\")",
       "Bash(node -e \"const p = require\\(''./node_modules/next-sanity/package.json''\\); const keys = Object.keys\\(p.exports\\); console.log\\(keys.filter\\(k => k.includes\\(''studio''\\)\\)\\)\")",
       "Bash(node -e \"const p = require\\(''./node_modules/next-sanity/package.json''\\); console.log\\(JSON.stringify\\(p.exports[''./studio/client-component''], null, 2\\)\\)\")",
-      "Bash(npx tsc:*)"
+      "Bash(npx tsc:*)",
+      "Bash(find . -not -path */node_modules/* -not -path */.git/* -not -path */.next/* -type d -o -not -path */node_modules/* -not -path */.git/* -not -path */.next/* -type f)",
+      "Bash(pnpm tsc:*)",
+      "Bash(curl:*)",
+      "mcp__Sanity__patch_document_from_json",
+      "Bash(for f:*)",
+      "Bash(do echo:*)",
+      "Bash(grep -rn $f 'C:\\\\Country Material Website\\\\src')",
+      "Bash(grep -v \"^C:.*sections/$f.tsx\")",
+      "Bash(done)"
     ]
   }
 }

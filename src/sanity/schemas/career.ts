@@ -8,6 +8,12 @@ export const career = defineType({
   fields: [
     defineField({ name: 'title', title: 'Job Title', type: 'string' }),
     defineField({ name: 'slug', title: 'Slug', type: 'slug', options: { source: 'title', maxLength: 96 } }),
+    defineField({
+      name: 'excerpt',
+      title: 'Short Description',
+      type: 'string',
+      description: 'One-sentence summary shown on the job card (max ~160 characters). Falls back to the first line of the full description.',
+    }),
     defineField({ name: 'department', title: 'Department', type: 'string' }),
     defineField({ name: 'location', title: 'Location', type: 'string' }),
     defineField({

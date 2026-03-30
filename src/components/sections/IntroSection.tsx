@@ -5,7 +5,12 @@ import { useGsapSlideIn, useGsapFadeUp } from '@/components/animations/gsap-hook
 import SectionLabel from '@/components/ui/SectionLabel'
 import Button from '@/components/ui/Button'
 
-export default function IntroSection() {
+interface IntroSectionProps {
+  heading?: string
+  body?: string
+}
+
+export default function IntroSection({ heading, body }: IntroSectionProps) {
   const leftRef = useRef<HTMLDivElement>(null)
   const rightRef = useRef<HTMLDivElement>(null)
 
@@ -37,18 +42,10 @@ export default function IntroSection() {
           <div ref={rightRef} className="opacity-0">
             <SectionLabel className="mb-5">Who We Are</SectionLabel>
             <h2 className="font-heading text-4xl lg:text-5xl text-navy leading-tight mb-6">
-              Tanzania's Trusted Partner in Industrial Solutions
+              {heading ?? "Tanzania's Trusted Partner in Industrial Solutions"}
             </h2>
-            <p className="font-body text-slate leading-relaxed mb-5">
-              Country Materials Ltd is a Dar es Salaam-based company dedicated to bridging the gap between
-              scrap informal vendors, steel manufacturers, and constructors. We operate across hardware
-              supply, waste management, and transportation — serving businesses and communities with
-              reliability and purpose.
-            </p>
             <p className="font-body text-slate leading-relaxed mb-8">
-              Headquartered at Babecov Complex on Buguruni Mandela Road, we have built a reputation
-              for quality, consistency, and long-term partnerships with Tanzania's leading steel and
-              construction companies.
+              {body ?? 'Country Materials Ltd is a Dar es Salaam-based company dedicated to bridging the gap between scrap informal vendors, steel manufacturers, and constructors. We operate across hardware supply, waste management, and transportation — serving businesses and communities with reliability and purpose.'}
             </p>
 
             <div className="grid grid-cols-3 gap-6 mb-10 py-8 border-y border-sand">

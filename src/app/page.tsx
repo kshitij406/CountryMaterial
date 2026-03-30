@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
-import { client, urlFor } from '@/sanity/lib/client'
+import { client, urlFor } from '@/sanity/lib/client' // urlFor used for partner logos below
 import { homepageQuery, allServicesQuery } from '@/sanity/lib/queries'
-import Hero from '@/components/sections/Hero'
+import HeroSection from '@/components/HeroSection'
 import IntroSection from '@/components/sections/IntroSection'
 import ValuesGrid from '@/components/sections/ValuesGrid'
 import ServicesGrid from '@/components/sections/ServicesGrid'
@@ -20,18 +20,6 @@ export default async function HomePage() {
     client.fetch(homepageQuery).catch(() => null),
     client.fetch(allServicesQuery).catch(() => null),
   ])
-
-  // Build hero slides from Sanity images — fall back to undefined (Hero uses built-in defaults)
-  const heroSlides =
-    homepage?.heroImages?.length
-      ? homepage.heroImages.map((img: any) => ({
-          image: urlFor(img).width(1920).height(900).url(),
-          heading: homepage?.heroHeading ?? "Building Tanzania's Industrial Future",
-          subheading:
-            homepage?.heroSubheading ??
-            'Premium hardware materials, waste management, and logistics solutions for a growing nation.',
-        }))
-      : undefined
 
   // Map Sanity values to ValuesGrid format
   const values = homepage?.values?.map((v: any) => ({
@@ -58,10 +46,20 @@ export default async function HomePage() {
       height: 24,
     }))
 
+  // heroVideo will come from siteSettings once the field is added to the schema
+  const heroVideo = (homepage as any)?.heroVideo
+    ? (homepage as any).heroVideo
+    : undefined
+
   return (
     <>
-      <Hero slides={heroSlides} />
-      <IntroSection />
+      <HeroSection
+        videoSrc={heroVideo}
+        headingLine1={homepage?.heroHeading?.split(' ').slice(0, 2).join(' ') ?? undefined}
+        headingLine2={homepage?.heroHeading?.split(' ').slice(2).join(' ') ?? undefined}
+        subheading={homepage?.heroSubheading ?? undefined}
+      />
+      <IntroSection heading={homepage?.introHeading} body={homepage?.introBody} />
       <ServicesGrid
         dark
         heading="Three Pillars of Our Business"

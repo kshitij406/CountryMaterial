@@ -1,19 +1,23 @@
 import type { Metadata } from 'next'
 import { client } from '@/sanity/lib/client'
-import { allProductsQuery, productCategoriesQuery } from '@/sanity/lib/queries'
+import { allProductsQuery, allProductCategoriesQuery, siteSettingsQuery } from '@/sanity/lib/queries'
+import type { Product, ProductCategory } from '@/types'
 import PageHeader from '@/components/ui/PageHeader'
-import ShopClient from '@/components/sections/ShopClient'
+import ProductGrid from '@/components/shop/ProductGrid'
 import CtaBanner from '@/components/sections/CtaBanner'
 
 export const revalidate = 60
 
-export const metadata: Metadata = {
-  title: 'Online Shop',
-  description:
-    'Browse construction materials, steel products, and hardware supplies from Country Materials Ltd. Prices in Tanzanian Shillings.',
+export async function generateMetadata(): Promise<Metadata> {
+  const settings = await client.fetch(siteSettingsQuery).catch(() => null)
+  const company = settings?.companyName ?? 'Country Materials'
+  return {
+    title: 'Product Catalog',
+    description: `Browse construction materials, steel products, and hardware supplies from ${company}. Prices in Tanzanian Shillings.`,
+  }
 }
 
-const fallbackProducts = [
+const fallbackProducts: Product[] = [
   {
     _id: 'fallback-1',
     name: 'Gypsum Board',
@@ -55,27 +59,38 @@ const fallbackProducts = [
   },
 ]
 
+const fallbackCategories: ProductCategory[] = [
+  { _id: 'fc-1', name: 'Building Materials', slug: { current: 'building-materials' } },
+  { _id: 'fc-2', name: 'Steel & Metals', slug: { current: 'steel-metals' } },
+]
+
 export default async function ShopPage() {
-  const [products, categories] = await Promise.all([
+  const [rawProducts, rawCategories, settings] = await Promise.all([
     client.fetch(allProductsQuery).catch(() => null),
-    client.fetch(productCategoriesQuery).catch(() => null),
+    client.fetch(allProductCategoriesQuery).catch(() => null),
+    client.fetch(siteSettingsQuery).catch(() => null),
   ])
 
-  const displayProducts = products?.length ? products : fallbackProducts
-  const categoryNames: string[] = categories?.length
-    ? categories.map((c: any) => c.name)
-    : ['Building Materials', 'Steel & Metals']
+  const products: Product[] = rawProducts?.length ? rawProducts : fallbackProducts
+  const categories: ProductCategory[] = rawCategories?.length ? rawCategories : fallbackCategories
+
+  const company = settings?.companyName ?? 'Country Materials'
+  const shopTitle = settings?.shopPageTitle ?? `Quality Materials from ${company}`
+  const shopSubtitle =
+    settings?.shopPageSubtitle ??
+    'Browse our full range of construction materials, steel products, and hardware supplies. All prices in Tanzanian Shillings.'
 
   return (
     <>
       <PageHeader
         label="Product Catalog"
-        title="Quality Materials at Competitive Prices"
-        subtitle="Browse our full range of construction materials, steel products, and hardware supplies. All prices in Tanzanian Shillings."
+        title={shopTitle}
+        subtitle={shopSubtitle}
       />
 
       <section className="bg-cream py-section">
         <div className="max-w-container mx-auto px-6 lg:px-10">
+
           {/* Catalog-only notice */}
           <div className="bg-gold/10 border border-gold/30 px-6 py-4 mb-10 flex items-center gap-4">
             <span className="text-gold text-lg shrink-0">ℹ</span>
@@ -88,7 +103,7 @@ export default async function ShopPage() {
             </p>
           </div>
 
-          <ShopClient products={displayProducts} categoryNames={categoryNames} />
+          <ProductGrid products={products} categories={categories} />
         </div>
       </section>
 

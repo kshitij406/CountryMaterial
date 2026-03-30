@@ -41,6 +41,29 @@ export const service = defineType({
         },
       ],
     }),
+    defineField({
+      name: 'features',
+      title: 'Key Capabilities',
+      type: 'array',
+      of: [{ type: 'string' }],
+      description: 'Bullet-point list of capabilities shown on the service detail page.',
+    }),
+    defineField({
+      name: 'highlights',
+      title: 'Stat Highlights',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            defineField({ name: 'stat', title: 'Stat', type: 'string' }),
+            defineField({ name: 'label', title: 'Label', type: 'string' }),
+          ],
+          preview: { select: { title: 'stat', subtitle: 'label' } },
+        },
+      ],
+      description: 'Up to 3 stat/label pairs shown in the dark banner on the service detail page.',
+    }),
     defineField({ name: 'displayOrder', title: 'Display Order', type: 'number' }),
   ],
   orderings: [{ title: 'Display Order', name: 'displayOrder', by: [{ field: 'displayOrder', direction: 'asc' }] }],

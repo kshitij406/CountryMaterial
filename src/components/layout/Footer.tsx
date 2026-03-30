@@ -15,7 +15,23 @@ const services = [
   { label: 'Waste Management', href: '/services/waste-management' },
 ]
 
-export default function Footer() {
+interface FooterContact {
+  address?: string
+  poBox?: string
+  city?: string
+  country?: string
+  phone?: string
+  email?: string
+}
+
+export default function Footer({ contact }: { contact?: FooterContact }) {
+  const address = contact?.address ?? 'Babecov Complex, Buguruni Mandela Road'
+  const poBox = contact?.poBox ? `P.O. Box ${contact.poBox}` : 'P.O. Box 2140'
+  const city = contact?.city ?? 'Dar es Salaam'
+  const country = contact?.country ?? 'Tanzania'
+  const phone = contact?.phone ?? '+255 768 500 555'
+  const email = contact?.email ?? 'info@countrymaterial.com'
+  const telHref = `tel:${phone.replace(/[\s-]/g, '')}`
   return (
     <footer className="bg-charcoal text-white/70">
       {/* Main footer */}
@@ -87,18 +103,18 @@ export default function Footer() {
             <h4 className="font-heading text-white text-lg mb-5">Get in Touch</h4>
             <address className="not-italic font-body text-sm space-y-3">
               <p className="leading-relaxed">
-                Babecov Complex, Buguruni Mandela Road<br />
-                P.O. Box 2140<br />
-                Dar es Salaam, Tanzania
+                {address}<br />
+                {poBox}<br />
+                {city}, {country}
               </p>
               <p>
-                <a href="tel:+255768500555" className="hover:text-gold transition-colors duration-200">
-                  +255 768 500 555
+                <a href={telHref} className="hover:text-gold transition-colors duration-200">
+                  {phone}
                 </a>
               </p>
               <p>
-                <a href="mailto:info@countrymaterial.com" className="hover:text-gold transition-colors duration-200">
-                  info@countrymaterial.com
+                <a href={`mailto:${email}`} className="hover:text-gold transition-colors duration-200">
+                  {email}
                 </a>
               </p>
             </address>

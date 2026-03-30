@@ -10,6 +10,9 @@ export const siteSettingsQuery = groq`
     poBox,
     city,
     country,
+    businessHours,
+    shopPageTitle,
+    shopPageSubtitle,
     socialLinks
   }
 `
@@ -70,6 +73,8 @@ export const serviceBySlugQuery = groq`
     excerpt,
     coverImage,
     contentSections,
+    features,
+    highlights,
     displayOrder
   }
 `
@@ -82,7 +87,7 @@ export const allProductsQuery = groq`
     price,
     priceRange,
     category-> { name, slug },
-    images,
+    "images": images[]{ "asset": asset->{ url } },
     description,
     inStock,
     hasVariants
@@ -97,11 +102,15 @@ export const productCategoriesQuery = groq`
   }
 `
 
+// Alias used by the shop page
+export const allProductCategoriesQuery = productCategoriesQuery
+
 export const openCareersQuery = groq`
   *[_type == "career" && expired != true] | order(_createdAt desc) {
     _id,
     title,
     slug,
+    excerpt,
     department,
     location,
     employmentType,
