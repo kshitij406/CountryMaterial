@@ -26,7 +26,7 @@ export default function IntroSection({ heading, body }: IntroSectionProps) {
             <div className="relative aspect-[4/5] max-w-md">
               <div
                 className="absolute inset-0 bg-cover bg-center"
-                style={{ backgroundImage: "url('/images/intro-main.jpg')" }}
+                style={{ backgroundImage: "url('/images/intro-main.svg')" }}
               />
               {/* Gold accent frame */}
               <div className="absolute -bottom-6 -right-6 w-3/4 h-3/4 border-2 border-gold/40 -z-10" />
@@ -41,22 +41,22 @@ export default function IntroSection({ heading, body }: IntroSectionProps) {
           {/* Right — text */}
           <div ref={rightRef} className="opacity-0">
             <SectionLabel className="mb-5">Who We Are</SectionLabel>
-            <h2 className="font-heading text-4xl lg:text-5xl text-navy leading-tight mb-6">
+            <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl text-navy leading-tight mb-6">
               {heading ?? "Tanzania's Trusted Partner in Industrial Solutions"}
             </h2>
             <p className="font-body text-slate leading-relaxed mb-8">
               {body ?? 'Country Materials Ltd is a Dar es Salaam-based company dedicated to bridging the gap between scrap informal vendors, steel manufacturers, and constructors. We operate across hardware supply, waste management, and transportation — serving businesses and communities with reliability and purpose.'}
             </p>
 
-            <div className="grid grid-cols-3 gap-6 mb-10 py-8 border-y border-sand">
+            <div className="grid grid-cols-3 gap-2 sm:gap-6 mb-6 sm:mb-10 py-5 sm:py-8 border-y border-sand">
               {[
                 { stat: '3', label: 'Core Services' },
                 { stat: '50+', label: 'Products Supplied' },
                 { stat: '6+', label: 'Industry Partners' },
               ].map((item) => (
                 <div key={item.label} className="text-center">
-                  <div className="font-heading text-3xl text-gold">{item.stat}</div>
-                  <div className="font-body text-xs text-slate/70 tracking-wide uppercase mt-1">{item.label}</div>
+                  <div className="font-heading text-xl sm:text-3xl text-gold">{item.stat}</div>
+                  <div className="font-body text-[10px] sm:text-xs text-slate/70 tracking-wide uppercase mt-1">{item.label}</div>
                 </div>
               ))}
             </div>

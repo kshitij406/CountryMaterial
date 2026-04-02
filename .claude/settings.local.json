@@ -37,7 +37,10 @@
       "Bash(do echo:*)",
       "Bash(grep -rn $f 'C:\\\\Country Material Website\\\\src')",
       "Bash(grep -v \"^C:.*sections/$f.tsx\")",
-      "Bash(done)"
+      "Bash(done)",
+      "WebFetch(domain:github.com)",
+      "Bash(ls:*)",
+      "Bash(node -e \"console.log\\(require.resolve\\(''@chenglou/pretext''\\)\\)\")"
     ]
   }
 }

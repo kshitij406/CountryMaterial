@@ -98,6 +98,7 @@ export default async function CareersPage() {
         label="Join Our Team"
         title={`Build Your Career with ${company}`}
         subtitle="We are growing and looking for driven, capable people to join us in building Tanzania's industrial future."
+        theme="gold"
       />
 
       {/* Culture section */}

@@ -26,14 +26,14 @@ export default function PartnersMarquee({ partners = defaultPartners.map((n) => 
 
       <div className="relative overflow-hidden">
         {/* Fade edges */}
-        <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-navy to-transparent z-10 pointer-events-none" />
-        <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-navy to-transparent z-10 pointer-events-none" />
+        <div className="absolute left-0 top-0 bottom-0 w-10 sm:w-16 lg:w-24 bg-gradient-to-r from-navy to-transparent z-10 pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-0 w-10 sm:w-16 lg:w-24 bg-gradient-to-l from-navy to-transparent z-10 pointer-events-none" />
 
         <div className="flex animate-marquee whitespace-nowrap">
           {doubled.map((partner, i) => (
             <div
               key={i}
-              className="inline-flex items-center shrink-0 mx-10 lg:mx-16"
+              className="inline-flex items-center shrink-0 mx-5 sm:mx-8 lg:mx-16"
             >
               {partner.logo?.asset?.url ? (
                 <img

@@ -16,18 +16,12 @@ export default function ProductCard({ product }: ProductCardProps) {
       className="bg-white border border-sand hover:border-gold/40 hover:shadow-xl hover:shadow-navy/8 transition-all duration-400 group flex flex-col"
     >
       {/* Image */}
-      <div className="relative h-52 bg-navy/5 flex items-center justify-center overflow-hidden shrink-0">
-        {imageUrl ? (
-          <img
-            src={imageUrl}
-            alt={product.name}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-          />
-        ) : (
-          <span className="font-heading text-8xl text-navy/10 select-none">
-            {product.name[0]}
-          </span>
-        )}
+      <div className="relative h-40 sm:h-44 md:h-52 bg-navy/5 flex items-center justify-center overflow-hidden shrink-0">
+        <img
+          src={imageUrl ?? '/images/product-placeholder.svg'}
+          alt={product.name}
+          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+        />
 
         {/* Category badge */}
         {product.category && (

@@ -24,7 +24,7 @@ export default function PartnersSection({ partners }: PartnersSectionProps) {
         <SectionLabel light className="mb-4">
           Industry Partners
         </SectionLabel>
-        <h2 className="font-heading text-3xl lg:text-4xl text-white leading-tight">
+        <h2 className="font-heading text-2xl md:text-3xl lg:text-4xl text-white leading-tight">
           Trusted by Tanzania's Leading Steel Companies
         </h2>
       </div>

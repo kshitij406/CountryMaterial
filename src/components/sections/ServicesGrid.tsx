@@ -64,7 +64,7 @@ export default function ServicesGrid({
         <div ref={headingRef} className="opacity-0 mb-14">
           <SectionLabel light={dark} className="mb-4">{label}</SectionLabel>
           <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
-            <h2 className={`font-heading text-4xl lg:text-5xl leading-tight max-w-lg ${dark ? 'text-white' : 'text-navy'}`}>
+            <h2 className={`font-heading text-3xl md:text-4xl lg:text-5xl leading-tight max-w-lg ${dark ? 'text-white' : 'text-navy'}`}>
               {heading}
             </h2>
             <Link

@@ -52,7 +52,7 @@ export default async function AboutPage() {
 
   const storyImageUrl = data?.images?.[0]
     ? urlFor(data.images[0]).width(800).height(800).url()
-    : '/images/about-main.jpg'
+    : '/images/about-main.svg'
 
   const bodyParagraphs = ptToParagraphs(data?.body)
 
@@ -78,6 +78,7 @@ export default async function AboutPage() {
           data?.intro ??
           'A Dar es Salaam-based company committed to quality materials, responsible waste management, and reliable logistics.'
         }
+        theme="cream"
       />
 
       {/* Story section */}

@@ -59,7 +59,7 @@ export function CustomersSection({ customers = [], className }: CustomersSection
             },
             ...transitionVariants,
           }}
-          className="group-hover:blur-xs mx-auto mt-12 grid max-w-2xl grid-cols-4 gap-x-12 gap-y-8 transition-all duration-500 group-hover:opacity-50 sm:gap-x-16 sm:gap-y-14"
+          className="group-hover:blur-xs mx-auto mt-8 sm:mt-12 grid max-w-2xl grid-cols-2 sm:grid-cols-4 gap-x-8 gap-y-6 sm:gap-x-12 sm:gap-y-8 transition-all duration-500 group-hover:opacity-50 lg:gap-x-16 lg:gap-y-14"
         >
           {customers.map((logo, index) => (
             <div key={index} className="flex">

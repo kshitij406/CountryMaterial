@@ -6,6 +6,7 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import SectionLabel from '@/components/ui/SectionLabel'
 import HeroCanvas from '@/components/HeroCanvas'
+import { useTextLines } from '@/components/animations/gsap-hooks'
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger)
@@ -45,6 +46,24 @@ export default function HeroSection({
   subheading = SUBHEADING,
 }: HeroSectionProps) {
   const sectionRef = useRef<HTMLElement>(null)
+  // Ref on the subheading <p> so pretext can measure its rendered width
+  const subRef = useRef<HTMLParagraphElement>(null)
+  // pretext splits the subheading into actual rendered lines (no DOM reflow)
+  // font: `font-body text-lg` = 18px Outfit; line-height: `leading-relaxed` = 1.625 × 18 ≈ 29px
+  const subLines = useTextLines(subRef, subheading, '18px Outfit', 29)
+  // Track whether the per-line animation has already fired
+  const subAnimated = useRef(false)
+
+  // Animate each subheading line with stagger once pretext has computed them
+  useEffect(() => {
+    if (subLines.length === 0 || subAnimated.current) return
+    subAnimated.current = true
+    gsap.fromTo(
+      '.hs-sub-line',
+      { opacity: 0, y: 14 },
+      { opacity: 1, y: 0, duration: 0.6, stagger: 0.09, ease: 'power3.out', delay: 1.52 }
+    )
+  }, [subLines])
 
   useEffect(() => {
     if (!sectionRef.current) return
@@ -72,8 +91,7 @@ export default function HeroSection({
         1.35
       )
 
-      // ── 4. Subheading ────────────────────────────────────────────────────
-      tl.fromTo('.hs-sub', { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.7 }, 1.52)
+      // ── 4. Subheading — animated per-line via useTextLines/pretext (see above)
 
       // ── 5. CTAs ──────────────────────────────────────────────────────────
       tl.fromTo(
@@ -179,9 +197,14 @@ export default function HeroSection({
             <span className="hs-underline block h-[3px] w-28 bg-gradient-to-r from-gold to-gold-light rounded-[1px] scale-x-0 origin-left" />
           </div>
 
-          {/* Subheading */}
-          <p className="hs-sub font-body text-lg text-white/75 leading-relaxed mb-10 max-w-[490px] opacity-0">
-            {subheading}
+          {/* Subheading — pretext computes real line breaks; each line animates in with stagger */}
+          <p ref={subRef} className="font-body text-lg text-white/75 leading-relaxed mb-10 max-w-[490px]">
+            {subLines.length === 0
+              ? <span className="hs-sub-line block opacity-0">{subheading}</span>
+              : subLines.map((line, i) => (
+                  <span key={i} className="hs-sub-line block opacity-0">{line}</span>
+                ))
+            }
           </p>
 
           {/* CTAs */}

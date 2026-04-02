@@ -33,6 +33,8 @@ export default defineConfig({
             S.documentTypeListItem('productCategory').title('Product Categories'),
             S.divider(),
             S.documentTypeListItem('career').title('Careers'),
+            S.divider(),
+            S.documentTypeListItem('post').title('News & Announcements'),
           ]),
     }),
     visionTool(),

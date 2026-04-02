@@ -2,7 +2,6 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { client } from '@/sanity/lib/client'
 import { serviceBySlugQuery, allServicesQuery } from '@/sanity/lib/queries'
-import PageHeader from '@/components/ui/PageHeader'
 import AnimatedSection from '@/components/animations/AnimatedSection'
 import SectionLabel from '@/components/ui/SectionLabel'
 import CtaBanner from '@/components/sections/CtaBanner'
@@ -146,7 +145,36 @@ export default async function ServiceDetailPage({
 
   return (
     <>
-      <PageHeader label={label} title={title} subtitle={excerpt} />
+      {/* Service detail header: navy with a thick gold left border accent */}
+      <section className="relative bg-navy overflow-hidden">
+        <div className="absolute inset-0 bg-[url('/images/noise.svg')] opacity-[0.03] pointer-events-none" />
+        <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-gold to-transparent" />
+        {/* Gold left-edge stripe */}
+        <div className="absolute top-0 left-0 bottom-0 w-1 bg-gold" />
+        <div className="relative max-w-container mx-auto px-6 lg:px-10 py-12 md:py-20 lg:py-28 pl-8 sm:pl-10 lg:pl-14">
+          <div className="flex items-start gap-8">
+            <div className="hidden lg:block shrink-0 text-right pt-1">
+              <span className="font-heading text-7xl text-gold/15 leading-none select-none">
+                {label?.toUpperCase()}
+              </span>
+            </div>
+            <div>
+              <span className="inline-flex items-center gap-2.5 font-body text-xs font-semibold tracking-[0.2em] uppercase text-gold-light mb-5">
+                <span className="block h-px w-8 bg-gold-light" />
+                {label}
+              </span>
+              <h1 className="font-heading text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-white leading-tight max-w-2xl">
+                {title}
+              </h1>
+              {excerpt && (
+                <p className="mt-5 font-body text-lg text-white/60 max-w-xl leading-relaxed">
+                  {excerpt}
+                </p>
+              )}
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* Intro */}
       <section className="bg-white py-section">

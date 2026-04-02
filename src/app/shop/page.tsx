@@ -2,7 +2,6 @@ import type { Metadata } from 'next'
 import { client } from '@/sanity/lib/client'
 import { allProductsQuery, allProductCategoriesQuery, siteSettingsQuery } from '@/sanity/lib/queries'
 import type { Product, ProductCategory } from '@/types'
-import PageHeader from '@/components/ui/PageHeader'
 import ProductGrid from '@/components/shop/ProductGrid'
 import CtaBanner from '@/components/sections/CtaBanner'
 
@@ -82,11 +81,29 @@ export default async function ShopPage() {
 
   return (
     <>
-      <PageHeader
-        label="Product Catalog"
-        title={shopTitle}
-        subtitle={shopSubtitle}
-      />
+      {/* Shop-specific header: cream bg with oversized "CATALOG" watermark */}
+      <section className="relative bg-cream overflow-hidden">
+        <div className="absolute inset-0 bg-[url('/images/noise.svg')] opacity-[0.02] pointer-events-none" />
+        {/* Oversized watermark */}
+        <div className="absolute inset-0 flex items-center justify-end pr-6 lg:pr-10 pointer-events-none select-none overflow-hidden">
+          <span className="font-heading text-[5rem] sm:text-[8rem] lg:text-[14rem] leading-none text-navy/5 tracking-tight">
+            CATALOG
+          </span>
+        </div>
+        <div className={`absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-gold/70 to-transparent`} />
+        <div className="relative max-w-container mx-auto px-6 lg:px-10 py-12 md:py-20 lg:py-28">
+          <span className="inline-flex items-center gap-2.5 font-body text-xs font-semibold tracking-[0.2em] uppercase text-gold mb-5">
+            <span className="block h-px w-8 bg-gold" />
+            Product Catalog
+          </span>
+          <h1 className="font-heading text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-navy leading-tight max-w-2xl">
+            {shopTitle}
+          </h1>
+          <p className="mt-5 font-body text-lg text-slate/65 max-w-xl leading-relaxed">
+            {shopSubtitle}
+          </p>
+        </div>
+      </section>
 
       <section className="bg-cream py-section">
         <div className="max-w-container mx-auto px-6 lg:px-10">

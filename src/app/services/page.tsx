@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import { client } from '@/sanity/lib/client'
 import { allServicesQuery } from '@/sanity/lib/queries'
-import PageHeader from '@/components/ui/PageHeader'
 import ServicesGrid from '@/components/sections/ServicesGrid'
 import CtaBanner from '@/components/sections/CtaBanner'
 
@@ -54,11 +53,45 @@ export default async function ServicesPage() {
 
   return (
     <>
-      <PageHeader
-        label="What We Do"
-        title="Services Built for Tanzania's Industrial Needs"
-        subtitle="Three integrated service lines — each designed to deliver reliability, quality, and value across Dar es Salaam and beyond."
-      />
+      {/* Services-specific header: split layout — title left, numbered service lines right */}
+      <section className="relative bg-navy overflow-hidden">
+        <div className="absolute inset-0 bg-[url('/images/noise.svg')] opacity-[0.03] pointer-events-none" />
+        <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-gold to-transparent" />
+        <div className="relative max-w-container mx-auto px-6 lg:px-10 py-12 md:py-20 lg:py-28">
+          <div className="grid lg:grid-cols-2 gap-10 lg:gap-20 items-end">
+            {/* Left: title */}
+            <div>
+              <span className="inline-flex items-center gap-2.5 font-body text-xs font-semibold tracking-[0.2em] uppercase text-gold-light mb-5">
+                <span className="block h-px w-8 bg-gold-light" />
+                What We Do
+              </span>
+              <h1 className="font-heading text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-white leading-tight">
+                Services Built for Tanzania&apos;s Industrial Needs
+              </h1>
+            </div>
+            {/* Right: numbered service lines */}
+            <div className="space-y-0 divide-y divide-white/10">
+              {callouts.map((item) => (
+                <a
+                  key={item.number}
+                  href={item.href}
+                  className="group flex items-center gap-5 py-5 hover:pl-2 transition-all duration-300"
+                >
+                  <span className="font-heading text-2xl text-gold/40 group-hover:text-gold transition-colors duration-300 shrink-0 w-10">
+                    {item.number}
+                  </span>
+                  <span className="font-heading text-lg text-white/70 group-hover:text-white transition-colors duration-300">
+                    {item.title}
+                  </span>
+                  <svg className="w-4 h-4 ml-auto text-white/20 group-hover:text-gold transition-colors duration-300 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
 
       <ServicesGrid
         label="Our Service Lines"

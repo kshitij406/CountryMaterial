@@ -5,6 +5,7 @@ import { service } from './service'
 import { product } from './product'
 import { productCategory } from './productCategory'
 import { career } from './career'
+import { post } from './post'
 
 export const schemaTypes = [
   siteSettings,
@@ -14,4 +15,5 @@ export const schemaTypes = [
   product,
   productCategory,
   career,
+  post,
 ]

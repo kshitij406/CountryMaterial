@@ -9,7 +9,7 @@ import ProductsGrid from '@/components/sections/ProductsGrid'
 import PartnersSection from '@/components/sections/PartnersSection'
 import CtaBanner from '@/components/sections/CtaBanner'
 
-export const revalidate = 60
+export const revalidate = 30
 
 export const metadata: Metadata = {
   title: 'Country Materials Ltd — Hardware, Waste Management & Logistics',
@@ -46,10 +46,7 @@ export default async function HomePage() {
       height: 24,
     }))
 
-  // heroVideo will come from siteSettings once the field is added to the schema
-  const heroVideo = (homepage as any)?.heroVideo
-    ? (homepage as any).heroVideo
-    : undefined
+  const heroVideo: string | undefined = homepage?.heroVideo?.asset?.url ?? undefined
 
   return (
     <>

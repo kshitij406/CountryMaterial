@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 320">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F5F2ED"/>
+      <stop offset="100%" stop-color="#EDE8E0"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#C8962E" stop-opacity="0"/>
+      <stop offset="50%" stop-color="#C8962E" stop-opacity="0.7"/>
+      <stop offset="100%" stop-color="#C8962E" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="480" height="320" fill="url(#bg)"/>
+
+  <!-- Subtle grid -->
+  <line x1="0" y1="80" x2="480" y2="80" stroke="#0B1D3A" stroke-width="0.4" opacity="0.08"/>
+  <line x1="0" y1="160" x2="480" y2="160" stroke="#0B1D3A" stroke-width="0.4" opacity="0.08"/>
+  <line x1="0" y1="240" x2="480" y2="240" stroke="#0B1D3A" stroke-width="0.4" opacity="0.08"/>
+  <line x1="120" y1="0" x2="120" y2="320" stroke="#0B1D3A" stroke-width="0.4" opacity="0.08"/>
+  <line x1="240" y1="0" x2="240" y2="320" stroke="#0B1D3A" stroke-width="0.4" opacity="0.08"/>
+  <line x1="360" y1="0" x2="360" y2="320" stroke="#0B1D3A" stroke-width="0.4" opacity="0.08"/>
+
+  <!-- Crate / box icon -->
+  <!-- Main box body -->
+  <rect x="168" y="90" width="144" height="120" fill="none" stroke="#0B1D3A" stroke-width="2" opacity="0.18"/>
+  <!-- Box lid top face -->
+  <polygon points="168,90 240,60 312,90 240,120" fill="none" stroke="#0B1D3A" stroke-width="2" opacity="0.18"/>
+  <!-- Box right side -->
+  <polygon points="312,90 312,210 240,240 240,120" fill="none" stroke="#0B1D3A" stroke-width="2" opacity="0.18"/>
+
+  <!-- Gold accent on box lid -->
+  <polygon points="168,90 240,60 312,90 240,120" fill="#C8962E" opacity="0.07"/>
+  <!-- Gold accent on box front -->
+  <rect x="168" y="90" width="144" height="120" fill="#C8962E" opacity="0.04"/>
+
+  <!-- Horizontal slat lines on box front (crate effect) -->
+  <line x1="168" y1="120" x2="312" y2="120" stroke="#0B1D3A" stroke-width="1" opacity="0.1"/>
+  <line x1="168" y1="150" x2="312" y2="150" stroke="#0B1D3A" stroke-width="1" opacity="0.1"/>
+  <line x1="168" y1="180" x2="312" y2="180" stroke="#0B1D3A" stroke-width="1" opacity="0.1"/>
+
+  <!-- CM label on box -->
+  <text x="240" y="162" font-family="Georgia, serif" font-size="18" fill="#0B1D3A" text-anchor="middle" opacity="0.18" letter-spacing="3">CM</text>
+
+  <!-- Gold bottom rule -->
+  <rect x="0" y="306" width="480" height="1" fill="url(#gold)"/>
+
+  <!-- Label -->
+  <text x="240" y="293" font-family="Arial, sans-serif" font-size="8" fill="#0B1D3A" text-anchor="middle" letter-spacing="4" opacity="0.3">NO IMAGE UPLOADED</text>
+</svg>

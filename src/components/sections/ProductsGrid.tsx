@@ -74,7 +74,7 @@ export default function ProductsGrid({ products = defaultProducts, featured = tr
         <div ref={headingRef} className="opacity-0 flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-12">
           <div>
             <SectionLabel className="mb-4">Our Products</SectionLabel>
-            <h2 className="font-heading text-4xl lg:text-5xl text-navy leading-tight">
+            <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl text-navy leading-tight">
               Quality Materials, Competitive Prices
             </h2>
           </div>
@@ -97,20 +97,12 @@ export default function ProductsGrid({ products = defaultProducts, featured = tr
             >
               {/* Image area */}
               <div className="relative h-48 bg-navy/5 overflow-hidden">
-                {product.images?.[0] ? (
-                  <Image
-                    src={(product.images[0] as { asset?: { url?: string } }).asset?.url ?? ''}
+                <Image
+                    src={product.images?.[0]?.asset?.url ?? '/images/product-placeholder.svg'}
                     alt={product.name}
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-500"
                   />
-                ) : (
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="w-16 h-16 border-2 border-sand flex items-center justify-center">
-                      <span className="font-heading text-navy/20 text-2xl">{product.name[0]}</span>
-                    </div>
-                  </div>
-                )}
                 {product.category && (
                   <span className="absolute top-3 left-3 font-body text-xs bg-navy text-gold px-3 py-1 tracking-wider uppercase">
                     {product.category.name}

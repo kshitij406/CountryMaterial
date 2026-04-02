@@ -14,6 +14,13 @@ export const homepage = defineType({
       type: 'array',
       of: [{ type: 'image', options: { hotspot: true } }],
     }),
+    defineField({
+      name: 'heroVideo',
+      title: 'Hero Background Video',
+      type: 'file',
+      options: { accept: 'video/mp4,video/webm,video/ogg' },
+      description: 'Upload an MP4/WebM video for the hero background. When set, it plays instead of the animated canvas fallback.',
+    }),
     defineField({ name: 'introHeading', title: 'Intro Section Heading', type: 'string' }),
     defineField({ name: 'introBody', title: 'Intro Body Text', type: 'text', rows: 4 }),
     defineField({ name: 'vision', title: 'Vision Statement', type: 'text', rows: 3 }),

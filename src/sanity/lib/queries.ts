@@ -22,6 +22,7 @@ export const homepageQuery = groq`
     heroHeading,
     heroSubheading,
     heroImages,
+    heroVideo { asset-> { url } },
     introHeading,
     introBody,
     vision,
@@ -104,6 +105,33 @@ export const productCategoriesQuery = groq`
 
 // Alias used by the shop page
 export const allProductCategoriesQuery = productCategoriesQuery
+
+export const allPostsQuery = groq`
+  *[_type == "post"] | order(publishedAt desc) {
+    _id,
+    title,
+    slug,
+    category,
+    publishedAt,
+    author,
+    excerpt,
+    coverImage
+  }
+`
+
+export const postBySlugQuery = groq`
+  *[_type == "post" && slug.current == $slug][0] {
+    _id,
+    title,
+    slug,
+    category,
+    publishedAt,
+    author,
+    excerpt,
+    coverImage,
+    body
+  }
+`
 
 export const openCareersQuery = groq`
   *[_type == "career" && expired != true] | order(_createdAt desc) {

@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500">
+  <defs>
+    <radialGradient id="glow" cx="40%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#1A3870" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#050E1F" stop-opacity="1"/>
+    </radialGradient>
+    <linearGradient id="goldLine" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#C8962E" stop-opacity="0"/>
+      <stop offset="40%" stop-color="#C8962E" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#C8962E" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Base background -->
+  <rect width="400" height="500" fill="#0B1D3A"/>
+  <rect width="400" height="500" fill="url(#glow)"/>
+
+  <!-- Structural grid lines -->
+  <line x1="0" y1="125" x2="400" y2="125" stroke="#C8962E" stroke-width="0.5" opacity="0.18"/>
+  <line x1="0" y1="250" x2="400" y2="250" stroke="#C8962E" stroke-width="0.5" opacity="0.18"/>
+  <line x1="0" y1="375" x2="400" y2="375" stroke="#C8962E" stroke-width="0.5" opacity="0.18"/>
+  <line x1="100" y1="0" x2="100" y2="500" stroke="#C8962E" stroke-width="0.5" opacity="0.12"/>
+  <line x1="200" y1="0" x2="200" y2="500" stroke="#C8962E" stroke-width="0.5" opacity="0.12"/>
+  <line x1="300" y1="0" x2="300" y2="500" stroke="#C8962E" stroke-width="0.5" opacity="0.12"/>
+
+  <!-- Diagonal accent lines -->
+  <line x1="0" y1="80" x2="160" y2="0" stroke="#C8962E" stroke-width="1" opacity="0.25"/>
+  <line x1="0" y1="180" x2="260" y2="0" stroke="#C8962E" stroke-width="0.5" opacity="0.12"/>
+  <line x1="400" y1="420" x2="240" y2="500" stroke="#C8962E" stroke-width="1" opacity="0.25"/>
+
+  <!-- Central frame -->
+  <rect x="130" y="175" width="140" height="140" fill="none" stroke="#C8962E" stroke-width="1.5" opacity="0.5"/>
+  <rect x="140" y="185" width="120" height="120" fill="none" stroke="#C8962E" stroke-width="0.5" opacity="0.25"/>
+
+  <!-- Corner accents on inner frame -->
+  <line x1="130" y1="175" x2="150" y2="175" stroke="#C8962E" stroke-width="2.5" opacity="0.9"/>
+  <line x1="130" y1="175" x2="130" y2="195" stroke="#C8962E" stroke-width="2.5" opacity="0.9"/>
+  <line x1="270" y1="175" x2="250" y2="175" stroke="#C8962E" stroke-width="2.5" opacity="0.9"/>
+  <line x1="270" y1="175" x2="270" y2="195" stroke="#C8962E" stroke-width="2.5" opacity="0.9"/>
+  <line x1="130" y1="315" x2="150" y2="315" stroke="#C8962E" stroke-width="2.5" opacity="0.9"/>
+  <line x1="130" y1="315" x2="130" y2="295" stroke="#C8962E" stroke-width="2.5" opacity="0.9"/>
+  <line x1="270" y1="315" x2="250" y2="315" stroke="#C8962E" stroke-width="2.5" opacity="0.9"/>
+  <line x1="270" y1="315" x2="270" y2="295" stroke="#C8962E" stroke-width="2.5" opacity="0.9"/>
+
+  <!-- CM monogram -->
+  <text x="200" y="258" font-family="Georgia, serif" font-size="44" font-weight="400" fill="#C8962E" text-anchor="middle" opacity="0.95" letter-spacing="4">CM</text>
+
+  <!-- Gold rule -->
+  <rect x="0" y="456" width="400" height="1" fill="url(#goldLine)"/>
+
+  <!-- Bottom label -->
+  <text x="200" y="480" font-family="Arial, sans-serif" font-size="9" fill="#C8962E" text-anchor="middle" letter-spacing="5" opacity="0.55">PLACEHOLDER IMAGE</text>
+</svg>
