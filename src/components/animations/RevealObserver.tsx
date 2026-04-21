@@ -1,8 +1,11 @@
 'use client'
 
 import { useEffect } from 'react'
+import { usePathname } from 'next/navigation'
 
 export default function RevealObserver() {
+  const pathname = usePathname()
+
   useEffect(() => {
     const io = new IntersectionObserver(
       (entries) => {
@@ -20,15 +23,22 @@ export default function RevealObserver() {
       document.querySelectorAll('.reveal, .stagger').forEach((el) => io.observe(el))
     }
 
-    observe()
+    const scheduleObserve = () => {
+      requestAnimationFrame(() => {
+        observe()
+      })
+    }
 
-    // Re-observe after any dynamic content settles
-    const timer = setTimeout(observe, 500)
+    scheduleObserve()
+
+    const timer = setTimeout(scheduleObserve, 250)
+    const lateTimer = setTimeout(scheduleObserve, 700)
     return () => {
       clearTimeout(timer)
+      clearTimeout(lateTimer)
       io.disconnect()
     }
-  }, [])
+  }, [pathname])
 
   return null
 }

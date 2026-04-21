@@ -44,18 +44,6 @@ export default function Navbar({ logoUrl, companyName: _companyName }: NavbarPro
     return pathname.startsWith(href)
   }
 
-  function handleClientsClick() {
-    setMenuOpen(false)
-
-    if (pathname !== '/') {
-      window.location.href = '/#clients'
-      return
-    }
-
-    const clientsSection = document.getElementById('clients')
-    clientsSection?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-  }
-
   const linkClass = (href: string) => cn(
     'relative font-condensed text-[13px] tracking-[0.22em] uppercase py-1',
     'after:absolute after:bottom-0 after:left-0 after:h-px after:bg-gold',
@@ -82,20 +70,20 @@ export default function Navbar({ logoUrl, companyName: _companyName }: NavbarPro
             <Image
               src={logoUrl}
               alt="Country Materials Ltd"
-              width={120}
-              height={46}
-              className="h-9 w-auto object-contain"
+              width={220}
+              height={64}
+              className="h-10 w-auto object-contain"
               priority
             />
           ) : (
-            <>
-              <div className="relative w-[34px] h-[34px] border border-gold/80 grid place-items-center flex-shrink-0">
-                <div className="absolute inset-[6px] border border-gold/80 rotate-45" />
-              </div>
-              <span className="font-display text-[20px] tracking-[0.18em] text-cream hidden sm:block">
-                COUNTRY<span className="text-gold">·</span>MATERIALS
-              </span>
-            </>
+            <Image
+              src="/images/country-materials-logo.svg"
+              alt="Country Materials Ltd"
+              width={220}
+              height={64}
+              className="h-10 w-auto object-contain"
+              priority
+            />
           )}
         </Link>
 
@@ -106,16 +94,6 @@ export default function Navbar({ logoUrl, companyName: _companyName }: NavbarPro
               {link.label}
             </Link>
           ))}
-
-          {/* Clients scroll link */}
-          <button onClick={handleClientsClick} className={cn(
-            'relative font-condensed text-[13px] tracking-[0.22em] uppercase py-1',
-            'after:absolute after:bottom-0 after:left-0 after:h-px after:bg-gold',
-            'after:transition-all after:duration-300',
-            'text-cream/80 hover:text-cream after:w-0 hover:after:w-full'
-          )}>
-            Clients
-          </button>
 
           <Link
             href="/contact"
@@ -162,12 +140,6 @@ export default function Navbar({ logoUrl, companyName: _companyName }: NavbarPro
               {link.label}
             </Link>
           ))}
-          <button
-            onClick={handleClientsClick}
-            className="font-display text-[clamp(32px,8vw,48px)] py-3 border-b tracking-[0.04em] uppercase border-gold/15 text-cream/80 hover:text-cream text-left"
-          >
-            Clients
-          </button>
           <Link
             href="/contact"
             className="mt-8 w-full text-center py-4 bg-gold text-navy font-condensed font-semibold text-[15px] tracking-[0.22em] uppercase"

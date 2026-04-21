@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 
 const divisions = [
   { label: 'Steel & Rebar',      href: '/services/steel' },
@@ -60,14 +61,14 @@ export default function Footer({ contact }: { contact?: FooterContact }) {
         >
           {/* Brand */}
           <div>
-            {/* Diamond logo */}
-            <div className="flex items-center gap-3.5 mb-5">
-              <div className="relative w-[34px] h-[34px] border border-gold/80 grid place-items-center flex-shrink-0">
-                <div className="absolute inset-[6px] border border-gold/80 rotate-45" />
-              </div>
-              <span className="font-display text-[20px] tracking-[0.18em] text-cream">
-                COUNTRY<span className="text-gold">·</span>MATERIALS
-              </span>
+            <div className="mb-5">
+              <Image
+                src="/images/country-materials-logo.svg"
+                alt="Country Materials Ltd"
+                width={220}
+                height={64}
+                className="h-10 w-auto object-contain"
+              />
             </div>
             <p className="font-barlow text-[14px] text-cream/55 leading-[1.6] max-w-[320px] mt-5">
               Steel, hardware, waste and logistics for the infrastructure Africa is building. Founded Dar es Salaam, 1997.

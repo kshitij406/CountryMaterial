@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 200" role="img" aria-labelledby="title desc">
+  <title id="title">Country Materials Ltd Logo</title>
+  <desc id="desc">Diamond mark with Country Materials wordmark</desc>
+  <rect width="720" height="200" fill="none"/>
+  <g transform="translate(16 24)">
+    <rect x="0" y="0" width="152" height="152" fill="none" stroke="#C8962E" stroke-width="8"/>
+    <rect x="38" y="38" width="76" height="76" fill="none" stroke="#C8962E" stroke-width="8" transform="rotate(45 76 76)"/>
+    <text x="76" y="90" fill="#FAF7F2" font-size="38" font-family="Barlow Condensed, Arial, sans-serif" font-weight="700" text-anchor="middle" letter-spacing="3">CM</text>
+  </g>
+  <g transform="translate(198 78)">
+    <text x="0" y="0" fill="#FAF7F2" font-size="54" font-family="Bebas Neue, Arial, sans-serif" letter-spacing="8">COUNTRY</text>
+    <circle cx="302" cy="-18" r="7" fill="#C8962E"/>
+    <text x="330" y="0" fill="#FAF7F2" font-size="54" font-family="Bebas Neue, Arial, sans-serif" letter-spacing="8">MATERIALS</text>
+    <text x="2" y="44" fill="#C8962E" font-size="16" font-family="Barlow Condensed, Arial, sans-serif" letter-spacing="4">HARDWARE • WASTE MANAGEMENT • LOGISTICS</text>
+  </g>
+</svg>

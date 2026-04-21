@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Country Materials icon">
+  <rect width="128" height="128" fill="#0B1D3A"/>
+  <rect x="16" y="16" width="96" height="96" fill="none" stroke="#C8962E" stroke-width="7"/>
+  <rect x="40" y="40" width="48" height="48" fill="none" stroke="#C8962E" stroke-width="7" transform="rotate(45 64 64)"/>
+  <text x="64" y="74" fill="#FAF7F2" font-size="32" font-family="Barlow Condensed, Arial, sans-serif" font-weight="700" text-anchor="middle" letter-spacing="2">CM</text>
+</svg>

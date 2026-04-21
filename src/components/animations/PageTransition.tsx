@@ -23,6 +23,10 @@ export default function PageTransition({ children }: { children: ReactNode }) {
   const activeTween = useRef<gsap.core.Tween | null>(null)
   const isFirstMount = useRef(true)
 
+  useEffect(() => {
+    setRenderedChildren(children)
+  }, [children])
+
   // Initial page load — animate in
   useEffect(() => {
     if (!ref.current) return
