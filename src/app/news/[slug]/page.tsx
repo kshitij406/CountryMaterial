@@ -4,8 +4,6 @@ import Link from 'next/link'
 import { PortableText } from 'next-sanity'
 import { client, urlFor } from '@/sanity/lib/client'
 import { postBySlugQuery, allPostsQuery } from '@/sanity/lib/queries'
-import AnimatedSection from '@/components/animations/AnimatedSection'
-import SectionLabel from '@/components/ui/SectionLabel'
 
 export const revalidate = 30
 
@@ -22,44 +20,34 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   }
 }
 
-const CATEGORY_COLORS: Record<string, string> = {
-  News: 'bg-navy text-white',
-  Announcement: 'bg-gold text-navy',
-  Update: 'bg-cream text-navy border border-sand',
-}
-
 function formatDate(dateStr: string | null | undefined) {
   if (!dateStr) return null
-  return new Date(dateStr).toLocaleDateString('en-GB', {
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric',
-  })
+  return new Date(dateStr).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })
 }
 
 const ptComponents = {
   block: {
     normal: ({ children }: any) => (
-      <p className="font-body text-slate leading-relaxed mb-5">{children}</p>
+      <p className="font-barlow text-[16px] text-cream/65 leading-[1.75] mb-5">{children}</p>
     ),
     h2: ({ children }: any) => (
-      <h2 className="font-heading text-3xl text-navy mt-10 mb-4 leading-snug">{children}</h2>
+      <h2 className="font-display text-[clamp(28px,3vw,40px)] leading-[0.95] tracking-[0.04em] uppercase text-cream mt-12 mb-5">{children}</h2>
     ),
     h3: ({ children }: any) => (
-      <h3 className="font-heading text-2xl text-navy mt-8 mb-3 leading-snug">{children}</h3>
+      <h3 className="font-display text-[clamp(22px,2.5vw,32px)] leading-[1] tracking-[0.04em] uppercase text-cream mt-10 mb-4">{children}</h3>
     ),
     blockquote: ({ children }: any) => (
-      <blockquote className="border-l-4 border-gold pl-6 my-6 font-body text-slate/75 italic leading-relaxed">
+      <blockquote className="my-8 py-6 px-8 font-barlow text-[16px] text-cream/60 italic leading-[1.75]" style={{ borderLeft: '3px solid #C8962E', background: 'rgba(200,150,46,.06)' }}>
         {children}
       </blockquote>
     ),
   },
   list: {
     bullet: ({ children }: any) => (
-      <ul className="font-body text-slate leading-relaxed mb-5 ml-5 list-disc space-y-1">{children}</ul>
+      <ul className="font-barlow text-[16px] text-cream/65 leading-[1.75] mb-5 ml-5 list-disc space-y-2">{children}</ul>
     ),
     number: ({ children }: any) => (
-      <ol className="font-body text-slate leading-relaxed mb-5 ml-5 list-decimal space-y-1">{children}</ol>
+      <ol className="font-barlow text-[16px] text-cream/65 leading-[1.75] mb-5 ml-5 list-decimal space-y-2">{children}</ol>
     ),
   },
   listItem: {
@@ -67,10 +55,10 @@ const ptComponents = {
     number: ({ children }: any) => <li>{children}</li>,
   },
   marks: {
-    strong: ({ children }: any) => <strong className="font-semibold text-navy">{children}</strong>,
+    strong: ({ children }: any) => <strong className="font-semibold text-cream">{children}</strong>,
     em: ({ children }: any) => <em>{children}</em>,
     link: ({ value, children }: any) => (
-      <a href={value?.href} target="_blank" rel="noopener noreferrer" className="text-gold underline hover:text-navy transition-colors">
+      <a href={value?.href} target="_blank" rel="noopener noreferrer" className="text-gold underline hover:text-gold-light transition-colors">
         {children}
       </a>
     ),
@@ -79,14 +67,10 @@ const ptComponents = {
     image: ({ value }: any) => {
       if (!value?.asset) return null
       return (
-        <figure className="my-8">
-          <img
-            src={urlFor(value).width(900).url()}
-            alt={value.alt ?? ''}
-            className="w-full object-cover"
-          />
+        <figure className="my-10">
+          <img src={urlFor(value).width(900).url()} alt={value.alt ?? ''} className="w-full object-cover" style={{ border: '1px solid rgba(200,150,46,.2)' }} />
           {value.caption && (
-            <figcaption className="mt-2 text-center font-body text-xs text-slate/50 tracking-wide">
+            <figcaption className="mt-3 font-condensed text-[11px] tracking-[0.15em] uppercase text-cream/35 text-center">
               {value.caption}
             </figcaption>
           )}
@@ -101,77 +85,75 @@ export default async function PostPage({ params }: { params: { slug: string } })
   if (!post) notFound()
 
   const imageUrl = post.coverImage
-    ? urlFor(post.coverImage).width(1200).height(600).url()
+    ? urlFor(post.coverImage).width(1440).height(640).url()
     : null
-  const badgeClass = CATEGORY_COLORS[post.category] ?? CATEGORY_COLORS.News
 
   return (
-    <main className="bg-white">
+    <main style={{ background: '#05101f', minHeight: '100vh' }}>
       {/* Cover image */}
       {imageUrl && (
-        <div className="relative h-[40vh] min-h-[280px] max-h-[480px] overflow-hidden bg-navy">
-          <img src={imageUrl} alt={post.title} className="w-full h-full object-cover opacity-80" />
-          <div className="absolute inset-0 bg-gradient-to-t from-navy/70 to-transparent" />
+        <div className="relative h-[45vh] min-h-[300px] max-h-[560px] overflow-hidden" style={{ background: '#0B1D3A' }}>
+          <img src={imageUrl} alt={post.title} className="w-full h-full object-cover opacity-70" />
+          <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, #05101f 0%, transparent 60%)' }} />
         </div>
       )}
 
       {/* Article */}
-      <div className={`max-w-3xl mx-auto px-6 lg:px-10 ${imageUrl ? '-mt-24 relative z-10' : 'pt-32'} pb-24`}>
-        <AnimatedSection>
-          {/* Back link */}
-          <Link
-            href="/news"
-            className="inline-flex items-center gap-2 font-body text-xs tracking-widest uppercase text-gold hover:text-navy transition-colors duration-200 mb-8"
-          >
-            <svg className="w-3.5 h-3.5 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-            </svg>
-            All News
-          </Link>
+      <div className={`max-w-3xl mx-auto px-8 lg:px-10 ${imageUrl ? '-mt-20 relative z-10' : 'pt-[140px]'} pb-24`}>
+        {/* Back link */}
+        <Link
+          href="/news"
+          className="inline-flex items-center gap-2 font-condensed text-[11px] tracking-[0.18em] uppercase text-gold/60 hover:text-gold transition-colors duration-200 mb-10"
+        >
+          <svg className="w-3.5 h-3.5 rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+            <path d="M5 12h14M13 5l7 7-7 7" />
+          </svg>
+          All News
+        </Link>
 
-          {/* Meta */}
-          <div className="flex flex-wrap items-center gap-3 mb-6">
-            {post.category && (
-              <span className={`font-body text-xs px-3 py-1 tracking-wider uppercase font-semibold ${badgeClass}`}>
-                {post.category}
-              </span>
-            )}
-            {post.publishedAt && (
-              <span className="font-body text-xs text-slate/50 uppercase tracking-widest">
-                {formatDate(post.publishedAt)}
-              </span>
-            )}
-            {post.author && (
-              <span className="font-body text-xs text-slate/50">by {post.author}</span>
-            )}
-          </div>
-
-          <h1 className="font-heading text-4xl lg:text-5xl text-navy leading-tight mb-8">
-            {post.title}
-          </h1>
-
-          {post.excerpt && (
-            <p className="font-body text-lg text-slate/70 leading-relaxed mb-10 pb-10 border-b border-sand">
-              {post.excerpt}
-            </p>
+        {/* Meta */}
+        <div className="flex flex-wrap items-center gap-3 mb-6">
+          {post.category && (
+            <span className="font-condensed text-[10px] tracking-[0.15em] uppercase px-3 py-1 text-navy bg-gold">
+              {post.category}
+            </span>
           )}
-        </AnimatedSection>
+          {post.publishedAt && (
+            <span className="font-condensed text-[11px] tracking-[0.15em] uppercase text-cream/35">
+              {formatDate(post.publishedAt)}
+            </span>
+          )}
+          {post.author && (
+            <span className="font-barlow text-[13px] text-cream/35">by {post.author}</span>
+          )}
+        </div>
+
+        <h1 className="font-display text-[clamp(36px,5vw,72px)] leading-[0.92] tracking-[0.03em] uppercase text-cream mb-8">
+          {post.title}
+        </h1>
+
+        {post.excerpt && (
+          <p className="font-barlow text-[18px] text-cream/55 leading-[1.65] mb-10 pb-10" style={{ borderBottom: '1px solid rgba(200,150,46,.2)' }}>
+            {post.excerpt}
+          </p>
+        )}
 
         {/* Body */}
         {post.body && (
-          <AnimatedSection delay={0.1}>
-            <PortableText value={post.body} components={ptComponents} />
-          </AnimatedSection>
+          <PortableText value={post.body} components={ptComponents} />
         )}
 
         {/* Footer */}
-        <div className="mt-16 pt-8 border-t border-sand">
-          <SectionLabel className="mb-4">Country Materials Ltd</SectionLabel>
+        <div className="mt-16 pt-8 flex items-center justify-between flex-wrap gap-4" style={{ borderTop: '1px solid rgba(200,150,46,.2)' }}>
+          <span className="font-condensed text-[11px] tracking-[0.18em] uppercase text-gold/50">Country Materials Ltd</span>
           <Link
             href="/news"
-            className="inline-flex items-center gap-2 font-body text-sm font-semibold tracking-wide text-gold hover:text-navy transition-colors duration-200"
+            className="inline-flex items-center gap-2 font-condensed text-[12px] tracking-[0.18em] uppercase text-gold hover:gap-4 transition-all duration-300"
           >
-            ← Back to all news
+            <svg className="w-3.5 h-3.5 rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+              <path d="M5 12h14M13 5l7 7-7 7" />
+            </svg>
+            Back to all news
           </Link>
         </div>
       </div>

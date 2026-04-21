@@ -3,6 +3,7 @@ import './globals.css'
 import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
 import PageTransition from '@/components/animations/PageTransition'
+import RevealObserver from '@/components/animations/RevealObserver'
 import { client, urlFor } from '@/sanity/lib/client'
 import { siteSettingsQuery } from '@/sanity/lib/queries'
 
@@ -41,6 +42,7 @@ export default async function RootLayout({
     country: settings?.country,
     phone: settings?.phone,
     email: settings?.email,
+    socialLinks: settings?.socialLinks,
   }
 
   return (
@@ -50,6 +52,7 @@ export default async function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
       </head>
       <body>
+        <RevealObserver />
         <Navbar logoUrl={logoUrl} companyName={settings?.companyName} />
         <PageTransition>
           <main>{children}</main>

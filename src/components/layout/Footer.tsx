@@ -1,19 +1,39 @@
 import Link from 'next/link'
 
-const quickLinks = [
-  { label: 'Home', href: '/' },
-  { label: 'About Us', href: '/about' },
-  { label: 'Our Services', href: '/services' },
-  { label: 'Online Shop', href: '/shop' },
-  { label: 'Careers', href: '/careers' },
-  { label: 'Contact Us', href: '/contact' },
+const divisions = [
+  { label: 'Steel & Rebar',      href: '/services/steel' },
+  { label: 'Hardware',           href: '/services/hardware' },
+  { label: 'Waste Management',   href: '/services/waste-management' },
+  { label: 'Logistics',          href: '/services/logistics' },
 ]
 
-const services = [
-  { label: 'Transportation & Logistics', href: '/services/transportation' },
-  { label: 'Hardware Materials', href: '/services/hardware' },
-  { label: 'Waste Management', href: '/services/waste-management' },
+const company = [
+  { label: 'About',      href: '/about' },
+  { label: 'Leadership', href: '/about#leadership' },
+  { label: 'Careers',    href: '/careers' },
+  { label: 'Press',      href: '/news' },
 ]
+
+const support = [
+  { label: 'Tender Desk',    href: '/contact' },
+  { label: 'Catalogue',      href: '/shop' },
+  { label: 'Delivery',       href: '/services' },
+  { label: 'Certifications', href: '/about' },
+]
+
+const yards = [
+  { label: 'Dar es Salaam', href: '/contact' },
+  { label: 'Arusha',        href: '/contact' },
+  { label: 'Mwanza',        href: '/contact' },
+  { label: 'Dodoma',        href: '/contact' },
+]
+
+interface SocialLinks {
+  facebook?: string
+  twitter?: string
+  instagram?: string
+  linkedin?: string
+}
 
 interface FooterContact {
   address?: string
@@ -22,117 +42,129 @@ interface FooterContact {
   country?: string
   phone?: string
   email?: string
+  socialLinks?: SocialLinks
 }
 
 export default function Footer({ contact }: { contact?: FooterContact }) {
-  const address = contact?.address ?? 'Babecov Complex, Buguruni Mandela Road'
-  const poBox = contact?.poBox ? `P.O. Box ${contact.poBox}` : 'P.O. Box 2140'
-  const city = contact?.city ?? 'Dar es Salaam'
-  const country = contact?.country ?? 'Tanzania'
   const phone = contact?.phone ?? '+255 768 500 555'
   const email = contact?.email ?? 'info@countrymaterial.com'
-  const telHref = `tel:${phone.replace(/[\s-]/g, '')}`
+  const social = contact?.socialLinks
+
   return (
-    <footer className="bg-charcoal text-white/70">
-      {/* Main footer */}
-      <div className="max-w-container mx-auto px-6 lg:px-10 pt-16 pb-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12">
-          {/* Brand column */}
-          <div className="lg:col-span-1">
-            <div className="flex flex-col leading-none mb-5">
-              <span className="font-heading text-white text-2xl">Country</span>
-              <span className="font-heading text-gold text-2xl">Materials</span>
+    <footer style={{ background: '#05101f', borderTop: '1px solid rgba(200,150,46,.2)' }}>
+      {/* Main grid */}
+      <div className="max-w-[1440px] mx-auto px-8 lg:px-16 pt-20 pb-16">
+        <div
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr_1fr] gap-12"
+          style={{ paddingBottom: 64, borderBottom: '1px solid rgba(200,150,46,.15)' }}
+        >
+          {/* Brand */}
+          <div>
+            {/* Diamond logo */}
+            <div className="flex items-center gap-3.5 mb-5">
+              <div className="relative w-[34px] h-[34px] border border-gold/80 grid place-items-center flex-shrink-0">
+                <div className="absolute inset-[6px] border border-gold/80 rotate-45" />
+              </div>
+              <span className="font-display text-[20px] tracking-[0.18em] text-cream">
+                COUNTRY<span className="text-gold">·</span>MATERIALS
+              </span>
             </div>
-            <p className="font-body text-sm leading-relaxed mb-6 max-w-xs">
-              A leading provider of hardware materials, waste management solutions, and logistics
-              services in Dar es Salaam, Tanzania.
+            <p className="font-barlow text-[14px] text-cream/55 leading-[1.6] max-w-[320px] mt-5">
+              Steel, hardware, waste and logistics for the infrastructure Africa is building. Founded Dar es Salaam, 1997.
             </p>
-            <div className="flex gap-3">
-              {/* Social icons — placeholder SVGs */}
-              {['facebook', 'twitter', 'linkedin'].map((s) => (
-                <a
-                  key={s}
-                  href="#"
-                  aria-label={s}
-                  className="w-9 h-9 border border-white/20 flex items-center justify-center hover:border-gold hover:text-gold transition-colors duration-200"
-                >
-                  <span className="text-xs uppercase font-semibold">{s[0].toUpperCase()}</span>
-                </a>
-              ))}
-            </div>
           </div>
 
-          {/* Quick links */}
-          <div>
-            <h4 className="font-heading text-white text-lg mb-5">Quick Links</h4>
-            <ul className="space-y-2.5">
-              {quickLinks.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="font-body text-sm hover:text-gold hover:translate-x-1 inline-flex items-center gap-1.5 transition-all duration-200"
-                  >
-                    <span className="text-gold text-xs">›</span>
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+          {/* Divisions */}
+          <FooterColumn title="Divisions" links={divisions} />
 
-          {/* Services */}
-          <div>
-            <h4 className="font-heading text-white text-lg mb-5">Our Services</h4>
-            <ul className="space-y-2.5">
-              {services.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="font-body text-sm hover:text-gold hover:translate-x-1 inline-flex items-center gap-1.5 transition-all duration-200"
-                  >
-                    <span className="text-gold text-xs">›</span>
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+          {/* Company */}
+          <FooterColumn title="Company" links={company} />
 
-          {/* Contact */}
-          <div>
-            <h4 className="font-heading text-white text-lg mb-5">Get in Touch</h4>
-            <address className="not-italic font-body text-sm space-y-3">
-              <p className="leading-relaxed">
-                {address}<br />
-                {poBox}<br />
-                {city}, {country}
-              </p>
-              <p>
-                <a href={telHref} className="hover:text-gold transition-colors duration-200">
-                  {phone}
-                </a>
-              </p>
-              <p>
-                <a href={`mailto:${email}`} className="hover:text-gold transition-colors duration-200">
-                  {email}
-                </a>
-              </p>
-            </address>
-          </div>
+          {/* Support */}
+          <FooterColumn title="Support" links={support} />
+
+          {/* Yards */}
+          <FooterColumn title="Yards" links={yards} />
         </div>
-      </div>
 
-      {/* Bottom bar */}
-      <div className="border-t border-white/10">
-        <div className="max-w-container mx-auto px-6 lg:px-10 py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p className="font-body text-xs">
-            &copy; {new Date().getFullYear()} Country Materials Ltd. All rights reserved.
-          </p>
-          <p className="font-body text-xs">
-            Dar es Salaam, Tanzania
-          </p>
+        {/* Bottom bar */}
+        <div className="mt-8 flex flex-col sm:flex-row items-center justify-between gap-5 flex-wrap">
+          <span className="font-space text-[11px] text-cream/40 tracking-[0.1em]">
+            © 1997–{new Date().getFullYear()} COUNTRY MATERIALS LTD · TIN 102-447-991
+          </span>
+
+          {/* Social links */}
+          <div className="flex gap-3">
+            {social?.linkedin && (
+              <SocialLink href={social.linkedin} label="LinkedIn">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M4 4h4v16H4zM6 0a2 2 0 110 4 2 2 0 010-4zM10 8h4v2a4 4 0 018 0v10h-4v-8a2 2 0 00-4 0v8h-4z" /></svg>
+              </SocialLink>
+            )}
+            {social?.instagram && (
+              <SocialLink href={social.instagram} label="Instagram">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="3" width="18" height="18" rx="4" /><circle cx="12" cy="12" r="4" /><circle cx="17" cy="7" r="1" fill="currentColor" /></svg>
+              </SocialLink>
+            )}
+            {social?.twitter && (
+              <SocialLink href={social.twitter} label="X / Twitter">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M3 3l8 9.5L3.5 21H6l6-6.5L17 21h4l-8.5-10L20 3h-2.5l-5.5 6L7 3z" /></svg>
+              </SocialLink>
+            )}
+            {social?.facebook && (
+              <SocialLink href={social.facebook} label="Facebook">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z" /></svg>
+              </SocialLink>
+            )}
+            {/* Fallback icons if no social links configured */}
+            {!social?.linkedin && !social?.instagram && !social?.twitter && !social?.facebook && (
+              <>
+                <SocialLink href="#" label="LinkedIn"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M4 4h4v16H4zM6 0a2 2 0 110 4 2 2 0 010-4zM10 8h4v2a4 4 0 018 0v10h-4v-8a2 2 0 00-4 0v8h-4z" /></svg></SocialLink>
+                <SocialLink href="#" label="Instagram"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="3" width="18" height="18" rx="4" /><circle cx="12" cy="12" r="4" /><circle cx="17" cy="7" r="1" fill="currentColor" /></svg></SocialLink>
+                <SocialLink href="#" label="X / Twitter"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M3 3l8 9.5L3.5 21H6l6-6.5L17 21h4l-8.5-10L20 3h-2.5l-5.5 6L7 3z" /></svg></SocialLink>
+              </>
+            )}
+          </div>
+
+          {/* Contact quick links */}
+          <div className="flex gap-6 font-condensed text-[12px] tracking-[0.15em] uppercase">
+            <a href={`tel:${phone.replace(/[\s-]/g, '')}`} className="text-cream/40 hover:text-gold transition-colors duration-200">{phone}</a>
+            <a href={`mailto:${email}`} className="text-cream/40 hover:text-gold transition-colors duration-200">{email}</a>
+          </div>
         </div>
       </div>
     </footer>
+  )
+}
+
+function FooterColumn({ title, links }: { title: string; links: { label: string; href: string }[] }) {
+  return (
+    <div>
+      <h5 className="font-condensed text-[12px] tracking-[0.22em] uppercase text-gold mb-6">{title}</h5>
+      <ul className="flex flex-col gap-3.5">
+        {links.map((link) => (
+          <li key={link.href}>
+            <Link
+              href={link.href}
+              className="font-barlow text-[15px] text-cream/65 hover:text-gold transition-colors duration-200"
+            >
+              {link.label}
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </div>
+  )
+}
+
+function SocialLink({ href, label, children }: { href: string; label: string; children: React.ReactNode }) {
+  return (
+    <a
+      href={href}
+      aria-label={label}
+      className="w-[38px] h-[38px] grid place-items-center text-gold transition-all duration-300 hover:bg-gold hover:text-navy"
+      style={{ border: '1px solid rgba(200,150,46,.3)' }}
+    >
+      {children}
+    </a>
   )
 }

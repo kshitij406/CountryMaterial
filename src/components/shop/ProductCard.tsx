@@ -12,31 +12,28 @@ export default function ProductCard({ product }: ProductCardProps) {
 
   return (
     <div
-      data-reveal
-      className="bg-white border border-sand hover:border-gold/40 hover:shadow-xl hover:shadow-navy/8 transition-all duration-400 group flex flex-col"
+      className="prod-card group flex flex-col"
+      style={{ border: '1px solid rgba(200,150,46,.2)', background: '#05101f', transition: 'border-color .25s' }}
     >
       {/* Image */}
-      <div className="relative h-40 sm:h-44 md:h-52 bg-navy/5 flex items-center justify-center overflow-hidden shrink-0">
+      <div className="relative h-48 overflow-hidden shrink-0" style={{ background: '#0B1D3A' }}>
         <img
           src={imageUrl ?? '/images/product-placeholder.svg'}
           alt={product.name}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+          className="prod-bg w-full h-full object-cover transition-transform duration-500"
         />
 
-        {/* Category badge */}
         {product.category && (
-          <span className="absolute top-3 left-3 font-body text-xs bg-gold text-navy px-3 py-1 tracking-wider uppercase font-semibold">
+          <span className="absolute top-3 left-3 font-condensed text-[10px] tracking-[0.15em] uppercase bg-gold text-navy px-3 py-1">
             {product.category.name}
           </span>
         )}
 
-        {/* Stock badge */}
         <span
-          className={`absolute top-3 right-3 font-body text-xs px-2.5 py-1 ${
-            product.inStock !== false
-              ? 'bg-navy text-white'
-              : 'bg-slate/60 text-white'
+          className={`absolute top-3 right-3 font-condensed text-[10px] tracking-[0.12em] uppercase px-2.5 py-1 ${
+            product.inStock !== false ? 'text-gold' : 'text-cream/40'
           }`}
+          style={{ border: `1px solid ${product.inStock !== false ? 'rgba(200,150,46,.4)' : 'rgba(200,150,46,.15)'}` }}
         >
           {product.inStock !== false ? 'In Stock' : 'Out of Stock'}
         </span>
@@ -44,33 +41,31 @@ export default function ProductCard({ product }: ProductCardProps) {
 
       {/* Content */}
       <div className="p-6 flex flex-col flex-1">
-        <h3 className="font-heading text-xl text-navy mb-2 group-hover:text-gold transition-colors duration-200 leading-snug">
+        <h3 className="font-display text-[clamp(18px,1.8vw,24px)] leading-[1] tracking-[0.04em] uppercase text-cream group-hover:text-gold transition-colors duration-200 mb-3">
           {product.name}
         </h3>
 
         {product.description && (
-          <p className="font-body text-sm text-slate/70 leading-relaxed mb-4 line-clamp-3 flex-1">
-            {product.description}
+          <p className="font-barlow text-[14px] text-cream/45 leading-[1.65] line-clamp-3 flex-1 mb-4">
+            {typeof product.description === 'string' ? product.description : ''}
           </p>
         )}
 
-        <div className="pt-4 border-t border-sand flex items-end justify-between gap-4 mt-auto">
-          {/* Price */}
+        <div className="pt-4 flex items-end justify-between gap-4 mt-auto" style={{ borderTop: '1px solid rgba(200,150,46,.15)' }}>
           <div>
-            <div className="font-body text-xs text-slate/50 mb-1 uppercase tracking-wide">Price</div>
+            <div className="font-condensed text-[10px] tracking-[0.18em] uppercase text-cream/35 mb-1">Price</div>
             {product.hasVariants && product.priceRange ? (
-              <div className="font-heading text-lg text-navy">TZS {product.priceRange} /=</div>
+              <div className="font-display text-[18px] tracking-[0.04em] uppercase text-cream">TZS {product.priceRange}</div>
             ) : product.price ? (
-              <div className="font-heading text-lg text-navy">{formatCurrency(product.price)} /=</div>
+              <div className="font-display text-[18px] tracking-[0.04em] uppercase text-cream">{formatCurrency(product.price)}</div>
             ) : (
-              <div className="font-heading text-sm text-slate/50 italic">Contact for price</div>
+              <div className="font-condensed text-[12px] tracking-[0.12em] uppercase text-cream/40">Contact for price</div>
             )}
           </div>
 
-          {/* Enquire CTA */}
           <Link
             href={enquireHref}
-            className="shrink-0 px-5 py-2.5 bg-gold hover:bg-gold-light text-navy font-body text-xs font-semibold tracking-wide transition-colors duration-200"
+            className="shrink-0 px-5 py-2.5 bg-gold text-navy font-condensed text-[12px] tracking-[0.18em] uppercase font-semibold hover:bg-gold-light transition-colors duration-200"
           >
             Enquire
           </Link>

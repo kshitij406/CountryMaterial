@@ -21,24 +21,51 @@ export const homepageQuery = groq`
   *[_type == "homepage"][0] {
     heroHeading,
     heroSubheading,
-    heroImages,
     heroVideo { asset-> { url } },
-    introHeading,
-    introBody,
-    vision,
-    mission,
-    values,
-    ctaHeading,
-    ctaSubtext,
-    ctaButtonText,
+
+    tickerItems,
+
     featuredServices[]-> {
       _id,
       title,
       slug,
       excerpt,
-      coverImage
+      icon,
+      displayOrder
     },
-    partnerLogos
+
+    aboutHeading,
+    aboutLead,
+    aboutBody,
+    founderInitials,
+    founderName,
+    founderRole,
+
+    stats,
+
+    featuredProducts[]-> {
+      _id,
+      name,
+      slug,
+      price,
+      priceRange,
+      hasVariants,
+      inStock,
+      description,
+      category-> { name },
+      "images": images[]{ "asset": asset->{ url } }
+    },
+
+    partnerLogos[] {
+      name,
+      sub,
+      "logoUrl": logo.asset->url
+    },
+
+    contactHeading,
+    contactEyebrow,
+    contactPrimaryLabel,
+    contactSecondaryLabel,
   }
 `
 

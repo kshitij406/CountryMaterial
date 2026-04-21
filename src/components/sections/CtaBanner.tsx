@@ -1,8 +1,4 @@
-'use client'
-
-import { useRef } from 'react'
-import { useGsapFadeUp } from '@/components/animations/gsap-hooks'
-import Button from '@/components/ui/Button'
+import Link from 'next/link'
 
 interface CtaBannerProps {
   heading?: string
@@ -14,40 +10,77 @@ interface CtaBannerProps {
 }
 
 export default function CtaBanner({
-  heading = 'Ready to Work With Us?',
+  heading = 'Ready to\nWork with Us?',
   subtext = 'Whether you need construction materials, waste management services, or reliable logistics — we are here to deliver.',
   primaryLabel = 'Contact Us Today',
   primaryHref = '/contact',
   secondaryLabel = 'View Our Services',
   secondaryHref = '/services',
 }: CtaBannerProps) {
-  const ref = useRef<HTMLDivElement>(null)
-  useGsapFadeUp(ref)
+  const lines = heading.split('\n')
 
   return (
-    <section className="relative bg-navy overflow-hidden py-20 lg:py-28">
-      {/* Decorative background element */}
-      <div className="absolute inset-0 bg-[url('/images/noise.svg')] opacity-[0.04] pointer-events-none" />
-      <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-gold/5 to-transparent pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-64 h-64 rounded-full bg-gold/5 blur-3xl pointer-events-none" />
+    <section
+      className="relative py-[140px] px-8 lg:px-16 overflow-hidden"
+      style={{
+        background: `
+          radial-gradient(ellipse at 30% 60%,rgba(200,150,46,.15),transparent 55%),
+          linear-gradient(180deg,#05101f 0%,#0B1D3A 100%)
+        `,
+        borderTop: '1px solid rgba(200,150,46,.2)',
+      }}
+    >
+      <div aria-hidden className="grain-overlay absolute inset-0 pointer-events-none z-0" />
+      <div
+        aria-hidden
+        className="absolute inset-0 pointer-events-none"
+        style={{ background: 'repeating-linear-gradient(90deg,transparent 0 120px,rgba(200,150,46,.04) 120px 121px)' }}
+      />
 
-      {/* Gold top border */}
-      <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-gold to-transparent" />
+      <div className="relative max-w-[1440px] mx-auto text-center reveal">
+        <div className="flex items-center justify-center gap-3.5 mb-8">
+          <span className="block h-px w-10 bg-gold" />
+          <span className="font-condensed text-[12px] tracking-[0.18em] uppercase text-gold">Get in touch</span>
+          <span className="block h-px w-10 bg-gold" />
+        </div>
 
-      <div ref={ref} className="opacity-0 relative max-w-container mx-auto px-6 lg:px-10 text-center">
-        <h2 className="font-heading text-3xl md:text-4xl lg:text-6xl text-white leading-tight mb-5 max-w-3xl mx-auto">
-          {heading}
+        <h2 className="font-display text-[clamp(48px,7vw,104px)] leading-[0.9] tracking-[0.03em] uppercase text-cream mb-10">
+          {lines.map((line, i) => (
+            <span key={i} className="block">
+              {i === lines.length - 1 ? <span className="text-gold">{line}</span> : line}
+            </span>
+          ))}
         </h2>
-        <p className="font-body text-white/60 text-base md:text-lg max-w-xl mx-auto mb-8 leading-relaxed">
-          {subtext}
-        </p>
+
+        {subtext && (
+          <p className="font-barlow text-[16px] text-cream/55 max-w-xl mx-auto mb-12 leading-[1.65]">
+            {subtext}
+          </p>
+        )}
+
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-          <Button href={primaryHref} variant="primary" size="lg">
-            {primaryLabel}
-          </Button>
-          <Button href={secondaryHref} variant="outline" size="lg">
-            {secondaryLabel}
-          </Button>
+          <Link
+            href={primaryHref}
+            className="group relative inline-flex items-center gap-3 overflow-hidden px-[34px] py-[18px] bg-gold text-navy font-condensed text-[14px] tracking-[0.22em] uppercase font-semibold"
+          >
+            <span className="relative z-10">{primaryLabel}</span>
+            <svg className="relative z-10 w-3.5 h-3.5 transition-transform duration-400 group-hover:translate-x-1.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+              <path d="M5 12h14M13 5l7 7-7 7" />
+            </svg>
+            <span className="absolute inset-0 bg-cream -translate-x-full group-hover:translate-x-0 transition-transform duration-500" style={{ transitionTimingFunction: 'cubic-bezier(.16,1,.3,1)' }} />
+          </Link>
+          {secondaryHref && (
+            <Link
+              href={secondaryHref}
+              className="group relative inline-flex items-center gap-3 overflow-hidden px-[34px] py-[18px] border border-gold text-gold font-condensed text-[14px] tracking-[0.22em] uppercase font-semibold"
+            >
+              <span className="relative z-10 group-hover:text-navy transition-colors duration-300">{secondaryLabel}</span>
+              <svg className="relative z-10 w-3.5 h-3.5 group-hover:text-navy transition-all duration-400 group-hover:translate-x-1.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+                <path d="M5 12h14M13 5l7 7-7 7" />
+              </svg>
+              <span className="absolute inset-0 bg-gold -translate-x-full group-hover:translate-x-0 transition-transform duration-500" style={{ transitionTimingFunction: 'cubic-bezier(.16,1,.3,1)' }} />
+            </Link>
+          )}
         </div>
       </div>
     </section>

@@ -32,13 +32,15 @@ export default function ContactForm() {
   }
 
   const inputClass =
-    'w-full bg-white border border-sand focus:border-gold focus:ring-0 focus:outline-none font-body text-slate text-sm px-5 py-4 transition-colors duration-200 placeholder:text-slate/40'
+    'w-full bg-transparent focus:outline-none font-barlow text-[15px] text-cream/80 px-5 py-4 transition-colors duration-200 placeholder:text-cream/25'
+  const inputStyle = { border: '1px solid rgba(200,150,46,.25)', background: 'rgba(200,150,46,.04)' }
+  const inputFocusStyle = { borderColor: 'rgba(200,150,46,.7)' }
 
   return (
     <form onSubmit={handleSubmit} className="space-y-5">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
         <div>
-          <label className="block font-body text-xs text-slate/60 tracking-widest uppercase mb-2">
+          <label className="block font-condensed text-[10px] tracking-[0.22em] uppercase text-cream/40 mb-2">
             Full Name <span className="text-gold">*</span>
           </label>
           <input
@@ -49,10 +51,13 @@ export default function ContactForm() {
             onChange={handleChange}
             placeholder="Your full name"
             className={inputClass}
+            style={inputStyle}
+            onFocus={e => Object.assign(e.target.style, inputFocusStyle)}
+            onBlur={e => Object.assign(e.target.style, inputStyle)}
           />
         </div>
         <div>
-          <label className="block font-body text-xs text-slate/60 tracking-widest uppercase mb-2">
+          <label className="block font-condensed text-[10px] tracking-[0.22em] uppercase text-cream/40 mb-2">
             Email Address <span className="text-gold">*</span>
           </label>
           <input
@@ -63,12 +68,15 @@ export default function ContactForm() {
             onChange={handleChange}
             placeholder="your@email.com"
             className={inputClass}
+            style={inputStyle}
+            onFocus={e => Object.assign(e.target.style, inputFocusStyle)}
+            onBlur={e => Object.assign(e.target.style, inputStyle)}
           />
         </div>
       </div>
 
       <div>
-        <label className="block font-body text-xs text-slate/60 tracking-widest uppercase mb-2">
+        <label className="block font-condensed text-[10px] tracking-[0.22em] uppercase text-cream/40 mb-2">
           Phone Number
         </label>
         <input
@@ -78,11 +86,14 @@ export default function ContactForm() {
           onChange={handleChange}
           placeholder="+255 7XX XXX XXX"
           className={inputClass}
+          style={inputStyle}
+          onFocus={e => Object.assign(e.target.style, inputFocusStyle)}
+          onBlur={e => Object.assign(e.target.style, inputStyle)}
         />
       </div>
 
       <div>
-        <label className="block font-body text-xs text-slate/60 tracking-widest uppercase mb-2">
+        <label className="block font-condensed text-[10px] tracking-[0.22em] uppercase text-cream/40 mb-2">
           Subject <span className="text-gold">*</span>
         </label>
         <input
@@ -93,11 +104,14 @@ export default function ContactForm() {
           onChange={handleChange}
           placeholder="What is this regarding?"
           className={inputClass}
+          style={inputStyle}
+          onFocus={e => Object.assign(e.target.style, inputFocusStyle)}
+          onBlur={e => Object.assign(e.target.style, inputStyle)}
         />
       </div>
 
       <div>
-        <label className="block font-body text-xs text-slate/60 tracking-widest uppercase mb-2">
+        <label className="block font-condensed text-[10px] tracking-[0.22em] uppercase text-cream/40 mb-2">
           Message <span className="text-gold">*</span>
         </label>
         <textarea
@@ -108,6 +122,9 @@ export default function ContactForm() {
           onChange={handleChange}
           placeholder="How can we help you?"
           className={`${inputClass} resize-none`}
+          style={inputStyle}
+          onFocus={e => Object.assign(e.target.style, inputFocusStyle)}
+          onBlur={e => Object.assign(e.target.style, inputStyle)}
         />
       </div>
 
@@ -115,21 +132,22 @@ export default function ContactForm() {
         <button
           type="submit"
           disabled={status === 'loading'}
-          className="w-full sm:w-auto px-10 py-4 bg-gold hover:bg-gold-light text-navy font-body font-semibold tracking-wide transition-colors duration-200 disabled:opacity-60 disabled:cursor-not-allowed"
+          className="group relative overflow-hidden px-[34px] py-[18px] bg-gold text-navy font-condensed text-[14px] tracking-[0.22em] uppercase font-semibold disabled:opacity-60 disabled:cursor-not-allowed"
         >
-          {status === 'loading' ? 'Sending...' : 'Send Message'}
+          <span className="relative z-10">{status === 'loading' ? 'Sending...' : 'Send Message'}</span>
+          <span className="absolute inset-0 bg-cream -translate-x-full group-hover:translate-x-0 transition-transform duration-500" style={{ transitionTimingFunction: 'cubic-bezier(.16,1,.3,1)' }} />
         </button>
       </div>
 
       {status === 'success' && (
-        <p className="font-body text-sm text-navy bg-gold/10 border border-gold/40 px-5 py-4">
+        <div className="px-5 py-4 font-barlow text-[14px] text-cream/80" style={{ border: '1px solid rgba(200,150,46,.4)', background: 'rgba(200,150,46,.08)' }}>
           Thank you! Your message has been received. We will get back to you shortly.
-        </p>
+        </div>
       )}
       {status === 'error' && (
-        <p className="font-body text-sm text-navy bg-navy/5 border border-navy/20 px-5 py-4">
-          Something went wrong. Please try again or email us directly at info@countrymaterial.com
-        </p>
+        <div className="px-5 py-4 font-barlow text-[14px] text-cream/60" style={{ border: '1px solid rgba(200,150,46,.2)', background: 'rgba(11,29,58,.5)' }}>
+          Something went wrong. Please try again or email us directly.
+        </div>
       )}
     </form>
   )

@@ -40,7 +40,11 @@
       "Bash(done)",
       "WebFetch(domain:github.com)",
       "Bash(ls:*)",
-      "Bash(node -e \"console.log\\(require.resolve\\(''@chenglou/pretext''\\)\\)\")"
+      "Bash(node -e \"console.log\\(require.resolve\\(''@chenglou/pretext''\\)\\)\")",
+      "WebFetch(domain:api.anthropic.com)",
+      "Bash(zcat \"/home/kxitiz/.claude/projects/-home-kxitiz-Coding-CountryMaterial/9cb0b98d-440e-4722-98f1-d5cdb00bd9f6/tool-results/webfetch-1776796373990-un0sba.bin\")",
+      "Bash(npx pnpm *)",
+      "Bash(npx next *)"
     ]
   }
 }

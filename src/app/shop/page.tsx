@@ -25,8 +25,7 @@ const fallbackProducts: Product[] = [
     priceRange: null,
     hasVariants: false,
     inStock: true,
-    description:
-      'Standard gypsum wallboard for interior partitions, ceilings, and dry-wall systems. Available in standard sheet sizes.',
+    description: 'Standard gypsum wallboard for interior partitions, ceilings, and dry-wall systems. Available in standard sheet sizes.',
     images: [],
     category: { name: 'Building Materials', slug: { current: 'building-materials' } },
   },
@@ -38,8 +37,7 @@ const fallbackProducts: Product[] = [
     priceRange: null,
     hasVariants: false,
     inStock: true,
-    description:
-      'High-grade marine plywood engineered for moisture resistance. Ideal for formwork, flooring, and demanding construction environments.',
+    description: 'High-grade marine plywood engineered for moisture resistance. Ideal for formwork, flooring, and demanding construction environments.',
     images: [],
     category: { name: 'Building Materials', slug: { current: 'building-materials' } },
   },
@@ -51,8 +49,7 @@ const fallbackProducts: Product[] = [
     priceRange: '11,666 – 120,000',
     hasVariants: true,
     inStock: true,
-    description:
-      'British Standard BS 500 compliant high-tensile deformed steel bars for structural reinforcement. Available in multiple diameters from 6mm to 32mm.',
+    description: 'British Standard BS 500 compliant high-tensile deformed steel bars for structural reinforcement. Available in multiple diameters from 6mm to 32mm.',
     images: [],
     category: { name: 'Steel & Metals', slug: { current: 'steel-metals' } },
   },
@@ -74,49 +71,67 @@ export default async function ShopPage() {
   const categories: ProductCategory[] = rawCategories?.length ? rawCategories : fallbackCategories
 
   const company = settings?.companyName ?? 'Country Materials'
-  const shopTitle = settings?.shopPageTitle ?? `Quality Materials from ${company}`
+  const shopTitle = settings?.shopPageTitle ?? `Quality Materials\nfrom ${company}`
   const shopSubtitle =
     settings?.shopPageSubtitle ??
     'Browse our full range of construction materials, steel products, and hardware supplies. All prices in Tanzanian Shillings.'
 
+  const titleLines = shopTitle.split('\n')
+
   return (
     <>
-      {/* Shop-specific header: cream bg with oversized "CATALOG" watermark */}
-      <section className="relative bg-cream overflow-hidden">
-        <div className="absolute inset-0 bg-[url('/images/noise.svg')] opacity-[0.02] pointer-events-none" />
-        {/* Oversized watermark */}
-        <div className="absolute inset-0 flex items-center justify-end pr-6 lg:pr-10 pointer-events-none select-none overflow-hidden">
-          <span className="font-heading text-[5rem] sm:text-[8rem] lg:text-[14rem] leading-none text-navy/5 tracking-tight">
-            CATALOG
-          </span>
+      {/* Hero */}
+      <section
+        className="relative overflow-hidden pt-[160px] pb-[100px] px-8 lg:px-16"
+        style={{ background: '#05101f', borderBottom: '1px solid rgba(200,150,46,.2)' }}
+      >
+        <div aria-hidden className="grain-overlay absolute inset-0 pointer-events-none z-0" />
+        <div
+          aria-hidden
+          className="absolute inset-0 pointer-events-none"
+          style={{ background: 'repeating-linear-gradient(90deg,transparent 0 120px,rgba(200,150,46,.04) 120px 121px)' }}
+        />
+        <div
+          aria-hidden
+          className="absolute inset-0 pointer-events-none"
+          style={{ background: 'radial-gradient(ellipse at 80% 40%,rgba(200,150,46,.12),transparent 55%)' }}
+        />
+        {/* Watermark */}
+        <div aria-hidden className="absolute inset-0 flex items-center justify-end pr-8 lg:pr-16 pointer-events-none select-none overflow-hidden">
+          <span className="font-display text-[8rem] lg:text-[14rem] leading-none text-gold/[0.06] tracking-tight">CATALOG</span>
         </div>
-        <div className={`absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-gold/70 to-transparent`} />
-        <div className="relative max-w-container mx-auto px-6 lg:px-10 py-12 md:py-20 lg:py-28">
-          <span className="inline-flex items-center gap-2.5 font-body text-xs font-semibold tracking-[0.2em] uppercase text-gold mb-5">
-            <span className="block h-px w-8 bg-gold" />
-            Product Catalog
-          </span>
-          <h1 className="font-heading text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-navy leading-tight max-w-2xl">
-            {shopTitle}
+
+        <div className="relative max-w-[1440px] mx-auto">
+          <div className="flex items-center gap-3.5 mb-7">
+            <span className="block h-px w-10 bg-gold" />
+            <span className="font-condensed text-[12px] tracking-[0.18em] uppercase text-gold">Product Catalog</span>
+          </div>
+          <h1 className="font-display text-[clamp(48px,7vw,112px)] leading-[0.9] tracking-[0.03em] uppercase text-cream max-w-4xl">
+            {titleLines.map((line: string, i: number) => (
+              <span key={i} className="block">
+                {i === titleLines.length - 1 ? <span className="text-gold">{line}</span> : line}
+              </span>
+            ))}
           </h1>
-          <p className="mt-5 font-body text-lg text-slate/65 max-w-xl leading-relaxed">
-            {shopSubtitle}
-          </p>
+          <p className="mt-8 font-barlow text-[17px] text-cream/55 max-w-xl leading-[1.65]">{shopSubtitle}</p>
         </div>
       </section>
 
-      <section className="bg-cream py-section">
-        <div className="max-w-container mx-auto px-6 lg:px-10">
-
+      {/* Products */}
+      <section
+        className="relative py-[120px] px-8 lg:px-16"
+        style={{ background: '#0B1D3A', borderBottom: '1px solid rgba(200,150,46,.15)' }}
+      >
+        <div className="max-w-[1440px] mx-auto">
           {/* Catalog-only notice */}
-          <div className="bg-gold/10 border border-gold/30 px-6 py-4 mb-10 flex items-center gap-4">
-            <span className="text-gold text-lg shrink-0">ℹ</span>
-            <p className="font-body text-sm text-navy/80">
+          <div
+            className="flex items-center gap-4 px-6 py-4 mb-12 reveal"
+            style={{ border: '1px solid rgba(200,150,46,.3)', background: 'rgba(200,150,46,.06)' }}
+          >
+            <div className="text-gold text-lg shrink-0">ℹ</div>
+            <p className="font-barlow text-[14px] text-cream/60">
               This is a display catalog. To place an order or request a bulk quotation, please{' '}
-              <a href="/contact" className="text-gold hover:underline font-semibold">
-                contact us directly
-              </a>
-              .
+              <a href="/contact" className="text-gold hover:underline">contact us directly</a>.
             </p>
           </div>
 
@@ -125,7 +140,7 @@ export default async function ShopPage() {
       </section>
 
       <CtaBanner
-        heading="Need a Bulk Order or Custom Quote?"
+        heading="Need a Bulk Order\nor Custom Quote?"
         subtext="We supply to contractors, developers, and businesses at competitive wholesale prices. Get in touch for project-specific pricing."
         primaryLabel="Request a Quote"
         primaryHref="/contact"

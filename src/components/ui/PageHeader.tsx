@@ -1,5 +1,3 @@
-import SectionLabel from './SectionLabel'
-
 export type PageHeaderTheme = 'navy' | 'cream' | 'gold' | 'charcoal'
 
 interface PageHeaderProps {
@@ -9,61 +7,36 @@ interface PageHeaderProps {
   theme?: PageHeaderTheme
 }
 
-const THEMES: Record<PageHeaderTheme, {
-  section: string
-  labelLight: boolean
-  title: string
-  subtitle: string
-  accent: string
-}> = {
-  navy: {
-    section: 'bg-navy',
-    labelLight: true,
-    title: 'text-white',
-    subtitle: 'text-white/60',
-    accent: 'from-transparent via-gold to-transparent',
-  },
-  cream: {
-    section: 'bg-cream',
-    labelLight: false,
-    title: 'text-navy',
-    subtitle: 'text-slate/65',
-    accent: 'from-transparent via-gold/70 to-transparent',
-  },
-  gold: {
-    section: 'bg-gold',
-    labelLight: false,
-    title: 'text-navy',
-    subtitle: 'text-navy/65',
-    accent: 'from-transparent via-navy/25 to-transparent',
-  },
-  charcoal: {
-    section: 'bg-charcoal',
-    labelLight: true,
-    title: 'text-white',
-    subtitle: 'text-white/55',
-    accent: 'from-transparent via-gold to-transparent',
-  },
-}
-
-export default function PageHeader({ label, title, subtitle, theme = 'navy' }: PageHeaderProps) {
-  const t = THEMES[theme]
+export default function PageHeader({ label, title, subtitle }: PageHeaderProps) {
   return (
-    <section className={`relative ${t.section} overflow-hidden`}>
-      <div className="absolute inset-0 bg-[url('/images/noise.svg')] opacity-[0.03] pointer-events-none" />
-      <div className={`absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r ${t.accent}`} />
+    <section
+      className="relative overflow-hidden pt-[160px] pb-[100px] px-8 lg:px-16"
+      style={{ background: '#05101f', borderBottom: '1px solid rgba(200,150,46,.2)' }}
+    >
+      <div aria-hidden className="grain-overlay absolute inset-0 pointer-events-none z-0" />
+      <div
+        aria-hidden
+        className="absolute inset-0 pointer-events-none"
+        style={{ background: 'repeating-linear-gradient(90deg,transparent 0 120px,rgba(200,150,46,.04) 120px 121px)' }}
+      />
+      <div
+        aria-hidden
+        className="absolute inset-0 pointer-events-none"
+        style={{ background: 'radial-gradient(ellipse at 70% 50%,rgba(200,150,46,.12),transparent 55%)' }}
+      />
 
-      <div className="relative max-w-container mx-auto px-6 lg:px-10 py-12 md:py-20 lg:py-28">
+      <div className="relative max-w-[1440px] mx-auto">
         {label && (
-          <SectionLabel light={t.labelLight} className="mb-5">
-            {label}
-          </SectionLabel>
+          <div className="flex items-center gap-3.5 mb-7">
+            <span className="block h-px w-10 bg-gold" />
+            <span className="font-condensed text-[12px] tracking-[0.18em] uppercase text-gold">{label}</span>
+          </div>
         )}
-        <h1 className={`font-heading text-3xl sm:text-4xl md:text-5xl lg:text-6xl ${t.title} leading-tight max-w-2xl`}>
+        <h1 className="font-display text-[clamp(48px,7vw,112px)] leading-[0.9] tracking-[0.03em] uppercase text-cream max-w-4xl">
           {title}
         </h1>
         {subtitle && (
-          <p className={`mt-4 font-body text-base md:text-lg ${t.subtitle} max-w-xl leading-relaxed`}>
+          <p className="mt-8 font-barlow text-[17px] text-cream/60 max-w-2xl leading-[1.65]">
             {subtitle}
           </p>
         )}

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600;700&family=Barlow+Condensed:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -8,6 +8,11 @@
   :root {
     --font-dm-serif: 'DM Serif Display', Georgia, serif;
     --font-outfit: 'Outfit', system-ui, sans-serif;
+    --font-bebas: 'Bebas Neue', sans-serif;
+    --font-barlow: 'Barlow', sans-serif;
+    --font-barlow-condensed: 'Barlow Condensed', sans-serif;
+    --font-space-mono: 'Space Mono', monospace;
+    --ease-industrial: cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   html {
@@ -26,39 +31,22 @@
     font-family: var(--font-dm-serif);
   }
 
-  /* Custom scrollbar */
-  ::-webkit-scrollbar {
-    width: 6px;
-  }
-  ::-webkit-scrollbar-track {
-    background: #FAF7F2;
-  }
-  ::-webkit-scrollbar-thumb {
-    background: #C8962E;
-    border-radius: 0;
-  }
-
-  /* Selection */
-  ::selection {
-    background-color: #C8962E;
-    color: #0B1D3A;
-  }
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: #FAF7F2; }
+  ::-webkit-scrollbar-thumb { background: #C8962E; border-radius: 0; }
+  ::selection { background-color: #C8962E; color: #0B1D3A; }
 }
 
 @layer utilities {
-  .font-heading {
-    font-family: var(--font-dm-serif);
-  }
+  .font-heading    { font-family: var(--font-dm-serif); }
+  .font-body       { font-family: var(--font-outfit); }
+  .font-display    { font-family: var(--font-bebas); }
+  .font-barlow     { font-family: var(--font-barlow); }
+  .font-condensed  { font-family: var(--font-barlow-condensed); }
+  .font-space      { font-family: var(--font-space-mono); }
 
-  .font-body {
-    font-family: var(--font-outfit);
-  }
+  .text-balance { text-wrap: balance; }
 
-  .text-balance {
-    text-wrap: balance;
-  }
-
-  /* Line clamp utility */
   .line-clamp-2 {
     display: -webkit-box;
     -webkit-line-clamp: 2;
@@ -73,30 +61,94 @@
   }
 }
 
-/* GSAP — elements start invisible when js hasn't run yet */
-.gsap-init {
-  opacity: 0;
-}
+/* GSAP — elements start invisible */
+.gsap-init { opacity: 0; }
 
-/* ─── Hero: cinematic grain texture overlay ──────────────────────────────────
-   Applied as a sibling div inside HeroSection. The SVG feTurbulence filter
-   generates pseudo-random noise without any external asset.                  */
+/* ─── Grain overlay ─────────────────────────────────────────────────────────── */
 .grain-overlay {
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
   background-repeat: repeat;
   background-size: 180px 180px;
-  opacity: 0.038;
+  opacity: 0.04;
   mix-blend-mode: overlay;
 }
 
-/* ─── Glassmorphism nav ───────────────────────────────────────────────────────
-   Toggled by HeroSection's GSAP ScrollTrigger via classList.add/remove.
-   The Navbar's existing `transition-all duration-500` handles the blend.
-   !important overrides the Tailwind bg-* utility set by Navbar's React state. */
+/* ─── Nav glassmorphism (toggled by scroll) ─────────────────────────────────── */
 header.nav-glass {
-  background-color: rgba(11, 29, 58, 0.45) !important;
-  backdrop-filter: blur(20px) saturate(160%) !important;
-  -webkit-backdrop-filter: blur(20px) saturate(160%) !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.07) !important;
-  box-shadow: 0 4px 32px rgba(11, 29, 58, 0.25) !important;
+  background-color: rgba(11, 29, 58, 0.92) !important;
+  backdrop-filter: blur(14px) !important;
+  -webkit-backdrop-filter: blur(14px) !important;
+  border-bottom: 1px solid rgba(200, 150, 46, 0.18) !important;
+}
+
+/* ─── Scroll reveal ─────────────────────────────────────────────────────────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s var(--ease-industrial), transform 0.8s var(--ease-industrial);
+}
+.reveal.in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.stagger > * {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s var(--ease-industrial), transform 0.8s var(--ease-industrial);
+}
+.stagger.in > * { opacity: 1; transform: translateY(0); }
+.stagger.in > *:nth-child(1) { transition-delay: 0ms; }
+.stagger.in > *:nth-child(2) { transition-delay: 120ms; }
+.stagger.in > *:nth-child(3) { transition-delay: 240ms; }
+.stagger.in > *:nth-child(4) { transition-delay: 360ms; }
+.stagger.in > *:nth-child(5) { transition-delay: 480ms; }
+.stagger.in > *:nth-child(6) { transition-delay: 600ms; }
+
+/* ─── Hero scroll-bar animation ─────────────────────────────────────────────── */
+@keyframes scrollBar {
+  0%   { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+.animate-scroll-bar {
+  animation: scrollBar 2s infinite cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ─── Ticker marquee ─────────────────────────────────────────────────────────── */
+@keyframes ticker {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.animate-ticker { animation: ticker 40s linear infinite; }
+
+/* ─── Service card hover (RSC-safe CSS-only) ────────────────────────────────── */
+.service-card {
+  transition: transform 0.5s cubic-bezier(0.16,1,0.3,1),
+              border-color 0.5s cubic-bezier(0.16,1,0.3,1),
+              background 0.5s cubic-bezier(0.16,1,0.3,1);
+}
+.service-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(200,150,46,.6) !important;
+  background: #1a3666 !important;
+}
+
+/* ─── Product card hover ────────────────────────────────────────────────────── */
+.prod-card {
+  transition: border-color 0.4s cubic-bezier(0.16,1,0.3,1);
+}
+.prod-card:hover { border-color: #C8962E !important; }
+.prod-card .prod-bg {
+  transition: transform 0.6s cubic-bezier(0.16,1,0.3,1);
+}
+.prod-card:hover .prod-bg { transform: scale(1.05); }
+
+/* ─── Logo tile hover ───────────────────────────────────────────────────────── */
+.logo-tile {
+  transition: filter 0.4s, opacity 0.4s, color 0.4s;
+}
+.logo-tile:hover {
+  filter: none !important;
+  opacity: 1 !important;
+  color: #C8962E !important;
 }

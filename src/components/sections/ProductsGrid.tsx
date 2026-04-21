@@ -1,55 +1,33 @@
-'use client'
-
-import { useRef } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useGsapStagger, useGsapFadeUp } from '@/components/animations/gsap-hooks'
-import SectionLabel from '@/components/ui/SectionLabel'
-import { formatCurrency } from '@/lib/utils'
 
-const defaultProducts = [
-  {
-    _id: '1',
-    name: 'Gypsum Board',
-    slug: { current: 'gypsum-board' },
-    price: 13000,
-    priceRange: null,
-    hasVariants: false,
-    inStock: true,
-    description: 'Standard gypsum wallboard for interior partitions and ceilings.',
-    images: [],
-    category: { name: 'Building Materials' },
-  },
-  {
-    _id: '2',
-    name: 'Marine Board',
-    slug: { current: 'marine-board' },
-    price: 38000,
-    priceRange: null,
-    hasVariants: false,
-    inStock: true,
-    description: 'High-grade marine plywood, moisture-resistant for demanding environments.',
-    images: [],
-    category: { name: 'Building Materials' },
-  },
-  {
-    _id: '3',
-    name: 'High Tensile Reinforcement Bars BS 500',
-    slug: { current: 'rebar-bs500' },
-    price: null,
-    priceRange: '11,666 – 120,000',
-    hasVariants: true,
-    inStock: true,
-    description: 'British Standard BS 500 compliant steel rebar for structural reinforcement.',
-    images: [],
-    category: { name: 'Steel & Metals' },
-  },
+// Gradient backgrounds cycled when products don't have images
+const BG_GRADIENTS = [
+  'radial-gradient(ellipse at 60% 40%,rgba(200,150,46,.3),transparent 60%),linear-gradient(160deg,#3a2810,#0B1D3A)',
+  'radial-gradient(ellipse at 40% 60%,rgba(232,184,75,.18),transparent 55%),linear-gradient(140deg,#1c2940,#0B1D3A)',
+  'radial-gradient(ellipse at 30% 30%,rgba(200,150,46,.22),transparent 60%),linear-gradient(180deg,#1a1a2e,#0B1D3A)',
+  'radial-gradient(ellipse at 70% 50%,rgba(232,184,75,.25),transparent 55%),linear-gradient(200deg,#251a0c,#162D56)',
+  'radial-gradient(ellipse at 50% 70%,rgba(200,150,46,.18),transparent 60%),linear-gradient(120deg,#0f1828,#1A1A2E)',
+  'radial-gradient(ellipse at 20% 40%,rgba(200,150,46,.3),transparent 55%),linear-gradient(160deg,#2a1a08,#0B1D3A)',
+]
+
+// 12-col span pattern: 6, 3, 3, 4, 4, 4
+const SPANS = [6, 3, 3, 4, 4, 4]
+const HEIGHTS = [440, 360, 360, 360, 360, 360]
+
+const DEFAULT_PRODUCTS = [
+  { _id: 'p1', category: { name: 'Steel / Reinforcement' }, name: 'TMT Rebar Y12 – Y32',    priceRange: '2,450/KG', price: null, hasVariants: true,  inStock: true, description: 'BS 4449 · Fe500D', images: [] },
+  { _id: 'p2', category: { name: 'Structural' },            name: 'H-Beams',                 priceRange: null,       price: null, hasVariants: false, inStock: true, description: '150 – 600mm · S275JR', images: [] },
+  { _id: 'p3', category: { name: 'Wire' },                  name: 'Binding Wire',             priceRange: null,       price: null, hasVariants: false, inStock: true, description: '16 – 22 gauge · GALV', images: [] },
+  { _id: 'p4', category: { name: 'Roofing' },               name: 'Corrugated Sheet',         priceRange: null,       price: null, hasVariants: false, inStock: true, description: '0.35 – 0.5mm · AZ150', images: [] },
+  { _id: 'p5', category: { name: 'Cementitious' },          name: 'Portland Cement 42.5N',    priceRange: null,       price: 18900, hasVariants: false, inStock: true, description: '50kg sack', images: [] },
+  { _id: 'p6', category: { name: 'Tooling' },               name: 'Power & Hand Tools',       priceRange: null,       price: null, hasVariants: false, inStock: true, description: '1,400 SKUs in stock', images: [] },
 ]
 
 interface Product {
   _id: string
   name: string
-  slug: { current: string }
+  slug?: { current: string }
   price?: number | null
   priceRange?: string | null
   hasVariants?: boolean
@@ -59,96 +37,92 @@ interface Product {
   category?: { name: string }
 }
 
-export default function ProductsGrid({ products = defaultProducts, featured = true }: { products?: Product[]; featured?: boolean }) {
-  const sectionRef = useRef<HTMLDivElement>(null)
-  const headingRef = useRef<HTMLDivElement>(null)
+function priceLabel(p: Product) {
+  if (p.hasVariants && p.priceRange) return `TZS ${p.priceRange}`
+  if (p.price) return `TZS ${p.price.toLocaleString()}`
+  return null
+}
 
-  useGsapFadeUp(headingRef)
-  useGsapStagger(sectionRef, '.product-card', { stagger: 0.12 })
-
-  const displayProducts = featured ? products.slice(0, 3) : products
+export default function ProductsGrid({ products }: { products?: Product[] }) {
+  const data = (products?.length ? products : DEFAULT_PRODUCTS).slice(0, 6)
 
   return (
-    <section className="bg-cream py-section">
-      <div className="max-w-container mx-auto px-6 lg:px-10">
-        <div ref={headingRef} className="opacity-0 flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-12">
+    <section className="relative bg-navy py-[140px] px-8 lg:px-16 overflow-hidden" id="products">
+      <span className="absolute top-14 right-8 lg:right-16 font-space text-[12px] text-gold tracking-[0.2em]">
+        05 / PRODUCTS
+      </span>
+
+      <div className="max-w-[1440px] mx-auto">
+        <div className="grid lg:grid-cols-2 gap-14 mb-20 items-end reveal">
           <div>
-            <SectionLabel className="mb-4">Our Products</SectionLabel>
-            <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl text-navy leading-tight">
-              Quality Materials, Competitive Prices
+            <div className="flex items-center gap-4 mb-6">
+              <span className="block h-px w-10 bg-gold" />
+              <span className="font-condensed text-[12px] tracking-[0.18em] uppercase text-gold">The catalogue</span>
+            </div>
+            <h2 className="font-display text-[clamp(44px,6.5vw,96px)] leading-[0.9] tracking-[0.03em] uppercase text-cream">
+              Materials,<br />specified <span className="text-gold">precisely.</span>
             </h2>
           </div>
-          <Link
-            href="/shop"
-            className="font-body text-sm text-gold hover:text-navy tracking-wide flex items-center gap-2 transition-colors duration-200 shrink-0"
-          >
-            Browse Full Catalog
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-            </svg>
-          </Link>
+          <p className="font-barlow text-[17px] text-cream/65 max-w-[480px]">
+            Everything we carry is specified, certified and traceable to source. Browse a selection below — request the full catalogue for tender pricing.
+          </p>
         </div>
 
-        <div ref={sectionRef} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-          {displayProducts.map((product, i) => (
-            <div
-              key={product._id}
-              className="product-card opacity-0 bg-white border border-sand group hover:border-gold/40 hover:shadow-xl hover:shadow-navy/8 transition-all duration-400"
-            >
-              {/* Image area */}
-              <div className="relative h-48 bg-navy/5 overflow-hidden">
-                <Image
-                    src={product.images?.[0]?.asset?.url ?? '/images/product-placeholder.svg'}
-                    alt={product.name}
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                {product.category && (
-                  <span className="absolute top-3 left-3 font-body text-xs bg-navy text-gold px-3 py-1 tracking-wider uppercase">
-                    {product.category.name}
-                  </span>
-                )}
-                {!product.inStock && (
-                  <div className="absolute inset-0 bg-white/80 flex items-center justify-center">
-                    <span className="font-body text-sm text-slate/60 tracking-wide">Out of Stock</span>
-                  </div>
-                )}
-              </div>
+        <div className="grid grid-cols-12 gap-4 stagger">
+          {data.map((p, i) => {
+            const imageUrl = p.images?.[0]?.asset?.url
+            const bg = BG_GRADIENTS[i % BG_GRADIENTS.length]
+            const price = priceLabel(p)
 
-              <div className="p-6">
-                <h3 className="font-heading text-lg text-navy mb-2 group-hover:text-gold transition-colors duration-200">
-                  {product.name}
-                </h3>
-                {product.description && (
-                  <p className="font-body text-sm text-slate/70 leading-relaxed mb-4 line-clamp-2">
-                    {product.description}
-                  </p>
-                )}
-                <div className="flex items-center justify-between pt-4 border-t border-sand">
-                  <div>
-                    {product.hasVariants && product.priceRange ? (
-                      <span className="font-body text-sm font-semibold text-navy">
-                        TZS {product.priceRange} /=
-                      </span>
-                    ) : product.price ? (
-                      <span className="font-body text-sm font-semibold text-navy">
-                        {formatCurrency(product.price)} /=
-                      </span>
-                    ) : null}
-                  </div>
-                  <Link
-                    href={`/shop`}
-                    className="font-body text-xs font-semibold tracking-widest uppercase text-gold hover:text-navy flex items-center gap-1.5 transition-colors duration-200"
-                  >
-                    View
-                    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                    </svg>
-                  </Link>
+            return (
+              <article
+                key={p._id}
+                className="prod-card group relative overflow-hidden flex flex-col justify-end p-7 cursor-pointer"
+                style={{
+                  gridColumn: `span ${SPANS[i] ?? 4}`,
+                  minHeight: HEIGHTS[i] ?? 360,
+                  border: '1px solid rgba(200,150,46,.14)',
+                }}
+              >
+                {/* Background */}
+                <div className="prod-bg absolute inset-0" style={{ background: bg }}>
+                  {imageUrl && (
+                    <Image src={imageUrl} alt={p.name} fill className="object-cover mix-blend-overlay opacity-50" />
+                  )}
+                  <div className="absolute inset-0 mix-blend-overlay" style={{ background: 'repeating-linear-gradient(45deg,transparent 0 40px,rgba(0,0,0,.15) 40px 41px)' }} />
+                  <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg,rgba(11,29,58,.2) 0%,rgba(5,16,31,.95) 100%)' }} />
                 </div>
-              </div>
-            </div>
-          ))}
+
+                {/* Content */}
+                <div className="relative z-10">
+                  {p.category && (
+                    <div className="flex items-center gap-2.5 mb-3.5">
+                      <span className="block w-2 h-2 flex-shrink-0" style={{ border: '1px solid #C8962E', transform: 'rotate(45deg)' }} />
+                      <span className="font-condensed text-[12px] tracking-[0.22em] uppercase text-gold">{p.category.name}</span>
+                    </div>
+                  )}
+                  <h4 className="font-display text-[32px] tracking-[0.03em] uppercase text-cream leading-[0.95]">{p.name}</h4>
+                  <div className="mt-3 flex items-center justify-between font-space text-[11px] tracking-[0.1em] text-cream/55">
+                    {p.description && <span>{p.description}</span>}
+                    {price && <span className="text-gold-light">{price}</span>}
+                  </div>
+                </div>
+              </article>
+            )
+          })}
+        </div>
+
+        <div className="mt-16 reveal">
+          <Link
+            href="/shop"
+            className="group relative inline-flex items-center gap-3 overflow-hidden px-[34px] py-[18px] border border-gold text-gold font-condensed text-[14px] tracking-[0.22em] uppercase font-semibold"
+          >
+            <span className="relative z-10 group-hover:text-navy transition-colors duration-300">Browse full catalogue</span>
+            <svg className="relative z-10 w-3.5 h-3.5 group-hover:text-navy transition-all duration-400 group-hover:translate-x-1.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+              <path d="M5 12h14M13 5l7 7-7 7" />
+            </svg>
+            <span className="absolute inset-0 bg-gold -translate-x-full group-hover:translate-x-0 transition-transform duration-500" style={{ transitionTimingFunction: 'cubic-bezier(.16,1,.3,1)' }} />
+          </Link>
         </div>
       </div>
     </section>

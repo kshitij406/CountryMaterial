@@ -2,8 +2,6 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { client, urlFor } from '@/sanity/lib/client'
 import { allPostsQuery } from '@/sanity/lib/queries'
-import PageHeader from '@/components/ui/PageHeader'
-import AnimatedSection from '@/components/animations/AnimatedSection'
 import CtaBanner from '@/components/sections/CtaBanner'
 
 export const revalidate = 30
@@ -13,25 +11,9 @@ export const metadata: Metadata = {
   description: 'Latest news, updates, and announcements from Country Materials Ltd.',
 }
 
-const CATEGORY_COLORS: Record<string, string> = {
-  News: 'bg-navy text-white',
-  Announcement: 'bg-gold text-navy',
-  Update: 'bg-white/20 text-white border border-white/30',
-}
-
-const CATEGORY_COLORS_LIGHT: Record<string, string> = {
-  News: 'bg-navy text-white',
-  Announcement: 'bg-gold text-navy',
-  Update: 'bg-sand text-navy',
-}
-
 function formatDate(dateStr: string | null | undefined) {
   if (!dateStr) return null
-  return new Date(dateStr).toLocaleDateString('en-GB', {
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric',
-  })
+  return new Date(dateStr).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })
 }
 
 export default async function NewsPage() {
@@ -46,129 +28,170 @@ export default async function NewsPage() {
 
   return (
     <>
-      <PageHeader
-        label="Latest from Country Materials"
-        title="News & Announcements"
-        subtitle="Stay up to date with our latest developments, product updates, and company announcements."
-        theme="charcoal"
-      />
+      {/* Hero */}
+      <section
+        className="relative overflow-hidden pt-[160px] pb-[100px] px-8 lg:px-16"
+        style={{ background: '#05101f', borderBottom: '1px solid rgba(200,150,46,.2)' }}
+      >
+        <div aria-hidden className="grain-overlay absolute inset-0 pointer-events-none z-0" />
+        <div
+          aria-hidden
+          className="absolute inset-0 pointer-events-none"
+          style={{ background: 'repeating-linear-gradient(90deg,transparent 0 120px,rgba(200,150,46,.04) 120px 121px)' }}
+        />
+        <div
+          aria-hidden
+          className="absolute inset-0 pointer-events-none"
+          style={{ background: 'radial-gradient(ellipse at 50% 60%,rgba(200,150,46,.1),transparent 55%)' }}
+        />
+        <div className="relative max-w-[1440px] mx-auto">
+          <div className="flex items-center gap-3.5 mb-7">
+            <span className="block h-px w-10 bg-gold" />
+            <span className="font-condensed text-[12px] tracking-[0.18em] uppercase text-gold">Latest from Country Materials</span>
+          </div>
+          <h1 className="font-display text-[clamp(48px,7vw,112px)] leading-[0.9] tracking-[0.03em] uppercase text-cream">
+            News &<br /><span className="text-gold">Announcements</span>
+          </h1>
+          <p className="mt-8 font-barlow text-[17px] text-cream/55 max-w-xl leading-[1.65]">
+            Stay up to date with our latest developments, product updates, and company announcements.
+          </p>
+        </div>
+      </section>
 
-      <section className="bg-white py-section">
-        <div className="max-w-container mx-auto px-6 lg:px-10">
+      <section
+        className="relative py-[120px] px-8 lg:px-16"
+        style={{ background: '#0B1D3A', borderBottom: '1px solid rgba(200,150,46,.15)' }}
+      >
+        <div className="max-w-[1440px] mx-auto">
 
           {posts.length === 0 ? (
-            <AnimatedSection className="text-center py-24">
-              <p className="font-body text-slate/60 text-lg">No posts yet — check back soon.</p>
-            </AnimatedSection>
+            <div className="text-center py-24 reveal" style={{ border: '1px solid rgba(200,150,46,.2)' }}>
+              <div className="font-display text-[56px] text-gold/20 mb-4">◈</div>
+              <p className="font-barlow text-[16px] text-cream/45">No posts yet — check back soon.</p>
+            </div>
           ) : (
             <>
-              {/* ── Featured post — full-width horizontal card ── */}
+              {/* Featured post */}
               {featured && (
-                <AnimatedSection className="mb-14">
-                  <Link
-                    href={`/news/${featured.slug.current}`}
-                    className="group grid lg:grid-cols-2 bg-navy overflow-hidden hover:shadow-2xl hover:shadow-navy/20 transition-shadow duration-500"
-                  >
-                    {/* Image */}
-                    <div className="relative h-64 lg:h-auto overflow-hidden">
+                <Link
+                  href={`/news/${featured.slug.current}`}
+                  className="group grid lg:grid-cols-2 mb-16 reveal overflow-hidden"
+                  style={{ border: '1px solid rgba(200,150,46,.2)' }}
+                >
+                  <div className="relative h-64 lg:h-auto overflow-hidden" style={{ background: '#05101f' }}>
+                    {featuredImage ? (
                       <img
-                        src={featuredImage ?? '/images/intro-main.svg'}
+                        src={featuredImage}
                         alt={featured.title}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-r from-navy/30 to-transparent lg:from-transparent lg:to-navy/60" />
-                    </div>
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center">
+                        <span className="font-display text-[80px] text-gold/10">◈</span>
+                      </div>
+                    )}
+                    <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, rgba(5,16,31,0.3), transparent)' }} />
+                  </div>
 
-                    {/* Content */}
-                    <div className="p-8 lg:p-12 flex flex-col justify-center">
-                      <div className="flex items-center gap-3 mb-5">
-                        <span className="font-body text-xs text-gold tracking-widest uppercase">
-                          Featured
+                  <div
+                    className="p-10 lg:p-14 flex flex-col justify-center"
+                    style={{ background: '#05101f', borderLeft: '1px solid rgba(200,150,46,.2)' }}
+                  >
+                    <div className="flex items-center gap-3.5 mb-6">
+                      <span className="font-condensed text-[11px] tracking-[0.18em] uppercase text-gold">Featured</span>
+                      {featured.category && (
+                        <span
+                          className="font-condensed text-[10px] tracking-[0.15em] uppercase px-3 py-1 text-navy bg-gold"
+                        >
+                          {featured.category}
                         </span>
-                        {featured.category && (
-                          <span className={`font-body text-xs px-3 py-1 tracking-wider uppercase font-semibold ${CATEGORY_COLORS[featured.category] ?? CATEGORY_COLORS.News}`}>
-                            {featured.category}
-                          </span>
-                        )}
-                      </div>
-                      <h2 className="font-heading text-3xl lg:text-4xl text-white leading-tight mb-4 group-hover:text-gold transition-colors duration-300">
-                        {featured.title}
-                      </h2>
-                      {featured.excerpt && (
-                        <p className="font-body text-white/60 leading-relaxed mb-6 line-clamp-3">
-                          {featured.excerpt}
-                        </p>
                       )}
-                      <div className="flex items-center justify-between">
-                        {featured.publishedAt && (
-                          <span className="font-body text-xs text-white/40 tracking-widest uppercase">
-                            {formatDate(featured.publishedAt)}
-                          </span>
-                        )}
-                        <span className="inline-flex items-center gap-2 font-body text-xs font-semibold tracking-widest uppercase text-gold">
-                          Read Article
-                          <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                          </svg>
-                        </span>
-                      </div>
                     </div>
-                  </Link>
-                </AnimatedSection>
+                    <h2 className="font-display text-[clamp(28px,3.5vw,48px)] leading-[0.95] tracking-[0.03em] uppercase text-cream group-hover:text-gold transition-colors duration-300 mb-5">
+                      {featured.title}
+                    </h2>
+                    {featured.excerpt && (
+                      <p className="font-barlow text-[15px] text-cream/50 leading-[1.65] mb-8 line-clamp-3">
+                        {featured.excerpt}
+                      </p>
+                    )}
+                    <div className="flex items-center justify-between flex-wrap gap-4">
+                      {featured.publishedAt && (
+                        <span className="font-condensed text-[11px] tracking-[0.15em] uppercase text-cream/35">
+                          {formatDate(featured.publishedAt)}
+                        </span>
+                      )}
+                      <span className="font-condensed text-[12px] tracking-[0.18em] uppercase text-gold flex items-center gap-2 group-hover:gap-4 transition-all duration-300">
+                        Read Article
+                        <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+                          <path d="M5 12h14M13 5l7 7-7 7" />
+                        </svg>
+                      </span>
+                    </div>
+                  </div>
+                </Link>
               )}
 
-              {/* ── Rest of posts — 3-column grid ── */}
+              {/* Rest of posts */}
               {rest.length > 0 && (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                  {rest.map((post: any, i: number) => {
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-0 stagger" style={{ borderTop: '1px solid rgba(200,150,46,.2)', borderLeft: '1px solid rgba(200,150,46,.2)' }}>
+                  {rest.map((post: any) => {
                     const imageUrl = post.coverImage
                       ? urlFor(post.coverImage).width(600).height(400).url()
                       : null
-                    const badgeClass = CATEGORY_COLORS_LIGHT[post.category] ?? CATEGORY_COLORS_LIGHT.News
 
                     return (
-                      <AnimatedSection key={post._id} delay={i * 0.06}>
-                        <Link
-                          href={`/news/${post.slug.current}`}
-                          className="group flex flex-col bg-white border border-sand hover:border-gold/40 hover:shadow-xl hover:shadow-navy/8 transition-all duration-300 h-full"
-                        >
-                          <div className="relative h-44 overflow-hidden shrink-0">
+                      <Link
+                        key={post._id}
+                        href={`/news/${post.slug.current}`}
+                        className="group flex flex-col"
+                        style={{ borderRight: '1px solid rgba(200,150,46,.2)', borderBottom: '1px solid rgba(200,150,46,.2)' }}
+                      >
+                        <div className="relative h-44 overflow-hidden shrink-0" style={{ background: '#05101f' }}>
+                          {imageUrl ? (
                             <img
-                              src={imageUrl ?? '/images/intro-main.svg'}
+                              src={imageUrl}
                               alt={post.title}
                               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                             />
-                            {post.category && (
-                              <span className={`absolute top-3 left-3 font-body text-xs px-3 py-1 tracking-wider uppercase font-semibold ${badgeClass}`}>
-                                {post.category}
-                              </span>
-                            )}
-                          </div>
-
-                          <div className="p-6 flex flex-col flex-1">
-                            {post.publishedAt && (
-                              <p className="font-body text-xs text-slate/45 uppercase tracking-widest mb-3">
-                                {formatDate(post.publishedAt)}
-                                {post.author && <span> · {post.author}</span>}
-                              </p>
-                            )}
-                            <h2 className="font-heading text-lg text-navy leading-snug mb-3 group-hover:text-gold transition-colors duration-200 flex-1">
-                              {post.title}
-                            </h2>
-                            {post.excerpt && (
-                              <p className="font-body text-sm text-slate/65 leading-relaxed line-clamp-2 mb-4">
-                                {post.excerpt}
-                              </p>
-                            )}
-                            <div className="pt-4 border-t border-sand flex items-center gap-1.5 font-body text-xs font-semibold tracking-widest uppercase text-gold group-hover:text-navy transition-colors duration-200">
-                              Read More
-                              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                              </svg>
+                          ) : (
+                            <div className="w-full h-full flex items-center justify-center">
+                              <span className="font-display text-[48px] text-gold/10">◈</span>
                             </div>
+                          )}
+                          {post.category && (
+                            <span className="absolute top-3 left-3 font-condensed text-[10px] tracking-[0.15em] uppercase px-3 py-1 text-navy bg-gold">
+                              {post.category}
+                            </span>
+                          )}
+                        </div>
+
+                        <div className="p-8 flex flex-col flex-1" style={{ background: '#05101f' }}>
+                          {post.publishedAt && (
+                            <p className="font-condensed text-[10px] tracking-[0.18em] uppercase text-cream/30 mb-3">
+                              {formatDate(post.publishedAt)}
+                              {post.author && <span> · {post.author}</span>}
+                            </p>
+                          )}
+                          <h2 className="font-display text-[clamp(18px,1.8vw,24px)] leading-[0.95] tracking-[0.03em] uppercase text-cream group-hover:text-gold transition-colors duration-200 mb-3 flex-1">
+                            {post.title}
+                          </h2>
+                          {post.excerpt && (
+                            <p className="font-barlow text-[14px] text-cream/40 leading-[1.65] line-clamp-2 mb-5">
+                              {post.excerpt}
+                            </p>
+                          )}
+                          <div
+                            className="pt-5 flex items-center gap-2 font-condensed text-[11px] tracking-[0.18em] uppercase text-gold"
+                            style={{ borderTop: '1px solid rgba(200,150,46,.15)' }}
+                          >
+                            Read More
+                            <svg className="w-3 h-3 transition-transform duration-300 group-hover:translate-x-1.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+                              <path d="M5 12h14M13 5l7 7-7 7" />
+                            </svg>
                           </div>
-                        </Link>
-                      </AnimatedSection>
+                        </div>
+                      </Link>
                     )
                   })}
                 </div>

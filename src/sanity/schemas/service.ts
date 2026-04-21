@@ -64,6 +64,20 @@ export const service = defineType({
       ],
       description: 'Up to 3 stat/label pairs shown in the dark banner on the service detail page.',
     }),
+    defineField({
+      name: 'icon',
+      title: 'Icon',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Steel / Construction', value: 'steel' },
+          { title: 'Hardware / Tools', value: 'hardware' },
+          { title: 'Waste Management', value: 'waste' },
+          { title: 'Logistics / Transport', value: 'logistics' },
+        ],
+      },
+      description: 'Icon shown on the homepage services card.',
+    }),
     defineField({ name: 'displayOrder', title: 'Display Order', type: 'number' }),
   ],
   orderings: [{ title: 'Display Order', name: 'displayOrder', by: [{ field: 'displayOrder', direction: 'asc' }] }],
