@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { usePathname, useRouter } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
 
 const navLinks = [
@@ -11,6 +11,7 @@ const navLinks = [
   { label: 'Services', href: '/services' },
   { label: 'Products', href: '/shop' },
   { label: 'About',    href: '/about' },
+  { label: 'Careers',  href: '/careers' },
   { label: 'Contact',  href: '/contact' },
 ]
 
@@ -23,7 +24,6 @@ export default function Navbar({ logoUrl, companyName: _companyName }: NavbarPro
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const pathname = usePathname()
-  const router = useRouter()
   const isHome = pathname === '/'
 
   useEffect(() => {
@@ -39,22 +39,21 @@ export default function Navbar({ logoUrl, companyName: _companyName }: NavbarPro
     return () => { document.body.style.overflow = '' }
   }, [menuOpen])
 
-  function handleClientsClick(e: React.MouseEvent) {
-    e.preventDefault()
-    setMenuOpen(false)
-    if (pathname === '/') {
-      document.getElementById('clients')?.scrollIntoView({ behavior: 'smooth' })
-    } else {
-      router.push('/')
-      setTimeout(() => {
-        document.getElementById('clients')?.scrollIntoView({ behavior: 'smooth' })
-      }, 600)
-    }
-  }
-
   function isActive(href: string) {
     if (href === '/') return pathname === '/'
     return pathname.startsWith(href)
+  }
+
+  function handleClientsClick() {
+    setMenuOpen(false)
+
+    if (pathname !== '/') {
+      window.location.href = '/#clients'
+      return
+    }
+
+    const clientsSection = document.getElementById('clients')
+    clientsSection?.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }
 
   const linkClass = (href: string) => cn(

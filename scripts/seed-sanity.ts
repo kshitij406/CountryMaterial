@@ -43,7 +43,7 @@ const siteSettings = {
   _type: 'siteSettings',
   companyName: 'Country Materials Ltd',
   phone: '+255 768 500 555',
-  email: 'info@countrymaterials.co.tz',
+  email: 'info@countrymaterial.com',
   address: 'Babecov Complex, Buguruni Mandela Road',
   poBox: '2140',
   city: 'Dar es Salaam',
@@ -52,9 +52,10 @@ const siteSettings = {
   shopPageTitle: 'Quality Materials\nfrom Country Materials',
   shopPageSubtitle: 'Browse our full range of construction materials, steel products, and hardware supplies. All prices in Tanzanian Shillings.',
   socialLinks: {
-    facebook: 'https://facebook.com',
-    linkedin: 'https://linkedin.com',
-    instagram: 'https://instagram.com',
+    facebook: 'https://www.facebook.com/countrymaterials',
+    linkedin: 'https://www.linkedin.com/company/country-materials',
+    instagram: 'https://www.instagram.com/countrymaterials',
+    twitter: 'https://x.com/countrymaterials',
   },
 }
 
@@ -296,6 +297,7 @@ const careerLogistics = {
   _type: 'career',
   title: 'Logistics Coordinator',
   slug: { _type: 'slug', current: 'logistics-coordinator' },
+  excerpt: 'Coordinate freight movement, dispatch planning, and route efficiency for construction material deliveries across Tanzania.',
   department: 'Transportation',
   location: 'Dar es Salaam',
   employmentType: 'full-time',
@@ -316,6 +318,7 @@ const careerWasteSupervisor = {
   _type: 'career',
   title: 'Waste Collection Supervisor',
   slug: { _type: 'slug', current: 'waste-collection-supervisor' },
+  excerpt: 'Lead field collection teams and ensure safe, compliant, high-quality waste operations for industrial clients.',
   department: 'Waste Management',
   location: 'Dar es Salaam',
   employmentType: 'full-time',
@@ -336,6 +339,7 @@ const careerSalesExecutive = {
   _type: 'career',
   title: 'Sales Executive — Steel & Hardware',
   slug: { _type: 'slug', current: 'sales-executive-steel' },
+  excerpt: 'Drive B2B growth across steel and hardware accounts by building contractor relationships and closing project deals.',
   department: 'Sales',
   location: 'Dar es Salaam',
   employmentType: 'full-time',
@@ -434,6 +438,12 @@ const homepage = {
 async function seed() {
   console.log('🌱 Seeding Country Materials Sanity dataset...\n')
 
+  if (!process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || !process.env.SANITY_API_TOKEN) {
+    console.error('❌ Missing Sanity environment variables.')
+    console.error('   Required: NEXT_PUBLIC_SANITY_PROJECT_ID, SANITY_API_TOKEN')
+    process.exit(1)
+  }
+
   // Order matters: base documents first, then references
   const batches = [
     {
@@ -462,6 +472,27 @@ async function seed() {
     },
   ]
 
+  const seededIds = batches.flatMap((batch) => batch.docs.map((doc: any) => doc._id))
+  const managedCollectionTypes = ['service', 'productCategory', 'product', 'career']
+
+  console.log('🧹 Cleaning stale seeded documents...')
+  const staleIds: string[] = await client.fetch(
+    `*[_type in $types && !(_id in $seededIds) && !(_id match "drafts.*")]._id`,
+    { types: managedCollectionTypes, seededIds }
+  )
+
+  if (staleIds.length > 0) {
+    const cleanupTx = client.transaction()
+    for (const id of staleIds) {
+      cleanupTx.delete(id)
+      cleanupTx.delete(`drafts.${id}`)
+    }
+    await cleanupTx.commit({ visibility: 'sync' })
+    console.log(`   ✅ Removed ${staleIds.length} stale document(s)`)
+  } else {
+    console.log('   ✅ No stale documents found')
+  }
+
   for (const batch of batches) {
     console.log(`📦 ${batch.label} (${batch.docs.length} document${batch.docs.length > 1 ? 's' : ''})...`)
     const transaction = client.transaction()
@@ -469,7 +500,7 @@ async function seed() {
       transaction.createOrReplace(doc as any)
     }
     try {
-      await transaction.commit({ visibility: 'async' })
+      await transaction.commit({ visibility: 'sync' })
       console.log(`   ✅ Done`)
     } catch (err: any) {
       console.error(`   ❌ Failed:`, err.message)
