@@ -105,7 +105,7 @@ export default function HeroSection({
         />
         {videoSrc && (
           <video
-            className="absolute inset-0 w-full h-full object-cover mix-blend-overlay opacity-55"
+            className="absolute inset-0 w-full h-full object-cover mix-blend-overlay opacity-65"
             src={videoSrc}
             autoPlay
             muted

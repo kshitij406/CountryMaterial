@@ -57,7 +57,7 @@ export default function Navbar({ logoUrl, companyName: _companyName }: NavbarPro
     <header
       className={cn(
         'fixed top-0 left-0 right-0 z-50 transition-all duration-400 border-b',
-        scrolled || !isHome
+        scrolled || !isHome || menuOpen
           ? 'bg-navy/92 backdrop-blur-[14px] border-gold/[0.18] py-3.5'
           : 'bg-transparent border-transparent py-[22px]'
       )}
@@ -65,7 +65,7 @@ export default function Navbar({ logoUrl, companyName: _companyName }: NavbarPro
       <div className="max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-16 flex items-center justify-between">
 
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-3.5" aria-label="Country Materials Ltd">
+        <Link href="/" className="flex items-center gap-1.5 sm:gap-3.5" aria-label="Country Materials Ltd">
           {logoUrl ? (
             <Image
               src={logoUrl}
@@ -122,11 +122,11 @@ export default function Navbar({ logoUrl, companyName: _companyName }: NavbarPro
       {/* Mobile menu */}
       <div
         className={cn(
-          'lg:hidden fixed inset-0 top-[62px] bg-navy transition-all duration-300',
+          'lg:hidden fixed inset-0 z-40 bg-navy/95 backdrop-blur-[10px] pt-[68px] transition-all duration-300',
           menuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
         )}
       >
-        <nav className="flex flex-col px-8 pt-10 gap-2">
+        <nav className="flex flex-col px-8 pt-3 gap-2">
           {navLinks.map((link) => (
             <Link
               key={link.href}
