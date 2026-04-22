@@ -63,7 +63,7 @@ export default function Footer({ contact }: { contact?: FooterContact }) {
           <div>
             <div className="mb-5">
               <Image
-                src="/images/country-materials-logo.svg"
+                src="/images/logo/Country-Materials-Logo.png"
                 alt="Country Materials Ltd"
                 width={220}
                 height={64}
