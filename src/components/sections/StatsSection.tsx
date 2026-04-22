@@ -59,7 +59,7 @@ export default function StatsSection({ stats }: { stats?: Stat[] }) {
 
   return (
     <section
-      className="relative py-[120px] px-8 lg:px-16 overflow-hidden"
+      className="relative py-20 sm:py-24 lg:py-[120px] px-5 sm:px-8 lg:px-16 overflow-hidden"
       id="stats"
       style={{
         background: '#05101f',
@@ -74,8 +74,8 @@ export default function StatsSection({ stats }: { stats?: Stat[] }) {
       />
 
       <div className="relative max-w-[1440px] mx-auto">
-        <div className="flex items-end justify-between flex-wrap gap-10 mb-24 reveal">
-          <h2 className="font-display text-[clamp(40px,5vw,72px)] leading-[0.9] tracking-[0.03em] uppercase text-cream max-w-[720px]">
+        <div className="flex items-end justify-between flex-wrap gap-8 sm:gap-10 mb-14 sm:mb-24 reveal">
+          <h2 className="font-display text-[clamp(32px,5vw,72px)] leading-[0.9] tracking-[0.03em] uppercase text-cream max-w-[720px]">
             Numbers that <span className="text-gold">hold weight.</span>
           </h2>
           <span className="font-space text-[12px] text-gold tracking-[0.2em]">{'// 04 — THE RECORD'}</span>
@@ -88,10 +88,10 @@ export default function StatsSection({ stats }: { stats?: Stat[] }) {
           {data.map((s, i) => (
             <div
               key={s.label}
-              className="py-14 px-8"
+              className="py-10 sm:py-14 px-5 sm:px-8"
               style={{ borderRight: i < data.length - 1 ? '1px solid rgba(200,150,46,.15)' : undefined }}
             >
-              <div className="font-display text-[clamp(80px,8vw,132px)] leading-[0.95] tracking-[0.02em] text-gold flex items-baseline gap-1.5">
+              <div className="font-display text-[clamp(56px,8vw,132px)] leading-[0.95] tracking-[0.02em] text-gold flex items-baseline gap-1.5">
                 <Counter count={s.count} />
                 {s.suffix && <span className="text-[0.55em] text-gold-light">{s.suffix}</span>}
               </div>

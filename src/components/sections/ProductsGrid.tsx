@@ -11,9 +11,9 @@ const BG_GRADIENTS = [
   'radial-gradient(ellipse at 20% 40%,rgba(200,150,46,.3),transparent 55%),linear-gradient(160deg,#2a1a08,#0B1D3A)',
 ]
 
-// 12-col span pattern: 6, 3, 3, 4, 4, 4
-const SPANS = [6, 3, 3, 4, 4, 4]
-const HEIGHTS = [440, 360, 360, 360, 360, 360]
+// 12-col span pattern on desktop: 6, 3, 3, 4, 4, 4
+const SPAN_CLASSES = ['lg:col-span-6', 'lg:col-span-3', 'lg:col-span-3', 'lg:col-span-4', 'lg:col-span-4', 'lg:col-span-4']
+const HEIGHT_CLASSES = ['lg:min-h-[440px]', 'lg:min-h-[360px]', 'lg:min-h-[360px]', 'lg:min-h-[360px]', 'lg:min-h-[360px]', 'lg:min-h-[360px]']
 
 const DEFAULT_PRODUCTS = [
   { _id: 'p1', category: { name: 'Steel / Reinforcement' }, name: 'TMT Rebar Y12 – Y32',    priceRange: '2,450/KG', price: null, hasVariants: true,  inStock: true, description: 'BS 4449 · Fe500D', images: [] },
@@ -47,28 +47,28 @@ export default function ProductsGrid({ products }: { products?: Product[] }) {
   const data = (products?.length ? products : DEFAULT_PRODUCTS).slice(0, 6)
 
   return (
-    <section className="relative bg-navy py-[140px] px-8 lg:px-16 overflow-hidden" id="products">
-      <span className="absolute top-14 right-8 lg:right-16 font-space text-[12px] text-gold tracking-[0.2em]">
+    <section className="relative bg-navy py-20 sm:py-24 lg:py-[140px] px-5 sm:px-8 lg:px-16 overflow-hidden" id="products">
+      <span className="absolute top-10 sm:top-14 right-5 sm:right-8 lg:right-16 font-space text-[11px] sm:text-[12px] text-gold tracking-[0.2em]">
         05 / PRODUCTS
       </span>
 
       <div className="max-w-[1440px] mx-auto">
-        <div className="grid lg:grid-cols-2 gap-14 mb-20 items-end reveal">
+        <div className="grid lg:grid-cols-2 gap-10 sm:gap-14 mb-12 sm:mb-20 items-end reveal">
           <div>
             <div className="flex items-center gap-4 mb-6">
               <span className="block h-px w-10 bg-gold" />
               <span className="font-condensed text-[12px] tracking-[0.18em] uppercase text-gold">The catalogue</span>
             </div>
-            <h2 className="font-display text-[clamp(44px,6.5vw,96px)] leading-[0.9] tracking-[0.03em] uppercase text-cream">
+            <h2 className="font-display text-[clamp(34px,6.5vw,96px)] leading-[0.9] tracking-[0.03em] uppercase text-cream">
               Materials,<br />specified <span className="text-gold">precisely.</span>
             </h2>
           </div>
-          <p className="font-barlow text-[17px] text-cream/65 max-w-[480px]">
+          <p className="font-barlow text-[15px] sm:text-[17px] text-cream/65 max-w-[480px]">
             Everything we carry is specified, certified and traceable to source. Browse a selection below — request the full catalogue for tender pricing.
           </p>
         </div>
 
-        <div className="grid grid-cols-12 gap-4 stagger">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-4 stagger">
           {data.map((p, i) => {
             const imageUrl = p.images?.[0]?.asset?.url
             const bg = BG_GRADIENTS[i % BG_GRADIENTS.length]
@@ -77,10 +77,9 @@ export default function ProductsGrid({ products }: { products?: Product[] }) {
             return (
               <article
                 key={p._id}
-                className="prod-card group relative overflow-hidden flex flex-col justify-end p-7 cursor-pointer"
+                className={`prod-card group relative overflow-hidden flex flex-col justify-end p-5 sm:p-7 cursor-pointer col-span-1 ${SPAN_CLASSES[i] ?? 'lg:col-span-4'} ${HEIGHT_CLASSES[i] ?? 'lg:min-h-[360px]'}`}
                 style={{
-                  gridColumn: `span ${SPANS[i] ?? 4}`,
-                  minHeight: HEIGHTS[i] ?? 360,
+                  minHeight: 280,
                   border: '1px solid rgba(200,150,46,.14)',
                 }}
               >

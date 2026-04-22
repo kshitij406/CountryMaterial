@@ -24,7 +24,7 @@ export default function ContactCTA({
 
   return (
     <section
-      className="relative py-[160px] px-8 lg:px-16 overflow-hidden"
+      className="relative py-20 sm:py-28 lg:py-[160px] px-5 sm:px-8 lg:px-16 overflow-hidden"
       id="contact"
       style={{
         background: `
@@ -40,14 +40,14 @@ export default function ContactCTA({
         style={{ background: 'repeating-linear-gradient(90deg,transparent 0 120px,rgba(200,150,46,.04) 120px 121px)' }}
       />
 
-      <div className="relative max-w-[1440px] mx-auto grid lg:grid-cols-[1.4fr_1fr] gap-20 items-end">
+      <div className="relative max-w-[1440px] mx-auto grid lg:grid-cols-[1.4fr_1fr] gap-12 sm:gap-20 items-end">
         {/* Headline */}
         <div className="reveal">
           <div className="flex items-center gap-3.5 mb-7">
             <span className="block h-px w-10 bg-gold" />
             <span className="font-condensed text-[12px] tracking-[0.18em] uppercase text-gold">{eyebrow}</span>
           </div>
-          <h2 className="font-display text-[clamp(56px,8vw,128px)] leading-[0.9] tracking-[0.03em] uppercase text-cream">
+          <h2 className="font-display text-[clamp(38px,8vw,128px)] leading-[0.9] tracking-[0.03em] uppercase text-cream">
             {headingLines.map((line, i) => (
               <span key={i} className="block">
                 {i === headingLines.length - 1 ? <span className="text-gold">{line}</span> : line}
@@ -60,13 +60,13 @@ export default function ContactCTA({
         <div className="flex flex-col gap-7 pb-3 reveal">
           <div style={{ borderTop: '1px solid rgba(200,150,46,.2)', paddingTop: 14 }}>
             <div className="font-condensed text-[11px] tracking-[0.22em] uppercase text-cream/55">Tender desk</div>
-            <div className="mt-1 font-display text-[26px] tracking-[0.04em] text-cream">
+              <div className="mt-1 font-display text-[22px] sm:text-[26px] tracking-[0.04em] text-cream">
               <a href={telHref} className="hover:text-gold transition-colors duration-200">{phone}</a>
             </div>
           </div>
           <div style={{ borderTop: '1px solid rgba(200,150,46,.2)', paddingTop: 14 }}>
             <div className="font-condensed text-[11px] tracking-[0.22em] uppercase text-cream/55">Email</div>
-            <div className="mt-1 font-display text-[clamp(18px,2vw,26px)] tracking-[0.04em] text-cream">
+             <div className="mt-1 font-display text-[clamp(16px,2vw,26px)] tracking-[0.04em] text-cream break-all sm:break-normal">
               <a href={`mailto:${email}`} className="hover:text-gold transition-colors duration-200">{email}</a>
             </div>
           </div>
@@ -80,7 +80,7 @@ export default function ContactCTA({
         <div className="lg:col-span-2 flex flex-col sm:flex-row gap-4 reveal">
           <Link
             href="/contact"
-            className="group relative inline-flex items-center gap-3 overflow-hidden px-[34px] py-[18px] bg-gold text-navy font-condensed text-[14px] tracking-[0.22em] uppercase font-semibold"
+            className="group relative inline-flex items-center justify-center gap-3 overflow-hidden px-6 sm:px-[34px] py-4 sm:py-[18px] bg-gold text-navy font-condensed text-[13px] sm:text-[14px] tracking-[0.22em] uppercase font-semibold"
           >
             <span className="relative z-10">{primaryLabel}</span>
             <svg className="relative z-10 w-3.5 h-3.5 transition-transform duration-400 group-hover:translate-x-1.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
@@ -90,7 +90,7 @@ export default function ContactCTA({
           </Link>
           <Link
             href="/about"
-            className="group relative inline-flex items-center gap-3 overflow-hidden px-[34px] py-[18px] border border-gold text-gold font-condensed text-[14px] tracking-[0.22em] uppercase font-semibold"
+            className="group relative inline-flex items-center justify-center gap-3 overflow-hidden px-6 sm:px-[34px] py-4 sm:py-[18px] border border-gold text-gold font-condensed text-[13px] sm:text-[14px] tracking-[0.22em] uppercase font-semibold"
           >
             <span className="relative z-10 group-hover:text-navy transition-colors duration-300">{secondaryLabel}</span>
             <svg className="relative z-10 w-3.5 h-3.5 group-hover:text-navy transition-all duration-400 group-hover:translate-x-1.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>

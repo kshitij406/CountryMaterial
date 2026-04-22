@@ -62,7 +62,7 @@ export default function Navbar({ logoUrl, companyName: _companyName }: NavbarPro
           : 'bg-transparent border-transparent py-[22px]'
       )}
     >
-      <div className="max-w-[1600px] mx-auto px-8 lg:px-16 flex items-center justify-between">
+      <div className="max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-16 flex items-center justify-between">
 
         {/* Logo */}
         <Link href="/" className="flex items-center gap-3.5" aria-label="Country Materials Ltd">
@@ -72,7 +72,7 @@ export default function Navbar({ logoUrl, companyName: _companyName }: NavbarPro
               alt="Country Materials Ltd"
               width={220}
               height={64}
-              className="h-10 w-auto object-contain"
+              className="h-8 sm:h-10 w-auto object-contain"
               priority
             />
           ) : (
@@ -81,7 +81,7 @@ export default function Navbar({ logoUrl, companyName: _companyName }: NavbarPro
               alt="Country Materials Ltd"
               width={220}
               height={64}
-              className="h-10 w-auto object-contain"
+              className="h-8 sm:h-10 w-auto object-contain"
               priority
             />
           )}

@@ -25,7 +25,7 @@ export default function AboutStrip({
     >
       {/* Left — foundry visual */}
       <div
-        className="grain-overlay relative min-h-[600px] lg:min-h-[720px] overflow-hidden reveal"
+        className="grain-overlay relative min-h-[320px] sm:min-h-[460px] lg:min-h-[720px] overflow-hidden reveal"
         style={{
           background: `
             radial-gradient(ellipse at 30% 40%,rgba(200,150,46,.35),transparent 55%),
@@ -55,13 +55,13 @@ export default function AboutStrip({
       </div>
 
       {/* Right — text */}
-      <div className="flex flex-col justify-center px-10 lg:px-20 py-28 bg-charcoal reveal">
+      <div className="flex flex-col justify-center px-5 sm:px-10 lg:px-20 py-16 sm:py-20 lg:py-28 bg-charcoal reveal">
         <div className="flex items-center gap-3.5 mb-6">
           <span className="block h-px w-8 bg-gold" />
           <span className="font-condensed text-[12px] tracking-[0.18em] uppercase text-gold">The House of Country</span>
         </div>
 
-        <h2 className="font-display text-[clamp(40px,5vw,72px)] leading-[0.92] tracking-[0.03em] uppercase text-cream">
+        <h2 className="font-display text-[clamp(32px,5vw,72px)] leading-[0.92] tracking-[0.03em] uppercase text-cream">
           {headingLines.map((line, i) => (
             <span key={i} className="block">
               {i === headingLines.length - 1
@@ -71,9 +71,9 @@ export default function AboutStrip({
           ))}
         </h2>
 
-        <p className="mt-7 font-barlow text-[19px] text-cream/82 leading-[1.55]">{lead}</p>
+        <p className="mt-6 sm:mt-7 font-barlow text-[16px] sm:text-[19px] text-cream/82 leading-[1.55]">{lead}</p>
 
-        <p className="mt-5 font-barlow text-[16px] text-cream/60 max-w-[540px]">{body}</p>
+        <p className="mt-4 sm:mt-5 font-barlow text-[15px] sm:text-[16px] text-cream/60 max-w-[540px]">{body}</p>
 
         <div
           className="mt-10 pt-7 flex items-center gap-5"

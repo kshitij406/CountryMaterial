@@ -52,23 +52,23 @@ export default function ServicesSection({ services }: { services?: Service[] }) 
   const data = services?.length ? services.slice(0, 4) : DEFAULT_SERVICES
 
   return (
-    <section className="relative bg-navy py-[140px] px-8 lg:px-16 overflow-hidden" id="services">
-      <span className="absolute top-14 right-8 lg:right-16 font-space text-[12px] text-gold tracking-[0.2em]">
+    <section className="relative bg-navy py-20 sm:py-24 lg:py-[140px] px-5 sm:px-8 lg:px-16 overflow-hidden" id="services">
+      <span className="absolute top-10 sm:top-14 right-5 sm:right-8 lg:right-16 font-space text-[11px] sm:text-[12px] text-gold tracking-[0.2em]">
         02 / SERVICES
       </span>
 
       <div className="max-w-[1440px] mx-auto">
-        <div className="grid lg:grid-cols-2 gap-14 mb-20 items-end reveal">
+        <div className="grid lg:grid-cols-2 gap-10 sm:gap-14 mb-12 sm:mb-20 items-end reveal">
           <div>
             <div className="flex items-center gap-4 mb-6">
               <span className="block h-px w-10 bg-gold" />
               <span className="font-condensed text-[12px] tracking-[0.18em] uppercase text-gold">What we do</span>
             </div>
-            <h2 className="font-display text-[clamp(44px,6.5vw,96px)] leading-[0.9] tracking-[0.03em] uppercase text-cream">
+            <h2 className="font-display text-[clamp(34px,6.5vw,96px)] leading-[0.9] tracking-[0.03em] uppercase text-cream">
               Four divisions.<br />One <span className="text-gold">discipline.</span>
             </h2>
           </div>
-          <p className="font-barlow text-[17px] text-cream/65 max-w-[480px]">
+          <p className="font-barlow text-[15px] sm:text-[17px] text-cream/65 max-w-[480px]">
             From reinforcement bar forged in our Pwani mill to sealed logistics across East Africa — Country Materials owns every link in the chain.
           </p>
         </div>
@@ -77,7 +77,7 @@ export default function ServicesSection({ services }: { services?: Service[] }) 
           {data.map((svc, i) => (
             <article
               key={svc._id}
-              className="service-card group relative flex flex-col min-h-[420px] p-11 pt-10 bg-navy-light"
+              className="service-card group relative flex flex-col min-h-[330px] lg:min-h-[420px] p-7 sm:p-9 lg:p-11 pt-7 sm:pt-9 lg:pt-10 bg-navy-light"
               style={{ border: '1px solid rgba(200,150,46,.18)', borderLeft: '3px solid #C8962E' }}
             >
               <span className="font-space text-[11px] text-gold/50 tracking-[0.2em]">/ {String(i + 1).padStart(2, '0')}</span>

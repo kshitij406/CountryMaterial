@@ -24,7 +24,7 @@ const DEFAULT_PARTNERS: Partner[] = [
 function LogoTile({ name, sub, logoUrl }: Partner) {
   return (
     <div
-      className="logo-tile flex-shrink-0 w-[180px] h-[60px] flex flex-col items-center justify-center px-6 cursor-default"
+      className="logo-tile flex-shrink-0 w-[150px] sm:w-[180px] h-[56px] sm:h-[60px] flex flex-col items-center justify-center px-4 sm:px-6 cursor-default"
       style={{
         filter: 'grayscale(1) brightness(1.4) contrast(.6)',
         opacity: 0.55,
@@ -36,7 +36,7 @@ function LogoTile({ name, sub, logoUrl }: Partner) {
         <Image src={logoUrl} alt={name} width={120} height={40} className="object-contain max-h-10 w-auto" />
       ) : (
         <>
-          <span className="font-display text-[20px] tracking-[0.08em] text-cream">{name}</span>
+          <span className="font-display text-[17px] sm:text-[20px] tracking-[0.08em] text-cream">{name}</span>
           {sub && <span className="font-condensed text-[9px] tracking-[0.2em] uppercase text-cream/50 mt-0.5">{sub}</span>}
         </>
       )}
@@ -50,7 +50,7 @@ export default function ClientsMarquee({ partners }: { partners?: Partner[] }) {
 
   return (
     <section
-      className="relative overflow-hidden py-20"
+      className="relative overflow-hidden py-14 sm:py-20"
       id="clients"
       style={{
         background: '#1A1A2E',
@@ -58,7 +58,7 @@ export default function ClientsMarquee({ partners }: { partners?: Partner[] }) {
         borderBottom: '1px solid rgba(200,150,46,.15)',
       }}
     >
-      <div className="text-center mb-16 px-8 reveal">
+      <div className="text-center mb-10 sm:mb-16 px-5 sm:px-8 reveal">
         <div className="inline-flex items-center gap-3.5 mb-5">
           <span className="block h-px w-8 bg-gold" />
           <span className="font-condensed text-[12px] tracking-[0.18em] uppercase text-gold">Trusted by</span>
@@ -69,7 +69,7 @@ export default function ClientsMarquee({ partners }: { partners?: Partner[] }) {
         </h3>
       </div>
 
-      <div className="flex gap-20 w-max animate-ticker">
+      <div className="flex gap-10 sm:gap-20 w-max animate-ticker">
         {doubled.map((c, i) => (
           <LogoTile key={i} {...c} />
         ))}

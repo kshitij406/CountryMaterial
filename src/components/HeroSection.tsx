@@ -78,7 +78,7 @@ export default function HeroSection({
   return (
     <section
       ref={sectionRef}
-      className="relative h-screen min-h-[720px] flex items-end overflow-hidden bg-navy"
+      className="relative h-screen min-h-[640px] lg:min-h-[720px] flex items-end overflow-hidden bg-navy"
     >
       {/* Cinematic background */}
       <div
@@ -126,7 +126,7 @@ export default function HeroSection({
       <div aria-hidden className="grain-overlay absolute inset-0 z-[2] pointer-events-none" />
 
       {/* Content */}
-      <div className="relative z-10 w-full max-w-[1600px] mx-auto px-8 lg:px-16 pb-24">
+      <div className="relative z-10 w-full max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-16 pb-16 sm:pb-24">
 
         {/* Kicker */}
         <div className="hs-kicker flex items-center gap-[18px] mb-7" style={{ opacity: 0 }}>
@@ -140,7 +140,7 @@ export default function HeroSection({
         </div>
 
         {/* H1 — each line clips via overflow-hidden parent */}
-        <h1 className="font-display uppercase leading-[0.88] tracking-[0.04em] text-[clamp(64px,10vw,160px)] max-w-[1200px]">
+        <h1 className="font-display uppercase leading-[0.88] tracking-[0.04em] text-[clamp(46px,10vw,160px)] max-w-[1200px]">
           <span className="block overflow-hidden">
             <span className="hs-line-inner block text-cream">{headingLine1}</span>
           </span>
@@ -151,17 +151,17 @@ export default function HeroSection({
 
         {/* Subheading */}
         <p
-          className="hs-sub mt-9 font-barlow text-[18px] text-cream/70 leading-[1.6] max-w-[540px]"
+          className="hs-sub mt-7 sm:mt-9 font-barlow text-[16px] sm:text-[18px] text-cream/70 leading-[1.6] max-w-[540px]"
           style={{ opacity: 0 }}
         >
           {subheading}
         </p>
 
         {/* CTAs */}
-        <div className="flex flex-col sm:flex-row gap-4 mt-11">
+        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mt-9 sm:mt-11">
           <Link
             href="/services"
-            className="hs-cta group relative inline-flex items-center gap-3 overflow-hidden px-[34px] py-[18px] bg-gold text-navy font-condensed text-[14px] tracking-[0.22em] uppercase font-semibold"
+            className="hs-cta group relative inline-flex items-center justify-center gap-3 overflow-hidden px-6 sm:px-[34px] py-4 sm:py-[18px] bg-gold text-navy font-condensed text-[13px] sm:text-[14px] tracking-[0.22em] uppercase font-semibold"
             style={{ opacity: 0 }}
           >
             <span className="relative z-10">Explore our work</span>
@@ -176,7 +176,7 @@ export default function HeroSection({
 
           <Link
             href="/contact"
-            className="hs-cta group relative inline-flex items-center gap-3 overflow-hidden px-[34px] py-[18px] border border-gold text-gold font-condensed text-[14px] tracking-[0.22em] uppercase font-semibold"
+            className="hs-cta group relative inline-flex items-center justify-center gap-3 overflow-hidden px-6 sm:px-[34px] py-4 sm:py-[18px] border border-gold text-gold font-condensed text-[13px] sm:text-[14px] tracking-[0.22em] uppercase font-semibold"
             style={{ opacity: 0 }}
           >
             <span className="relative z-10 group-hover:text-navy transition-colors duration-300">Request a quote</span>
@@ -195,13 +195,13 @@ export default function HeroSection({
       </div>
 
       {/* Hero meta — bottom right */}
-      <div className="hs-meta absolute right-8 lg:right-16 bottom-24 z-10 flex flex-col gap-1 items-end" style={{ opacity: 0 }}>
+      <div className="hs-meta hidden sm:flex absolute right-8 lg:right-16 bottom-24 z-10 flex-col gap-1 items-end" style={{ opacity: 0 }}>
         <span className="font-condensed text-[11px] tracking-[0.18em] uppercase text-cream/50">Est. MCMXCVII</span>
         <span className="font-space text-[12px] text-gold tracking-[0.1em]">06°47&apos;S · 39°12&apos;E</span>
       </div>
 
       {/* Scroll hint — bottom left */}
-      <div className="hs-scroll absolute left-8 lg:left-16 bottom-10 z-10 flex items-center gap-3" style={{ opacity: 0 }}>
+      <div className="hs-scroll absolute left-5 sm:left-8 lg:left-16 bottom-8 sm:bottom-10 z-10 flex items-center gap-3" style={{ opacity: 0 }}>
         <span className="font-condensed text-[11px] tracking-[0.22em] uppercase text-cream/60">Scroll</span>
         <span className="relative block w-px h-9 bg-gold overflow-hidden">
           <span className="absolute inset-0 bg-cream animate-scroll-bar" />
