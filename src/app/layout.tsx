@@ -12,6 +12,11 @@ export const metadata: Metadata = {
     default: 'Country Materials Ltd — Hardware, Waste Management & Logistics | Dar es Salaam',
     template: '%s | Country Materials Ltd',
   },
+  icons: {
+    icon: '/images/logo/Country-Materials-Logo.png',
+    shortcut: '/images/logo/Country-Materials-Logo.png',
+    apple: '/images/logo/Country-Materials-Logo.png',
+  },
   description:
     'Country Materials Ltd is a leading Tanzanian provider of hardware materials, steel, waste management, and transportation services in Dar es Salaam.',
   keywords: ['hardware materials', 'steel bars', 'waste management', 'transportation', 'Tanzania', 'Dar es Salaam'],
