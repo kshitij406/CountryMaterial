@@ -10,10 +10,10 @@ interface Stat {
 }
 
 const DEFAULT_STATS: Stat[] = [
-  { count: 29,    suffix: '',  label: 'Years in Operation', sub: 'Since 1997, under one family stewardship.' },
-  { count: 50000, suffix: '+', label: 'Tonnes Delivered',   sub: 'Of certified steel, annually, across the region.' },
-  { count: 1200,  suffix: '+', label: 'Active Clients',     sub: 'Contractors, ministries, mines, and developers.' },
-  { count: 14,    suffix: '',  label: 'Cities Served',      sub: 'Across Tanzania, Zambia, DRC and Rwanda.' },
+  { count: 50000, suffix: '+', label: 'Metric Tons Recycled', sub: 'Scrap recycled to date across the network.' },
+  { count: 320,   suffix: '+', label: 'Active Clients',       sub: 'Contractors, builders, and industrial buyers.' },
+  { count: 30,    suffix: '+', label: 'In-House Vehicles',    sub: 'Dedicated fleet supporting collection and dispatch.' },
+  { count: 5000,  suffix: '+', label: 'Vendors Digitized',    sub: 'Scrap vendors on the mobile platform.' },
 ]
 
 function Counter({ count }: { count: number }) {
@@ -59,23 +59,13 @@ export default function StatsSection({ stats }: { stats?: Stat[] }) {
 
   return (
     <section
-      className="relative py-20 sm:py-24 lg:py-[120px] px-5 sm:px-8 lg:px-16 overflow-hidden"
+      className="relative py-20 sm:py-24 lg:py-[110px] px-5 sm:px-8 lg:px-16 overflow-hidden bg-charcoal"
       id="stats"
-      style={{
-        background: '#05101f',
-        borderTop: '1px solid rgba(200,150,46,.2)',
-        borderBottom: '1px solid rgba(200,150,46,.2)',
-      }}
+      style={{ borderTop: '1px solid #D8E0E7', borderBottom: '1px solid #D8E0E7' }}
     >
-      <div aria-hidden className="grain-overlay absolute inset-0 pointer-events-none z-0" />
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse at 50% 120%,rgba(200,150,46,.12),transparent 60%)' }}
-      />
-
       <div className="relative max-w-[1440px] mx-auto">
         <div className="flex items-end justify-between flex-wrap gap-8 sm:gap-10 mb-14 sm:mb-24 reveal">
-          <h2 className="font-display text-[clamp(32px,5vw,72px)] leading-[0.9] tracking-[0.03em] uppercase text-cream max-w-[720px]">
+          <h2 className="font-display text-[clamp(32px,5vw,72px)] leading-[0.9] tracking-[0.03em] uppercase text-slate max-w-[720px]">
             Numbers that <span className="text-gold">hold weight.</span>
           </h2>
           <span className="font-space text-[12px] text-gold tracking-[0.2em]">{'// 04 — THE RECORD'}</span>
@@ -83,21 +73,21 @@ export default function StatsSection({ stats }: { stats?: Stat[] }) {
 
         <div
           className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 stagger"
-          style={{ borderTop: '1px solid rgba(200,150,46,.25)' }}
+          style={{ borderTop: '1px solid #D8E0E7' }}
         >
           {data.map((s, i) => (
             <div
               key={s.label}
               className="py-10 sm:py-14 px-5 sm:px-8"
-              style={{ borderRight: i < data.length - 1 ? '1px solid rgba(200,150,46,.15)' : undefined }}
+              style={{ borderRight: i < data.length - 1 ? '1px solid #D8E0E7' : undefined }}
             >
               <div className="font-display text-[clamp(56px,8vw,132px)] leading-[0.95] tracking-[0.02em] text-gold flex items-baseline gap-1.5">
                 <Counter count={s.count} />
-                {s.suffix && <span className="text-[0.55em] text-gold-light">{s.suffix}</span>}
+                {s.suffix && <span className="text-[0.55em] text-gold-dim">{s.suffix}</span>}
               </div>
               <div className="mt-4 w-10 h-px bg-gold" />
-              <div className="mt-4 font-condensed text-[13px] tracking-[0.22em] uppercase text-cream/65">{s.label}</div>
-              {s.sub && <div className="mt-2 font-barlow text-[14px] text-cream/45 max-w-[200px]">{s.sub}</div>}
+              <div className="mt-4 font-condensed text-[13px] tracking-[0.22em] uppercase text-slate/75">{s.label}</div>
+              {s.sub && <div className="mt-2 font-barlow text-[14px] text-slate/65 max-w-[220px]">{s.sub}</div>}
             </div>
           ))}
         </div>

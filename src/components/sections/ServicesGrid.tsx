@@ -11,21 +11,21 @@ const defaultServices = [
     title: 'Transportation & Logistics',
     excerpt: 'End-to-end freight forwarding, warehousing, and last-mile distribution across Tanzania and the region.',
     icon: '🚛',
-    coverColor: '#0B1D3A',
+    coverColor: '#1F3347',
   },
   {
     slug: { current: 'hardware' },
     title: 'Hardware & Steel Materials',
     excerpt: 'Quality construction materials — color paints, hardware supplies, and high-tensile reinforcement bars.',
     icon: '🔩',
-    coverColor: '#1A2E4A',
+    coverColor: '#2D475F',
   },
   {
     slug: { current: 'waste-management' },
     title: 'Waste Management',
     excerpt: 'Comprehensive scrap collection, sorting, recycling, and waste-to-energy services for industry and communities.',
     icon: '♻️',
-    coverColor: '#0F2438',
+    coverColor: '#244055',
   },
 ]
 
@@ -64,13 +64,13 @@ export default function ServicesGrid({
         <div ref={headingRef} className="opacity-0 mb-14">
           <SectionLabel light={dark} className="mb-4">{label}</SectionLabel>
           <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
-            <h2 className={`font-heading text-3xl md:text-4xl lg:text-5xl leading-tight max-w-lg ${dark ? 'text-white' : 'text-navy'}`}>
+            <h2 className={`font-heading text-3xl md:text-4xl lg:text-5xl leading-tight max-w-lg ${dark ? 'text-white' : 'text-slate'}`}>
               {heading}
             </h2>
             <Link
               href="/services"
               className={`font-body text-sm tracking-wide flex items-center gap-2 shrink-0 transition-colors duration-200 ${
-                dark ? 'text-gold hover:text-gold-light' : 'text-gold hover:text-navy'
+                dark ? 'text-gold hover:text-gold-light' : 'text-gold hover:text-slate'
               }`}
             >
               View All Services
@@ -92,7 +92,7 @@ export default function ServicesGrid({
                 {/* Image / color block */}
                 <div
                   className="relative h-48 overflow-hidden"
-                  style={{ backgroundColor: service.coverColor ?? '#0B1D3A' }}
+                  style={{ backgroundColor: service.coverColor ?? '#1F3347' }}
                 >
                   <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent" />
                   <div className="absolute inset-0 flex items-end justify-start p-6">
@@ -103,7 +103,7 @@ export default function ServicesGrid({
                 </div>
 
                 <div className="p-7">
-                  <h3 className={`font-heading text-xl mb-3 transition-colors duration-200 ${dark ? 'text-white group-hover:text-gold' : 'text-navy group-hover:text-gold'}`}>
+                  <h3 className={`font-heading text-xl mb-3 transition-colors duration-200 ${dark ? 'text-white group-hover:text-gold' : 'text-slate group-hover:text-gold'}`}>
                     {service.title}
                   </h3>
                   <p className={`font-body text-sm leading-relaxed mb-5 ${dark ? 'text-white/60' : 'text-slate/70'}`}>

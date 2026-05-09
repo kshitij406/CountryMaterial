@@ -45,7 +45,7 @@ export default function JobCard({ job }: JobCardProps) {
         {/* Department badge + employment type */}
         <div className="flex flex-wrap items-center gap-2 mb-4">
           {job.department && (
-            <span className="font-body text-xs bg-gold text-navy px-3 py-1 tracking-wider uppercase font-semibold">
+            <span className="font-body text-xs bg-gold text-white px-3 py-1 tracking-wider uppercase font-semibold">
               {job.department}
             </span>
           )}
@@ -57,7 +57,7 @@ export default function JobCard({ job }: JobCardProps) {
         </div>
 
         {/* Title */}
-        <h3 className="font-heading text-xl text-navy mb-3 leading-snug">{job.title}</h3>
+        <h3 className="font-heading text-xl text-slate mb-3 leading-snug">{job.title}</h3>
 
         {/* Meta row — location + closing date */}
         <div className="flex flex-wrap gap-4 mb-4">
@@ -89,7 +89,7 @@ export default function JobCard({ job }: JobCardProps) {
         <div className="mt-auto pt-5 border-t border-sand">
           <Link
             href={applyHref}
-            className="inline-flex items-center gap-2 px-7 py-3 bg-gold hover:bg-gold-light text-navy font-body text-sm font-semibold tracking-wide transition-colors duration-200"
+            className="inline-flex items-center gap-2 px-7 py-3 bg-gold hover:bg-gold-dim text-white font-body text-sm font-semibold tracking-wide transition-colors duration-200"
           >
             Apply Now
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

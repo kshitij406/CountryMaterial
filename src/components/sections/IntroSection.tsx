@@ -41,11 +41,11 @@ export default function IntroSection({ heading, body }: IntroSectionProps) {
           {/* Right — text */}
           <div ref={rightRef} className="opacity-0">
             <SectionLabel className="mb-5">Who We Are</SectionLabel>
-            <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl text-navy leading-tight mb-6">
+            <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl text-slate leading-tight mb-6">
               {heading ?? "Tanzania's Trusted Partner in Industrial Solutions"}
             </h2>
             <p className="font-body text-slate leading-relaxed mb-8">
-              {body ?? 'Country Materials Ltd is a Dar es Salaam-based company dedicated to bridging the gap between scrap informal vendors, steel manufacturers, and constructors. We operate across hardware supply, waste management, and transportation — serving businesses and communities with reliability and purpose.'}
+              {body ?? 'Country Materials Limited is a regenerative steel recycler integrating scrap vendors, manufacturers, and construction into a circular supply chain powered by technology.'}
             </p>
 
             <div className="grid grid-cols-3 gap-2 sm:gap-6 mb-6 sm:mb-10 py-5 sm:py-8 border-y border-sand">

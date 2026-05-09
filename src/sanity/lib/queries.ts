@@ -88,6 +88,7 @@ export const allServicesQuery = groq`
     title,
     slug,
     excerpt,
+    icon,
     coverImage,
     displayOrder
   }

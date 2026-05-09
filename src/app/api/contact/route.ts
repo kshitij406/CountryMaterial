@@ -56,8 +56,8 @@ export async function POST(req: NextRequest) {
       html: `
         <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;">
 
-          <div style="background:#0B1D3A;padding:24px 32px;">
-            <h2 style="color:#C8962E;margin:0;font-size:22px;">New Contact Form Submission</h2>
+          <div style="background:#1F3347;padding:24px 32px;">
+            <h2 style="color:#2E6FA3;margin:0;font-size:22px;">New Contact Form Submission</h2>
             <p style="color:rgba(255,255,255,0.5);margin:4px 0 0;font-size:13px;">countrymaterial.com</p>
           </div>
 
@@ -70,7 +70,7 @@ export async function POST(req: NextRequest) {
               <tr>
                 <td style="padding:10px 0;border-bottom:1px solid #E8DED1;color:#2C3E50;font-size:13px;font-weight:bold;">Email</td>
                 <td style="padding:10px 0;border-bottom:1px solid #E8DED1;color:#2C3E50;font-size:14px;">
-                  <a href="mailto:${escAttr(email)}" style="color:#C8962E;">${escHtml(email)}</a>
+                  <a href="mailto:${escAttr(email)}" style="color:#2E6FA3;">${escHtml(email)}</a>
                 </td>
               </tr>
               <tr>
@@ -90,17 +90,17 @@ export async function POST(req: NextRequest) {
 
             <div style="margin-top:28px;padding-top:16px;border-top:1px solid #E8DED1;">
               <a href="mailto:${escAttr(email)}?subject=Re: ${escAttr(subject)}"
-                 style="display:inline-block;background:#C8962E;color:#0B1D3A;padding:12px 24px;text-decoration:none;font-weight:bold;font-size:14px;">
+                 style="display:inline-block;background:#2E6FA3;color:#ffffff;padding:12px 24px;text-decoration:none;font-weight:bold;font-size:14px;">
                 Reply to ${escHtml(name)}
               </a>
             </div>
           </div>
 
-          <div style="background:#1A1A2E;padding:16px 32px;text-align:center;">
-            <p style="color:rgba(255,255,255,0.25);font-size:12px;margin:0;">
-              Country Materials Ltd &bull; Babecov Complex, Buguruni Mandela Road &bull; Dar es Salaam, Tanzania
-            </p>
-          </div>
+           <div style="background:#1A2232;padding:16px 32px;text-align:center;">
+             <p style="color:rgba(255,255,255,0.25);font-size:12px;margin:0;">
+              Country Materials Limited &bull; Babecov Complex, Buguruni Mandela Road &bull; Dar es Salaam, Tanzania
+             </p>
+           </div>
 
         </div>
       `,

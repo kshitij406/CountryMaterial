@@ -34,10 +34,10 @@ const DEFAULT_ICON = (
 )
 
 const DEFAULT_SERVICES = [
-  { _id: '1', icon: 'steel',    title: 'Steel & Reinforcement', excerpt: 'TMT rebar, structural beams, wire rod. Tested to BS 4449 and ISO 6935-2 from our Pwani mill.', slug: { current: 'steel' } },
-  { _id: '2', icon: 'hardware', title: 'Hardware & Tooling',    excerpt: 'Fasteners, fixings, power tools and construction consumables — from ten warehouses across Tanzania.', slug: { current: 'hardware' } },
-  { _id: '3', icon: 'waste',    title: 'Waste Management',      excerpt: 'Industrial collection, transfer, recovery. Licensed under NEMC for hazardous and scrap material handling.', slug: { current: 'waste-management' } },
-  { _id: '4', icon: 'logistics',title: 'Logistics & Haulage',   excerpt: 'Sixty-vehicle fleet moving bulk steel, containers and project cargo across Tanzania, Zambia, DRC and Rwanda.', slug: { current: 'logistics' } },
+  { _id: '1', icon: 'waste',    title: 'Scrap Collection & Recycling', excerpt: '100% locally sourced scrap feeding a fully integrated circular model, from aggregation through processing and recovery.', slug: { current: 'waste-management' } },
+  { _id: '2', icon: 'steel',    title: 'Certified Steel Products',     excerpt: 'BS 500 certified steel and TMT rebar for affordable, reliable construction. Billets and finished products supported by traceable sourcing.', slug: { current: 'steel' } },
+  { _id: '3', icon: 'hardware', title: 'Vendor Platform & Procurement', excerpt: 'Proprietary mobile platform digitizing 5,000+ scrap vendors, improving pricing transparency, access, and throughput.', slug: { current: 'hardware' } },
+  { _id: '4', icon: 'logistics',title: 'Logistics & Fleet Operations',  excerpt: '30+ in-house vehicles supporting scrap movement, yard operations, and delivery coordination across key regions.', slug: { current: 'transportation' } },
 ]
 
 interface Service {
@@ -52,7 +52,7 @@ export default function ServicesSection({ services }: { services?: Service[] }) 
   const data = services?.length ? services.slice(0, 4) : DEFAULT_SERVICES
 
   return (
-    <section className="relative bg-navy py-20 sm:py-24 lg:py-[140px] px-5 sm:px-8 lg:px-16 overflow-hidden" id="services">
+    <section className="relative bg-charcoal py-20 sm:py-24 lg:py-[120px] px-5 sm:px-8 lg:px-16 overflow-hidden" id="services">
       <span className="absolute top-10 sm:top-14 right-5 sm:right-8 lg:right-16 font-space text-[11px] sm:text-[12px] text-gold tracking-[0.2em]">
         02 / SERVICES
       </span>
@@ -64,12 +64,14 @@ export default function ServicesSection({ services }: { services?: Service[] }) 
               <span className="block h-px w-10 bg-gold" />
               <span className="font-condensed text-[12px] tracking-[0.18em] uppercase text-gold">What we do</span>
             </div>
-            <h2 className="font-display text-[clamp(34px,6.5vw,96px)] leading-[0.9] tracking-[0.03em] uppercase text-cream">
-              Four divisions.<br />One <span className="text-gold">discipline.</span>
+            <h2 className="font-display text-[clamp(34px,6.5vw,88px)] leading-[0.9] tracking-[0.03em] uppercase text-slate">
+              Steel, Scrap,
+              <br />
+              and <span className="text-gold">Industrial Support.</span>
             </h2>
           </div>
-          <p className="font-barlow text-[15px] sm:text-[17px] text-cream/65 max-w-[480px]">
-            From reinforcement bar forged in our Pwani mill to sealed logistics across East Africa — Country Materials owns every link in the chain.
+          <p className="font-barlow text-[15px] sm:text-[17px] text-slate/75 max-w-[520px]">
+            We help contractors, developers, and manufacturers source the right materials and move them reliably. Our services are built for day-to-day project needs, not marketing buzzwords.
           </p>
         </div>
 
@@ -77,20 +79,20 @@ export default function ServicesSection({ services }: { services?: Service[] }) 
           {data.map((svc, i) => (
             <article
               key={svc._id}
-              className="service-card group relative flex flex-col min-h-[330px] lg:min-h-[420px] p-7 sm:p-9 lg:p-11 pt-7 sm:pt-9 lg:pt-10 bg-navy-light"
-              style={{ border: '1px solid rgba(200,150,46,.18)', borderLeft: '3px solid #C8962E' }}
+              className="service-card group relative flex flex-col min-h-[320px] lg:min-h-[380px] p-7 sm:p-9 bg-white"
+              style={{ border: '1px solid #D8E0E7' }}
             >
-              <span className="font-space text-[11px] text-gold/50 tracking-[0.2em]">/ {String(i + 1).padStart(2, '0')}</span>
+              <span className="font-space text-[11px] text-gold/70 tracking-[0.2em]">/ {String(i + 1).padStart(2, '0')}</span>
 
               <div className="mt-7">
                 {ICONS[svc.icon ?? ''] ?? DEFAULT_ICON}
               </div>
 
-              <h3 className="mt-auto pt-10 font-display text-[34px] tracking-[0.04em] uppercase text-cream leading-[0.95]">
+              <h3 className="mt-auto pt-10 font-display text-[30px] tracking-[0.04em] uppercase text-slate leading-[0.95]">
                 {svc.title}
               </h3>
               {svc.excerpt && (
-                <p className="mt-4 font-barlow text-[15px] text-cream/62 leading-[1.55]">{svc.excerpt}</p>
+                <p className="mt-4 font-barlow text-[15px] text-slate/70 leading-[1.55]">{svc.excerpt}</p>
               )}
 
               <Link

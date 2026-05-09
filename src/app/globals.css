@@ -23,18 +23,19 @@
 
   body {
     font-family: var(--font-outfit);
-    color: #2C3E50;
-    background-color: #FAF7F2;
+    color: #22313F;
+    background-color: #F7F9FB;
   }
 
   h1, h2, h3, h4, h5 {
-    font-family: var(--font-dm-serif);
+    font-family: var(--font-barlow-condensed);
+    font-weight: 700;
   }
 
   ::-webkit-scrollbar { width: 6px; }
-  ::-webkit-scrollbar-track { background: #FAF7F2; }
-  ::-webkit-scrollbar-thumb { background: #C8962E; border-radius: 0; }
-  ::selection { background-color: #C8962E; color: #0B1D3A; }
+  ::-webkit-scrollbar-track { background: #F7F9FB; }
+  ::-webkit-scrollbar-thumb { background: #2E6FA3; border-radius: 6px; }
+  ::selection { background-color: #D9E8F4; color: #172838; }
 }
 
 @layer utilities {
@@ -69,16 +70,16 @@
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
   background-repeat: repeat;
   background-size: 180px 180px;
-  opacity: 0.04;
+  opacity: 0.02;
   mix-blend-mode: overlay;
 }
 
 /* ─── Nav glassmorphism (toggled by scroll) ─────────────────────────────────── */
 header.nav-glass {
-  background-color: rgba(11, 29, 58, 0.92) !important;
+  background-color: rgba(31, 51, 71, 0.95) !important;
   backdrop-filter: blur(14px) !important;
   -webkit-backdrop-filter: blur(14px) !important;
-  border-bottom: 1px solid rgba(200, 150, 46, 0.18) !important;
+  border-bottom: 1px solid rgba(216, 224, 231, 0.9) !important;
 }
 
 /* ─── Scroll reveal ─────────────────────────────────────────────────────────── */
@@ -128,16 +129,16 @@ header.nav-glass {
               background 0.5s cubic-bezier(0.16,1,0.3,1);
 }
 .service-card:hover {
-  transform: translateY(-6px);
-  border-color: rgba(200,150,46,.6) !important;
-  background: #1a3666 !important;
+  transform: translateY(-4px);
+  border-color: rgba(46,111,163,.5) !important;
+  background: #ffffff !important;
 }
 
 /* ─── Product card hover ────────────────────────────────────────────────────── */
 .prod-card {
   transition: border-color 0.4s cubic-bezier(0.16,1,0.3,1);
 }
-.prod-card:hover { border-color: #C8962E !important; }
+.prod-card:hover { border-color: #2E6FA3 !important; }
 .prod-card .prod-bg {
   transition: transform 0.6s cubic-bezier(0.16,1,0.3,1);
 }
@@ -150,5 +151,5 @@ header.nav-glass {
 .logo-tile:hover {
   filter: none !important;
   opacity: 1 !important;
-  color: #C8962E !important;
+  color: #2E6FA3 !important;
 }

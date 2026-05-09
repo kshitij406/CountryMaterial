@@ -9,8 +9,8 @@ import { siteSettingsQuery } from '@/sanity/lib/queries'
 
 export const metadata: Metadata = {
   title: {
-    default: 'Country Materials Ltd — Hardware, Waste Management & Logistics | Dar es Salaam',
-    template: '%s | Country Materials Ltd',
+    default: 'Country Materials Limited — Circular Steel Recycling | Dar es Salaam',
+    template: '%s | Country Materials Limited',
   },
   icons: {
     icon: '/images/logo/Country-Materials-Logo.png',
@@ -18,10 +18,10 @@ export const metadata: Metadata = {
     apple: '/images/logo/Country-Materials-Logo.png',
   },
   description:
-    'Country Materials Ltd is a leading Tanzanian provider of hardware materials, steel, waste management, and transportation services in Dar es Salaam.',
-  keywords: ['hardware materials', 'steel bars', 'waste management', 'transportation', 'Tanzania', 'Dar es Salaam'],
+    'Regenerative steel recycler integrating scrap vendors, manufacturers, and construction into a circular supply chain powered by technology.',
+  keywords: ['steel recycling', 'circular economy', 'scrap metal', 'BS 500', 'TMT rebar', 'steel billets', 'Tanzania', 'Dar es Salaam'],
   openGraph: {
-    siteName: 'Country Materials Ltd',
+    siteName: 'Country Materials Limited',
     locale: 'en_TZ',
     type: 'website',
   },

@@ -19,7 +19,7 @@ import { useEffect, useRef } from 'react'
 
 // ── Scene descriptors ───────────────────────────────────────────────────────
 // lx/ly: light-source position in normalised canvas coords (0–1)
-// gr/gg/gb: warm accent colour (close to brand gold #C8962E)
+// gr/gg/gb: warm accent colour (close to brand gold #2E6FA3)
 // intensity: ambient glow strength (0–1)
 const SCENES = [
   { lx: 0.22, ly: 0.16, gr: 200, gg: 145, gb: 44, intensity: 0.50 },  // warehouse

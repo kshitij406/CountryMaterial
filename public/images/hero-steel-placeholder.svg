@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-label="Steel yard placeholder">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#dce6ef"/>
+      <stop offset="100%" stop-color="#bccdda"/>
+    </linearGradient>
+    <linearGradient id="yard" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#5a6b79"/>
+      <stop offset="100%" stop-color="#435463"/>
+    </linearGradient>
+    <linearGradient id="steel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#9aabb9"/>
+      <stop offset="100%" stop-color="#6f8293"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1600" height="900" fill="url(#sky)"/>
+  <rect y="520" width="1600" height="380" fill="url(#yard)"/>
+
+  <rect x="80" y="410" width="520" height="80" fill="#7c8f9f"/>
+  <rect x="110" y="375" width="520" height="80" fill="url(#steel)"/>
+  <rect x="140" y="340" width="520" height="80" fill="#8699a8"/>
+
+  <rect x="690" y="430" width="420" height="70" fill="#7a8c9c"/>
+  <rect x="730" y="398" width="420" height="70" fill="url(#steel)"/>
+  <rect x="770" y="366" width="420" height="70" fill="#8a9dac"/>
+
+  <rect x="1160" y="455" width="340" height="60" fill="#708494"/>
+  <rect x="1185" y="428" width="340" height="60" fill="#8599a9"/>
+  <rect x="1210" y="401" width="340" height="60" fill="url(#steel)"/>
+
+  <rect x="230" y="260" width="16" height="260" fill="#304454"/>
+  <rect x="250" y="240" width="190" height="20" fill="#304454"/>
+  <rect x="940" y="250" width="16" height="280" fill="#304454"/>
+  <rect x="960" y="232" width="210" height="18" fill="#304454"/>
+
+  <circle cx="1450" cy="120" r="58" fill="#f4f8fb" opacity="0.65"/>
+
+  <text x="70" y="840" font-family="Arial, sans-serif" font-size="24" fill="#eaf0f5" letter-spacing="3">COUNTRY MATERIALS PLACEHOLDER - STEEL YARD</text>
+</svg>

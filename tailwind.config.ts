@@ -10,23 +10,23 @@ const config: Config = {
     extend: {
       colors: {
         navy: {
-          DEFAULT: '#0B1D3A',
-          deep: '#05101f',
-          light: '#162D56',
+          DEFAULT: '#1F3347',
+          deep: '#172838',
+          light: '#2D475F',
         },
         gold: {
-          DEFAULT: '#C8962E',
-          light: '#E8B84B',
-          dim: '#8A6520',
-          pale: '#F2D98A',
+          DEFAULT: '#2E6FA3',
+          light: '#3B84BF',
+          dim: '#245C88',
+          pale: '#D9E8F4',
         },
         cream: {
-          DEFAULT: '#FAF7F2',
-          dark: '#F0EAE0',
+          DEFAULT: '#FFFFFF',
+          dark: '#F7F9FB',
         },
-        sand: '#E8DED1',
-        charcoal: '#1A1A2E',
-        slate: '#2C3E50',
+        sand: '#D8E0E7',
+        charcoal: '#EAF0F5',
+        slate: '#22313F',
       },
       fontFamily: {
         heading:   ['var(--font-dm-serif)', 'Georgia', 'serif'],

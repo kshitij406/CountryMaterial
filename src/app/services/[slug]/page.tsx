@@ -12,35 +12,49 @@ const staticServices: Record<string, {
   features: string[]; highlights: Array<{ stat: string; label: string }>
 }> = {
   transportation: {
-    title: 'Transportation & Logistics',
+    title: 'Logistics & Fleet Operations',
     label: 'Logistics',
-    excerpt: 'End-to-end freight forwarding, warehousing, and last-mile distribution across Tanzania and the region.',
-    intro: 'Our transportation division provides reliable, efficient movement of goods across Tanzania. From bulk freight to time-sensitive deliveries, we offer a full spectrum of logistics services backed by an experienced team and a growing fleet.',
-    features: ['Freight forwarding — domestic and regional', 'Warehousing and storage solutions', 'Last-mile delivery across Dar es Salaam', 'Heavy-load transportation for construction materials', 'Supply chain coordination and tracking', 'Cross-border logistics support'],
-    highlights: [{ stat: '100+', label: 'Deliveries Per Month' }, { stat: '10+', label: 'Routes Covered' }, { stat: '99%', label: 'On-Time Rate' }],
+    excerpt: 'Fleet operations supporting scrap movement, yard logistics, and dispatch coordination across Tanzania.',
+    intro: 'Our in-house logistics capability supports scrap movement, yard operations, and dispatch coordination across branches and client sites. We focus on safety, reliability, and consistent throughput.',
+    features: ['Scrap collection and dispatch coordination', 'In-house fleet operations (30+ vehicles)', 'Inter-branch transfers and route planning', 'Yard logistics support and scheduling', 'Project delivery coordination (where applicable)'],
+    highlights: [{ stat: '30+', label: 'In-House Vehicles' }, { stat: '5', label: 'Branches' }, { stat: '24hrs', label: 'Operations' }],
   },
   hardware: {
-    title: 'Hardware & Steel Materials',
-    label: 'Hardware',
-    excerpt: 'Quality construction materials — color paints, hardware supplies, and high-tensile reinforcement bars.',
-    intro: 'We supply a comprehensive range of hardware materials for construction, industrial, and commercial projects. Our stock includes BS 500 high-tensile reinforcement bars, color paints, and essential hardware — all sourced from certified manufacturers and available at competitive prices.',
-    features: ['High Tensile Reinforcement Bars (BS 500 compliant)', 'Color paints — interior and exterior grades', 'Gypsum boards and ceiling materials', 'Marine plywood and timber products', 'General hardware supplies and fasteners', 'Bulk and project-quantity procurement'],
-    highlights: [{ stat: '50+', label: 'Products Stocked' }, { stat: '6+', label: 'Partner Manufacturers' }, { stat: 'BS 500', label: 'Steel Standard' }],
+    title: 'Vendor Platform & Procurement',
+    label: 'Platform',
+    excerpt: 'Proprietary mobile platform digitizing 5,000+ scrap vendors to improve transparency, pricing, and sourcing efficiency.',
+    intro: 'Our proprietary mobile platform digitizes the scrap supply chain, improving transparency, traceability, and throughput. It helps vendors participate consistently and supports reliable sourcing for certified steel production.',
+    features: ['Digitized vendor onboarding and management', 'Transparent sourcing and procurement workflows', 'Supply coordination from collection to processing', 'Traceability and reporting support (where applicable)'],
+    highlights: [{ stat: '5,000+', label: 'Vendors' }, { stat: '100%', label: 'Local Scrap' }, { stat: '320+', label: 'Active Clients' }],
+  },
+  steel: {
+    title: 'Certified Steel Products',
+    label: 'Steel',
+    excerpt: 'BS 500 certified steel and TMT rebar for reliable construction. Billets and finished products supported by traceable sourcing.',
+    intro: 'We transform locally sourced scrap into high-quality, BS 500 certified steel products that support affordable construction and long-term durability. Full specifications, sizes, MOQ, and pricing are available on request (TBC).',
+    features: ['BS 500 certified steel / TMT rebar', 'Steel billets and finished steel products', 'Clear specifications and traceable sourcing', 'Project coordination for supply planning (TBC)'],
+    highlights: [{ stat: 'BS 500', label: 'Certified Steel' }, { stat: '50,000+', label: 'Metric Tons Recycled' }, { stat: '320+', label: 'Clients' }],
   },
   'waste-management': {
-    title: 'Waste Management',
-    label: 'Environment',
-    excerpt: 'Comprehensive scrap collection, sorting, recycling, and waste-to-energy services for industry and communities.',
-    intro: 'Our waste management division sits at the core of our mission. We bridge the gap between informal scrap vendors, industrial generators, and recycling facilities — creating an efficient, transparent, and environmentally responsible value chain for steel and industrial waste in Tanzania.',
-    features: ['Scrap metal collection and aggregation', 'Industrial waste sorting and processing', 'Steel recycling and material recovery', 'Waste-to-energy program development', 'Community waste collection partnerships', 'Compliance documentation and reporting'],
-    highlights: [{ stat: '∞', label: 'Recyclable Materials' }, { stat: 'Zero', label: 'Waste-to-Landfill Goal' }, { stat: 'CO₂', label: 'Reduction Focus' }],
+    title: 'Scrap Collection & Recycling',
+    label: 'Recycling',
+    excerpt: 'Scrap collection, sorting, and recycling that turns local waste into high-quality, certified steel.',
+    intro: 'Our recycling operations bridge informal scrap vendors, industrial generators, and steel production into a single circular supply chain. The result is a more efficient, transparent, and environmentally responsible model for steel in Tanzania and beyond.',
+    features: ['Scrap metal collection and aggregation', 'Industrial scrap sorting and processing', 'Material recovery and recycling operations', 'Compliance documentation and reporting (where applicable)'],
+    highlights: [{ stat: '50,000+', label: 'Metric Tons Recycled' }, { stat: '5,000+', label: 'Vendors on Platform' }, { stat: '104', label: 'Staff' }],
   },
 }
 
 export async function generateStaticParams() {
   const services = await client.fetch(allServicesQuery).catch(() => null)
-  if (services?.length) return services.map((s: any) => ({ slug: s.slug.current }))
-  return Object.keys(staticServices).map((slug) => ({ slug }))
+
+  const slugs = new Set<string>()
+  for (const s of services ?? []) {
+    const slug = s?.slug?.current
+    if (slug) slugs.add(slug)
+  }
+  for (const slug of Object.keys(staticServices)) slugs.add(slug)
+  return Array.from(slugs).map((slug) => ({ slug }))
 }
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
@@ -79,89 +93,60 @@ export default async function ServiceDetailPage({ params }: { params: { slug: st
 
   return (
     <>
-      {/* Hero */}
-      <section
-        className="relative overflow-hidden pt-[160px] pb-[100px] px-8 lg:px-16"
-        style={{ background: '#05101f', borderBottom: '1px solid rgba(200,150,46,.2)' }}
-      >
-        <div aria-hidden className="grain-overlay absolute inset-0 pointer-events-none z-0" />
-        <div
-          aria-hidden
-          className="absolute inset-0 pointer-events-none"
-          style={{ background: 'repeating-linear-gradient(90deg,transparent 0 120px,rgba(200,150,46,.04) 120px 121px)' }}
-        />
-        <div
-          aria-hidden
-          className="absolute inset-0 pointer-events-none"
-          style={{ background: 'radial-gradient(ellipse at 70% 50%,rgba(200,150,46,.12),transparent 55%)' }}
-        />
-        {/* Gold left stripe */}
-        <div className="absolute top-0 left-0 bottom-0 w-1 bg-gold" />
-
+      <section className="relative overflow-hidden pt-[150px] pb-[90px] px-8 lg:px-16 bg-navy" style={{ borderBottom: '1px solid rgba(216,224,231,.4)' }}>
         <div className="relative max-w-[1440px] mx-auto">
           <div className="flex items-center gap-3.5 mb-7">
-            <Link href="/services" className="font-condensed text-[12px] tracking-[0.18em] uppercase text-gold/60 hover:text-gold transition-colors duration-200">Services</Link>
-            <span className="text-gold/30">→</span>
-            <span className="font-condensed text-[12px] tracking-[0.18em] uppercase text-gold">{label}</span>
+            <Link href="/services" className="font-condensed text-[12px] tracking-[0.18em] uppercase text-white/70 hover:text-white transition-colors duration-200">Services</Link>
+            <span className="text-white/40">/</span>
+            <span className="font-condensed text-[12px] tracking-[0.18em] uppercase text-gold-light">{label}</span>
           </div>
-          <h1 className="font-display text-[clamp(48px,7vw,112px)] leading-[0.9] tracking-[0.03em] uppercase text-cream max-w-4xl">
+          <h1 className="font-display text-[clamp(44px,7vw,98px)] leading-[0.9] tracking-[0.03em] uppercase text-white max-w-4xl">
             {title}
           </h1>
           {excerpt && (
-            <p className="mt-8 font-barlow text-[17px] text-cream/55 max-w-2xl leading-[1.65]">{excerpt}</p>
+            <p className="mt-8 font-barlow text-[17px] text-white/75 max-w-2xl leading-[1.65]">{excerpt}</p>
           )}
         </div>
       </section>
 
-      {/* Overview + Features */}
-      <section
-        className="relative py-[120px] px-8 lg:px-16"
-        style={{ background: '#0B1D3A', borderBottom: '1px solid rgba(200,150,46,.15)' }}
-      >
-        <div className="max-w-[1440px] mx-auto grid lg:grid-cols-2 gap-20 items-start">
+      <section className="relative py-[100px] px-8 lg:px-16 bg-white" style={{ borderBottom: '1px solid #D8E0E7' }}>
+        <div className="max-w-[1440px] mx-auto grid lg:grid-cols-2 gap-16 items-start">
           <div className="reveal">
             <div className="flex items-center gap-3.5 mb-7">
               <span className="block h-px w-10 bg-gold" />
               <span className="font-condensed text-[12px] tracking-[0.18em] uppercase text-gold">Overview</span>
             </div>
-            <h2 className="font-display text-[clamp(32px,3.5vw,56px)] leading-[0.95] tracking-[0.03em] uppercase text-cream mb-8">
+            <h2 className="font-display text-[clamp(32px,3.5vw,56px)] leading-[0.95] tracking-[0.03em] uppercase text-slate mb-8">
               What This Service <span className="text-gold">Covers</span>
             </h2>
-            <p className="font-barlow text-[16px] text-cream/60 leading-[1.7] mb-5">{intro}</p>
+            <p className="font-barlow text-[16px] text-slate/75 leading-[1.7] mb-5">{intro}</p>
             {section2Text && (
-              <p className="font-barlow text-[16px] text-cream/60 leading-[1.7] mb-8">{section2Text}</p>
+              <p className="font-barlow text-[16px] text-slate/75 leading-[1.7] mb-8">{section2Text}</p>
             )}
             <Link
               href="/contact"
-              className="group relative inline-flex items-center gap-3 overflow-hidden px-[34px] py-[18px] border border-gold text-gold font-condensed text-[14px] tracking-[0.22em] uppercase font-semibold"
+              className="group relative inline-flex items-center gap-3 overflow-hidden px-[34px] py-[16px] bg-gold text-white font-condensed text-[14px] tracking-[0.22em] uppercase font-semibold"
             >
-              <span className="relative z-10 group-hover:text-navy transition-colors duration-300">Request a Quote</span>
-              <svg className="relative z-10 w-3.5 h-3.5 group-hover:text-navy transition-all duration-400 group-hover:translate-x-1.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+              <span className="relative z-10">Request a Quote</span>
+              <svg className="relative z-10 w-3.5 h-3.5 transition-all duration-300 group-hover:translate-x-1.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
                 <path d="M5 12h14M13 5l7 7-7 7" />
               </svg>
-              <span className="absolute inset-0 bg-gold -translate-x-full group-hover:translate-x-0 transition-transform duration-500" style={{ transitionTimingFunction: 'cubic-bezier(.16,1,.3,1)' }} />
+              <span className="absolute inset-0 bg-gold-dim -translate-x-full group-hover:translate-x-0 transition-transform duration-500" style={{ transitionTimingFunction: 'cubic-bezier(.16,1,.3,1)' }} />
             </Link>
           </div>
 
           {features.length > 0 && (
-            <div
-              className="reveal p-10"
-              style={{ border: '1px solid rgba(200,150,46,.2)', background: '#05101f' }}
-            >
-              <h3 className="font-display text-[clamp(20px,2vw,28px)] leading-[1] tracking-[0.04em] uppercase text-cream mb-8">
+            <div className="reveal p-8 bg-charcoal" style={{ border: '1px solid #D8E0E7' }}>
+              <h3 className="font-display text-[clamp(20px,2vw,28px)] leading-[1] tracking-[0.04em] uppercase text-slate mb-8">
                 Key <span className="text-gold">Capabilities</span>
               </h3>
-              <ul style={{ borderTop: '1px solid rgba(200,150,46,.2)' }}>
+              <ul style={{ borderTop: '1px solid #D8E0E7' }}>
                 {features.map((f, i) => (
-                  <li
-                    key={i}
-                    className="flex items-start gap-5 py-4"
-                    style={{ borderBottom: '1px solid rgba(200,150,46,.1)' }}
-                  >
-                    <span className="shrink-0 w-6 h-6 grid place-items-center bg-gold text-navy font-space text-[11px] font-semibold mt-0.5">
+                  <li key={i} className="flex items-start gap-5 py-4" style={{ borderBottom: '1px solid #D8E0E7' }}>
+                    <span className="shrink-0 w-6 h-6 grid place-items-center bg-gold text-white font-space text-[11px] font-semibold mt-0.5">
                       {i + 1}
                     </span>
-                    <span className="font-barlow text-[15px] text-cream/60 leading-[1.6]">{f}</span>
+                    <span className="font-barlow text-[15px] text-slate/75 leading-[1.6]">{f}</span>
                   </li>
                 ))}
               </ul>
@@ -170,26 +155,13 @@ export default async function ServiceDetailPage({ params }: { params: { slug: st
         </div>
       </section>
 
-      {/* Highlights */}
       {highlights.length > 0 && (
-        <section
-          className="relative py-[80px] px-8 lg:px-16"
-          style={{ background: '#05101f', borderBottom: '1px solid rgba(200,150,46,.15)' }}
-        >
-          <div
-            aria-hidden
-            className="absolute inset-0 pointer-events-none"
-            style={{ background: 'radial-gradient(ellipse at 50% 100%,rgba(200,150,46,.1),transparent 55%)' }}
-          />
-          <div className="relative max-w-[1440px] mx-auto grid grid-cols-3 gap-0" style={{ borderTop: '1px solid rgba(200,150,46,.2)' }}>
+        <section className="relative py-[80px] px-8 lg:px-16 bg-charcoal" style={{ borderBottom: '1px solid #D8E0E7' }}>
+          <div className="relative max-w-[1440px] mx-auto grid grid-cols-1 sm:grid-cols-3 gap-5">
             {highlights.map((item, i) => (
-              <div
-                key={i}
-                className="text-center py-12"
-                style={{ borderRight: i < highlights.length - 1 ? '1px solid rgba(200,150,46,.15)' : undefined }}
-              >
-                <div className="font-display text-[clamp(40px,5vw,80px)] leading-none text-gold mb-2">{item.stat}</div>
-                <div className="font-condensed text-[11px] tracking-[0.22em] uppercase text-cream/45">{item.label}</div>
+              <div key={i} className="text-center py-10 bg-white" style={{ border: '1px solid #D8E0E7' }}>
+                <div className="font-display text-[clamp(40px,5vw,72px)] leading-none text-gold mb-2">{item.stat}</div>
+                <div className="font-condensed text-[11px] tracking-[0.22em] uppercase text-slate/60">{item.label}</div>
               </div>
             ))}
           </div>
@@ -197,7 +169,7 @@ export default async function ServiceDetailPage({ params }: { params: { slug: st
       )}
 
       <CtaBanner
-        heading={`Ready to Use\nOur Services?`}
+        heading="Ready to Use\nOur Services?"
         subtext="Get in touch with our team for a custom quote or to discuss your specific requirements."
         primaryLabel="Get in Touch"
         primaryHref="/contact"

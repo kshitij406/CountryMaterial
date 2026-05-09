@@ -52,26 +52,26 @@ export default function Footer({ contact }: { contact?: FooterContact }) {
   const social = contact?.socialLinks
 
   return (
-    <footer style={{ background: '#05101f', borderTop: '1px solid rgba(200,150,46,.2)' }}>
+    <footer style={{ background: '#1F3347', borderTop: '1px solid rgba(216,224,231,.4)' }}>
       {/* Main grid */}
       <div className="max-w-[1440px] mx-auto px-8 lg:px-16 pt-20 pb-16">
         <div
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr_1fr] gap-12"
-          style={{ paddingBottom: 64, borderBottom: '1px solid rgba(200,150,46,.15)' }}
+          style={{ paddingBottom: 64, borderBottom: '1px solid rgba(216,224,231,.3)' }}
         >
           {/* Brand */}
           <div>
             <div className="mb-5">
               <Image
                 src="/images/logo/Country-Materials-Logo.png"
-                alt="Country Materials Ltd"
+                alt="Country Materials Limited"
                 width={220}
                 height={64}
                 className="h-10 w-auto object-contain"
               />
             </div>
-            <p className="font-barlow text-[14px] text-cream/55 leading-[1.6] max-w-[320px] mt-5">
-              Steel, hardware, waste and logistics for the infrastructure Africa is building. Founded Dar es Salaam, 1997.
+            <p className="font-barlow text-[14px] text-white/55 leading-[1.6] max-w-[320px] mt-5">
+              Regenerative steel recycler integrating scrap vendors, manufacturers, and construction into a circular supply chain powered by technology. Founded in Dar es Salaam, 2022.
             </p>
           </div>
 
@@ -90,8 +90,8 @@ export default function Footer({ contact }: { contact?: FooterContact }) {
 
         {/* Bottom bar */}
         <div className="mt-8 flex flex-col sm:flex-row items-center justify-between gap-5 flex-wrap">
-          <span className="font-space text-[11px] text-cream/40 tracking-[0.1em]">
-            © 1997–{new Date().getFullYear()} COUNTRY MATERIALS LTD · TIN 102-447-991
+          <span className="font-space text-[11px] text-white/40 tracking-[0.1em]">
+            © {new Date().getFullYear()} COUNTRY MATERIALS LIMITED
           </span>
 
           {/* Social links */}
@@ -128,8 +128,8 @@ export default function Footer({ contact }: { contact?: FooterContact }) {
 
           {/* Contact quick links */}
           <div className="flex gap-6 font-condensed text-[12px] tracking-[0.15em] uppercase">
-            <a href={`tel:${phone.replace(/[\s-]/g, '')}`} className="text-cream/40 hover:text-gold transition-colors duration-200">{phone}</a>
-            <a href={`mailto:${email}`} className="text-cream/40 hover:text-gold transition-colors duration-200">{email}</a>
+            <a href={`tel:${phone.replace(/[\s-]/g, '')}`} className="text-white/40 hover:text-gold transition-colors duration-200">{phone}</a>
+            <a href={`mailto:${email}`} className="text-white/40 hover:text-gold transition-colors duration-200">{email}</a>
           </div>
         </div>
       </div>
@@ -146,7 +146,7 @@ function FooterColumn({ title, links }: { title: string; links: { label: string;
           <li key={link.href}>
             <Link
               href={link.href}
-              className="font-barlow text-[15px] text-cream/65 hover:text-gold transition-colors duration-200"
+              className="font-barlow text-[15px] text-white/65 hover:text-gold transition-colors duration-200"
             >
               {link.label}
             </Link>
@@ -162,8 +162,8 @@ function SocialLink({ href, label, children }: { href: string; label: string; ch
     <a
       href={href}
       aria-label={label}
-      className="w-[38px] h-[38px] grid place-items-center text-gold transition-all duration-300 hover:bg-gold hover:text-navy"
-      style={{ border: '1px solid rgba(200,150,46,.3)' }}
+      className="w-[38px] h-[38px] grid place-items-center text-gold transition-all duration-300 hover:bg-gold hover:text-white"
+      style={{ border: '1px solid rgba(216,224,231,.3)' }}
     >
       {children}
     </a>

@@ -33,9 +33,9 @@ export default function ProductGrid({ products, categories }: ProductGridProps) 
           ))}
         </div>
       ) : (
-        <div className="text-center py-20" style={{ border: '1px solid rgba(200,150,46,.2)' }}>
-          <div className="font-display text-[48px] text-gold/20 mb-3">◈</div>
-          <p className="font-barlow text-[15px] text-cream/40">No products in this category yet.</p>
+        <div className="text-center py-20 bg-white" style={{ border: '1px solid #D8E0E7' }}>
+          <div className="font-display text-[48px] text-gold/30 mb-3">◈</div>
+          <p className="font-barlow text-[15px] text-slate/60">No products in this category yet.</p>
         </div>
       )}
     </>

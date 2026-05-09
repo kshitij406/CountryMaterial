@@ -21,10 +21,10 @@ export default function CategoryFilter({ categories, active, onSelect }: Categor
             onClick={() => onSelect(cat.name)}
             className={`font-condensed text-[12px] tracking-[0.18em] uppercase px-5 py-2.5 transition-all duration-200 ${
               isActive
-                ? 'bg-gold text-navy font-semibold'
-                : 'text-cream/60 hover:text-cream'
+                ? 'bg-gold text-white font-semibold'
+                : 'text-slate/70 hover:text-slate bg-white'
             }`}
-            style={{ border: isActive ? '1px solid #C8962E' : '1px solid rgba(200,150,46,.25)' }}
+            style={{ border: isActive ? '1px solid #2E6FA3' : '1px solid #D8E0E7' }}
           >
             {cat.name}
           </button>

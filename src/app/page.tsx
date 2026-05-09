@@ -13,7 +13,7 @@ import ContactCTA from '@/components/sections/ContactCTA'
 export const revalidate = 30
 
 export const metadata: Metadata = {
-  title: 'Country Materials Ltd — Built for Africa. Built to Last.',
+  title: 'Country Materials Limited — Built for Africa. Built to Last.',
 }
 
 export default async function HomePage() {

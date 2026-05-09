@@ -46,7 +46,7 @@ const fallbackProducts: Product[] = [
     name: 'High Tensile Reinforcement Bars BS 500',
     slug: { current: 'rebar-bs500' },
     price: null,
-    priceRange: '11,666 – 120,000',
+    priceRange: '11,666 - 120,000',
     hasVariants: true,
     inStock: true,
     description: 'British Standard BS 500 compliant high-tensile deformed steel bars for structural reinforcement. Available in multiple diameters from 6mm to 32mm.',
@@ -80,56 +80,28 @@ export default async function ShopPage() {
 
   return (
     <>
-      {/* Hero */}
-      <section
-        className="relative overflow-hidden pt-[160px] pb-[100px] px-8 lg:px-16"
-        style={{ background: '#05101f', borderBottom: '1px solid rgba(200,150,46,.2)' }}
-      >
-        <div aria-hidden className="grain-overlay absolute inset-0 pointer-events-none z-0" />
-        <div
-          aria-hidden
-          className="absolute inset-0 pointer-events-none"
-          style={{ background: 'repeating-linear-gradient(90deg,transparent 0 120px,rgba(200,150,46,.04) 120px 121px)' }}
-        />
-        <div
-          aria-hidden
-          className="absolute inset-0 pointer-events-none"
-          style={{ background: 'radial-gradient(ellipse at 80% 40%,rgba(200,150,46,.12),transparent 55%)' }}
-        />
-        {/* Watermark */}
-        <div aria-hidden className="absolute inset-0 flex items-center justify-end pr-8 lg:pr-16 pointer-events-none select-none overflow-hidden">
-          <span className="font-display text-[8rem] lg:text-[14rem] leading-none text-gold/[0.06] tracking-tight">CATALOG</span>
-        </div>
-
+      <section className="relative overflow-hidden pt-[150px] pb-[90px] px-8 lg:px-16 bg-navy" style={{ borderBottom: '1px solid rgba(216,224,231,.4)' }}>
         <div className="relative max-w-[1440px] mx-auto">
           <div className="flex items-center gap-3.5 mb-7">
             <span className="block h-px w-10 bg-gold" />
-            <span className="font-condensed text-[12px] tracking-[0.18em] uppercase text-gold">Product Catalog</span>
+            <span className="font-condensed text-[12px] tracking-[0.18em] uppercase text-white/90">Product Catalog</span>
           </div>
-          <h1 className="font-display text-[clamp(48px,7vw,112px)] leading-[0.9] tracking-[0.03em] uppercase text-cream max-w-4xl">
+          <h1 className="font-display text-[clamp(44px,7vw,98px)] leading-[0.9] tracking-[0.03em] uppercase text-white max-w-4xl">
             {titleLines.map((line: string, i: number) => (
               <span key={i} className="block">
-                {i === titleLines.length - 1 ? <span className="text-gold">{line}</span> : line}
+                {i === titleLines.length - 1 ? <span className="text-gold-light">{line}</span> : line}
               </span>
             ))}
           </h1>
-          <p className="mt-8 font-barlow text-[17px] text-cream/55 max-w-xl leading-[1.65]">{shopSubtitle}</p>
+          <p className="mt-8 font-barlow text-[17px] text-white/75 max-w-2xl leading-[1.65]">{shopSubtitle}</p>
         </div>
       </section>
 
-      {/* Products */}
-      <section
-        className="relative py-[120px] px-8 lg:px-16"
-        style={{ background: '#0B1D3A', borderBottom: '1px solid rgba(200,150,46,.15)' }}
-      >
+      <section className="relative py-[100px] px-8 lg:px-16 bg-white" style={{ borderBottom: '1px solid #D8E0E7' }}>
         <div className="max-w-[1440px] mx-auto">
-          {/* Catalog-only notice */}
-          <div
-            className="flex items-center gap-4 px-6 py-4 mb-12 reveal"
-            style={{ border: '1px solid rgba(200,150,46,.3)', background: 'rgba(200,150,46,.06)' }}
-          >
-            <div className="text-gold text-lg shrink-0">ℹ</div>
-            <p className="font-barlow text-[14px] text-cream/60">
+          <div className="flex items-center gap-4 px-6 py-4 mb-12 reveal bg-charcoal" style={{ border: '1px solid #D8E0E7' }}>
+            <div className="text-gold text-lg shrink-0">i</div>
+            <p className="font-barlow text-[14px] text-slate/75">
               This is a display catalog. To place an order or request a bulk quotation, please{' '}
               <a href="/contact" className="text-gold hover:underline">contact us directly</a>.
             </p>

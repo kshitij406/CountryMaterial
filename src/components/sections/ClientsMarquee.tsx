@@ -26,18 +26,18 @@ function LogoTile({ name, sub, logoUrl }: Partner) {
     <div
       className="logo-tile flex-shrink-0 w-[150px] sm:w-[180px] h-[56px] sm:h-[60px] flex flex-col items-center justify-center px-4 sm:px-6 cursor-default"
       style={{
-        filter: 'grayscale(1) brightness(1.4) contrast(.6)',
-        opacity: 0.55,
-        borderLeft: '1px solid rgba(200,150,46,.15)',
-        borderRight: '1px solid rgba(200,150,46,.15)',
+        filter: 'grayscale(1) brightness(1.1) contrast(.8)',
+        opacity: 0.72,
+        borderLeft: '1px solid #D8E0E7',
+        borderRight: '1px solid #D8E0E7',
       }}
     >
       {logoUrl ? (
         <Image src={logoUrl} alt={name} width={120} height={40} className="object-contain max-h-10 w-auto" />
       ) : (
         <>
-          <span className="font-display text-[17px] sm:text-[20px] tracking-[0.08em] text-cream">{name}</span>
-          {sub && <span className="font-condensed text-[9px] tracking-[0.2em] uppercase text-cream/50 mt-0.5">{sub}</span>}
+          <span className="font-display text-[17px] sm:text-[20px] tracking-[0.08em] text-slate">{name}</span>
+          {sub && <span className="font-condensed text-[9px] tracking-[0.2em] uppercase text-slate/55 mt-0.5">{sub}</span>}
         </>
       )}
     </div>
@@ -50,13 +50,9 @@ export default function ClientsMarquee({ partners }: { partners?: Partner[] }) {
 
   return (
     <section
-      className="relative overflow-hidden py-14 sm:py-20"
+      className="relative overflow-hidden py-14 sm:py-20 bg-white"
       id="clients"
-      style={{
-        background: '#1A1A2E',
-        borderTop: '1px solid rgba(200,150,46,.15)',
-        borderBottom: '1px solid rgba(200,150,46,.15)',
-      }}
+      style={{ borderTop: '1px solid #D8E0E7', borderBottom: '1px solid #D8E0E7' }}
     >
       <div className="text-center mb-10 sm:mb-16 px-5 sm:px-8 reveal">
         <div className="inline-flex items-center gap-3.5 mb-5">
@@ -64,7 +60,7 @@ export default function ClientsMarquee({ partners }: { partners?: Partner[] }) {
           <span className="font-condensed text-[12px] tracking-[0.18em] uppercase text-gold">Trusted by</span>
           <span className="block h-px w-8 bg-gold" />
         </div>
-        <h3 className="font-display text-[clamp(28px,3.5vw,44px)] tracking-[0.05em] uppercase text-cream">
+        <h3 className="font-display text-[clamp(28px,3.5vw,44px)] tracking-[0.05em] uppercase text-slate">
           The firms building East Africa
         </h3>
       </div>

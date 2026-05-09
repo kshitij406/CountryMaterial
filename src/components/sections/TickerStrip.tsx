@@ -1,12 +1,12 @@
 const DEFAULT_ITEMS = [
-  { num: '50,000+', label: 'Tonnes / yr' },
-  { num: '29',      label: 'Years' },
-  { num: '14',      label: 'Cities' },
-  { num: '1,200+',  label: 'Clients' },
-  { num: '60',      label: 'Fleet Vehicles' },
-  { num: '10',      label: 'Distribution Yards' },
-  { num: 'ISO 9001',label: 'Certified' },
-  { num: '24 / 7',  label: 'Logistics' },
+  { num: '50,000+', label: 'Metric tons recycled' },
+  { num: '320+',    label: 'Active clients' },
+  { num: '30+',     label: 'In-house vehicles' },
+  { num: '104',     label: 'Staff' },
+  { num: '5,000+',  label: 'Vendors on platform' },
+  { num: 'BS 500',  label: 'Certified steel' },
+  { num: '5',       label: 'Branches' },
+  { num: '24hrs',   label: 'Business hours' },
 ]
 
 interface TickerItem { num: string; label: string }
@@ -15,7 +15,7 @@ function TickerItem({ num, label }: TickerItem) {
   return (
     <div className="flex items-center gap-3 sm:gap-5 flex-shrink-0">
       <span className="font-display text-[24px] sm:text-[34px] text-gold tracking-[0.04em] leading-none">{num}</span>
-      <span className="font-condensed text-[11px] sm:text-[13px] tracking-[0.2em] uppercase text-cream/65">{label}</span>
+      <span className="font-condensed text-[11px] sm:text-[13px] tracking-[0.2em] uppercase text-slate/70">{label}</span>
       <span className="w-1.5 h-1.5 bg-gold rotate-45 flex-shrink-0" />
     </div>
   )
@@ -29,9 +29,9 @@ export default function TickerStrip({ items }: { items?: TickerItem[] }) {
     <section
       className="relative overflow-hidden py-5 sm:py-7"
       style={{
-        background: '#1A1A2E',
-        borderTop: '1px solid rgba(200,150,46,.22)',
-        borderBottom: '1px solid rgba(200,150,46,.22)',
+        background: '#FFFFFF',
+        borderTop: '1px solid #D8E0E7',
+        borderBottom: '1px solid #D8E0E7',
       }}
       aria-label="Key facts"
     >

@@ -40,7 +40,7 @@ export default function ValuesGrid({ values = defaultValues }: { values?: Value[
       <div className="max-w-container mx-auto px-6 lg:px-10">
         <div ref={headingRef} className="opacity-0 text-center mb-14">
           <SectionLabel className="mb-4">Our Principles</SectionLabel>
-          <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl text-navy leading-tight max-w-xl mx-auto">
+          <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl text-slate leading-tight max-w-xl mx-auto">
             The Values That Drive Everything We Do
           </h2>
         </div>
@@ -52,7 +52,7 @@ export default function ValuesGrid({ values = defaultValues }: { values?: Value[
               className="value-card opacity-0 bg-white border border-sand p-6 sm:p-8 lg:p-10 group hover:border-gold/50 hover:shadow-xl hover:shadow-navy/5 transition-all duration-400"
             >
               <div className="text-4xl text-gold mb-6 font-heading">{value.icon ?? '◆'}</div>
-              <h3 className="font-heading text-xl text-navy mb-3 group-hover:text-gold transition-colors duration-300">
+              <h3 className="font-heading text-xl text-slate mb-3 group-hover:text-gold transition-colors duration-300">
                 {value.title}
               </h3>
               <p className="font-body text-slate/80 leading-relaxed text-sm">{value.description}</p>

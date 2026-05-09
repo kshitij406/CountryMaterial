@@ -50,7 +50,7 @@ export default function Navbar({ logoUrl, companyName: _companyName }: NavbarPro
     'after:transition-all after:duration-300',
     isActive(href)
       ? 'text-gold after:w-full'
-      : 'text-cream/80 hover:text-cream after:w-0 hover:after:w-full'
+      : 'text-white/80 hover:text-white after:w-0 hover:after:w-full'
   )
 
   return (
@@ -58,18 +58,18 @@ export default function Navbar({ logoUrl, companyName: _companyName }: NavbarPro
       className={cn(
         'fixed top-0 left-0 right-0 z-50 transition-all duration-400 border-b',
         scrolled || !isHome || menuOpen
-          ? 'bg-navy/92 backdrop-blur-[14px] border-gold/[0.18] py-3.5'
+          ? 'bg-navy/95 backdrop-blur-[14px] border-sand/60 py-3.5'
           : 'bg-transparent border-transparent py-[22px]'
       )}
     >
       <div className="max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-16 flex items-center justify-between">
 
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-1.5 sm:gap-3.5" aria-label="Country Materials Ltd">
+        <Link href="/" className="flex items-center gap-1.5 sm:gap-3.5" aria-label="Country Materials Limited">
           {logoUrl ? (
             <Image
               src={logoUrl}
-              alt="Country Materials Ltd"
+              alt="Country Materials Limited"
               width={220}
               height={64}
               className="h-8 sm:h-10 w-auto object-contain"
@@ -78,7 +78,7 @@ export default function Navbar({ logoUrl, companyName: _companyName }: NavbarPro
           ) : (
             <Image
               src="/images/country-materials-logo.svg"
-              alt="Country Materials Ltd"
+              alt="Country Materials Limited"
               width={220}
               height={64}
               className="h-8 sm:h-10 w-auto object-contain"
@@ -97,11 +97,11 @@ export default function Navbar({ logoUrl, companyName: _companyName }: NavbarPro
 
           <Link
             href="/contact"
-            className="group relative ml-2 overflow-hidden px-[26px] py-3 bg-gold text-navy font-condensed text-[13px] tracking-[0.22em] uppercase font-semibold"
+            className="group relative ml-2 overflow-hidden px-[26px] py-3 bg-gold text-white font-condensed text-[13px] tracking-[0.22em] uppercase font-semibold"
           >
             <span className="relative z-10">Request a Quote</span>
             <span
-              className="absolute inset-0 bg-gold-light -translate-x-full group-hover:translate-x-0 transition-transform duration-400"
+              className="absolute inset-0 bg-gold-dim -translate-x-full group-hover:translate-x-0 transition-transform duration-400"
               style={{ transitionTimingFunction: 'cubic-bezier(.16,1,.3,1)' }}
             />
           </Link>
@@ -133,8 +133,8 @@ export default function Navbar({ logoUrl, companyName: _companyName }: NavbarPro
               href={link.href}
               className={cn(
                 'font-display text-[clamp(32px,8vw,48px)] py-3 border-b tracking-[0.04em] uppercase',
-                'border-gold/15 transition-colors duration-200',
-                isActive(link.href) ? 'text-gold' : 'text-cream/80 hover:text-cream'
+                'border-sand/30 transition-colors duration-200',
+                isActive(link.href) ? 'text-gold' : 'text-white/80 hover:text-white'
               )}
             >
               {link.label}
@@ -142,7 +142,7 @@ export default function Navbar({ logoUrl, companyName: _companyName }: NavbarPro
           ))}
           <Link
             href="/contact"
-            className="mt-8 w-full text-center py-4 bg-gold text-navy font-condensed font-semibold text-[15px] tracking-[0.22em] uppercase"
+            className="mt-8 w-full text-center py-4 bg-gold text-white font-condensed font-semibold text-[15px] tracking-[0.22em] uppercase"
           >
             Request a Quote
           </Link>
