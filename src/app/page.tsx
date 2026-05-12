@@ -9,6 +9,7 @@ import ProductsGrid from '@/components/sections/ProductsGrid'
 import OperationsSection from '@/components/sections/OperationsSection'
 import CertificationsSection from '@/components/sections/CertificationsSection'
 import ClientsMarquee from '@/components/sections/ClientsMarquee'
+import NextDecadeTeaser from '@/components/sections/NextDecadeTeaser'
 import ContactCTA from '@/components/sections/ContactCTA'
 
 export const revalidate = 30
@@ -46,6 +47,8 @@ export default async function HomePage() {
       <CertificationsSection />
 
       <ClientsMarquee partners={hp?.partnerLogos?.length ? hp.partnerLogos : undefined} />
+
+      <NextDecadeTeaser />
 
       <ContactCTA
         heading={hp?.contactHeading ?? undefined}

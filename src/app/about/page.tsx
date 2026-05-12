@@ -172,6 +172,119 @@ export default async function AboutPage() {
         </div>
       </section>
 
+      {/* Next Decade Development Plan */}
+      <section
+        className="relative overflow-hidden"
+        id="next-decade"
+        style={{ background: '#07121F' }}
+        aria-label="Next decade development plan"
+      >
+        {/* Top rule */}
+        <div className="absolute top-0 left-0 right-0 h-px bg-gold/20" />
+
+        <div className="max-w-[1440px] mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 min-h-[640px]">
+
+            {/* Image panel — left */}
+            <div className="relative min-h-[420px] lg:min-h-0 overflow-hidden order-2 lg:order-1">
+              <Image
+                src="/images/stock/iron-ore-smelting.jpg"
+                alt="Industrial furnace — placeholder for factory renders"
+                fill
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+              />
+              {/* Dark overlay */}
+              <div
+                className="absolute inset-0"
+                style={{ background: 'linear-gradient(to right, rgba(7,18,31,0.25) 0%, rgba(7,18,31,0.1) 100%)' }}
+              />
+              {/* Placeholder label — remove when real renders arrive */}
+              <div
+                className="absolute bottom-4 left-4 px-3 py-1.5"
+                style={{ background: 'rgba(7,18,31,0.88)', border: '1px solid rgba(200,150,46,0.35)' }}
+              >
+                <span className="font-mono text-[9px] tracking-[0.22em] uppercase text-gold/75">
+                  Placeholder — swap with factory renders
+                </span>
+              </div>
+              {/* Watermark */}
+              <span
+                className="absolute top-5 right-6 font-mono font-bold select-none pointer-events-none text-white/8"
+                style={{ fontSize: '96px', lineHeight: 1 }}
+                aria-hidden="true"
+              >
+                ND
+              </span>
+            </div>
+
+            {/* Content panel — right */}
+            <div
+              className="flex flex-col justify-center px-8 sm:px-12 lg:px-16 xl:px-20 py-20 lg:py-28 order-1 lg:order-2"
+              style={{ background: '#07121F' }}
+            >
+              {/* Eyebrow */}
+              <div className="flex items-center gap-4 mb-8 reveal">
+                <span className="block w-8 h-px bg-gold" aria-hidden="true" />
+                <span className="font-mono text-[10px] tracking-[0.30em] uppercase text-gold">
+                  Next Decade Development Plan
+                </span>
+              </div>
+
+              {/* Headline */}
+              <h2 className="font-black text-[clamp(30px,3.5vw,52px)] text-white leading-tight tracking-tight mb-7 reveal">
+                The Future of Steel.<br />
+                <span className="text-gold">Made in Tanzania.</span>
+              </h2>
+
+              {/* Body */}
+              <p className="text-[15px] text-white/55 leading-relaxed mb-8 max-w-lg reveal">
+                The upcoming Country Materials factory will be a state-of-the-art facility equipped with the latest machinery to produce virgin steel in Tanzania. It will be the second facility on the African continent capable of producing virgin steel directly from iron ore, after South Africa. This process requires no mixing and produces superior quality steel billets — setting a new standard for locally manufactured construction materials. Our vision is to provide Tanzanians with the highest quality products that uplift local industry and compete directly against imported steel.
+              </p>
+
+              {/* Pull quote */}
+              <blockquote
+                className="mb-10 pl-5 reveal"
+                style={{ borderLeft: '2px solid rgba(200,150,46,0.6)' }}
+              >
+                <p className="font-black text-[clamp(20px,2.2vw,28px)] text-gold leading-tight">
+                  &ldquo;Second only to South Africa.<br />First in Tanzania.&rdquo;
+                </p>
+              </blockquote>
+
+              {/* Three callouts */}
+              <div
+                className="grid grid-cols-1 sm:grid-cols-3 reveal"
+                style={{ borderTop: '1px solid rgba(200,150,46,0.12)' }}
+              >
+                {[
+                  { title: 'Virgin Steel Production', sub: 'No mixing. No compromise.' },
+                  { title: 'Superior Quality Billets', sub: 'Highest grade. Locally made.' },
+                  { title: 'Import Replacement', sub: 'Built for Tanzania. Scaled for Africa.' },
+                ].map((item, i) => (
+                  <div
+                    key={item.title}
+                    className="pt-6 pb-2 pr-4"
+                    style={{
+                      borderRight: i < 2 ? '1px solid rgba(200,150,46,0.10)' : undefined,
+                      paddingLeft: i > 0 ? '1rem' : undefined,
+                    }}
+                  >
+                    <p className="font-mono text-[10px] tracking-[0.18em] uppercase text-gold/70 mb-1">
+                      {item.title}
+                    </p>
+                    <p className="text-[12px] text-white/35 leading-snug">{item.sub}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom rule */}
+        <div className="absolute bottom-0 left-0 right-0 h-px bg-gold/10" />
+      </section>
+
       {/* CTA */}
       <section className="py-20 sm:py-24 text-center" style={{ background: '#0B1D3A' }} aria-label="Contact call to action">
         <div className="max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16">

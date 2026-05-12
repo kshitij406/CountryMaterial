@@ -13,12 +13,6 @@ interface HeroSectionProps {
   subheading?: string
 }
 
-const HERO_STATS = [
-  { value: '50,000+', label: 'MT Recycled' },
-  { value: '320+',    label: 'Active Clients' },
-  { value: '5,000+',  label: 'Vendors' },
-  { value: '5',       label: 'Branches' },
-]
 
 export default function HeroSection({
   videoSrc,
@@ -33,12 +27,11 @@ export default function HeroSection({
   const line2Ref      = useRef<HTMLSpanElement>(null)
   const subRef        = useRef<HTMLParagraphElement>(null)
   const ctaRef        = useRef<HTMLDivElement>(null)
-  const statsBarRef   = useRef<HTMLDivElement>(null)
   const scrollRef     = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    const els = [locationRef, line1Ref, line2Ref, subRef, ctaRef, statsBarRef, scrollRef]
+    const els = [locationRef, line1Ref, line2Ref, subRef, ctaRef, scrollRef]
     if (prefersReduced) {
       els.forEach((r) => {
         if (r.current) { r.current.style.opacity = '1'; r.current.style.transform = 'none' }
@@ -53,8 +46,7 @@ export default function HeroSection({
         .from(line2Ref.current,    { y: 80, opacity: 0, duration: 1.0 }, '-=0.7')
         .from(subRef.current,      { y: 30, opacity: 0, duration: 0.7 }, '-=0.4')
         .from(ctaRef.current,      { y: 20, opacity: 0, duration: 0.6 }, '-=0.4')
-        .from(statsBarRef.current, { opacity: 0, duration: 0.8 },        '-=0.2')
-        .from(scrollRef.current,   { opacity: 0, duration: 0.8 },        '-=0.4')
+        .from(scrollRef.current,   { opacity: 0, duration: 0.8 },        '-=0.2')
     }, containerRef)
 
     return () => ctx.revert()
@@ -142,32 +134,6 @@ export default function HeroSection({
           >
             View Products
           </Link>
-        </div>
-      </div>
-
-      {/* Stats bar — full-width dark strip separated from hero */}
-      <div
-        ref={statsBarRef}
-        className="relative z-10 w-full bg-navy-mid border-t border-white/[0.06]"
-        aria-label="Key statistics"
-      >
-        <div className="max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16">
-          <div className="grid grid-cols-2 sm:grid-cols-4">
-            {HERO_STATS.map((s, i) => (
-              <div
-                key={s.label}
-                className="py-6 px-4 sm:px-6 flex flex-col items-center sm:items-start"
-                style={{ borderRight: i < HERO_STATS.length - 1 ? '1px solid rgba(255,255,255,0.06)' : undefined }}
-              >
-                <span className="font-mono font-bold text-[clamp(28px,3.5vw,44px)] leading-none text-gold tabular-nums">
-                  {s.value}
-                </span>
-                <span className="mt-1.5 text-[10px] font-bold tracking-[0.2em] uppercase text-white/35">
-                  {s.label}
-                </span>
-              </div>
-            ))}
-          </div>
         </div>
       </div>
 

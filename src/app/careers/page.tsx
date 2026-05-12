@@ -91,10 +91,19 @@ export default async function CareersPage() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 stagger">
             {WHY_ITEMS.map((item, i) => (
-              <div key={i} className="p-8 bg-charcoal" style={{ border: '1px solid #D8E0E7' }}>
-                <span className="font-space text-[11px] text-gold/50 tracking-[0.2em]">{String(i + 1).padStart(2, '0')}</span>
-                <h3 className="font-display text-[clamp(22px,2vw,30px)] leading-[1] tracking-[0.04em] uppercase text-slate mt-3 mb-3">{item.title}</h3>
-                <p className="font-barlow text-[15px] text-slate/85 leading-[1.65]">{item.desc}</p>
+              <div
+                key={i}
+                className="p-8 bg-charcoal"
+                style={{
+                  borderLeft: '3px solid rgba(200,150,46,0.55)',
+                  borderTop: '1px solid rgba(200,150,46,0.12)',
+                  borderRight: '1px solid rgba(200,150,46,0.08)',
+                  borderBottom: '1px solid rgba(200,150,46,0.08)',
+                }}
+              >
+                <span className="font-space text-[11px] text-gold/60 tracking-[0.2em]">{String(i + 1).padStart(2, '0')}</span>
+                <h3 className="font-display text-[clamp(22px,2vw,30px)] leading-[1] tracking-[0.04em] uppercase text-cream font-semibold mt-3 mb-3">{item.title}</h3>
+                <p className="font-barlow text-[15px] text-sand leading-[1.65]">{item.desc}</p>
               </div>
             ))}
           </div>
