@@ -1,32 +1,26 @@
 import Link from 'next/link'
 import Image from 'next/image'
 
-const divisions = [
-  { label: 'Steel & Rebar',      href: '/services/steel' },
-  { label: 'Hardware',           href: '/services/hardware' },
-  { label: 'Waste Management',   href: '/services/waste-management' },
-  { label: 'Logistics',          href: '/services/logistics' },
+const colCompany = [
+  { label: 'About Us',       href: '/about' },
+  { label: 'Operations',     href: '/about#operations' },
+  { label: 'Certifications', href: '/about#certifications' },
+  { label: 'Careers',        href: '/careers' },
 ]
 
-const company = [
-  { label: 'About',      href: '/about' },
-  { label: 'Leadership', href: '/about#leadership' },
-  { label: 'Careers',    href: '/careers' },
-  { label: 'Press',      href: '/news' },
+const colServices = [
+  { label: 'Scrap Collection',   href: '/services' },
+  { label: 'Steel Manufacturing', href: '/services' },
+  { label: 'Rebar & Billets',    href: '/shop' },
+  { label: 'Fleet Logistics',    href: '/services' },
 ]
 
-const support = [
-  { label: 'Tender Desk',    href: '/contact' },
-  { label: 'Catalogue',      href: '/shop' },
-  { label: 'Delivery',       href: '/services' },
-  { label: 'Certifications', href: '/about' },
-]
-
-const yards = [
-  { label: 'Dar es Salaam', href: '/contact' },
-  { label: 'Arusha',        href: '/contact' },
-  { label: 'Mwanza',        href: '/contact' },
-  { label: 'Dodoma',        href: '/contact' },
+const colBranches = [
+  { label: 'Dar es Salaam — HQ', href: '/contact' },
+  { label: 'Mbeya',              href: '/contact' },
+  { label: 'Dodoma',             href: '/contact' },
+  { label: 'Kahama',             href: '/contact' },
+  { label: 'Pwani · Kilimanjaro', href: '/contact' },
 ]
 
 interface SocialLinks {
@@ -52,84 +46,64 @@ export default function Footer({ contact }: { contact?: FooterContact }) {
   const social = contact?.socialLinks
 
   return (
-    <footer style={{ background: '#1F3347', borderTop: '1px solid rgba(216,224,231,.4)' }}>
-      {/* Main grid */}
-      <div className="max-w-[1440px] mx-auto px-8 lg:px-16 pt-20 pb-16">
-        <div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr_1fr] gap-12"
-          style={{ paddingBottom: 64, borderBottom: '1px solid rgba(216,224,231,.3)' }}
-        >
-          {/* Brand */}
+    <footer style={{ background: '#0B1D3A', borderTop: '1px solid rgba(200,150,46,0.12)' }}>
+      <div className="max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16 pt-16 pb-10">
+
+        {/* Main grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[1.6fr_1fr_1fr_1fr] gap-12 pb-14" style={{ borderBottom: '1px solid rgba(255,255,255,0.07)' }}>
+
+          {/* Brand column */}
           <div>
-            <div className="mb-5">
+            <div className="mb-6">
               <Image
                 src="/images/logo/Country-Materials-Logo.png"
                 alt="Country Materials Limited"
-                width={220}
-                height={64}
+                width={200}
+                height={56}
                 className="h-10 w-auto object-contain"
               />
             </div>
-            <p className="font-barlow text-[14px] text-white/55 leading-[1.6] max-w-[320px] mt-5">
-              Regenerative steel recycler integrating scrap vendors, manufacturers, and construction into a circular supply chain powered by technology. Founded in Dar es Salaam, 2022.
+            <p className="text-[14px] text-white/40 leading-relaxed max-w-xs">
+              Tanzania&apos;s leading circular steel ecosystem — from scrap collection to BS 500-certified construction steel. Founded 2022, Dar es Salaam.
             </p>
+            <div className="mt-7 flex flex-col gap-2">
+              <a href={`tel:${phone.replace(/\s/g, '')}`} className="text-[13px] text-white/50 hover:text-white transition-colors duration-200">
+                {phone}
+              </a>
+              <a href={`mailto:${email}`} className="text-[13px] text-white/50 hover:text-white transition-colors duration-200">
+                {email}
+              </a>
+            </div>
+
+            {/* Social links */}
+            <div className="mt-6 flex gap-2.5">
+              {social?.linkedin && <SocialLink href={social.linkedin} label="LinkedIn"><LinkedInIcon /></SocialLink>}
+              {social?.instagram && <SocialLink href={social.instagram} label="Instagram"><InstagramIcon /></SocialLink>}
+              {social?.twitter && <SocialLink href={social.twitter} label="X / Twitter"><XIcon /></SocialLink>}
+              {social?.facebook && <SocialLink href={social.facebook} label="Facebook"><FacebookIcon /></SocialLink>}
+              {!social?.linkedin && !social?.instagram && !social?.twitter && !social?.facebook && (
+                <>
+                  <SocialLink href="#" label="LinkedIn"><LinkedInIcon /></SocialLink>
+                  <SocialLink href="#" label="Instagram"><InstagramIcon /></SocialLink>
+                  <SocialLink href="#" label="X"><XIcon /></SocialLink>
+                </>
+              )}
+            </div>
           </div>
 
-          {/* Divisions */}
-          <FooterColumn title="Divisions" links={divisions} />
-
-          {/* Company */}
-          <FooterColumn title="Company" links={company} />
-
-          {/* Support */}
-          <FooterColumn title="Support" links={support} />
-
-          {/* Yards */}
-          <FooterColumn title="Yards" links={yards} />
+          <FooterColumn title="Company"  links={colCompany} />
+          <FooterColumn title="Services" links={colServices} />
+          <FooterColumn title="Branches" links={colBranches} />
         </div>
 
         {/* Bottom bar */}
-        <div className="mt-8 flex flex-col sm:flex-row items-center justify-between gap-5 flex-wrap">
-          <span className="font-space text-[11px] text-white/40 tracking-[0.1em]">
-            © {new Date().getFullYear()} COUNTRY MATERIALS LIMITED
+        <div className="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-[12px] text-white/25">
+          <span className="font-mono tracking-widest uppercase">
+            © {new Date().getFullYear()} Country Materials Limited
           </span>
-
-          {/* Social links */}
-          <div className="flex gap-3">
-            {social?.linkedin && (
-              <SocialLink href={social.linkedin} label="LinkedIn">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M4 4h4v16H4zM6 0a2 2 0 110 4 2 2 0 010-4zM10 8h4v2a4 4 0 018 0v10h-4v-8a2 2 0 00-4 0v8h-4z" /></svg>
-              </SocialLink>
-            )}
-            {social?.instagram && (
-              <SocialLink href={social.instagram} label="Instagram">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="3" width="18" height="18" rx="4" /><circle cx="12" cy="12" r="4" /><circle cx="17" cy="7" r="1" fill="currentColor" /></svg>
-              </SocialLink>
-            )}
-            {social?.twitter && (
-              <SocialLink href={social.twitter} label="X / Twitter">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M3 3l8 9.5L3.5 21H6l6-6.5L17 21h4l-8.5-10L20 3h-2.5l-5.5 6L7 3z" /></svg>
-              </SocialLink>
-            )}
-            {social?.facebook && (
-              <SocialLink href={social.facebook} label="Facebook">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z" /></svg>
-              </SocialLink>
-            )}
-            {/* Fallback icons if no social links configured */}
-            {!social?.linkedin && !social?.instagram && !social?.twitter && !social?.facebook && (
-              <>
-                <SocialLink href="#" label="LinkedIn"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M4 4h4v16H4zM6 0a2 2 0 110 4 2 2 0 010-4zM10 8h4v2a4 4 0 018 0v10h-4v-8a2 2 0 00-4 0v8h-4z" /></svg></SocialLink>
-                <SocialLink href="#" label="Instagram"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="3" width="18" height="18" rx="4" /><circle cx="12" cy="12" r="4" /><circle cx="17" cy="7" r="1" fill="currentColor" /></svg></SocialLink>
-                <SocialLink href="#" label="X / Twitter"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M3 3l8 9.5L3.5 21H6l6-6.5L17 21h4l-8.5-10L20 3h-2.5l-5.5 6L7 3z" /></svg></SocialLink>
-              </>
-            )}
-          </div>
-
-          {/* Contact quick links */}
-          <div className="flex gap-6 font-condensed text-[12px] tracking-[0.15em] uppercase">
-            <a href={`tel:${phone.replace(/[\s-]/g, '')}`} className="text-white/40 hover:text-gold transition-colors duration-200">{phone}</a>
-            <a href={`mailto:${email}`} className="text-white/40 hover:text-gold transition-colors duration-200">{email}</a>
+          <div className="flex gap-6">
+            <span>Dar es Salaam, Tanzania</span>
+            <span>BS 500 · TBS Certified</span>
           </div>
         </div>
       </div>
@@ -140,13 +114,13 @@ export default function Footer({ contact }: { contact?: FooterContact }) {
 function FooterColumn({ title, links }: { title: string; links: { label: string; href: string }[] }) {
   return (
     <div>
-      <h5 className="font-condensed text-[12px] tracking-[0.22em] uppercase text-gold mb-6">{title}</h5>
-      <ul className="flex flex-col gap-3.5">
+      <h5 className="text-[10px] font-bold tracking-[0.22em] uppercase text-gold mb-5">{title}</h5>
+      <ul className="flex flex-col gap-3">
         {links.map((link) => (
-          <li key={link.href}>
+          <li key={link.label}>
             <Link
               href={link.href}
-              className="font-barlow text-[15px] text-white/65 hover:text-gold transition-colors duration-200"
+              className="text-[14px] text-white/45 hover:text-white transition-colors duration-200"
             >
               {link.label}
             </Link>
@@ -162,10 +136,25 @@ function SocialLink({ href, label, children }: { href: string; label: string; ch
     <a
       href={href}
       aria-label={label}
-      className="w-[38px] h-[38px] grid place-items-center text-gold transition-all duration-300 hover:bg-gold hover:text-white"
-      style={{ border: '1px solid rgba(216,224,231,.3)' }}
+      className="w-9 h-9 flex items-center justify-center border border-white/10 text-white/40 hover:text-gold hover:border-gold/40 transition-all duration-200 cursor-pointer"
     >
       {children}
     </a>
   )
+}
+
+function LinkedInIcon() {
+  return <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5c0 1.381-1.11 2.5-2.48 2.5s-2.48-1.119-2.48-2.5c0-1.38 1.11-2.5 2.48-2.5s2.48 1.12 2.48 2.5zm.02 4.5h-5v16h5v-16zm7.982 0h-4.968v16h4.969v-8.399c0-4.67 6.029-5.052 6.029 0v8.399h4.988v-10.131c0-7.88-8.922-7.593-11.018-3.714v-2.155z"/></svg>
+}
+
+function InstagramIcon() {
+  return <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.75" fill="currentColor" stroke="none"/></svg>
+}
+
+function XIcon() {
+  return <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+}
+
+function FacebookIcon() {
+  return <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
 }

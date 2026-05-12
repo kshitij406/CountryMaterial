@@ -3,176 +3,123 @@ import { client } from '@/sanity/lib/client'
 import { siteSettingsQuery } from '@/sanity/lib/queries'
 import ContactForm from '@/components/sections/ContactForm'
 
+export const metadata: Metadata = {
+  title: 'Contact Country Materials Limited',
+  description: 'Request a quote, schedule delivery, or speak to our steel team. We respond within 24 hours.',
+}
+
 export const revalidate = 60
 
-export async function generateMetadata(): Promise<Metadata> {
-  const settings = await client.fetch(siteSettingsQuery).catch(() => null)
-  const name = settings?.companyName ?? 'Country Materials Limited'
-  const city = settings?.city ?? 'Dar es Salaam'
-  const country = settings?.country ?? 'Tanzania'
-  return {
-    title: 'Contact Us',
-    description: `Get in touch with ${name}. We are based in ${city}, ${country}. Call, email, or send us a message.`,
-  }
-}
+const branches = [
+  { name: 'Dar es Salaam', note: 'Headquarters & Main Yard',  hours: '24hrs' },
+  { name: 'Mbeya',         note: 'Southern Highlands Hub',   hours: '8am–6pm' },
+  { name: 'Dodoma',        note: 'Central Region Branch',    hours: '8am–6pm' },
+  { name: 'Kahama',        note: 'Lake Zone Operations',     hours: '8am–6pm' },
+  { name: 'Pwani',         note: 'Coastal Collection Hub',   hours: '8am–6pm' },
+  { name: 'Kilimanjaro',   note: 'Northern Zone Branch',     hours: '8am–6pm' },
+]
 
 export default async function ContactPage() {
   const settings = await client.fetch(siteSettingsQuery).catch(() => null)
-
   const phone = settings?.phone ?? '+255 768 500 555'
   const email = settings?.email ?? 'info@countrymaterial.com'
-  const addressLine = settings?.address ?? 'Babecov Complex, Buguruni Mandela Road'
-  const poBox = settings?.poBox ? `P.O. Box ${settings.poBox}` : 'P.O. Box 2140'
-  const city = settings?.city ?? 'Dar es Salaam'
-  const country = settings?.country ?? 'Tanzania'
-  const officeValue = `${addressLine}\n${poBox}, ${city}, ${country}`
-
-  const telHref = `tel:${phone.replace(/[\s-]/g, '')}`
-  const mapsQuery = encodeURIComponent(`${addressLine} ${city}`)
 
   return (
     <>
-      <section className="relative overflow-hidden pt-[150px] pb-[90px] px-8 lg:px-16 bg-navy" style={{ borderBottom: '1px solid rgba(216,224,231,.4)' }}>
-        <div className="relative max-w-[1440px] mx-auto grid lg:grid-cols-[1.3fr_1fr] gap-16 items-end">
-          <div>
-            <div className="flex items-center gap-3.5 mb-7">
-              <span className="block h-px w-10 bg-gold" />
-              <span className="font-condensed text-[12px] tracking-[0.18em] uppercase text-white/90">Get in Touch</span>
-            </div>
-            <h1 className="font-display text-[clamp(44px,7vw,96px)] leading-[0.9] tracking-[0.03em] uppercase text-white">
-              Contact the
-              <span className="text-gold-light"> Country Materials Team</span>
-            </h1>
-          </div>
-
-          <div className="reveal" style={{ borderLeft: '1px solid rgba(216,224,231,.35)', paddingLeft: 32 }}>
-            <a href={telHref} className="group flex items-center gap-5 py-5 hover:pl-3 transition-all duration-300" style={{ borderBottom: '1px solid rgba(216,224,231,.3)' }}>
-              <div className="shrink-0 w-10 h-10 grid place-items-center text-gold" style={{ border: '1px solid rgba(216,224,231,.4)' }}>
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                </svg>
-              </div>
-              <div>
-                <div className="font-condensed text-[10px] tracking-[0.22em] uppercase text-white/55 mb-0.5">Phone</div>
-                <div className="font-barlow text-[16px] text-white group-hover:text-gold-light transition-colors duration-200">{phone}</div>
-              </div>
-            </a>
-            <a href={`mailto:${email}`} className="group flex items-center gap-5 py-5 hover:pl-3 transition-all duration-300" style={{ borderBottom: '1px solid rgba(216,224,231,.3)' }}>
-              <div className="shrink-0 w-10 h-10 grid place-items-center text-gold" style={{ border: '1px solid rgba(216,224,231,.4)' }}>
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                </svg>
-              </div>
-              <div>
-                <div className="font-condensed text-[10px] tracking-[0.22em] uppercase text-white/55 mb-0.5">Email</div>
-                <div className="font-barlow text-[16px] text-white group-hover:text-gold-light transition-colors duration-200">{email}</div>
-              </div>
-            </a>
-            <div className="flex items-center gap-5 py-5">
-              <div className="shrink-0 w-10 h-10 grid place-items-center text-gold" style={{ border: '1px solid rgba(216,224,231,.4)' }}>
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                </svg>
-              </div>
-              <div>
-                <div className="font-condensed text-[10px] tracking-[0.22em] uppercase text-white/55 mb-0.5">Head Office</div>
-                <div className="font-barlow text-[15px] text-white/85">{addressLine}, {city}</div>
-              </div>
-            </div>
-          </div>
+      {/* Hero */}
+      <section
+        className="relative min-h-[38vh] flex flex-col justify-end overflow-hidden pt-20"
+        style={{ background: '#0B1D3A' }}
+        aria-label="Contact page hero"
+      >
+        <div className="absolute inset-0 bg-steel-texture" aria-hidden="true" />
+        <div className="absolute inset-0 bg-concrete-texture" aria-hidden="true" />
+        <div className="relative max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16 pb-16 sm:pb-20 pt-12">
+          <p className="font-mono text-[11px] tracking-[0.2em] uppercase text-gold mb-6">Get in Touch</p>
+          <h1 className="font-black text-[clamp(48px,8vw,110px)] leading-[0.92] tracking-tight text-white">
+            We respond within<br />
+            <span className="text-gold">24 hours.</span>
+          </h1>
+          <p className="mt-6 text-[17px] text-white/55 max-w-lg leading-relaxed">
+            From bulk orders and delivery logistics to vendor registration and trade accounts — reach our team directly.
+          </p>
         </div>
       </section>
 
-      <section className="relative py-[100px] px-8 lg:px-16 bg-white" style={{ borderBottom: '1px solid #D8E0E7' }}>
-        <div className="max-w-[1440px] mx-auto grid lg:grid-cols-2 gap-20">
-          <div className="reveal">
-            <div className="flex items-center gap-3.5 mb-7">
-              <span className="block h-px w-10 bg-gold" />
-              <span className="font-condensed text-[12px] tracking-[0.18em] uppercase text-gold">Contact Information</span>
-            </div>
-            <h2 className="font-display text-[clamp(32px,3.5vw,56px)] leading-[0.95] tracking-[0.03em] uppercase text-slate mb-10">
-              Visit, Call, or <span className="text-gold">Write</span>
-            </h2>
+      {/* Contact grid */}
+      <section className="py-16 sm:py-20" style={{ background: '#FAF7F2' }} aria-label="Contact information and form">
+        <div className="max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16">
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.5fr] gap-8">
 
-            <div className="bg-charcoal" style={{ border: '1px solid #D8E0E7' }}>
-              <div className="flex gap-5 py-6 px-6" style={{ borderBottom: '1px solid #D8E0E7' }}>
-                <div className="shrink-0 w-10 h-10 grid place-items-center text-gold" style={{ border: '1px solid #B9D1E4' }}>
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                  </svg>
-                </div>
-                <div>
-                  <div className="font-condensed text-[10px] tracking-[0.22em] uppercase text-slate/55 mb-1">Our Office</div>
-                  <p className="font-barlow text-[15px] text-slate/80 whitespace-pre-line leading-[1.6]">{officeValue}</p>
+            {/* Left: contact info */}
+            <div className="flex flex-col gap-5">
+
+              {/* Direct contacts */}
+              <div className="p-7 border" style={{ background: '#FFFFFF', borderColor: '#E8DED1' }}>
+                <h2 className="font-black text-[17px] text-ink mb-6">Direct Contact</h2>
+                <div className="flex flex-col gap-5">
+
+                  <div className="flex items-start gap-4">
+                    <div className="w-10 h-10 flex items-center justify-center border border-gold/30 flex-shrink-0 text-gold">
+                      <svg viewBox="0 0 24 24" fill="none" className="w-5 h-5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.42 2 2 0 0 1 3.59 1.24h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 9a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                    </div>
+                    <div>
+                      <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-slate/45 mb-1">Phone / WhatsApp</p>
+                      <a href={`tel:${phone.replace(/\s/g, '')}`} className="text-[16px] font-bold text-ink hover:text-gold transition-colors duration-200 cursor-pointer">{phone}</a>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-4">
+                    <div className="w-10 h-10 flex items-center justify-center border border-gold/30 flex-shrink-0 text-gold">
+                      <svg viewBox="0 0 24 24" fill="none" className="w-5 h-5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                    </div>
+                    <div>
+                      <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-slate/45 mb-1">Email</p>
+                      <a href={`mailto:${email}`} className="text-[16px] font-bold text-ink hover:text-gold transition-colors duration-200 cursor-pointer">{email}</a>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-4">
+                    <div className="w-10 h-10 flex items-center justify-center border border-gold/30 flex-shrink-0 text-gold">
+                      <svg viewBox="0 0 24 24" fill="none" className="w-5 h-5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                    </div>
+                    <div>
+                      <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-slate/45 mb-1">Headquarters</p>
+                      <p className="text-[16px] font-bold text-ink">{settings?.address ?? 'Dar es Salaam, Tanzania'}</p>
+                    </div>
+                  </div>
                 </div>
               </div>
 
-              <div className="flex gap-5 py-6 px-6" style={{ borderBottom: '1px solid #D8E0E7' }}>
-                <div className="shrink-0 w-10 h-10 grid place-items-center text-gold" style={{ border: '1px solid #B9D1E4' }}>
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                  </svg>
+              {/* Branches */}
+              <div className="p-7 border" style={{ background: '#FFFFFF', borderColor: '#E8DED1' }}>
+                <h2 className="font-black text-[17px] text-ink mb-5">All Branches</h2>
+                <div className="flex flex-col">
+                  {branches.map((b, i) => (
+                    <div
+                      key={b.name}
+                      className="flex items-center justify-between py-3"
+                      style={{ borderBottom: i < branches.length - 1 ? '1px solid #E8DED1' : undefined }}
+                    >
+                      <div>
+                        <p className="text-[14px] font-bold text-ink">{b.name}</p>
+                        <p className="text-[12px] text-slate/50">{b.note}</p>
+                      </div>
+                      <span className="text-[10px] font-bold border border-gold/25 text-gold px-2.5 py-1 font-mono tracking-wide">
+                        {b.hours}
+                      </span>
+                    </div>
+                  ))}
                 </div>
-                <div>
-                  <div className="font-condensed text-[10px] tracking-[0.22em] uppercase text-slate/55 mb-1">Phone</div>
-                  <a href={telHref} className="font-barlow text-[15px] text-slate/85 hover:text-gold transition-colors duration-200">{phone}</a>
-                </div>
-              </div>
-
-              <div className="flex gap-5 py-6 px-6" style={{ borderBottom: '1px solid #D8E0E7' }}>
-                <div className="shrink-0 w-10 h-10 grid place-items-center text-gold" style={{ border: '1px solid #B9D1E4' }}>
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                  </svg>
-                </div>
-                <div>
-                  <div className="font-condensed text-[10px] tracking-[0.22em] uppercase text-slate/55 mb-1">Email</div>
-                  <a href={`mailto:${email}`} className="font-barlow text-[15px] text-slate/85 hover:text-gold transition-colors duration-200">{email}</a>
-                </div>
-              </div>
-
-              <div className="flex gap-5 py-6 px-6">
-                <div className="shrink-0 w-10 h-10 grid place-items-center text-gold" style={{ border: '1px solid #B9D1E4' }}>
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                </div>
-                <div>
-                  <div className="font-condensed text-[10px] tracking-[0.22em] uppercase text-slate/55 mb-1">Business Hours</div>
-                  <p className="font-barlow text-[15px] text-slate/80 whitespace-pre-line leading-[1.6]">
-                    {settings?.businessHours ?? '24hrs'}
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="mt-8 h-52 flex items-center justify-center bg-charcoal" style={{ border: '1px solid #D8E0E7' }}>
-              <div className="text-center">
-                <div className="font-display text-[36px] text-gold/45 mb-2">◈</div>
-                <p className="font-barlow text-[13px] text-slate/65">{addressLine}, {city}</p>
-                <a
-                  href={`https://maps.google.com/?q=${mapsQuery}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="font-condensed text-[11px] tracking-[0.15em] uppercase text-gold hover:text-gold-dim mt-2 inline-block transition-colors duration-200"
-                >
-                  Open in Google Maps
-                </a>
               </div>
             </div>
-          </div>
 
-          <div className="reveal">
-            <div className="flex items-center gap-3.5 mb-7">
-              <span className="block h-px w-10 bg-gold" />
-              <span className="font-condensed text-[12px] tracking-[0.18em] uppercase text-gold">Send a Message</span>
+            {/* Right: form */}
+            <div className="p-8 border" style={{ background: '#FFFFFF', borderColor: '#E8DED1' }}>
+              <h2 className="font-black text-[20px] text-ink mb-2">Send us a message</h2>
+              <p className="text-[14px] text-slate/55 mb-7">We&apos;ll get back to you within 24 hours, Monday–Saturday.</p>
+              <ContactForm />
             </div>
-            <h2 className="font-display text-[clamp(32px,3.5vw,56px)] leading-[0.95] tracking-[0.03em] uppercase text-slate mb-12">
-              Tell Us What <span className="text-gold">You Need</span>
-            </h2>
-            <ContactForm />
           </div>
         </div>
       </section>

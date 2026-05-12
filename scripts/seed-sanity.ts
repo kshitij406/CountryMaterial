@@ -248,75 +248,123 @@ const categoryPaints = {
 
 // ─── Products ─────────────────────────────────────────────────────────────────
 
-const productGypsumBoard = {
-  _id: 'product-gypsum-board',
+const productRebar8mm = {
+  _id: 'product-tmt-rebar-8mm',
   _type: 'product',
-  name: 'BS 500 Certified Steel / TMT Rebar',
-  slug: { _type: 'slug', current: 'tmt-rebar-bs500' },
-  price: null,
-  hasVariants: true,
+  name: 'TMT Rebar — 8mm',
+  slug: { _type: 'slug', current: 'tmt-rebar-8mm' },
+  grade: 'BS 500B',
+  unit: 'Per tonne',
   inStock: true,
-  description: 'BS 500 certified steel reinforcement. Full product specs, sizes, MOQ, and pricing: TBC.',
+  hasVariants: false,
+  description: 'High-strength 8mm deformed rebar for slab reinforcement, columns, and foundations. Produced from 100% recycled scrap and BS 500B certified.',
+  standards: ['BS 500B', 'TBS 1257', 'ISO 9001'],
+  specSheet: [
+    { _key: 'sp1', key: 'Diameter', value: '8mm' },
+    { _key: 'sp2', key: 'Length', value: '12m standard' },
+    { _key: 'sp3', key: 'Yield Strength', value: '≥ 500 N/mm²' },
+    { _key: 'sp4', key: 'Weight', value: '~0.395 kg/m' },
+  ],
   category: { _type: 'reference', _ref: 'productCategory-steel-metals' },
 }
 
-const productMarineBoard = {
-  _id: 'product-marine-board',
+const productRebar10mm = {
+  _id: 'product-tmt-rebar-10mm',
+  _type: 'product',
+  name: 'TMT Rebar — 10mm',
+  slug: { _type: 'slug', current: 'tmt-rebar-10mm' },
+  grade: 'BS 500B',
+  unit: 'Per tonne',
+  inStock: true,
+  hasVariants: false,
+  description: 'Standard 10mm deformed rebar for residential and commercial concrete reinforcement. Available in 12m lengths with mill certificates.',
+  standards: ['BS 500B', 'TBS 1257', 'ISO 9001'],
+  specSheet: [
+    { _key: 'sp1', key: 'Diameter', value: '10mm' },
+    { _key: 'sp2', key: 'Length', value: '12m standard' },
+    { _key: 'sp3', key: 'Yield Strength', value: '≥ 500 N/mm²' },
+    { _key: 'sp4', key: 'Weight', value: '~0.617 kg/m' },
+  ],
+  category: { _type: 'reference', _ref: 'productCategory-steel-metals' },
+}
+
+const productRebar12mm = {
+  _id: 'product-tmt-rebar-12mm',
+  _type: 'product',
+  name: 'TMT Rebar — 12mm',
+  slug: { _type: 'slug', current: 'tmt-rebar-12mm' },
+  grade: 'BS 500B',
+  unit: 'Per tonne',
+  inStock: true,
+  hasVariants: false,
+  description: '12mm TMT rebar for medium and heavy construction. Consistent rib pattern ensures superior concrete bond strength.',
+  standards: ['BS 500B', 'TBS 1257', 'ISO 9001'],
+  specSheet: [
+    { _key: 'sp1', key: 'Diameter', value: '12mm' },
+    { _key: 'sp2', key: 'Length', value: '12m standard' },
+    { _key: 'sp3', key: 'Yield Strength', value: '≥ 500 N/mm²' },
+    { _key: 'sp4', key: 'Weight', value: '~0.888 kg/m' },
+  ],
+  category: { _type: 'reference', _ref: 'productCategory-steel-metals' },
+}
+
+const productRebar16mm = {
+  _id: 'product-tmt-rebar-16mm',
+  _type: 'product',
+  name: 'TMT Rebar — 16mm',
+  slug: { _type: 'slug', current: 'tmt-rebar-16mm' },
+  grade: 'BS 500B',
+  unit: 'Per tonne',
+  inStock: true,
+  hasVariants: false,
+  description: 'Heavy-duty 16mm deformed rebar for bridges, high-rises, and infrastructure projects. ISO-process controlled with per-batch lab testing.',
+  standards: ['BS 500B', 'TBS 1257', 'ISO 9001'],
+  specSheet: [
+    { _key: 'sp1', key: 'Diameter', value: '16mm' },
+    { _key: 'sp2', key: 'Length', value: '12m standard' },
+    { _key: 'sp3', key: 'Yield Strength', value: '≥ 500 N/mm²' },
+    { _key: 'sp4', key: 'Weight', value: '~1.579 kg/m' },
+  ],
+  category: { _type: 'reference', _ref: 'productCategory-steel-metals' },
+}
+
+const productSteelBillets = {
+  _id: 'product-steel-billets',
   _type: 'product',
   name: 'Steel Billets',
   slug: { _type: 'slug', current: 'steel-billets' },
-  price: null,
-  hasVariants: false,
+  grade: 'Q235',
+  unit: 'Per tonne',
   inStock: true,
-  description: 'Steel billets produced from locally sourced scrap. Photo received. Full specs, MOQ, and pricing: TBC.',
+  hasVariants: false,
+  description: 'Square billets produced from 100% recycled scrap in our electric arc furnace. Used as rolling mill feedstock or direct fabrication input. Chemistry-tested per heat.',
+  standards: ['BS EN 10025', 'ISO 9001'],
+  specSheet: [
+    { _key: 'sp1', key: 'Section', value: '100 / 125mm sq.' },
+    { _key: 'sp2', key: 'Length', value: '6–12m cut lengths' },
+    { _key: 'sp3', key: 'Grade', value: 'Q235' },
+    { _key: 'sp4', key: 'Source', value: '100% recycled scrap' },
+  ],
   category: { _type: 'reference', _ref: 'productCategory-steel-metals' },
 }
 
-const productRebarBS500 = {
-  _id: 'product-rebar-bs500',
+const productRebar20mm = {
+  _id: 'product-tmt-rebar-20mm',
   _type: 'product',
-  name: 'Steel Billets (Additional)',
-  slug: { _type: 'slug', current: 'steel-billets-additional' },
+  name: 'TMT Rebar — 20mm',
+  slug: { _type: 'slug', current: 'tmt-rebar-20mm' },
+  grade: 'BS 500B',
+  unit: 'Per tonne',
+  inStock: true,
   hasVariants: false,
-  priceRange: null,
-  inStock: true,
-  description: 'Additional billet product listing for catalog display. Full specs, sizes, MOQ, and pricing: TBC.',
-  category: { _type: 'reference', _ref: 'productCategory-steel-metals' },
-}
-
-const productMildSteel = {
-  _id: 'product-mild-steel-bars',
-  _type: 'product',
-  name: 'BS 500 Certified Steel / TMT Rebar (Additional)',
-  slug: { _type: 'slug', current: 'tmt-rebar-bs500-additional' },
-  hasVariants: true,
-  priceRange: null,
-  inStock: true,
-  description: 'Additional rebar listing for catalog display. Full product specs, sizes, MOQ, and pricing: TBC.',
-  category: { _type: 'reference', _ref: 'productCategory-steel-metals' },
-}
-
-const productColorPaint = {
-  _id: 'product-color-paint',
-  _type: 'product',
-  name: 'Steel Products (Specs TBC)',
-  slug: { _type: 'slug', current: 'steel-products-tbc' },
-  price: null,
-  hasVariants: false,
-  inStock: true,
-  description: 'Additional product placeholder for steel lineup. Full specs, sizes, MOQ, and pricing: TBC.',
-  category: { _type: 'reference', _ref: 'productCategory-steel-metals' },
-}
-
-const productCeilingBoard = {
-  _id: 'product-ceiling-board',
-  _type: 'product',
-  name: 'Steel Products (Specs TBC 2)',
-  slug: { _type: 'slug', current: 'steel-products-tbc-2' },
-  price: null,
-  hasVariants: false,
-  inStock: true,
-  description: 'Additional product placeholder for steel lineup. Full specs, sizes, MOQ, and pricing: TBC.',
+  description: 'Extra-heavy 20mm TMT rebar for pile caps, retaining walls, and large infrastructure. Bulk pricing available on request.',
+  standards: ['BS 500B', 'TBS 1257', 'ISO 9001'],
+  specSheet: [
+    { _key: 'sp1', key: 'Diameter', value: '20mm' },
+    { _key: 'sp2', key: 'Length', value: '12m standard' },
+    { _key: 'sp3', key: 'Yield Strength', value: '≥ 500 N/mm²' },
+    { _key: 'sp4', key: 'Weight', value: '~2.466 kg/m' },
+  ],
   category: { _type: 'reference', _ref: 'productCategory-steel-metals' },
 }
 
@@ -433,12 +481,12 @@ const homepage = {
 
   // Featured products (references)
   featuredProducts: [
-    { _type: 'reference', _key: 'fp1', _ref: 'product-rebar-bs500' },
-    { _type: 'reference', _key: 'fp2', _ref: 'product-mild-steel-bars' },
-    { _type: 'reference', _key: 'fp3', _ref: 'product-gypsum-board' },
-    { _type: 'reference', _key: 'fp4', _ref: 'product-marine-board' },
-    { _type: 'reference', _key: 'fp5', _ref: 'product-color-paint' },
-    { _type: 'reference', _key: 'fp6', _ref: 'product-ceiling-board' },
+    { _type: 'reference', _key: 'fp1', _ref: 'product-tmt-rebar-8mm' },
+    { _type: 'reference', _key: 'fp2', _ref: 'product-tmt-rebar-10mm' },
+    { _type: 'reference', _key: 'fp3', _ref: 'product-tmt-rebar-12mm' },
+    { _type: 'reference', _key: 'fp4', _ref: 'product-tmt-rebar-16mm' },
+    { _type: 'reference', _key: 'fp5', _ref: 'product-steel-billets' },
+    { _type: 'reference', _key: 'fp6', _ref: 'product-tmt-rebar-20mm' },
   ],
 
   // Partner logos
@@ -491,7 +539,7 @@ async function seed() {
     },
     {
       label: 'Products (6)',
-      docs: [productGypsumBoard, productMarineBoard, productRebarBS500, productMildSteel, productColorPaint, productCeilingBoard],
+      docs: [productRebar8mm, productRebar10mm, productRebar12mm, productRebar16mm, productSteelBillets, productRebar20mm],
     },
     {
       label: 'Careers (3)',

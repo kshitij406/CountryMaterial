@@ -1,111 +1,258 @@
 import Link from 'next/link'
-
-// Icon map keyed to the `icon` field value on the service schema
-const ICONS: Record<string, React.ReactNode> = {
-  steel: (
-    <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-11 h-11 text-gold">
-      <path d="M6 36h36M10 36V14l14-6 14 6v22M18 36V22h12v14M18 28h12" />
-    </svg>
-  ),
-  hardware: (
-    <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-11 h-11 text-gold">
-      <path d="M6 12h36v24H6zM6 20h36M14 28h4M22 28h4M30 28h4" />
-    </svg>
-  ),
-  waste: (
-    <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-11 h-11 text-gold">
-      <path d="M12 10h24l4 10v22H8V20zM8 20h32M18 28h12" />
-      <circle cx="16" cy="36" r="3" /><circle cx="32" cy="36" r="3" />
-    </svg>
-  ),
-  logistics: (
-    <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-11 h-11 text-gold">
-      <path d="M4 30h28V14H4zM32 20h8l4 6v4H32z" />
-      <circle cx="14" cy="34" r="4" /><circle cx="36" cy="34" r="4" />
-    </svg>
-  ),
-}
-
-const DEFAULT_ICON = (
-  <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-11 h-11 text-gold">
-    <rect x="8" y="8" width="32" height="32" rx="2" />
-    <path d="M16 24h16M24 16v16" />
-  </svg>
-)
-
-const DEFAULT_SERVICES = [
-  { _id: '1', icon: 'waste',    title: 'Scrap Collection & Recycling', excerpt: '100% locally sourced scrap feeding a fully integrated circular model, from aggregation through processing and recovery.', slug: { current: 'waste-management' } },
-  { _id: '2', icon: 'steel',    title: 'Certified Steel Products',     excerpt: 'BS 500 certified steel and TMT rebar for affordable, reliable construction. Billets and finished products supported by traceable sourcing.', slug: { current: 'steel' } },
-  { _id: '3', icon: 'hardware', title: 'Vendor Platform & Procurement', excerpt: 'Proprietary mobile platform digitizing 5,000+ scrap vendors, improving pricing transparency, access, and throughput.', slug: { current: 'hardware' } },
-  { _id: '4', icon: 'logistics',title: 'Logistics & Fleet Operations',  excerpt: '30+ in-house vehicles supporting scrap movement, yard operations, and delivery coordination across key regions.', slug: { current: 'transportation' } },
-]
+import Image from 'next/image'
 
 interface Service {
   _id: string
   title: string
+  slug?: { current: string }
   excerpt?: string
   icon?: string
-  slug?: { current: string }
+  cardImageUrl?: string
+  specChips?: string[]
+}
+
+const DEFAULT_SERVICES: Service[] = [
+  {
+    _id: '1',
+    title: 'Scrap Collection',
+    excerpt: "Tanzania's largest organised scrap collection network. 5,000+ vendors, verified daily.",
+    icon: 'waste',
+    specChips: ['5,000+ vendors', 'Mobile-enabled'],
+  },
+  {
+    _id: '2',
+    title: 'Steel Manufacturing',
+    excerpt: 'Electric arc furnace producing BS 500B-certified TMT rebar and billets from recycled scrap.',
+    icon: 'steel',
+    specChips: ['BS 500B', 'TBS certified'],
+  },
+  {
+    _id: '3',
+    title: 'Fleet Logistics',
+    excerpt: '30+ owned trucks. 24/7 operations. Same-day dispatch across 5 regional branches.',
+    icon: 'logistics',
+    specChips: ['30+ vehicles', 'Same-day dispatch'],
+  },
+  {
+    _id: '4',
+    title: 'Vendor Platform',
+    excerpt: 'Proprietary mobile platform connecting scrap vendors, buyers, and operations on one network.',
+    icon: 'hardware',
+    specChips: ['Digital payments', 'Trade accounts'],
+  },
+]
+
+const SERVICE_IMAGES: Record<string, string> = {
+  waste:     '/images/company/wastee.jpg',
+  steel:     '/images/randos/molten_steel.jpeg',
+  logistics: '/images/company/trans-large.jpg',
+  hardware:  '/images/company/hardware.jpg',
+}
+
+/* Large watermark SVG icons per service category */
+const SERVICE_ICONS: Record<string, React.ReactNode> = {
+  waste: (
+    <svg viewBox="0 0 24 24" fill="none" className="w-full h-full" stroke="currentColor" strokeWidth="0.6" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="1" y="3" width="15" height="13" rx="1"/>
+      <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/>
+      <circle cx="5.5" cy="18.5" r="2.5"/>
+      <circle cx="18.5" cy="18.5" r="2.5"/>
+    </svg>
+  ),
+  steel: (
+    <svg viewBox="0 0 24 24" fill="none" className="w-full h-full" stroke="currentColor" strokeWidth="0.6" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M8.5 14.5A6.5 6.5 0 0 0 15 21a6.5 6.5 0 0 0 0-13C12 8 9 5 9 2c0 0-3.5 4-3.5 7.5a5.5 5.5 0 0 0 3 4.9"/>
+      <path d="M11.5 17.5A3 3 0 0 0 15 20a3 3 0 0 0 3-3c0-1.5-1.5-3-3-3s-3-1.5-3-3"/>
+    </svg>
+  ),
+  logistics: (
+    <svg viewBox="0 0 24 24" fill="none" className="w-full h-full" stroke="currentColor" strokeWidth="0.6" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+      <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+      <line x1="12" y1="22.08" x2="12" y2="12"/>
+    </svg>
+  ),
+  hardware: (
+    <svg viewBox="0 0 24 24" fill="none" className="w-full h-full" stroke="currentColor" strokeWidth="0.6" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="2" y="3" width="20" height="14" rx="2"/>
+      <line x1="8" y1="21" x2="16" y2="21"/>
+      <line x1="12" y1="17" x2="12" y2="21"/>
+    </svg>
+  ),
 }
 
 export default function ServicesSection({ services }: { services?: Service[] }) {
   const data = services?.length ? services.slice(0, 4) : DEFAULT_SERVICES
 
   return (
-    <section className="relative bg-charcoal py-20 sm:py-24 lg:py-[120px] px-5 sm:px-8 lg:px-16 overflow-hidden" id="services">
-      <span className="absolute top-10 sm:top-14 right-5 sm:right-8 lg:right-16 font-space text-[11px] sm:text-[12px] text-gold tracking-[0.2em]">
-        02 / SERVICES
-      </span>
+    <section
+      className="relative overflow-hidden"
+      id="services"
+      style={{ background: '#FAF7F2' }}
+      aria-label="Our services"
+    >
+      <div className="max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16 py-20 sm:py-28">
 
-      <div className="max-w-[1440px] mx-auto">
-        <div className="grid lg:grid-cols-2 gap-10 sm:gap-14 mb-12 sm:mb-20 items-end reveal">
+        {/* Header */}
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-14 reveal">
           <div>
-            <div className="flex items-center gap-4 mb-6">
-              <span className="block h-px w-10 bg-gold" />
-              <span className="font-condensed text-[12px] tracking-[0.18em] uppercase text-gold">What we do</span>
-            </div>
-            <h2 className="font-display text-[clamp(34px,6.5vw,88px)] leading-[0.9] tracking-[0.03em] uppercase text-slate">
-              Steel, Scrap,
-              <br />
-              and <span className="text-gold">Industrial Support.</span>
+            <p className="font-mono text-[11px] tracking-[0.2em] uppercase text-gold mb-4">What We Do</p>
+            <h2 className="font-black text-[clamp(36px,5vw,72px)] text-ink leading-none tracking-tight">
+              The complete<br />steel chain.
             </h2>
           </div>
-          <p className="font-barlow text-[15px] sm:text-[17px] text-slate/75 max-w-[520px]">
-            We help contractors, developers, and manufacturers source the right materials and move them reliably. Our services are built for day-to-day project needs, not marketing buzzwords.
-          </p>
+          <Link
+            href="/services"
+            className="flex-shrink-0 self-start sm:self-end inline-flex items-center gap-2 text-gold hover:text-gold-dark font-semibold text-[13px] border-b border-gold/30 hover:border-gold pb-0.5 transition-all duration-200 cursor-pointer"
+          >
+            All services
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </Link>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5 stagger">
-          {data.map((svc, i) => (
-            <article
-              key={svc._id}
-              className="service-card group relative flex flex-col min-h-[320px] lg:min-h-[380px] p-7 sm:p-9 bg-white"
-              style={{ border: '1px solid #D8E0E7' }}
-            >
-              <span className="font-space text-[11px] text-gold/70 tracking-[0.2em]">/ {String(i + 1).padStart(2, '0')}</span>
+        {/*
+          Fixed asymmetric grid:
+          md:grid-cols-2 with card 0 spanning 2 rows on md+
+          Card 3 spans full width at bottom
+        */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 stagger">
 
-              <div className="mt-7">
-                {ICONS[svc.icon ?? ''] ?? DEFAULT_ICON}
-              </div>
-
-              <h3 className="mt-auto pt-10 font-display text-[30px] tracking-[0.04em] uppercase text-slate leading-[0.95]">
-                {svc.title}
-              </h3>
-              {svc.excerpt && (
-                <p className="mt-4 font-barlow text-[15px] text-slate/70 leading-[1.55]">{svc.excerpt}</p>
-              )}
-
+          {/* Card 0 — tall, spans 2 rows on md+ */}
+          {data[0] && (() => {
+            const s = data[0]
+            const imgSrc = s.cardImageUrl ?? SERVICE_IMAGES[s.icon ?? 'steel']
+            const icon = SERVICE_ICONS[s.icon ?? 'steel']
+            return (
               <Link
-                href={svc.slug?.current ? `/services/${svc.slug.current}` : '/services'}
-                className="mt-7 inline-flex items-center gap-2.5 font-condensed text-[12px] tracking-[0.22em] uppercase text-gold"
+                href={s.slug ? `/services/${s.slug.current}` : '/services'}
+                className="group relative overflow-hidden md:row-span-2 min-h-[380px] md:min-h-[560px] flex flex-col justify-end cursor-pointer"
+                style={{ background: '#0B1D3A' }}
               >
-                <span>Learn more</span>
-                <svg className="w-3.5 h-3.5 transition-transform duration-400 group-hover:translate-x-1.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
-                  <path d="M5 12h14M13 5l7 7-7 7" />
-                </svg>
+                {imgSrc && (
+                  <Image
+                    src={imgSrc}
+                    alt={s.title}
+                    fill className="object-cover opacity-45 transition-transform duration-700 group-hover:scale-105"
+                  />
+                )}
+                <div className="absolute inset-0 bg-gradient-to-t from-navy via-navy/50 to-navy/10" />
+                {/* Watermark icon */}
+                <div className="absolute top-8 right-8 w-24 h-24 text-white/5 pointer-events-none select-none">
+                  {icon}
+                </div>
+                <div className="relative p-8">
+                  <p className="font-mono text-[10px] tracking-[0.18em] text-gold/60 uppercase mb-3">01</p>
+                  <h3 className="font-black text-[clamp(24px,3vw,40px)] text-white leading-tight mb-3 group-hover:text-gold transition-colors duration-300">
+                    {s.title}
+                  </h3>
+                  <p className="text-[14px] text-white/50 max-w-md leading-relaxed mb-4">{s.excerpt}</p>
+                  {s.specChips?.length && (
+                    <div className="flex flex-wrap gap-2">
+                      {s.specChips.slice(0, 2).map((c) => (
+                        <span key={c} className="text-[10px] font-semibold px-2.5 py-1 border border-gold/25 text-gold/70 tracking-wide">
+                          {c}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </div>
               </Link>
-            </article>
-          ))}
+            )
+          })()}
+
+          {/* Cards 1 & 2 — stacked right column */}
+          {data.slice(1, 3).map((s, idx) => {
+            const imgSrc = s.cardImageUrl ?? SERVICE_IMAGES[s.icon ?? 'steel']
+            const icon = SERVICE_ICONS[s.icon ?? 'steel']
+            return (
+              <Link
+                key={s._id}
+                href={s.slug ? `/services/${s.slug.current}` : '/services'}
+                className="group relative overflow-hidden min-h-[260px] flex flex-col justify-end cursor-pointer"
+                style={{ background: '#0B1D3A' }}
+              >
+                {imgSrc && (
+                  <Image
+                    src={imgSrc}
+                    alt={s.title}
+                    fill className="object-cover opacity-40 transition-transform duration-700 group-hover:scale-105"
+                  />
+                )}
+                <div className="absolute inset-0 bg-gradient-to-t from-navy via-navy/60 to-transparent" />
+                {/* Watermark icon */}
+                <div className="absolute top-5 right-5 w-16 h-16 text-white/5 pointer-events-none select-none">
+                  {icon}
+                </div>
+                <div className="relative p-6">
+                  <p className="font-mono text-[10px] tracking-[0.18em] text-gold/50 uppercase mb-2">
+                    {String(idx + 2).padStart(2, '0')}
+                  </p>
+                  <h3 className="font-black text-[20px] sm:text-[22px] text-white leading-tight mb-2 group-hover:text-gold transition-colors duration-300">
+                    {s.title}
+                  </h3>
+                  <p className="text-[13px] text-white/40 leading-relaxed line-clamp-2">{s.excerpt}</p>
+                  {s.specChips?.length && (
+                    <div className="flex flex-wrap gap-1.5 mt-3">
+                      {s.specChips.slice(0, 2).map((c) => (
+                        <span key={c} className="text-[10px] font-semibold px-2 py-0.5 border border-gold/20 text-gold/60 tracking-wide">
+                          {c}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </Link>
+            )
+          })}
+
+          {/* Card 3 — full-width bottom, horizontal split */}
+          {data[3] && (() => {
+            const s = data[3]
+            const imgSrc = s.cardImageUrl ?? SERVICE_IMAGES[s.icon ?? 'steel']
+            const icon = SERVICE_ICONS[s.icon ?? 'steel']
+            return (
+              <Link
+                key={s._id}
+                href={s.slug ? `/services/${s.slug.current}` : '/services'}
+                className="group relative overflow-hidden md:col-span-2 min-h-[200px] flex flex-col sm:flex-row cursor-pointer"
+                style={{ background: '#0B1D3A' }}
+              >
+                {/* Image half */}
+                <div className="relative w-full sm:w-2/5 min-h-[200px] overflow-hidden flex-shrink-0">
+                  {imgSrc && (
+                    <Image
+                      src={imgSrc}
+                      alt={s.title}
+                      fill className="object-cover opacity-65 transition-transform duration-700 group-hover:scale-105"
+                    />
+                  )}
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent to-navy/90 sm:block hidden" />
+                  <div className="absolute inset-0 bg-gradient-to-b from-transparent to-navy/90 sm:hidden" />
+                  {/* Watermark icon */}
+                  <div className="absolute top-5 left-5 w-16 h-16 text-white/8 pointer-events-none select-none">
+                    {icon}
+                  </div>
+                </div>
+                {/* Content half */}
+                <div className="flex flex-col justify-center px-8 py-8 flex-1">
+                  <p className="font-mono text-[10px] tracking-[0.18em] text-gold/50 uppercase mb-3">04</p>
+                  <h3 className="font-black text-[clamp(20px,2.5vw,34px)] text-white leading-tight mb-3 group-hover:text-gold transition-colors duration-300">
+                    {s.title}
+                  </h3>
+                  <p className="text-[14px] text-white/45 max-w-md leading-relaxed mb-4">{s.excerpt}</p>
+                  {s.specChips?.length && (
+                    <div className="flex flex-wrap gap-2">
+                      {s.specChips.slice(0, 2).map((c) => (
+                        <span key={c} className="text-[10px] font-semibold px-2.5 py-1 border border-gold/20 text-gold/60 tracking-wide">
+                          {c}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </Link>
+            )
+          })()}
         </div>
       </div>
     </section>

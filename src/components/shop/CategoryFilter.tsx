@@ -24,7 +24,7 @@ export default function CategoryFilter({ categories, active, onSelect }: Categor
                 ? 'bg-gold text-white font-semibold'
                 : 'text-slate/70 hover:text-slate bg-white'
             }`}
-            style={{ border: isActive ? '1px solid #2E6FA3' : '1px solid #D8E0E7' }}
+            style={{ border: isActive ? '1px solid #C8962E' : '1px solid #E8DED1' }}
           >
             {cat.name}
           </button>

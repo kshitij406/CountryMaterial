@@ -1,114 +1,241 @@
 import Image from 'next/image'
 import Link from 'next/link'
 
-const PLACEHOLDER_IMAGES = [
-  '/images/hero-steel-placeholder.svg',
-  '/images/about-main.svg',
-  '/images/intro-main.svg',
-]
-
-const DEFAULT_PRODUCTS = [
-  { _id: 'p1', category: { name: 'Steel' }, name: 'BS 500 Certified TMT Rebar', priceRange: null, price: null, hasVariants: true, inStock: true, description: 'Certified BS 500 steel reinforcement. Sizes and specifications TBC.', images: [] },
-  { _id: 'p2', category: { name: 'Steel' }, name: 'Steel Billets', priceRange: null, price: null, hasVariants: false, inStock: true, description: 'Billets produced from locally sourced scrap. Specs and pricing TBC.', images: [] },
-]
-
 interface Product {
   _id: string
   name: string
   slug?: { current: string }
   price?: number | null
   priceRange?: string | null
-  hasVariants?: boolean
+  description?: string | null
   inStock?: boolean
-  description?: string
-  images?: Array<{ asset?: { url?: string } }>
-  category?: { name: string }
+  hasVariants?: boolean
+  grade?: string | null
+  unit?: string | null
+  standards?: string[] | null
+  specSheet?: Array<{ key: string; value: string }> | null
+  images?: Array<{ asset?: { url: string } }> | null
+  category?: { name: string } | null
 }
 
-function priceLabel(p: Product) {
-  if (p.hasVariants && p.priceRange) return `TZS ${p.priceRange}`
-  if (p.price) return `TZS ${p.price.toLocaleString()}`
-  return 'Request quote'
-}
+const FALLBACK_PRODUCTS: Product[] = [
+  {
+    _id: 'rb-8',
+    name: 'TMT Rebar — 8mm',
+    slug: { current: 'tmt-rebar-8mm' },
+    grade: 'BS 500B',
+    unit: 'Per tonne',
+    description: 'High-strength deformed rebar for slab reinforcement, columns, and foundations. Compliant with BS 500B and TBS.',
+    inStock: true,
+    standards: ['BS 500B', 'TBS 1257'],
+    specSheet: [{ key: 'Diameter', value: '8mm' }, { key: 'Length', value: '12m' }],
+    images: [{ asset: { url: '/images/stock/products/tmt-rebar-1.jpg' } }],
+  },
+  {
+    _id: 'rb-10',
+    name: 'TMT Rebar — 10mm',
+    slug: { current: 'tmt-rebar-10mm' },
+    grade: 'BS 500B',
+    unit: 'Per tonne',
+    description: 'Standard 10mm deformed rebar for residential and commercial concrete reinforcement. Available in 12m lengths.',
+    inStock: true,
+    standards: ['BS 500B', 'TBS 1257'],
+    specSheet: [{ key: 'Diameter', value: '10mm' }, { key: 'Length', value: '12m' }],
+    images: [{ asset: { url: '/images/stock/products/tmt-rebar-2.jpg' } }],
+  },
+  {
+    _id: 'rb-12',
+    name: 'TMT Rebar — 12mm',
+    slug: { current: 'tmt-rebar-12mm' },
+    grade: 'BS 500B',
+    unit: 'Per tonne',
+    description: '12mm TMT rebar for medium and heavy construction. Consistent rib pattern ensures superior concrete bond strength.',
+    inStock: true,
+    standards: ['BS 500B', 'TBS 1257'],
+    specSheet: [{ key: 'Diameter', value: '12mm' }, { key: 'Length', value: '12m' }],
+    images: [{ asset: { url: '/images/stock/products/tmt-rebar-3.jpg' } }],
+  },
+  {
+    _id: 'rb-16',
+    name: 'TMT Rebar — 16mm',
+    slug: { current: 'tmt-rebar-16mm' },
+    grade: 'BS 500B',
+    unit: 'Per tonne',
+    description: 'Heavy-duty 16mm deformed rebar for bridges, high-rises, and infrastructure projects. ISO process controlled.',
+    inStock: true,
+    standards: ['BS 500B', 'TBS 1257'],
+    specSheet: [{ key: 'Diameter', value: '16mm' }, { key: 'Length', value: '12m' }],
+    images: [{ asset: { url: '/images/stock/products/tmt-rebar-1.jpg' } }],
+  },
+  {
+    _id: 'billet-sq',
+    name: 'Steel Billets',
+    slug: { current: 'steel-billets' },
+    grade: 'Q235',
+    unit: 'Per tonne',
+    description: 'Square billets produced from 100% recycled scrap. Used as feedstock for rolling mills. Available in 100mm and 125mm sections.',
+    inStock: true,
+    standards: ['BS EN 10025', 'ISO 9001'],
+    specSheet: [{ key: 'Section', value: '100 / 125mm sq.' }, { key: 'Length', value: '6–12m' }],
+    images: [{ asset: { url: '/images/stock/products/steel-billets.jpg' } }],
+  },
+  {
+    _id: 'rb-20',
+    name: 'TMT Rebar — 20mm',
+    slug: { current: 'tmt-rebar-20mm' },
+    grade: 'BS 500B',
+    unit: 'Per tonne',
+    description: 'Extra-heavy 20mm TMT rebar for pile caps, retaining walls, and large infrastructure. Bulk pricing available.',
+    inStock: true,
+    standards: ['BS 500B', 'TBS 1257'],
+    specSheet: [{ key: 'Diameter', value: '20mm' }, { key: 'Length', value: '12m' }],
+    images: [{ asset: { url: '/images/stock/products/tmt-rebar-2.jpg' } }],
+  },
+]
 
 export default function ProductsGrid({ products }: { products?: Product[] }) {
-  const data = (products?.length ? products : DEFAULT_PRODUCTS).slice(0, 6)
+  const data = products?.length ? products.slice(0, 6) : FALLBACK_PRODUCTS
 
   return (
-    <section className="relative bg-white py-20 sm:py-24 lg:py-[120px] px-5 sm:px-8 lg:px-16" id="products">
-      <span className="absolute top-10 sm:top-14 right-5 sm:right-8 lg:right-16 font-space text-[11px] sm:text-[12px] text-gold tracking-[0.2em]">
-        05 / PRODUCTS
-      </span>
+    <section
+      className="relative overflow-hidden"
+      id="products"
+      style={{ background: '#0B1D3A' }}
+      aria-label="Product catalogue"
+    >
+      <div className="absolute inset-0 bg-steel-texture" aria-hidden="true" />
 
-      <div className="max-w-[1440px] mx-auto">
-        <div className="grid lg:grid-cols-2 gap-10 sm:gap-14 mb-12 sm:mb-16 items-end reveal">
+      <div className="relative max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16 py-20 sm:py-28">
+
+        {/* Asymmetric header */}
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-14 reveal">
           <div>
-            <div className="flex items-center gap-4 mb-6">
-              <span className="block h-px w-10 bg-gold" />
-              <span className="font-condensed text-[12px] tracking-[0.18em] uppercase text-gold">Product lines</span>
-            </div>
-            <h2 className="font-display text-[clamp(34px,6.5vw,88px)] leading-[0.92] tracking-[0.03em] uppercase text-slate">
-              Materials for
-              <br />
-              <span className="text-gold">Real Job Sites.</span>
+            <p className="font-mono text-[11px] tracking-[0.2em] uppercase text-gold mb-4">Product Catalogue</p>
+            <h2 className="font-black text-[clamp(36px,5vw,72px)] text-white leading-none tracking-tight">
+              Certified steel,<br />ready to ship.
             </h2>
           </div>
-          <p className="font-barlow text-[15px] sm:text-[17px] text-slate/75 max-w-[520px]">
-            Browse our featured steel and industrial products. Each item includes practical specs to help teams make faster purchasing decisions.
-          </p>
+          <Link
+            href="/shop"
+            className="flex-shrink-0 self-start sm:self-end inline-flex items-center gap-2 text-gold hover:text-gold-light font-semibold text-[13px] border-b border-gold/30 hover:border-gold pb-0.5 transition-all duration-200 cursor-pointer"
+          >
+            Full catalogue
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </Link>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 stagger">
-          {data.map((p, i) => {
-            const imageUrl = p.images?.[0]?.asset?.url ?? PLACEHOLDER_IMAGES[i % PLACEHOLDER_IMAGES.length]
-            const price = priceLabel(p)
+        {/* Products grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-px stagger" style={{ background: 'rgba(200,150,46,0.08)' }}>
+          {data.map((product) => {
+            const imgSrc = product.images?.[0]?.asset?.url
+            const displayPrice = product.priceRange ?? (product.price ? `TZS ${product.price.toLocaleString()}` : null)
 
             return (
-              <article
-                key={p._id}
-                className="prod-card group overflow-hidden bg-white"
-                style={{ border: '1px solid #D8E0E7' }}
+              <Link
+                key={product._id}
+                href={product.slug ? `/shop/${product.slug.current}` : '/shop'}
+                className="group flex flex-col overflow-hidden transition-all duration-300 cursor-pointer"
+                style={{ background: '#0B1D3A' }}
               >
-                <div className="relative h-52 sm:h-56 bg-charcoal overflow-hidden">
-                  <Image src={imageUrl} alt={p.name} fill className="prod-bg object-cover" />
-                  {p.category && (
-                    <span className="absolute top-3 left-3 bg-white/95 px-3 py-1 font-condensed text-[10px] tracking-[0.18em] uppercase text-gold">
-                      {p.category.name}
-                    </span>
-                  )}
-                </div>
-
-                <div className="p-6">
-                  <h4 className="font-display text-[30px] tracking-[0.03em] uppercase text-slate leading-[0.95]">{p.name}</h4>
-                  {p.description && (
-                    <p className="mt-3 font-barlow text-[14px] text-slate/70 leading-[1.55]">{p.description}</p>
-                  )}
-
-                  <div className="mt-5 pt-4 flex items-center justify-between" style={{ borderTop: '1px solid #E6ECF1' }}>
-                    <span className="font-space text-[11px] tracking-[0.1em] text-slate/65">{price}</span>
-                    <Link href="/shop" className="font-condensed text-[12px] tracking-[0.2em] uppercase text-gold inline-flex items-center gap-2">
-                      Learn more
-                      <svg className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
-                        <path d="M5 12h14M13 5l7 7-7 7" />
+                {/* Image */}
+                <div className="relative h-52 overflow-hidden flex-shrink-0" style={{ background: '#070F1E' }}>
+                  {imgSrc ? (
+                    <Image
+                      src={imgSrc}
+                      alt={product.name}
+                      fill
+                      className="object-cover opacity-75 transition-transform duration-700 group-hover:scale-105"
+                    />
+                  ) : (
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <svg viewBox="0 0 48 48" fill="none" className="w-16 h-16 text-white/10" stroke="currentColor" strokeWidth="1.5">
+                        <rect x="6" y="18" width="36" height="8" rx="4"/><rect x="6" y="28" width="36" height="8" rx="4"/><rect x="6" y="8" width="36" height="8" rx="4"/>
                       </svg>
-                    </Link>
+                    </div>
+                  )}
+                  <div className="absolute inset-0 bg-gradient-to-t from-navy/80 via-transparent to-transparent" />
+
+                  {/* Grade badge */}
+                  {product.grade && (
+                    <div className="absolute top-3 left-3 px-2.5 py-1 bg-navy/80 border border-gold/40 text-gold text-[10px] font-bold tracking-wide font-mono">
+                      {product.grade}
+                    </div>
+                  )}
+
+                  {/* Stock badge */}
+                  <div className={`absolute top-3 right-3 px-2.5 py-1 text-[10px] font-bold tracking-wide border ${
+                    product.inStock !== false
+                      ? 'bg-emerald-DEFAULT/20 border-emerald-DEFAULT/40 text-emerald-DEFAULT'
+                      : 'bg-white/10 border-white/20 text-white/50'
+                  }`}>
+                    {product.inStock !== false ? 'In Stock' : 'Contact Us'}
                   </div>
                 </div>
-              </article>
+
+                {/* Body */}
+                <div className="flex-1 flex flex-col p-6 border-t border-gold/10">
+                  <h3 className="text-[15px] font-black text-white leading-snug mb-3 group-hover:text-gold transition-colors duration-300">
+                    {product.name}
+                  </h3>
+
+                  {/* Spec row */}
+                  {product.specSheet?.length && (
+                    <div className="flex flex-wrap gap-4 mb-3">
+                      {product.specSheet.slice(0, 2).map((spec) => (
+                        <span key={spec.key} className="font-mono text-[11px] text-white/40">
+                          {spec.key}: <strong className="text-white/60">{spec.value}</strong>
+                        </span>
+                      ))}
+                    </div>
+                  )}
+
+                  {product.description && (
+                    <p className="text-[13px] text-white/40 leading-relaxed line-clamp-2 flex-1">{product.description}</p>
+                  )}
+
+                  {/* Standards */}
+                  {product.standards?.length && (
+                    <div className="mt-4 flex flex-wrap gap-1.5">
+                      {product.standards.slice(0, 3).map((s) => (
+                        <span key={s} className="text-[10px] font-semibold px-2.5 py-1 border border-gold/20 text-gold/60 tracking-wider uppercase">
+                          {s}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+
+                  {/* Price + CTA */}
+                  <div className="mt-5 flex items-center justify-between pt-4 border-t border-white/[0.07]">
+                    <div>
+                      {product.unit && <p className="text-[10px] text-white/30 font-mono uppercase tracking-wider">{product.unit}</p>}
+                      {displayPrice ? (
+                        <p className="text-[15px] font-bold text-white">{displayPrice}</p>
+                      ) : (
+                        <p className="text-[13px] font-semibold text-gold">Contact for pricing</p>
+                      )}
+                    </div>
+                    <span className="inline-flex items-center gap-1 text-[12px] font-semibold text-gold/60 group-hover:text-gold transition-colors duration-200">
+                      Details
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                    </span>
+                  </div>
+                </div>
+              </Link>
             )
           })}
         </div>
 
-        <div className="mt-14 reveal">
+        {/* Bottom CTA */}
+        <div className="mt-12 flex flex-col sm:flex-row items-center justify-between gap-6 px-7 py-6 border-l-4 border-gold reveal" style={{ background: 'rgba(200,150,46,0.06)' }}>
+          <p className="text-[14px] text-white/50 max-w-sm leading-relaxed">
+            Need custom sizes, bulk pricing, or scheduled delivery? Our steel team responds within 24 hours.
+          </p>
           <Link
-            href="/shop"
-            className="group relative inline-flex items-center gap-3 overflow-hidden px-[34px] py-[16px] bg-gold text-white font-condensed text-[14px] tracking-[0.22em] uppercase font-semibold"
+            href="/contact"
+            className="flex-shrink-0 inline-flex items-center gap-2 bg-gold hover:bg-gold-light text-white font-bold text-[14px] px-8 py-4 transition-colors duration-200 cursor-pointer"
           >
-            <span className="relative z-10">Browse full catalogue</span>
-            <svg className="relative z-10 w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
-              <path d="M5 12h14M13 5l7 7-7 7" />
-            </svg>
-            <span className="absolute inset-0 bg-gold-dim -translate-x-full group-hover:translate-x-0 transition-transform duration-500" style={{ transitionTimingFunction: 'cubic-bezier(.16,1,.3,1)' }} />
+            Talk to Our Steel Team
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
           </Link>
         </div>
       </div>

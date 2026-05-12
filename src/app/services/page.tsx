@@ -1,222 +1,288 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import Link from 'next/link'
-import React from 'react'
 import { client } from '@/sanity/lib/client'
 import { allServicesQuery } from '@/sanity/lib/queries'
-import CtaBanner from '@/components/sections/CtaBanner'
 
 export const revalidate = 60
 
-export async function generateMetadata(): Promise<Metadata> {
-  return {
-    title: 'Our Services',
-    description:
-      'Explore our integrated services across scrap collection and recycling, certified steel products, vendor-enabled procurement, and logistics support across Tanzania.',
-  }
+export const metadata: Metadata = {
+  title: 'Our Services — Circular Steel & Logistics',
+  description: "Scrap collection, certified steel manufacturing, vendor platform, and fleet logistics — Tanzania's most integrated steel supply chain.",
 }
 
-const ICON_MAP: Record<string, React.ReactNode> = {
-  steel: (
-    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5}>
-      <path d="M4 4h16v4H4zM4 10h16v4H4zM4 16h16v4H4z" />
-    </svg>
-  ),
-  hardware: (
-    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5}>
-      <path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z" />
-    </svg>
-  ),
-  waste: (
-    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5}>
-      <path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6" />
-    </svg>
-  ),
-  logistics: (
-    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5}>
-      <rect x="1" y="3" width="15" height="13" />
-      <path d="M16 8h4l3 5v3h-7V8zM5.5 21a1.5 1.5 0 100-3 1.5 1.5 0 000 3zM18.5 21a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" />
-    </svg>
-  ),
-}
-
-const staticServices = [
+const SERVICES_STATIC = [
   {
     _id: 's1',
     slug: { current: 'waste-management' },
     title: 'Scrap Collection & Recycling',
-    excerpt: 'Scrap collection, sorting, and recycling that turns local waste into high-quality, certified steel.',
+    tagline: 'Where it all begins.',
+    excerpt: "Tanzania's largest organised scrap collection network. 5,000+ vendors, verified daily through our mobile platform. We collect from workshops, construction sites, and industrial estates — anywhere scrap accumulates.",
     icon: 'waste',
     displayOrder: 1,
+    specChips: ['5,000+ vendors', 'Mobile-enabled', 'Nationwide pickup', 'Fair market pricing'],
+    cardImageUrl: '/images/company/wastee.jpg',
+    highlights: [
+      'Real-time weight verification at point of collection',
+      'Instant mobile money payment to vendors',
+      'Sorted by grade at our central yards',
+      'Full traceability from source to furnace',
+    ],
   },
   {
     _id: 's2',
     slug: { current: 'steel' },
-    title: 'Certified Steel Products',
-    excerpt: 'BS 500 certified steel and TMT rebar for reliable construction. Billets and finished products supported by traceable sourcing.',
+    title: 'Certified Steel Manufacturing',
+    tagline: 'Scrap becomes structure.',
+    excerpt: "Electric arc furnace technology producing BS 500-certified TMT rebar and billets. Every batch is laboratory-tested. Every tonne traceable to its scrap input. We don't ship steel we wouldn't build with.",
     icon: 'steel',
     displayOrder: 2,
+    specChips: ['BS 500B certified', 'TBS compliant', 'ISO 9001 process', 'Lab-tested batches'],
+    cardImageUrl: '/images/randos/molten_steel.jpeg',
+    highlights: [
+      'Electric arc furnace — 1,600°C controlled melt',
+      'Continuous casting to billets',
+      'Hot-rolled to BS 500B rebar in 8–32mm',
+      'Mill certificates on every shipment',
+    ],
   },
   {
     _id: 's3',
-    slug: { current: 'transportation' },
-    title: 'Logistics & Fleet Operations',
-    excerpt: '30+ in-house vehicles supporting scrap movement, yard operations, and delivery coordination across key regions.',
-    icon: 'logistics',
-    displayOrder: 4,
+    slug: { current: 'hardware' },
+    title: 'Vendor Platform & Procurement',
+    tagline: 'Technology meets supply chain.',
+    excerpt: "Our proprietary mobile platform connects 5,000+ scrap vendors, 320+ construction clients, and our own operations on a single digital infrastructure — eliminating middlemen, bringing price transparency to an opaque market.",
+    icon: 'hardware',
+    displayOrder: 3,
+    specChips: ['5,000+ active vendors', 'Real-time pricing', 'Digital payments', 'Trade accounts'],
+    cardImageUrl: '/images/company/hardware.jpg',
+    highlights: [
+      'Vendor registration and KYC entirely on mobile',
+      'Live scrap commodity pricing, updated daily',
+      'Digital order management for construction buyers',
+      'Bulk procurement and credit terms for contractors',
+    ],
   },
   {
     _id: 's4',
-    slug: { current: 'hardware' },
-    title: 'Vendor Platform & Procurement',
-    excerpt: 'Proprietary mobile platform digitizing 5,000+ scrap vendors to improve transparency, pricing, and sourcing efficiency.',
-    icon: 'hardware',
-    displayOrder: 3,
+    slug: { current: 'transportation' },
+    title: 'Fleet Logistics & Distribution',
+    tagline: 'From yard to site. Same day.',
+    excerpt: "30+ in-house trucks operating 24 hours across 5 regional branches. We move scrap in and finished steel out — no third-party logistics risk, no delay chains. Same-day dispatch on in-stock rebar.",
+    icon: 'logistics',
+    displayOrder: 4,
+    specChips: ['30+ owned vehicles', '24/7 operations', '5 regional branches', 'Same-day dispatch'],
+    cardImageUrl: '/images/company/trans-large.jpg',
+    highlights: [
+      'Owned fleet — no outsourced haulage risk',
+      'GPS-tracked deliveries across Tanzania',
+      'Branches: DSM, Mbeya, Dodoma, Kahama, Pwani',
+      'Heavy-load rated for direct site delivery',
+    ],
   },
 ]
 
 export default async function ServicesPage() {
   const rawServices = await client.fetch(allServicesQuery).catch(() => null)
-  const services = rawServices?.length ? rawServices : staticServices
-
-  // `allServicesQuery` fetches icon now, but older datasets may not have it.
-  const mergedServices = (() => {
-    if (!rawServices?.length) return services
-
-    const bySlug = new Map<string, any>()
-    for (const s of services) bySlug.set(s?.slug?.current, s)
-    for (const fallback of staticServices) {
-      const slug = fallback?.slug?.current
-      if (slug && !bySlug.has(slug)) bySlug.set(slug, fallback)
-    }
-    return Array.from(bySlug.values()).sort((a: any, b: any) => {
-      const ao = typeof a?.displayOrder === 'number' ? a.displayOrder : Number.POSITIVE_INFINITY
-      const bo = typeof b?.displayOrder === 'number' ? b.displayOrder : Number.POSITIVE_INFINITY
-      return ao - bo
-    })
-  })()
-
-  const servicesWithIcons = mergedServices.map((svc: any) => {
-    if (svc?.icon) return svc
-    const slug = svc?.slug?.current
-    const iconBySlug: Record<string, keyof typeof ICON_MAP> = {
-      transportation: 'logistics',
-      'waste-management': 'waste',
-      steel: 'steel',
-      hardware: 'hardware',
-    }
-    return { ...svc, icon: iconBySlug[slug] }
-  })
+  const services: typeof SERVICES_STATIC = rawServices?.length
+    ? rawServices.map((svc: any) => {
+        const match = SERVICES_STATIC.find((s) => s.slug.current === svc.slug?.current)
+        return {
+          ...match,
+          ...svc,
+          cardImageUrl: svc.cardImageUrl ?? match?.cardImageUrl,
+          highlights: match?.highlights ?? [],
+          tagline: match?.tagline ?? '',
+          specChips: svc.specChips ?? match?.specChips ?? [],
+        }
+      })
+    : SERVICES_STATIC
 
   return (
     <>
-      <section className="relative overflow-hidden pt-[150px] pb-[90px] px-8 lg:px-16 bg-navy" style={{ borderBottom: '1px solid rgba(216,224,231,.4)' }}>
-        <div className="relative max-w-[1440px] mx-auto grid lg:grid-cols-[1.3fr_1fr] gap-16 items-end">
-          <div>
-            <div className="flex items-center gap-3.5 mb-7">
-              <span className="block h-px w-10 bg-gold" />
-              <span className="font-condensed text-[12px] tracking-[0.18em] uppercase text-white/90">What We Do</span>
-            </div>
-            <h1 className="font-display text-[clamp(44px,7vw,102px)] leading-[0.9] tracking-[0.03em] uppercase text-white">
-              Practical Services for
-              <span className="text-gold-light"> Steel and Scrap</span>
-            </h1>
-          </div>
-
-          <div className="space-y-0 reveal" style={{ borderTop: '1px solid rgba(216,224,231,.35)' }}>
-            {servicesWithIcons.slice(0, 4).map((svc: any, i: number) => (
-              <Link
-                key={svc._id ?? i}
-                href={`/services/${svc.slug.current}`}
-                className="group flex items-center gap-5 py-5 transition-all duration-300 hover:pl-3"
-                style={{ borderBottom: '1px solid rgba(216,224,231,.3)' }}
-              >
-                <span className="font-space text-[13px] text-white/50 group-hover:text-gold-light transition-colors duration-300 shrink-0">
-                  {String(i + 1).padStart(2, '0')}
-                </span>
-                <span className="font-condensed text-[15px] tracking-[0.12em] uppercase text-white/80 group-hover:text-white transition-colors duration-300">
-                  {svc.title}
-                </span>
-                <svg className="w-3.5 h-3.5 ml-auto text-white/35 group-hover:text-gold-light transition-colors duration-300 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
-                  <path d="M5 12h14M13 5l7 7-7 7" />
-                </svg>
-              </Link>
-            ))}
-          </div>
+      {/* Page hero */}
+      <section
+        className="relative min-h-[52vh] flex flex-col justify-end overflow-hidden bg-navy pt-20"
+        aria-label="Services page hero"
+      >
+        <div className="absolute inset-0">
+          <Image
+            src="/images/stock/services-industrial.jpg"
+            alt="Country Materials industrial operations"
+            fill className="object-cover opacity-20"
+            priority
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-navy/60 via-navy/50 to-navy" />
+          <div className="absolute inset-0 bg-steel-texture" aria-hidden="true" />
+        </div>
+        <div className="relative max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16 pb-16 sm:pb-24 pt-12">
+          <p className="font-mono text-[11px] tracking-[0.2em] uppercase text-gold mb-6">What We Do</p>
+          <h1 className="font-black text-[clamp(48px,8vw,110px)] leading-[0.92] tracking-tight text-white">
+            Practical services.<br />
+            <span className="text-gold">Real infrastructure.</span>
+          </h1>
+          <p className="mt-6 text-[17px] text-white/55 max-w-xl leading-relaxed">
+            Not consultants. Not aggregators. We own the trucks, run the furnaces, and pay the vendors directly.
+          </p>
         </div>
       </section>
 
-      <section className="relative py-[100px] px-8 lg:px-16 bg-white" style={{ borderBottom: '1px solid #D8E0E7' }}>
-        <div className="max-w-[1440px] mx-auto">
-          <div className="flex items-end justify-between flex-wrap gap-8 mb-14 reveal">
-            <h2 className="font-display text-[clamp(34px,4vw,60px)] leading-[0.9] tracking-[0.03em] uppercase text-slate">
-              Comprehensive
-              <span className="text-gold"> Industrial Support</span>
-            </h2>
-            <span className="font-space text-[12px] text-gold tracking-[0.2em]">{'// SERVICE LINES'}</span>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 stagger">
-            {servicesWithIcons.map((svc: any, i: number) => (
-              <Link
-                key={svc._id ?? i}
-                href={`/services/${svc.slug.current}`}
-                className="service-card group block p-8 bg-charcoal"
-                style={{ border: '1px solid #D8E0E7' }}
+      {/* Quick-jump index */}
+      <div className="bg-navy-mid border-b border-white/[0.06]">
+        <div className="max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16">
+          <div className="flex overflow-x-auto scrollbar-hide">
+            {services.slice(0, 4).map((svc, i) => (
+              <a
+                key={svc._id}
+                href={`#service-${i + 1}`}
+                className="flex-shrink-0 flex items-center gap-3 py-4 pr-10 text-white/45 hover:text-white transition-colors duration-200 cursor-pointer group"
               >
-                <div className="text-gold mb-6 transition-transform duration-300 group-hover:scale-110 inline-block">
-                  {ICON_MAP[svc.icon] ?? ICON_MAP.steel}
-                </div>
-                <h3 className="font-display text-[clamp(22px,2.2vw,32px)] leading-[1] tracking-[0.04em] uppercase text-slate mb-4 group-hover:text-gold transition-colors duration-200">
-                  {svc.title}
-                </h3>
-                <p className="font-barlow text-[15px] text-slate/70 leading-[1.65] mb-6">{svc.excerpt}</p>
-                <span className="font-condensed text-[12px] tracking-[0.18em] uppercase text-gold flex items-center gap-2">
-                  Learn More
-                  <svg className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
-                    <path d="M5 12h14M13 5l7 7-7 7" />
-                  </svg>
-                </span>
-              </Link>
+                <span className="font-mono text-[10px] text-gold/50 group-hover:text-gold transition-colors">{String(i + 1).padStart(2, '0')}</span>
+                <span className="text-[13px] font-semibold tracking-wide whitespace-nowrap">{svc.title}</span>
+              </a>
             ))}
           </div>
         </div>
-      </section>
+      </div>
 
-      <section className="relative py-[100px] px-8 lg:px-16 bg-charcoal" style={{ borderBottom: '1px solid #D8E0E7' }}>
-        <div className="relative max-w-[1440px] mx-auto">
-          <div className="flex items-center gap-3.5 mb-12 reveal">
-            <span className="block h-px w-10 bg-gold" />
-            <span className="font-condensed text-[12px] tracking-[0.18em] uppercase text-gold">In Detail</span>
-          </div>
-          <div className="grid lg:grid-cols-3 gap-5 stagger">
-            {servicesWithIcons.slice(0, 4).map((svc: any, i: number) => (
-              <div key={svc._id ?? i} className="p-8 bg-white" style={{ border: '1px solid #D8E0E7' }}>
-                <span className="font-display text-[72px] leading-none text-gold/20">{String(i + 1).padStart(2, '0')}</span>
-                <h3 className="font-display text-[clamp(22px,2vw,30px)] leading-[1] tracking-[0.04em] uppercase text-slate mt-2 mb-4">{svc.title}</h3>
-                <p className="font-barlow text-[15px] text-slate/70 leading-[1.65] mb-6">{svc.excerpt}</p>
-                <Link
-                  href={`/services/${svc.slug.current}`}
-                  className="font-condensed text-[12px] tracking-[0.18em] uppercase text-gold flex items-center gap-2 hover:gap-4 transition-all duration-300"
+      {/* Alternating editorial service sections */}
+      {services.slice(0, 4).map((svc, i) => {
+        const isEven = i % 2 === 0   // dark bg on even (0, 2), light bg on odd (1, 3)
+        const imgSrc = svc.cardImageUrl
+
+        return (
+          <section
+            key={svc._id}
+            id={`service-${i + 1}`}
+            className="relative overflow-hidden"
+            style={{ background: isEven ? '#0B1D3A' : '#FAF7F2' }}
+            aria-label={svc.title}
+          >
+            <div className="max-w-[1440px] mx-auto">
+              <div className={`grid grid-cols-1 lg:grid-cols-2 min-h-[580px]`}>
+
+                {/* Image panel — right on even, left on odd */}
+                <div
+                  className={`relative min-h-[340px] lg:min-h-0 overflow-hidden ${isEven ? 'lg:order-2' : 'lg:order-1'}`}
                 >
-                  Learn More
-                  <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
-                    <path d="M5 12h14M13 5l7 7-7 7" />
-                  </svg>
-                </Link>
+                  {imgSrc ? (
+                    <Image
+                      src={imgSrc}
+                      alt={svc.title}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 1024px) 100vw, 50vw"
+                    />
+                  ) : (
+                    <div className="absolute inset-0 bg-navy-mid" />
+                  )}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+                  {/* Watermark number */}
+                  <span
+                    className="absolute bottom-4 right-6 font-mono font-bold text-[96px] leading-none select-none pointer-events-none text-white/10"
+                    aria-hidden="true"
+                  >
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
+                </div>
+
+                {/* Content panel */}
+                <div
+                  className={`flex flex-col justify-center px-8 sm:px-12 lg:px-16 xl:px-20 py-16 lg:py-24 ${isEven ? 'lg:order-1' : 'lg:order-2'}`}
+                  style={{ background: isEven ? '#0B1D3A' : '#FAF7F2' }}
+                >
+                  {/* Eyebrow */}
+                  <div className="flex items-center gap-3 mb-7">
+                    <span className="font-mono text-[10px] text-gold tracking-[0.22em]">{String(i + 1).padStart(2, '0')}</span>
+                    <span className="w-8 h-px bg-gold/60" aria-hidden="true" />
+                    <span className={`text-[11px] font-medium tracking-widest uppercase ${isEven ? 'text-white/40' : 'text-slate/50'}`}>
+                      {svc.tagline}
+                    </span>
+                  </div>
+
+                  {/* Title */}
+                  <h2 className={`font-black text-[clamp(28px,3vw,46px)] leading-tight mb-5 ${isEven ? 'text-white' : 'text-ink'}`}>
+                    {svc.title}
+                  </h2>
+
+                  {/* Body */}
+                  <p className={`text-[15px] leading-relaxed mb-8 max-w-md ${isEven ? 'text-white/55' : 'text-slate/70'}`}>
+                    {svc.excerpt}
+                  </p>
+
+                  {/* Highlights list */}
+                  {svc.highlights.length > 0 && (
+                    <ul className="flex flex-col gap-3 mb-8" aria-label={`${svc.title} highlights`}>
+                      {svc.highlights.map((h) => (
+                        <li key={h} className="flex items-start gap-3">
+                          <span className="w-5 h-5 rounded-full border border-gold/50 flex items-center justify-center flex-shrink-0 mt-0.5" aria-hidden="true">
+                            <span className="w-1.5 h-1.5 rounded-full bg-gold" />
+                          </span>
+                          <span className={`text-[13.5px] leading-snug ${isEven ? 'text-white/50' : 'text-slate/65'}`}>{h}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+
+                  {/* Spec chips */}
+                  {svc.specChips.length > 0 && (
+                    <div className="flex flex-wrap gap-2 mb-9">
+                      {svc.specChips.map((chip) => (
+                        <span
+                          key={chip}
+                          className={`text-[11px] font-semibold px-3 py-1.5 tracking-wide border ${
+                            isEven
+                              ? 'border-gold/25 text-gold/80 bg-gold/8'
+                              : 'border-sand text-gold-dark bg-gold/6'
+                          }`}
+                        >
+                          {chip}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+
+                  {/* CTA */}
+                  <Link
+                    href={`/services/${svc.slug.current}`}
+                    className={`self-start inline-flex items-center gap-2 font-semibold text-[13px] tracking-wide border-b pb-0.5 transition-all duration-200 cursor-pointer group ${
+                      isEven
+                        ? 'text-gold border-gold/30 hover:border-gold'
+                        : 'text-gold-dark border-gold/40 hover:border-gold-dark'
+                    }`}
+                  >
+                    Learn more
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                  </Link>
+                </div>
               </div>
-            ))}
+            </div>
+          </section>
+        )
+      })}
+
+      {/* Contact CTA */}
+      <section className="py-20 sm:py-24 bg-navy-mid" aria-label="Contact call to action">
+        <div className="max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16 text-center">
+          <div className="max-w-2xl mx-auto">
+            <h2 className="font-black text-[clamp(28px,4vw,56px)] text-white leading-tight mb-5">
+              Need a tailored solution?<br />
+              <span className="text-gold">Talk to our team.</span>
+            </h2>
+            <p className="text-[15px] text-white/45 max-w-md mx-auto mb-8">
+              From bespoke vendor programmes to bulk steel contracts — we respond within 24 hours.
+            </p>
+            <div className="flex flex-wrap justify-center gap-4">
+              <Link href="/contact" className="inline-flex items-center gap-2 bg-gold hover:bg-gold-light text-white font-bold text-[15px] px-8 py-4 transition-colors duration-200 cursor-pointer">
+                Contact Us
+              </Link>
+              <Link href="/shop" className="inline-flex items-center gap-2 border border-white/20 hover:border-white/40 text-white font-semibold text-[15px] px-8 py-4 transition-all duration-200 cursor-pointer">
+                View Products
+              </Link>
+            </div>
           </div>
         </div>
       </section>
-
-      <CtaBanner
-        heading="Need a Custom\nSolution?"
-        subtext="Our team is ready to discuss your specific requirements and build a tailored service plan."
-        primaryLabel="Talk to Us"
-        primaryHref="/contact"
-        secondaryLabel="Our Products"
-        secondaryHref="/shop"
-      />
     </>
   )
 }

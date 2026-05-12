@@ -1,205 +1,196 @@
 import type { Metadata } from 'next'
-import { client, urlFor } from '@/sanity/lib/client'
-import { aboutPageQuery } from '@/sanity/lib/queries'
-import PageHeader from '@/components/ui/PageHeader'
-import CtaBanner from '@/components/sections/CtaBanner'
 import Image from 'next/image'
+import Link from 'next/link'
+import { client } from '@/sanity/lib/client'
+import { aboutPageQuery } from '@/sanity/lib/queries'
+
+export const metadata: Metadata = {
+  title: 'About Country Materials Limited',
+  description: "Founded in 2022 in Dar es Salaam, Country Materials Limited built Tanzania's first fully integrated circular steel ecosystem.",
+}
 
 export const revalidate = 60
 
-export async function generateMetadata(): Promise<Metadata> {
-  const data = await client.fetch(aboutPageQuery).catch(() => null)
-  return {
-    title: data?.heading ?? 'About Us',
-    description:
-      data?.intro ??
-      'Learn about Country Materials Limited - our mission, vision, and values powering a circular steel supply chain in Tanzania.',
-  }
-}
-
-function ptToParagraphs(blocks: any[] | null | undefined): string[] {
-  if (!blocks?.length) return []
-  return blocks
-    .filter((b: any) => b._type === 'block')
-    .map((b: any) => (b.children ?? []).map((c: any) => c.text ?? '').join(''))
-    .filter(Boolean)
-}
-
-const fallbackValues = [
-  { _key: 'v1', title: 'People', desc: 'We create dignity and earning power for informal scrap vendors while building safe, skilled teams.' },
-  { _key: 'v2', title: 'Planet', desc: 'We turn waste into certified steel and keep valuable materials in circulation through responsible operations.' },
-  { _key: 'v3', title: 'Partnership', desc: 'We build long-term relationships across vendors, manufacturers, and builders through trust and transparency.' },
+const milestones = [
+  { year: '2022', event: "Founded in Dar es Salaam with a vision to formalise Tanzania's scrap-to-steel supply chain." },
+  { year: '2023', event: 'Launched mobile vendor platform. Onboarded 2,000+ scrap vendors within 6 months.' },
+  { year: '2024', event: 'Achieved BS 500B and TBS certification. Opened branches in Mbeya and Dodoma.' },
+  { year: '2025', event: 'Expanded to 5 branches, 30+ fleet vehicles, $11.2M revenue, 5,000+ vendors digitised.' },
 ]
 
-const fallbackWhyChooseUs = [
-  { title: 'Fully Integrated Circular Model', description: '100% locally sourced scrap and an end-to-end operating model that reduces friction across collection, processing, and supply.' },
-  { title: 'Proprietary Vendor Platform', description: 'A mobile platform digitizing 5,000+ vendors to improve transparency, traceability, and access to consistent scrap supply.' },
-  { title: 'Certified Steel at Local Pricing', description: 'BS 500 certified steel products delivered with clear specifications and competitive local pricing.' },
-  { title: 'Scale With a Clear Roadmap', description: 'A pipeline for a state-of-the-art virgin steel factory (details TBC) to increase capacity and expand product range.' },
+const values = [
+  {
+    title: 'Circular First',
+    body: "Every tonne of steel we produce comes from recycled scrap. Sustainability isn't a marketing word here — it's the business model.",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" className="w-6 h-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg>
+    ),
+  },
+  {
+    title: 'Vendor First',
+    body: 'We built the network from the ground up — by paying fair prices, providing instant mobile money, and treating informal collectors as partners.',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" className="w-6 h-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+    ),
+  },
+  {
+    title: 'Quality Uncompromised',
+    body: 'BS 500B. TBS. ISO 9001. We certify every batch because the buildings this steel reinforces depend on it — and so do the people inside.',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" className="w-6 h-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+    ),
+  },
+  {
+    title: 'Tanzania-Rooted',
+    body: 'Our team, our vendors, and our clients are Tanzanian. We reinvest in local communities and create skilled jobs across 5 regions.',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" className="w-6 h-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>
+    ),
+  },
 ]
 
 export default async function AboutPage() {
-  const data = await client.fetch(aboutPageQuery).catch(() => null)
-
-  const vision =
-    data?.vision ??
-    "Build Africa's most trusted circular steel ecosystem, making quality construction materials accessible while transforming waste into opportunity for millions."
-  const mission =
-    data?.mission ??
-    'Transform scrap metal into high-quality, certified steel, enabling affordable construction while empowering informal scrap vendors and driving sustainable industrial growth across Africa.'
-
-  const storyImageUrl = data?.images?.[0]
-    ? urlFor(data.images[0]).width(800).height(800).url()
-    : null
-
-  const bodyParagraphs = ptToParagraphs(data?.body)
-
-  const values = (data?.values ?? fallbackValues).map((v: any) => ({
-    _key: v._key,
-    title: v.title,
-    desc: v.description ?? v.desc,
-  }))
-
-  const whyChooseUs = (data?.whyChooseUs ?? fallbackWhyChooseUs).map((w: any) => ({
-    title: w.title,
-    description: w.description,
-  }))
+  const about = await client.fetch(aboutPageQuery).catch(() => null)
 
   return (
     <>
-      <PageHeader
-        label="Our Story"
-        title={data?.heading ?? 'Building Stronger\nFoundations'}
-        subtitle={
-          data?.intro ??
-          'A Dar es Salaam-based company committed to quality materials, responsible waste management, and reliable logistics.'
-        }
-      />
+      {/* Page hero */}
+      <section
+        className="relative min-h-[52vh] flex flex-col justify-end overflow-hidden pt-20"
+        style={{ background: '#0B1D3A' }}
+        aria-label="About page hero"
+      >
+        <div className="absolute inset-0">
+          <Image src="/images/company/company-profile.jpg" alt="Country Materials facility" fill className="object-cover opacity-20" />
+          <div className="absolute inset-0 bg-gradient-to-b from-navy/60 via-navy/50 to-navy" />
+          <div className="absolute inset-0 bg-steel-texture" aria-hidden="true" />
+        </div>
+        <div className="relative max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16 pb-16 sm:pb-24 pt-12">
+          <p className="font-mono text-[11px] tracking-[0.2em] uppercase text-gold mb-6">About Us</p>
+          <h1 className="font-black text-[clamp(48px,8vw,110px)] leading-[0.92] tracking-tight text-white">
+            Built for Tanzania.<br />
+            <span className="text-gold">Built to last.</span>
+          </h1>
+          <p className="mt-6 text-[17px] text-white/55 max-w-xl leading-relaxed">
+            {about?.intro ?? "Country Materials Limited is Tanzania's leading circular steel manufacturer and scrap recycling ecosystem — founded in 2022, headquartered in Dar es Salaam."}
+          </p>
+        </div>
+      </section>
 
-      <section className="relative py-[100px] px-8 lg:px-16 bg-white" style={{ borderBottom: '1px solid #D8E0E7' }}>
-        <div className="max-w-[1440px] mx-auto grid lg:grid-cols-[1fr_1.1fr] gap-20 items-center">
-          <div className="reveal relative aspect-square max-w-[540px]">
-            <div className="absolute inset-0 overflow-hidden" style={{ border: '1px solid #D8E0E7' }}>
-              {storyImageUrl ? (
-                <Image src={storyImageUrl} alt="Country Materials" fill className="object-cover" />
-              ) : (
-                <Image src="/images/hero-steel-placeholder.svg" alt="Country Materials" fill className="object-cover" />
-              )}
-            </div>
-            <div className="absolute -bottom-5 -right-5 w-[80px] h-[80px] grid place-items-center" style={{ border: '1px solid #B9D1E4', background: '#2E6FA3' }}>
-              <span className="font-display text-[22px] tracking-[0.1em] text-white">CM</span>
-            </div>
-          </div>
+      {/* Mission + Vision */}
+      <section className="py-20 sm:py-28 overflow-hidden" style={{ background: '#FAF7F2' }} aria-label="Mission and vision">
+        <div className="max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-px" style={{ background: '#E8DED1' }}>
 
-          <div className="reveal">
-            <div className="flex items-center gap-3.5 mb-7">
-              <span className="block h-px w-10 bg-gold" />
-              <span className="font-condensed text-[12px] tracking-[0.18em] uppercase text-gold">Who We Are</span>
+            <div className="p-10 sm:p-14 reveal" style={{ background: '#FAF7F2' }}>
+              <p className="font-mono text-[10px] tracking-[0.2em] uppercase text-gold mb-6">Our Mission</p>
+              <p className="font-black text-[clamp(20px,2.5vw,32px)] text-ink leading-tight">
+                {about?.mission ?? "To formalise Tanzania's scrap economy into a world-class circular steel supply chain that creates jobs, reduces waste, and builds the nation."}
+              </p>
             </div>
-            <h2 className="font-display text-[clamp(36px,4vw,64px)] leading-[0.95] tracking-[0.03em] uppercase text-slate mb-8">
-              A Company Built on <span className="text-gold">Integrity</span>
-            </h2>
-            {bodyParagraphs.length > 0 ? (
-              bodyParagraphs.map((p, i) => (
-                <p key={i} className="font-barlow text-[16px] text-slate/75 leading-[1.7] mb-5 last:mb-0">{p}</p>
-              ))
-            ) : (
-              <>
-                <p className="font-barlow text-[16px] text-slate/75 leading-[1.7] mb-5">
-                  Country Materials Limited is a regenerative steel recycler integrating scrap vendors,
-                  manufacturers, and construction into a circular supply chain powered by technology.
-                </p>
-                <p className="font-barlow text-[16px] text-slate/75 leading-[1.7] mb-5">
-                  Headquartered at Babecov Complex on Buguruni Mandela Road in Dar es Salaam, we
-                  operate across scrap collection, recycling, and certified steel supply.
-                </p>
-                <p className="font-barlow text-[16px] text-slate/75 leading-[1.7]">
-                  Through a proprietary mobile platform with 5,000+ digitized vendors and a fully
-                  integrated model based on 100% locally sourced scrap, we deliver BS 500 certified
-                  steel at competitive local pricing.
-                </p>
-              </>
-            )}
+
+            <div className="p-10 sm:p-14 reveal" style={{ background: '#F0E8DC' }}>
+              <p className="font-mono text-[10px] tracking-[0.2em] uppercase text-gold mb-6">Our Vision</p>
+              <p className="font-black text-[clamp(20px,2.5vw,32px)] text-ink leading-tight">
+                {about?.vision ?? "To be Africa's most trusted circular steel ecosystem — the model that other African nations replicate to build sustainable construction industries."}
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
-      <section className="relative py-[100px] px-8 lg:px-16 bg-charcoal" style={{ borderBottom: '1px solid #D8E0E7' }}>
-        <div className="relative max-w-[1440px] mx-auto grid lg:grid-cols-2 gap-5">
-          <div className="reveal p-8 bg-white" style={{ border: '1px solid #D8E0E7' }}>
-            <span className="font-space text-[11px] tracking-[0.2em] text-gold/75">SECTION VISION</span>
-            <h3 className="font-display text-[clamp(32px,3.5vw,56px)] leading-[0.95] tracking-[0.03em] uppercase text-slate mt-4 mb-6">
-              Building a Trusted<br /><span className="text-gold">Circular Ecosystem</span>
-            </h3>
-            <p className="font-barlow text-[16px] text-slate/75 leading-[1.7]">{vision}</p>
-          </div>
-          <div className="reveal p-8 bg-white" style={{ border: '1px solid #D8E0E7' }}>
-            <span className="font-space text-[11px] tracking-[0.2em] text-gold/75">SECTION MISSION</span>
-            <h3 className="font-display text-[clamp(32px,3.5vw,56px)] leading-[0.95] tracking-[0.03em] uppercase text-slate mt-4 mb-6">
-              Transforming <span className="text-gold">Scrap to Steel</span>
-            </h3>
-            <p className="font-barlow text-[16px] text-slate/75 leading-[1.7]">{mission}</p>
-          </div>
-        </div>
-      </section>
+      {/* Our Story / Milestones */}
+      <section className="py-20 sm:py-28" style={{ background: '#0B1D3A' }} aria-label="Company milestones">
+        <div className="max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
-      <section className="relative py-[100px] px-8 lg:px-16 bg-white" style={{ borderBottom: '1px solid #D8E0E7' }}>
-        <div className="max-w-[1440px] mx-auto">
-          <div className="flex items-end justify-between flex-wrap gap-8 mb-14 reveal">
-            <div>
-              <div className="flex items-center gap-3.5 mb-5">
-                <span className="block h-px w-10 bg-gold" />
-                <span className="font-condensed text-[12px] tracking-[0.18em] uppercase text-gold">What We Stand For</span>
-              </div>
-              <h2 className="font-display text-[clamp(40px,4.5vw,72px)] leading-[0.9] tracking-[0.03em] uppercase text-slate">
-                Our Core <span className="text-gold">Values</span>
+            <div className="reveal">
+              <p className="font-mono text-[11px] tracking-[0.2em] uppercase text-gold mb-6">Our Story</p>
+              <h2 className="font-black text-[clamp(32px,4vw,60px)] text-white leading-none tracking-tight mb-8">
+                From idea to<br />industry-defining<br />network.
               </h2>
+              <p className="text-[15px] text-white/50 leading-relaxed mb-10">
+                {typeof about?.body === 'string'
+                  ? about.body
+                  : "Country Materials was founded with one observation: Tanzania had abundant scrap metal, strong construction demand, and zero organised supply chain connecting them. We built the bridge — from informal scrap vendors with mobile phones to certified steel leaving certified yards."}
+              </p>
+
+              {/* Timeline */}
+              <div style={{ borderTop: '1px solid rgba(200,150,46,0.15)' }}>
+                {milestones.map((m) => (
+                  <div
+                    key={m.year}
+                    className="grid grid-cols-[72px_1fr] gap-6 py-5"
+                    style={{ borderBottom: '1px solid rgba(200,150,46,0.1)' }}
+                  >
+                    <span className="font-mono font-bold text-[13px] text-gold">{m.year}</span>
+                    <p className="text-[14px] text-white/50 leading-relaxed">{m.event}</p>
+                  </div>
+                ))}
+              </div>
             </div>
-            <span className="font-space text-[12px] text-gold/75 tracking-[0.2em]">{'// 03 - PRINCIPLES'}</span>
+
+            <div className="space-y-3 reveal">
+              <div className="relative h-72 overflow-hidden">
+                <Image src="/images/company/group-photo-large.jpg" alt="Country Materials team" fill className="object-cover" />
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                <div className="relative h-44 overflow-hidden">
+                  <Image src="/images/company/wastee.jpg" alt="Scrap collection" fill className="object-cover" />
+                </div>
+                <div className="relative h-44 overflow-hidden">
+                  <Image src="/images/company/hardware.jpg" alt="Hardware products" fill className="object-cover" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Values */}
+      <section className="py-20 sm:py-28 overflow-hidden" style={{ background: '#FAF7F2' }} aria-label="Company values" id="values">
+        <div className="max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16">
+
+          <div className="mb-16 reveal">
+            <p className="font-mono text-[11px] tracking-[0.2em] uppercase text-gold mb-4">What We Stand For</p>
+            <h2 className="font-black text-[clamp(36px,5vw,72px)] text-ink leading-none tracking-tight">
+              The principles<br />behind the product.
+            </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 stagger">
-            {values.map((v: any, i: number) => (
-              <div key={v._key ?? i} className="py-10 px-8 bg-charcoal" style={{ border: '1px solid #D8E0E7' }}>
-                <div className="w-10 h-px bg-gold mb-8" />
-                <h3 className="font-display text-[clamp(24px,2.5vw,36px)] leading-[1] tracking-[0.04em] uppercase text-slate mb-4">{v.title}</h3>
-                <p className="font-barlow text-[15px] text-slate/70 leading-[1.65]">{v.desc}</p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-px stagger" style={{ background: '#E8DED1' }}>
+            {values.map((v) => (
+              <div key={v.title} className="p-8 cursor-default" style={{ background: '#FAF7F2' }}>
+                <div className="w-10 h-10 flex items-center justify-center border border-gold/30 text-gold mb-6">
+                  {v.icon}
+                </div>
+                <h3 className="font-black text-[18px] text-ink mb-3">{v.title}</h3>
+                <p className="text-[13.5px] text-slate/65 leading-relaxed">{v.body}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="relative py-[100px] px-8 lg:px-16 bg-charcoal" style={{ borderBottom: '1px solid #D8E0E7' }}>
-        <div className="relative max-w-[1440px] mx-auto">
-          <div className="flex items-center gap-3.5 mb-5 reveal">
-            <span className="block h-px w-10 bg-gold" />
-            <span className="font-condensed text-[12px] tracking-[0.18em] uppercase text-gold">Why Country Materials</span>
-          </div>
-          <h2 className="font-display text-[clamp(40px,4.5vw,72px)] leading-[0.9] tracking-[0.03em] uppercase text-slate mb-14 reveal">
-            Why Clients Choose <span className="text-gold">Us</span>
-          </h2>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 stagger">
-            {whyChooseUs.map((item: any, i: number) => (
-              <div key={i} className="p-8 bg-white" style={{ border: '1px solid #D8E0E7' }}>
-                <span className="font-space text-[11px] text-gold/65 tracking-[0.2em]">{String(i + 1).padStart(2, '0')}</span>
-                <h3 className="font-display text-[clamp(22px,2vw,32px)] leading-[1] tracking-[0.04em] uppercase text-slate mt-3 mb-4">{item.title}</h3>
-                <p className="font-barlow text-[15px] text-slate/70 leading-[1.65]">{item.description}</p>
-              </div>
-            ))}
+      {/* CTA */}
+      <section className="py-20 sm:py-24 text-center" style={{ background: '#0B1D3A' }} aria-label="Contact call to action">
+        <div className="max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16">
+          <div className="max-w-2xl mx-auto reveal">
+            <h2 className="font-black text-[clamp(28px,4vw,56px)] text-white leading-tight mb-5">
+              Want to know more?<br />
+              <span className="text-gold">Let&apos;s talk.</span>
+            </h2>
+            <div className="flex flex-wrap justify-center gap-4">
+              <Link href="/contact" className="inline-flex items-center gap-2 bg-gold hover:bg-gold-light text-white font-bold text-[15px] px-8 py-4 transition-colors duration-200 cursor-pointer">
+                Contact Us
+              </Link>
+              <Link href="/shop" className="inline-flex items-center gap-2 border border-white/20 hover:border-white/40 text-white font-semibold text-[15px] px-8 py-4 transition-all duration-200 cursor-pointer">
+                View Products
+              </Link>
+            </div>
           </div>
         </div>
       </section>
-
-      <CtaBanner
-        heading="Let's Build\nTogether"
-        subtext="Reach out to discuss your materials, logistics, or waste management needs."
-        primaryLabel="Contact Us"
-        primaryHref="/contact"
-        secondaryLabel="Our Services"
-        secondaryHref="/services"
-      />
     </>
   )
 }

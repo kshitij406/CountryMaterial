@@ -6,6 +6,10 @@
 
 # testing
 /coverage
+playwright-report/
+test-results/
+tests/playwright-report/
+tests/test-results/
 
 # next.js
 /.next/
@@ -22,6 +26,7 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+pnpm-debug.log*
 
 # local env files
 .env*.local
@@ -33,6 +38,14 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# pnpm
+.pnpm-store/
+
+# design assets (local reference only)
+design-system/
+
 # claude
+CLAUDE.md
 CLAUDE.MD
 .claude
+handoff.md

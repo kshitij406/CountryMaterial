@@ -17,7 +17,7 @@ export default function CtaBanner({
   secondaryLabel = 'View Our Services',
   secondaryHref = '/services',
 }: CtaBannerProps) {
-  const lines = heading.split('\n')
+  const lines = heading.replace(/\\n/g, '\n').split('\n')
 
   return (
     <section className="relative py-[110px] px-8 lg:px-16 overflow-hidden bg-navy" style={{ borderTop: '1px solid rgba(216,224,231,.35)' }}>

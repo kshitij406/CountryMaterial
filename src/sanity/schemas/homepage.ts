@@ -14,7 +14,14 @@ export const homepage = defineType({
       title: 'Hero Background Video',
       type: 'file',
       options: { accept: 'video/mp4,video/webm,video/ogg' },
-      description: 'Upload an MP4/WebM for the hero background. Leave empty to show the animated gradient.',
+      description: 'Upload an MP4/WebM for the hero background. Takes priority over Hero Background Image.',
+    }),
+    defineField({
+      name: 'heroImage',
+      title: 'Hero Background Image',
+      type: 'image',
+      options: { hotspot: true },
+      description: 'Used when no video is set. Upload a steel yard or molten steel shot (min 1920×1080, landscape).',
     }),
 
     // ── Ticker strip ──────────────────────────────────────────────────────────
@@ -51,6 +58,28 @@ export const homepage = defineType({
     defineField({ name: 'founderInitials', title: 'Founder Initials', type: 'string', description: 'Displayed large, e.g. "HM"' }),
     defineField({ name: 'founderName', title: 'Founder Name', type: 'string' }),
     defineField({ name: 'founderRole', title: 'Founder Role', type: 'string', description: 'e.g. "Founder & Chairman"' }),
+    defineField({
+      name: 'aboutImage',
+      title: 'About Section Image',
+      type: 'image',
+      options: { hotspot: true },
+      description: 'Shown in the homepage About strip (left column). Use a yard operations or process shot.',
+    }),
+    defineField({
+      name: 'processSteps',
+      title: 'Process Steps (Scrap → Steel)',
+      type: 'array',
+      description: '3–5 steps shown as a process strip below the About image.',
+      of: [{
+        type: 'object',
+        fields: [
+          defineField({ name: 'label', title: 'Step Label', type: 'string', description: 'e.g. "Collection"' }),
+          defineField({ name: 'note', title: 'Short Note', type: 'string', description: 'e.g. "5,000+ vendors"' }),
+        ],
+        preview: { select: { title: 'label', subtitle: 'note' } },
+      }],
+      validation: (Rule) => Rule.max(5),
+    }),
 
     // ── Stats section ─────────────────────────────────────────────────────────
     defineField({
@@ -100,6 +129,20 @@ export const homepage = defineType({
         },
       ],
     }),
+
+    // ── Featured announcement / development plan ──────────────────────────────
+    defineField({ name: 'announcementTag', title: 'Announcement Tag', type: 'string', description: 'e.g. "Upcoming · Next Decade"' }),
+    defineField({ name: 'announcementHeading', title: 'Announcement Heading', type: 'string', description: 'e.g. "Next Decade Development Plan"' }),
+    defineField({ name: 'announcementBody', title: 'Announcement Body', type: 'text', rows: 5 }),
+    defineField({
+      name: 'announcementImage',
+      title: 'Announcement Image',
+      type: 'image',
+      options: { hotspot: true },
+      description: 'Background image for the announcement card — use a modern factory or facility shot.',
+    }),
+    defineField({ name: 'announcementCtaLabel', title: 'Announcement CTA Label', type: 'string', description: 'e.g. "Read more"' }),
+    defineField({ name: 'announcementCtaHref', title: 'Announcement CTA Link', type: 'string', description: 'e.g. "/news/next-decade-plan"' }),
 
     // ── Contact CTA ───────────────────────────────────────────────────────────
     defineField({ name: 'contactHeading', title: 'Contact CTA Heading', type: 'string', description: 'e.g. "Price your project." — contact info comes from Site Settings' }),

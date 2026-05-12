@@ -80,7 +80,8 @@ All fields are optional; sections fall back to hardcoded defaults.
 |---|---|---|
 | `heroHeading` | Hero | Use `\n` to split into two lines |
 | `heroSubheading` | Hero | |
-| `heroVideo` | Hero | MP4/WebM file |
+| `heroVideo` | Hero | MP4/WebM file (takes priority over heroImage) |
+| `heroImage` | Hero | Background photo (min 1920×1080); fallback: `molten_steel.jpeg` |
 | `tickerItems[]` | Ticker strip | `{ num, label }` pairs |
 | `featuredServices[]` | Services | References to `service` docs; max 4 |
 | `aboutHeading` | About strip | Use `\n` to break into lines |
@@ -89,6 +90,8 @@ All fields are optional; sections fall back to hardcoded defaults.
 | `founderInitials` | About strip | |
 | `founderName` | About strip | |
 | `founderRole` | About strip | |
+| `aboutImage` | About strip | Left-column photo; fallback: `steel_bars.jpeg` |
+| `processSteps[]` | About strip | `{ label, note }` pairs; max 5; shown as process strip below image |
 | `stats[]` | Stats section | `{ count, suffix, label, sub }`; max 4 |
 | `featuredProducts[]` | Products grid | References to `product` docs; max 6 |
 | `partnerLogos[]` | Clients marquee | `{ name, sub, logo? }` |
@@ -99,9 +102,25 @@ All fields are optional; sections fall back to hardcoded defaults.
 
 Contact info (phone, email, address) in the Contact CTA comes from **Site Settings**, not the homepage document.
 
-### Service schema — icon field
+### Service schema — new fields
 
-Services have an `icon` field (select: `steel`, `hardware`, `waste`, `logistics`) that determines which SVG is shown on the homepage services card. The mapping lives in `ServicesSection.tsx`.
+Services have an `icon` field (select: `steel`, `hardware`, `waste`, `logistics`) that determines the SVG badge and gradient in `ServicesSection.tsx`.
+
+New fields added for industrial visual language:
+- `cardImage` — photo shown in the image panel on service cards (landscape, 800×500+). Without it, a dark gradient panel is shown.
+- `specChips[]` — short attribute strings shown as spec chips on cards (max 4). e.g. "BS 500", "Locally sourced", "24hrs dispatch".
+
+### Product schema — new fields
+
+- `grade` — steel grade badge e.g. "BS 500B". Shown in top-left of product image.
+- `unit` — unit of measure e.g. "Per tonne". Shown above price.
+- `standards[]` — certification badge strings e.g. "TBS", "BS 500", "ISO 9001" (max 4).
+- `specSheet[]` — `{ key, value }` pairs for the spec table (first 2 shown on card).
+
+### About Page schema — new fields
+
+- `heroImage` — primary story image (replaces placeholder). Fallback: `steel_bars.jpeg`.
+- `processSteps[]` — `{ stepNumber, title, description, image }` for the "Scrap → Steel" timeline (max 5). Fallback steps are hardcoded in the page component.
 
 ### Site Settings — what the client controls
 
@@ -126,16 +145,36 @@ All tokens are defined in `tailwind.config.ts`. Always use these — never hardc
 
 | Token | Hex | Use |
 |---|---|---|
-| `navy` | `#0B1D3A` | Primary dark background, navbar |
-| `navy-light` | `#162D56` | Service cards, elevated navy surfaces |
-| `navy-deep` | `#05101f` | Footer, stats section background |
-| `charcoal` | `#1A1A2E` | About strip, ticker background |
-| `cream` | `#FAF7F2` | Text on dark backgrounds |
-| `sand` | `#E8DED1` | Borders, subtle backgrounds |
-| `gold` | `#C8962E` | CTAs, accents, highlights |
-| `gold-light` | `#E8B84B` | Hover states, counter suffixes |
-| `gold-dim` | `#8A6520` | Muted gold |
-| `slate` | `#2C3E50` | Body text on light pages |
+| `navy` | `#1F3347` | Primary dark background, navbar |
+| `navy-light` | `#2D475F` | Service card panels, elevated navy surfaces |
+| `navy-deep` | `#0F1E2D` | Stats section, Contact CTA, About process timeline |
+| `charcoal` | `#EAF0F5` | Light section backgrounds (Services, Why Choose Us) |
+| `cream` | `#FFFFFF` | Text on dark backgrounds |
+| `cream-dark` | `#F7F9FB` | Body background |
+| `sand` | `#D8E0E7` | Borders, subtle dividers |
+| `gold` | `#2E6FA3` | CTAs, accents, links (steel-blue) |
+| `gold-light` | `#3B84BF` | Hover states, stat counter numbers |
+| `gold-dim` | `#245C88` | Muted gold for dark surfaces |
+| `amber` | `#C9A84C` | Premium warm-gold accent (grade badges, cert highlights) |
+| `amber-light` | `#E4C46A` | Amber hover states |
+| `steel-light` | `#C4D2DB` | Subtle steel texture tones |
+| `steel-mid` | `#8EA6B7` | Steel mid-tone |
+| `steel-dark` | `#4E6B7D` | Spec chip text, steel accents |
+| `slate` | `#22313F` | Body text on light pages |
+
+### Industrial CSS utility classes (in `globals.css`)
+
+| Class | Use |
+|---|---|
+| `.bg-rebar-grid` | Subtle rebar grid on light backgrounds |
+| `.bg-rebar-grid-dark` | Brighter rebar grid on dark backgrounds (navy-deep) |
+| `.bg-steel-lines` | Diagonal steel-lines texture (dark sections) |
+| `.material-card` | Service card with hover lift + border glow |
+| `.material-card-img` | Image inside material card (scales on hover) |
+| `.catalog-card` | Product card with hover border + shadow |
+| `.catalog-img` | Image inside catalog card (scales on hover) |
+| `.grade-stamp` | Monospaced grade/inspection text (Space Mono, 9px) |
+| `.grain-overlay` | Subtle film grain (keep opacity 0.02–0.04) |
 
 ### Font classes
 

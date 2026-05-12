@@ -29,4 +29,8 @@ export interface Product {
   description?: string | null
   inStock?: boolean
   hasVariants?: boolean
+  grade?: string | null
+  unit?: string | null
+  standards?: string[] | null
+  specSheet?: Array<{ key: string; value: string }> | null
 }

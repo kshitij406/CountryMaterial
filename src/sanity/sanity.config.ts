@@ -35,6 +35,8 @@ export default defineConfig({
             S.documentTypeListItem('career').title('Careers'),
             S.divider(),
             S.documentTypeListItem('post').title('News & Announcements'),
+            S.divider(),
+            S.documentTypeListItem('motifLibrary').title('Motif Library'),
           ]),
     }),
     visionTool(),

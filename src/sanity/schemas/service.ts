@@ -10,10 +10,26 @@ export const service = defineType({
     defineField({ name: 'slug', title: 'Slug', type: 'slug', options: { source: 'title', maxLength: 96 } }),
     defineField({ name: 'excerpt', title: 'Short Description', type: 'text', rows: 2 }),
     defineField({
-      name: 'coverImage',
-      title: 'Cover Image',
+      name: 'cardImage',
+      title: 'Service Card Image',
       type: 'image',
       options: { hotspot: true },
+      description: 'Photo shown in the image panel on homepage/services cards. Use an operations shot (landscape, 800×500+).',
+    }),
+    defineField({
+      name: 'specChips',
+      title: 'Specification Chips',
+      type: 'array',
+      description: 'Short attribute labels on service cards. e.g. "BS 500", "Locally sourced", "24hrs dispatch".',
+      of: [{ type: 'string' }],
+      validation: (Rule) => Rule.max(4),
+    }),
+    defineField({
+      name: 'coverImage',
+      title: 'Cover Image (Detail Page)',
+      type: 'image',
+      options: { hotspot: true },
+      description: 'Hero image for the individual service detail page.',
     }),
     defineField({
       name: 'contentSections',

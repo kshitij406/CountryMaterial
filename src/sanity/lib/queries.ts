@@ -22,6 +22,7 @@ export const homepageQuery = groq`
     heroHeading,
     heroSubheading,
     heroVideo { asset-> { url } },
+    "heroImageUrl": heroImage.asset->url,
 
     tickerItems,
 
@@ -31,7 +32,9 @@ export const homepageQuery = groq`
       slug,
       excerpt,
       icon,
-      displayOrder
+      displayOrder,
+      "cardImageUrl": cardImage.asset->url,
+      specChips
     },
 
     aboutHeading,
@@ -40,6 +43,8 @@ export const homepageQuery = groq`
     founderInitials,
     founderName,
     founderRole,
+    "aboutImageUrl": aboutImage.asset->url,
+    processSteps,
 
     stats,
 
@@ -52,6 +57,10 @@ export const homepageQuery = groq`
       hasVariants,
       inStock,
       description,
+      grade,
+      unit,
+      standards,
+      specSheet,
       category-> { name },
       "images": images[]{ "asset": asset->{ url } }
     },
@@ -62,10 +71,29 @@ export const homepageQuery = groq`
       "logoUrl": logo.asset->url
     },
 
+    announcementTag,
+    announcementHeading,
+    announcementBody,
+    "announcementImageUrl": announcementImage.asset->url,
+    announcementCtaLabel,
+    announcementCtaHref,
+
     contactHeading,
     contactEyebrow,
     contactPrimaryLabel,
     contactSecondaryLabel,
+  }
+`
+
+export const latestPostsQuery = groq`
+  *[_type == "post"] | order(publishedAt desc)[0...3] {
+    _id,
+    title,
+    slug,
+    category,
+    publishedAt,
+    excerpt,
+    "coverImageUrl": coverImage.asset->url
   }
 `
 
@@ -78,7 +106,14 @@ export const aboutPageQuery = groq`
     mission,
     values,
     whyChooseUs,
-    images
+    images,
+    "heroImageUrl": heroImage.asset->url,
+    processSteps[] {
+      stepNumber,
+      title,
+      description,
+      "imageUrl": image.asset->url
+    }
   }
 `
 
@@ -90,7 +125,9 @@ export const allServicesQuery = groq`
     excerpt,
     icon,
     coverImage,
-    displayOrder
+    displayOrder,
+    "cardImageUrl": cardImage.asset->url,
+    specChips
   }
 `
 
@@ -119,7 +156,11 @@ export const allProductsQuery = groq`
     "images": images[]{ "asset": asset->{ url } },
     description,
     inStock,
-    hasVariants
+    hasVariants,
+    grade,
+    unit,
+    standards,
+    specSheet
   }
 `
 
@@ -175,4 +216,24 @@ export const openCareersQuery = groq`
     closingDate,
     expired
   }
+`
+
+export const careerBySlugQuery = groq`
+  *[_type == "career" && slug.current == $slug][0] {
+    _id,
+    title,
+    slug,
+    excerpt,
+    department,
+    location,
+    employmentType,
+    description,
+    requirements,
+    closingDate,
+    expired
+  }
+`
+
+export const allCareerSlugsQuery = groq`
+  *[_type == "career"] { "slug": slug.current }
 `

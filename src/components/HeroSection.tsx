@@ -1,94 +1,187 @@
+'use client'
+
+import { useEffect, useRef } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
+import gsap from 'gsap'
 
 interface HeroSectionProps {
-  videoSrc?: string | null
+  videoSrc?: string
+  heroImageUrl?: string
   headingLine1?: string
   headingLine2?: string
   subheading?: string
 }
 
+const HERO_STATS = [
+  { value: '50,000+', label: 'MT Recycled' },
+  { value: '320+',    label: 'Active Clients' },
+  { value: '5,000+',  label: 'Vendors' },
+  { value: '5',       label: 'Branches' },
+]
+
 export default function HeroSection({
-  videoSrc: _videoSrc,
-  headingLine1 = 'Steel and Scrap',
-  headingLine2 = 'You Can Trust.',
-  subheading = 'Regenerative steel recycler integrating scrap vendors, manufacturers, and construction into a circular supply chain powered by technology.',
+  videoSrc,
+  heroImageUrl,
+  headingLine1 = "Africa's Circular",
+  headingLine2 = 'Steel Ecosystem',
+  subheading = "From scrap collection to BS 500-certified construction steel — Tanzania's most integrated circular steel supply chain.",
 }: HeroSectionProps) {
+  const containerRef  = useRef<HTMLDivElement>(null)
+  const locationRef   = useRef<HTMLParagraphElement>(null)
+  const line1Ref      = useRef<HTMLSpanElement>(null)
+  const line2Ref      = useRef<HTMLSpanElement>(null)
+  const subRef        = useRef<HTMLParagraphElement>(null)
+  const ctaRef        = useRef<HTMLDivElement>(null)
+  const statsBarRef   = useRef<HTMLDivElement>(null)
+  const scrollRef     = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const els = [locationRef, line1Ref, line2Ref, subRef, ctaRef, statsBarRef, scrollRef]
+    if (prefersReduced) {
+      els.forEach((r) => {
+        if (r.current) { r.current.style.opacity = '1'; r.current.style.transform = 'none' }
+      })
+      return
+    }
+
+    const ctx = gsap.context(() => {
+      const tl = gsap.timeline({ defaults: { ease: 'power3.out' } })
+      tl.from(locationRef.current, { y: 20, opacity: 0, duration: 0.6 })
+        .from(line1Ref.current,    { y: 80, opacity: 0, duration: 1.0 }, '-=0.3')
+        .from(line2Ref.current,    { y: 80, opacity: 0, duration: 1.0 }, '-=0.7')
+        .from(subRef.current,      { y: 30, opacity: 0, duration: 0.7 }, '-=0.4')
+        .from(ctaRef.current,      { y: 20, opacity: 0, duration: 0.6 }, '-=0.4')
+        .from(statsBarRef.current, { opacity: 0, duration: 0.8 },        '-=0.2')
+        .from(scrollRef.current,   { opacity: 0, duration: 0.8 },        '-=0.4')
+    }, containerRef)
+
+    return () => ctx.revert()
+  }, [])
+
+  const bgImage = heroImageUrl ?? '/images/randos/molten_steel.jpeg'
+
   return (
     <section
-      className="relative min-h-[560px] lg:min-h-[680px] pt-36 sm:pt-40 lg:pt-44 pb-14 sm:pb-20 flex items-end overflow-hidden bg-navy"
+      ref={containerRef}
+      className="relative min-h-screen flex flex-col overflow-hidden bg-navy"
+      aria-label="Hero"
     >
-      <div
-        className="absolute inset-0"
-        style={{
-          backgroundImage: "url('/images/hero-steel-placeholder.svg')",
-          backgroundPosition: 'center',
-          backgroundSize: 'cover',
-        }}
-      />
+      {/* Background */}
+      {videoSrc ? (
+        <video autoPlay muted loop playsInline
+          className="absolute inset-0 w-full h-full object-cover"
+          aria-hidden="true"
+        >
+          <source src={videoSrc} type="video/mp4" />
+        </video>
+      ) : (
+        <Image
+          src={bgImage}
+          alt="Country Materials Limited steel operations"
+          fill className="object-cover"
+          priority quality={85}
+        />
+      )}
 
-      <div
-        className="absolute inset-0"
-        style={{ background: 'linear-gradient(100deg,rgba(23,40,56,.82) 12%,rgba(23,40,56,.62) 48%,rgba(23,40,56,.28) 100%)' }}
-      />
+      {/* Overlays — heavy at bottom so copy reads, lighter at top */}
+      <div className="absolute inset-0 bg-gradient-to-b from-navy/70 via-navy/40 to-navy/95" aria-hidden="true" />
+      <div className="absolute inset-0 bg-gradient-to-r from-navy/55 via-transparent to-transparent" aria-hidden="true" />
+      <div className="absolute inset-0 grain-overlay" aria-hidden="true" />
+      <div className="absolute inset-0 bg-steel-texture" aria-hidden="true" />
 
-      <div className="relative z-10 w-full max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-16 pb-16 sm:pb-24">
-        <div className="flex items-center gap-4 mb-6 reveal">
-          <span className="block h-px w-10 bg-gold flex-shrink-0" />
-          <span className="font-condensed text-[12px] tracking-[0.18em] uppercase text-white/90">
-            Dar es Salaam | Est. 2022
+      {/* Content — pushed to bottom third */}
+      <div className="relative z-10 flex-1 flex flex-col justify-end max-w-[1440px] mx-auto w-full px-6 sm:px-10 lg:px-16 pb-0">
+
+        {/* Location line — plain text, no badge */}
+        <p
+          ref={locationRef}
+          className="font-mono text-[11px] tracking-[0.22em] uppercase text-white/45 mb-8"
+        >
+          Dar es Salaam, Tanzania · Est. 2022 · BS 500 Certified
+        </p>
+
+        {/* Main headline */}
+        <h1 className="font-sans leading-[0.95] tracking-tight text-white mb-7">
+          <span
+            ref={line1Ref}
+            className="block font-black text-[clamp(52px,8.5vw,124px)]"
+          >
+            {headingLine1}
           </span>
-        </div>
-
-        <h1 className="reveal font-display uppercase leading-[0.9] tracking-[0.03em] text-[clamp(42px,8.2vw,118px)] max-w-[980px] text-white">
-          <span className="block">{headingLine1}</span>
-          <span className="block text-gold-light">{headingLine2}</span>
+          {/* Second line in gold, not cyan */}
+          <span
+            ref={line2Ref}
+            className="block font-black text-[clamp(52px,8.5vw,124px)] text-gold"
+          >
+            {headingLine2}
+          </span>
         </h1>
 
-        <p className="reveal mt-7 sm:mt-9 font-barlow text-[16px] sm:text-[18px] text-white/90 leading-[1.6] max-w-[620px]">
+        {/* Subheading */}
+        <p
+          ref={subRef}
+          className="text-[clamp(15px,1.6vw,18px)] text-white/60 font-medium leading-relaxed max-w-lg mb-10"
+        >
           {subheading}
         </p>
 
-        <div className="reveal flex flex-col sm:flex-row gap-3 sm:gap-4 mt-9 sm:mt-11">
-          <Link
-            href="/shop"
-            className="group relative inline-flex items-center justify-center gap-3 overflow-hidden px-6 sm:px-[34px] py-4 sm:py-[18px] bg-gold text-white font-condensed text-[13px] sm:text-[14px] tracking-[0.2em] uppercase font-semibold"
-          >
-            <span className="relative z-10">View products</span>
-            <svg className="relative z-10 w-3.5 h-3.5 transition-transform duration-400 group-hover:translate-x-1.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
-              <path d="M5 12h14M13 5l7 7-7 7" />
-            </svg>
-            <span
-              className="absolute inset-0 bg-gold-dim -translate-x-full group-hover:translate-x-0 transition-transform duration-500"
-              style={{ transitionTimingFunction: 'cubic-bezier(.16,1,.3,1)' }}
-            />
-          </Link>
-
+        {/* CTAs */}
+        <div ref={ctaRef} className="flex flex-wrap items-center gap-4 mb-16">
           <Link
             href="/contact"
-            className="group relative inline-flex items-center justify-center gap-3 overflow-hidden px-6 sm:px-[34px] py-4 sm:py-[18px] border border-cream/70 text-white font-condensed text-[13px] sm:text-[14px] tracking-[0.2em] uppercase font-semibold"
+            className="inline-flex items-center gap-2 bg-gold hover:bg-gold-light text-white font-bold text-[15px] px-7 py-4 rounded-none transition-colors duration-200 cursor-pointer"
           >
-            <span className="relative z-10 group-hover:text-white transition-colors duration-300">Request a quote</span>
-            <svg
-              className="relative z-10 w-3.5 h-3.5 group-hover:text-white transition-all duration-400 group-hover:translate-x-1.5"
-              viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}
-            >
-              <path d="M5 12h14M13 5l7 7-7 7" />
-            </svg>
-            <span
-              className="absolute inset-0 bg-cream/20 -translate-x-full group-hover:translate-x-0 transition-transform duration-500"
-              style={{ transitionTimingFunction: 'cubic-bezier(.16,1,.3,1)' }}
-            />
+            Request a Quote
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
           </Link>
-        </div>
-
-        <div className="reveal mt-10 sm:mt-12 inline-flex flex-wrap items-center gap-x-8 gap-y-3 text-white/85">
-          <span className="font-condensed text-[11px] tracking-[0.2em] uppercase">100% locally sourced scrap</span>
-          <span className="font-condensed text-[11px] tracking-[0.2em] uppercase">BS 500 certified steel</span>
-          <span className="font-condensed text-[11px] tracking-[0.2em] uppercase">5,000+ vendors digitized</span>
+          <Link
+            href="/shop"
+            className="inline-flex items-center gap-2 text-white/80 hover:text-white border border-white/20 hover:border-white/40 font-semibold text-[15px] px-7 py-4 rounded-none transition-all duration-200 cursor-pointer"
+          >
+            View Products
+          </Link>
         </div>
       </div>
 
-      <div className="absolute bottom-0 left-0 right-0 h-px bg-cream/35 z-20" />
+      {/* Stats bar — full-width dark strip separated from hero */}
+      <div
+        ref={statsBarRef}
+        className="relative z-10 w-full bg-navy-mid border-t border-white/[0.06]"
+        aria-label="Key statistics"
+      >
+        <div className="max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16">
+          <div className="grid grid-cols-2 sm:grid-cols-4">
+            {HERO_STATS.map((s, i) => (
+              <div
+                key={s.label}
+                className="py-6 px-4 sm:px-6 flex flex-col items-center sm:items-start"
+                style={{ borderRight: i < HERO_STATS.length - 1 ? '1px solid rgba(255,255,255,0.06)' : undefined }}
+              >
+                <span className="font-mono font-bold text-[clamp(28px,3.5vw,44px)] leading-none text-gold tabular-nums">
+                  {s.value}
+                </span>
+                <span className="mt-1.5 text-[10px] font-bold tracking-[0.2em] uppercase text-white/35">
+                  {s.label}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Scroll indicator */}
+      <div
+        ref={scrollRef}
+        className="absolute bottom-[130px] right-8 lg:right-14 hidden lg:flex flex-col items-center gap-2"
+        aria-hidden="true"
+      >
+        <div className="w-px h-14 bg-gradient-to-b from-transparent via-white/20 to-white/40" />
+        <span className="text-[9px] font-bold tracking-[0.25em] uppercase text-white/25 [writing-mode:vertical-lr]">
+          Scroll
+        </span>
+      </div>
     </section>
   )
 }
