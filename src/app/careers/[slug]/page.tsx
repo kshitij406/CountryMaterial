@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation'
 import { client } from '@/sanity/lib/client'
 import { careerBySlugQuery, allCareerSlugsQuery } from '@/sanity/lib/queries'
 import type { Career } from '@/types'
+import { buildMetadata } from '@/lib/metadata'
 
 export const revalidate = 60
 
@@ -14,11 +15,14 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
   const job = await client.fetch<Career>(careerBySlugQuery, { slug: params.slug }).catch(() => null)
-  if (!job) return { title: 'Job Not Found' }
-  return {
-    title: job.title,
-    description: job.excerpt ?? `Apply for the ${job.title} role at Country Materials Ltd.`,
-  }
+  if (!job) return { title: 'Job Not Found | Country Materials Ltd' }
+  return buildMetadata({
+    title: `${job.title} | Country Materials Ltd`,
+    description:
+      job.excerpt ??
+      `Apply for the ${job.title} position at Country Materials Ltd. Based in ${job.location ?? 'Dar es Salaam'}, Tanzania.`,
+    path: `/careers/${params.slug}`,
+  })
 }
 
 function renderBlocks(blocks?: Career['description']) {

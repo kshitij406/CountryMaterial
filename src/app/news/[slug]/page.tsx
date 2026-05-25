@@ -1,9 +1,11 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
-import { PortableText } from 'next-sanity'
+import Image from 'next/image'
+import { PortableText } from '@portabletext/react'
 import { client, urlFor } from '@/sanity/lib/client'
 import { postBySlugQuery, allPostsQuery } from '@/sanity/lib/queries'
+import { buildMetadata } from '@/lib/metadata'
 
 export const revalidate = 30
 
@@ -14,10 +16,14 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
   const post = await client.fetch(postBySlugQuery, { slug: params.slug }).catch(() => null)
-  return {
-    title: post?.title ?? 'Post - Country Materials Limited',
-    description: post?.excerpt ?? '',
-  }
+  if (!post?.title) return { title: 'News | Country Materials Ltd' }
+  return buildMetadata({
+    title: `${post.title} | Country Materials Ltd`,
+    description:
+      post.excerpt ??
+      "Read the latest news and updates from Country Materials Ltd, Tanzania's leading circular steel manufacturer.",
+    path: `/news/${params.slug}`,
+  })
 }
 
 function formatDate(dateStr: string | null | undefined) {
@@ -68,7 +74,9 @@ const ptComponents = {
       if (!value?.asset) return null
       return (
         <figure className="my-10">
-          <img src={urlFor(value).width(900).url()} alt={value.alt ?? ''} className="w-full object-cover" style={{ border: '1px solid #D8E0E7' }} />
+          <div className="relative w-full" style={{ aspectRatio: '16/9', border: '1px solid #D8E0E7' }}>
+            <Image src={urlFor(value).width(900).auto('format').url()} alt={value.alt ?? ''} fill className="object-cover" />
+          </div>
           {value.caption && (
             <figcaption className="mt-3 font-condensed text-[11px] tracking-[0.15em] uppercase text-slate/55 text-center">
               {value.caption}
@@ -85,14 +93,14 @@ export default async function PostPage({ params }: { params: { slug: string } })
   if (!post) notFound()
 
   const imageUrl = post.coverImage
-    ? urlFor(post.coverImage).width(1440).height(640).url()
+    ? urlFor(post.coverImage).width(1440).height(640).auto('format').url()
     : null
 
   return (
     <main style={{ background: '#F7F9FB', minHeight: '100vh' }}>
       {imageUrl && (
         <div className="relative h-[45vh] min-h-[300px] max-h-[560px] overflow-hidden" style={{ background: '#EEF2F5' }}>
-          <img src={imageUrl} alt={post.title} className="w-full h-full object-cover opacity-80" />
+          <Image src={imageUrl} alt={post.title} fill className="object-cover opacity-80" priority />
           <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(247,249,251,1) 0%, rgba(247,249,251,0) 60%)' }} />
         </div>
       )}

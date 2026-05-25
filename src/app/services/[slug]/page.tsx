@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation'
 import { client } from '@/sanity/lib/client'
 import { serviceBySlugQuery, allServicesQuery } from '@/sanity/lib/queries'
 import CtaBanner from '@/components/sections/CtaBanner'
+import { buildMetadata } from '@/lib/metadata'
 
 export const revalidate = 60
 
@@ -60,10 +61,16 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
   const sanity = await client.fetch(serviceBySlugQuery, { slug: params.slug }).catch(() => null)
   const fallback = staticServices[params.slug]
-  const title = sanity?.title ?? fallback?.title
-  const description = sanity?.excerpt ?? fallback?.excerpt
-  if (!title) return {}
-  return { title, description }
+  const name = sanity?.title ?? fallback?.title
+  const excerpt = sanity?.excerpt ?? fallback?.excerpt
+  if (!name) return {}
+  return buildMetadata({
+    title: `${name} | Country Materials Ltd`,
+    description:
+      excerpt ??
+      'Explore our industrial services including steel manufacturing, scrap collection, vendor platform and fleet logistics across Tanzania.',
+    path: `/services/${params.slug}`,
+  })
 }
 
 function ptToText(blocks: any[]): string {

@@ -3,13 +3,16 @@ import Link from 'next/link'
 import { client, urlFor } from '@/sanity/lib/client'
 import { allPostsQuery } from '@/sanity/lib/queries'
 import CtaBanner from '@/components/sections/CtaBanner'
+import { buildMetadata } from '@/lib/metadata'
 
 export const revalidate = 30
 
-export const metadata: Metadata = {
-  title: 'News & Announcements - Country Materials Limited',
-  description: 'Latest news, updates, and announcements from Country Materials Limited.',
-}
+export const metadata: Metadata = buildMetadata({
+  title: 'News & Announcements | Country Materials Ltd',
+  description:
+    "Read the latest news, project updates and announcements from Country Materials Ltd — Tanzania's leading circular steel manufacturer based in Dar es Salaam.",
+  path: '/news',
+})
 
 function formatDate(dateStr: string | null | undefined) {
   if (!dateStr) return null
@@ -23,7 +26,7 @@ export default async function NewsPage() {
   const rest = posts.slice(1)
 
   const featuredImage = featured?.coverImage
-    ? urlFor(featured.coverImage).width(1200).height(640).url()
+    ? urlFor(featured.coverImage).width(1200).height(640).auto('format').url()
     : null
 
   return (
@@ -113,7 +116,7 @@ export default async function NewsPage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 stagger">
                   {rest.map((post: any) => {
                     const imageUrl = post.coverImage
-                      ? urlFor(post.coverImage).width(600).height(400).url()
+                      ? urlFor(post.coverImage).width(600).height(400).auto('format').url()
                       : null
 
                     return (

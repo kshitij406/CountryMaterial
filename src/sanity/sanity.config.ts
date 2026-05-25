@@ -27,6 +27,12 @@ export default defineConfig({
               .title('About Page')
               .id('aboutPage')
               .child(S.document().schemaType('aboutPage').documentId('aboutPage')),
+            S.listItem()
+              .title('Impact Page')
+              .id('impactPage')
+              .child(S.document().schemaType('impactPage').documentId('impactPage')),
+            S.divider(),
+            S.documentTypeListItem('legalPage').title('Legal Pages'),
             S.divider(),
             S.documentTypeListItem('service').title('Services'),
             S.documentTypeListItem('product').title('Products'),

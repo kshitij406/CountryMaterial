@@ -3,13 +3,16 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { client } from '@/sanity/lib/client'
 import { allServicesQuery } from '@/sanity/lib/queries'
+import { buildMetadata } from '@/lib/metadata'
 
 export const revalidate = 60
 
-export const metadata: Metadata = {
-  title: 'Our Services — Circular Steel & Logistics',
-  description: "Scrap collection, certified steel manufacturing, vendor platform, and fleet logistics — Tanzania's most integrated steel supply chain.",
-}
+export const metadata: Metadata = buildMetadata({
+  title: 'Our Services | Country Materials Ltd',
+  description:
+    'Explore steel manufacturing, scrap collection, vendor digitisation and fleet logistics services from Country Materials Ltd, operating across Tanzania.',
+  path: '/services',
+})
 
 const SERVICES_STATIC = [
   {

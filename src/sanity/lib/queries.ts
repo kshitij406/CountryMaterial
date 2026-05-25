@@ -1,15 +1,18 @@
-import { groq } from 'next-sanity'
+import groq from 'groq'
 
 export const siteSettingsQuery = groq`
   *[_type == "siteSettings"][0] {
     companyName,
+    founded,
     logo,
     phone,
     email,
+    whatsapp,
     address,
     poBox,
     city,
     country,
+    regions,
     businessHours,
     shopPageTitle,
     shopPageSubtitle,
@@ -236,4 +239,18 @@ export const careerBySlugQuery = groq`
 
 export const allCareerSlugsQuery = groq`
   *[_type == "career"] { "slug": slug.current }
+`
+
+export const legalPageQuery = groq`
+  *[_type == "legalPage" && slug.current == $slug][0]{
+    title, lastUpdated, body
+  }
+`
+
+export const impactPageQuery = groq`
+  *[_type == "impactPage"][0]{
+    tonnesRecycled, reportingYear, manualOverrides,
+    heroHeading, heroSubtitle, methodologyNote,
+    impactStories, sdgGoals
+  }
 `

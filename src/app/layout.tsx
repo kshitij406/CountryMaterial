@@ -1,41 +1,57 @@
 import type { Metadata } from 'next'
-import '@fontsource/plus-jakarta-sans/300.css'
-import '@fontsource/plus-jakarta-sans/400.css'
-import '@fontsource/plus-jakarta-sans/500.css'
-import '@fontsource/plus-jakarta-sans/600.css'
-import '@fontsource/plus-jakarta-sans/700.css'
-import '@fontsource/plus-jakarta-sans/800.css'
-import '@fontsource/space-mono/400.css'
-import '@fontsource/space-mono/700.css'
+import { Plus_Jakarta_Sans, Space_Mono } from 'next/font/google'
 import './globals.css'
+
+const plusJakartaSans = Plus_Jakarta_Sans({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700', '800'],
+  variable: '--font-jakarta',
+  display: 'swap',
+  preload: true,
+})
+
+const spaceMono = Space_Mono({
+  subsets: ['latin'],
+  weight: ['400', '700'],
+  variable: '--font-space-mono',
+  display: 'swap',
+  preload: true,
+})
 import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
 import PageTransition from '@/components/animations/PageTransition'
 import RevealObserver from '@/components/animations/RevealObserver'
+import CookieBanner from '@/components/CookieBanner'
 import { client, urlFor } from '@/sanity/lib/client'
 import { siteSettingsQuery } from '@/sanity/lib/queries'
 
-// Fonts are loaded via @fontsource CSS imports above.
-// CSS variables are set in globals.css.
-const fontClassNames = ''
+// TODO: replace /public/og-default.png with a real 1200×630 branded OG image before go-live
+// TODO: add /public/favicon.ico for full browser/tab support (currently using logo PNG via `icons`)
 
 export const metadata: Metadata = {
   title: {
-    default: 'Country Materials Limited — Africa\'s Circular Steel Ecosystem',
-    template: '%s | Country Materials Limited',
+    default: 'Country Materials Ltd',
+    template: '%s | Country Materials Ltd',
   },
   description:
-    'From scrap collection to certified construction steel. Tanzania\'s leading circular steel manufacturer connecting 5,000+ vendors, 320+ clients, and 30+ fleet vehicles across 5 regional branches.',
-  keywords: ['steel recycling', 'circular economy', 'scrap metal', 'BS 500', 'TMT rebar', 'steel billets', 'Tanzania', 'Dar es Salaam'],
+    "Tanzania's trusted supplier of construction materials, waste management solutions and logistics services based in Dar es Salaam.",
+  keywords: [
+    'construction materials Tanzania',
+    'waste management Dar es Salaam',
+    'scrap recycling Tanzania',
+    'hardware supplier Tanzania',
+    'logistics Tanzania',
+    'BS 500 steel',
+    'TMT rebar Tanzania',
+    'circular economy Africa',
+  ],
+  authors: [{ name: 'Country Materials Ltd' }],
+  robots: { index: true, follow: true },
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? 'https://countrymaterials.com'),
   icons: {
     icon:     '/images/logo/Country-Materials-Logo.png',
     shortcut: '/images/logo/Country-Materials-Logo.png',
     apple:    '/images/logo/Country-Materials-Logo.png',
-  },
-  openGraph: {
-    siteName: 'Country Materials Limited',
-    locale: 'en_TZ',
-    type: 'website',
   },
 }
 
@@ -45,7 +61,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const settings = await client.fetch(siteSettingsQuery).catch(() => null)
 
   const logoUrl = settings?.logo?.asset
-    ? urlFor(settings.logo).width(240).url()
+    ? urlFor(settings.logo).width(240).auto('format').url()
     : undefined
 
   const contact = {
@@ -59,7 +75,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   }
 
   return (
-    <html lang="en" className={fontClassNames}>
+    <html lang="en" className={`${plusJakartaSans.variable} ${spaceMono.variable}`}>
       <body>
         <RevealObserver />
         <Navbar logoUrl={logoUrl} companyName={settings?.companyName} />
@@ -67,6 +83,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <main>{children}</main>
         </PageTransition>
         <Footer contact={contact} />
+        <CookieBanner />
       </body>
     </html>
   )

@@ -2,11 +2,14 @@ import type { Metadata } from 'next'
 import { client } from '@/sanity/lib/client'
 import { siteSettingsQuery } from '@/sanity/lib/queries'
 import ContactForm from '@/components/sections/ContactForm'
+import { buildMetadata } from '@/lib/metadata'
 
-export const metadata: Metadata = {
-  title: 'Contact Country Materials Limited',
-  description: 'Request a quote, schedule delivery, or speak to our steel team. We respond within 24 hours.',
-}
+export const metadata: Metadata = buildMetadata({
+  title: 'Contact Us | Country Materials Ltd',
+  description:
+    "Reach Country Materials Ltd's team in Dar es Salaam to request a quote, place a bulk order, or find your nearest yard across Tanzania's five branches.",
+  path: '/contact',
+})
 
 export const revalidate = 60
 
@@ -23,6 +26,7 @@ export default async function ContactPage() {
   const settings = await client.fetch(siteSettingsQuery).catch(() => null)
   const phone = settings?.phone ?? '+255 768 500 555'
   const email = settings?.email ?? 'info@countrymaterial.com'
+  const whatsappNum = settings?.whatsapp ?? phone.replace(/[^0-9]/g, '')
 
   return (
     <>
@@ -65,7 +69,7 @@ export default async function ContactPage() {
                     </div>
                     <div>
                       <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-slate/45 mb-1">Phone / WhatsApp</p>
-                      <a href={`tel:${phone.replace(/\s/g, '')}`} className="text-[16px] font-bold text-ink hover:text-gold transition-colors duration-200 cursor-pointer">{phone}</a>
+                      <a href={`https://wa.me/${whatsappNum}`} className="text-[16px] font-bold text-ink hover:text-gold transition-colors duration-200 cursor-pointer">{phone}</a>
                     </div>
                   </div>
 
@@ -85,7 +89,7 @@ export default async function ContactPage() {
                     </div>
                     <div>
                       <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-slate/45 mb-1">Headquarters</p>
-                      <p className="text-[16px] font-bold text-ink">{settings?.address ?? 'Dar es Salaam, Tanzania'}</p>
+                      <p className="text-[16px] font-bold text-ink">{settings?.address ?? 'Babecov Complex, Buguruni Mandela Road, Dar es Salaam'}</p>
                     </div>
                   </div>
                 </div>

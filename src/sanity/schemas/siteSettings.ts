@@ -7,13 +7,27 @@ export const siteSettings = defineType({
   icon: () => '⚙️',
   fields: [
     defineField({ name: 'companyName', title: 'Company Name', type: 'string' }),
+    defineField({ name: 'founded', title: 'Year Founded', type: 'number', description: 'e.g. 2022' }),
     defineField({ name: 'logo', title: 'Logo', type: 'image', options: { hotspot: true } }),
     defineField({ name: 'phone', title: 'Phone Number', type: 'string' }),
     defineField({ name: 'email', title: 'Email Address', type: 'string' }),
+    defineField({
+      name: 'whatsapp',
+      title: 'WhatsApp Number',
+      type: 'string',
+      description: 'Digits only, no + or spaces — used for wa.me links. e.g. "255768500555"',
+    }),
     defineField({ name: 'address', title: 'Street Address', type: 'string' }),
     defineField({ name: 'poBox', title: 'P.O. Box', type: 'string' }),
     defineField({ name: 'city', title: 'City', type: 'string' }),
     defineField({ name: 'country', title: 'Country', type: 'string' }),
+    defineField({
+      name: 'regions',
+      title: 'Active Regions / Branches',
+      type: 'array',
+      of: [{ type: 'string' }],
+      description: 'Branch cities where the company operates, e.g. "Dar es Salaam", "Mbeya".',
+    }),
     defineField({
       name: 'businessHours',
       title: 'Business Hours',

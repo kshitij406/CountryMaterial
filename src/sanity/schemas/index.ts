@@ -7,6 +7,8 @@ import { productCategory } from './productCategory'
 import { career } from './career'
 import { post } from './post'
 import { motifLibrary } from './motifLibrary'
+import { legalPage } from './legalPage'
+import { impactPage } from './impactPage'
 
 export const schemaTypes = [
   siteSettings,
@@ -18,4 +20,6 @@ export const schemaTypes = [
   career,
   post,
   motifLibrary,
+  legalPage,
+  impactPage,
 ]

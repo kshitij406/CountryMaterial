@@ -3,6 +3,7 @@ import Image from 'next/image'
 
 const colCompany = [
   { label: 'About Us',       href: '/about' },
+  { label: 'Our Impact',     href: '/impact' },
   { label: 'Operations',     href: '/about#operations' },
   { label: 'Certifications', href: '/about#certifications' },
   { label: 'Careers',        href: '/careers' },
@@ -97,13 +98,31 @@ export default function Footer({ contact }: { contact?: FooterContact }) {
         </div>
 
         {/* Bottom bar */}
-        <div className="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-[12px] text-white/25">
-          <span className="font-mono tracking-widest uppercase">
-            © {new Date().getFullYear()} Country Materials Limited
+        <div className="mt-8 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
+          <span className="font-mono tracking-widest uppercase text-white/60">
+            © {new Date().getFullYear()} Country Materials Ltd. All rights reserved.
           </span>
-          <div className="flex gap-6">
-            <span>Dar es Salaam, Tanzania</span>
-            <span>BS 500 · TBS Certified</span>
+          <div className="flex items-center gap-1.5 text-white/60">
+            <Link
+              href="/privacy-policy"
+              className="hover:text-white transition-colors duration-200"
+            >
+              Privacy Policy
+            </Link>
+            <span className="text-white/20" aria-hidden="true">·</span>
+            <Link
+              href="/terms"
+              className="hover:text-white transition-colors duration-200"
+            >
+              Terms &amp; Conditions
+            </Link>
+            <span className="text-white/20" aria-hidden="true">·</span>
+            <Link
+              href="/cookies"
+              className="hover:text-white transition-colors duration-200"
+            >
+              Cookie Policy
+            </Link>
           </div>
         </div>
       </div>

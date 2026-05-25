@@ -3,13 +3,16 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { client } from '@/sanity/lib/client'
 import { siteSettingsQuery } from '@/sanity/lib/queries'
+import { buildMetadata } from '@/lib/metadata'
 
 export const revalidate = 60
 
-export const metadata: Metadata = {
-  title: 'Product Catalogue — Steel, Rebar & Hardware',
-  description: 'Browse BS 500-certified TMT rebar, steel billets, and hardware from Country Materials Limited. Contact us for pricing and bulk orders.',
-}
+export const metadata: Metadata = buildMetadata({
+  title: 'Product Catalog | Country Materials Ltd',
+  description:
+    'Browse BS 500B-certified TMT rebar, steel billets and hardware from Country Materials Ltd. Request pricing and bulk delivery across Tanzania.',
+  path: '/shop',
+})
 
 const PRODUCT_CATEGORIES = [
   {

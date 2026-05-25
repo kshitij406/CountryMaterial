@@ -3,7 +3,6 @@
 import { useEffect, useRef } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import gsap from 'gsap'
 
 interface HeroSectionProps {
   videoSrc?: string
@@ -31,25 +30,28 @@ export default function HeroSection({
 
   useEffect(() => {
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    const els = [locationRef, line1Ref, line2Ref, subRef, ctaRef, scrollRef]
+    const refs = [locationRef, line1Ref, line2Ref, subRef, ctaRef, scrollRef]
     if (prefersReduced) {
-      els.forEach((r) => {
+      refs.forEach((r) => {
         if (r.current) { r.current.style.opacity = '1'; r.current.style.transform = 'none' }
       })
       return
     }
 
-    const ctx = gsap.context(() => {
-      const tl = gsap.timeline({ defaults: { ease: 'power3.out' } })
-      tl.from(locationRef.current, { y: 20, opacity: 0, duration: 0.6 })
-        .from(line1Ref.current,    { y: 80, opacity: 0, duration: 1.0 }, '-=0.3')
-        .from(line2Ref.current,    { y: 80, opacity: 0, duration: 1.0 }, '-=0.7')
-        .from(subRef.current,      { y: 30, opacity: 0, duration: 0.7 }, '-=0.4')
-        .from(ctaRef.current,      { y: 20, opacity: 0, duration: 0.6 }, '-=0.4')
-        .from(scrollRef.current,   { opacity: 0, duration: 0.8 },        '-=0.2')
-    }, containerRef)
+    let ctx: { revert: () => void } | undefined
+    import('gsap').then(({ default: gsap }) => {
+      ctx = gsap.context(() => {
+        const tl = gsap.timeline({ defaults: { ease: 'power3.out' } })
+        tl.from(locationRef.current, { y: 20, opacity: 0, duration: 0.6 })
+          .from(line1Ref.current,    { y: 80, opacity: 0, duration: 1.0 }, '-=0.3')
+          .from(line2Ref.current,    { y: 80, opacity: 0, duration: 1.0 }, '-=0.7')
+          .from(subRef.current,      { y: 30, opacity: 0, duration: 0.7 }, '-=0.4')
+          .from(ctaRef.current,      { y: 20, opacity: 0, duration: 0.6 }, '-=0.4')
+          .from(scrollRef.current,   { opacity: 0, duration: 0.8 },        '-=0.2')
+      }, containerRef)
+    })
 
-    return () => ctx.revert()
+    return () => ctx?.revert()
   }, [])
 
   const bgImage = heroImageUrl ?? '/images/randos/molten_steel.jpeg'

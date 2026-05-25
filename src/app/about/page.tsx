@@ -3,11 +3,14 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { client } from '@/sanity/lib/client'
 import { aboutPageQuery } from '@/sanity/lib/queries'
+import { buildMetadata } from '@/lib/metadata'
 
-export const metadata: Metadata = {
-  title: 'About Country Materials Limited',
-  description: "Founded in 2022 in Dar es Salaam, Country Materials Limited built Tanzania's first fully integrated circular steel ecosystem.",
-}
+export const metadata: Metadata = buildMetadata({
+  title: 'About Us | Country Materials Ltd',
+  description:
+    "Learn how Country Materials Ltd built Tanzania's leading circular steel ecosystem — from informal scrap vendors to BS 500-certified rebar delivered nationwide.",
+  path: '/about',
+})
 
 export const revalidate = 60
 
@@ -18,39 +21,35 @@ const milestones = [
   { year: '2025', event: 'Expanded to 5 branches, 30+ fleet vehicles, $11.2M revenue, 5,000+ vendors digitised.' },
 ]
 
-const values = [
+const fallbackValues = [
   {
-    title: 'Circular First',
-    body: "Every tonne of steel we produce comes from recycled scrap. Sustainability isn't a marketing word here — it's the business model.",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" className="w-6 h-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg>
-    ),
+    title: 'People',
+    body: 'We exist to uplift the communities we serve by creating dignified employment, empowering scrap vendors, and building inclusive economic opportunities across the value chain.',
+    icon: '🤝',
   },
   {
-    title: 'Vendor First',
-    body: 'We built the network from the ground up — by paying fair prices, providing instant mobile money, and treating informal collectors as partners.',
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" className="w-6 h-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-    ),
+    title: 'Planet',
+    body: 'We are committed to transforming waste into value, reducing environmental harm, and building a business that improves lives while advancing a sustainable, circular future.',
+    icon: '🌍',
   },
   {
-    title: 'Quality Uncompromised',
-    body: 'BS 500B. TBS. ISO 9001. We certify every batch because the buildings this steel reinforces depend on it — and so do the people inside.',
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" className="w-6 h-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-    ),
-  },
-  {
-    title: 'Tanzania-Rooted',
-    body: 'Our team, our vendors, and our clients are Tanzanian. We reinvest in local communities and create skilled jobs across 5 regions.',
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" className="w-6 h-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>
-    ),
+    title: 'Partnership',
+    body: 'We believe lasting impact is built together. We collaborate with vendors, industry players, and communities to create trust, shared value, and scalable solutions.',
+    icon: '🔗',
   },
 ]
 
 export default async function AboutPage() {
   const about = await client.fetch(aboutPageQuery).catch(() => null)
+
+  type DisplayValue = { title: string; body: string; icon?: string | null }
+  const displayValues: DisplayValue[] = about?.values?.length
+    ? about.values.map((v: { title: string; description: string; icon?: string }) => ({
+        title: v.title,
+        body: v.description,
+        icon: v.icon ?? null,
+      }))
+    : fallbackValues
 
   return (
     <>
@@ -85,14 +84,14 @@ export default async function AboutPage() {
             <div className="p-10 sm:p-14 reveal" style={{ background: '#FAF7F2' }}>
               <p className="font-mono text-[10px] tracking-[0.2em] uppercase text-gold mb-6">Our Mission</p>
               <p className="font-black text-[clamp(20px,2.5vw,32px)] text-ink leading-tight">
-                {about?.mission ?? "To formalise Tanzania's scrap economy into a world-class circular steel supply chain that creates jobs, reduces waste, and builds the nation."}
+                {about?.mission ?? "We transform scrap metal into high-quality, certified steel, enabling affordable construction while empowering informal scrap vendors and driving sustainable industrial growth across Africa."}
               </p>
             </div>
 
             <div className="p-10 sm:p-14 reveal" style={{ background: '#F0E8DC' }}>
               <p className="font-mono text-[10px] tracking-[0.2em] uppercase text-gold mb-6">Our Vision</p>
               <p className="font-black text-[clamp(20px,2.5vw,32px)] text-ink leading-tight">
-                {about?.vision ?? "To be Africa's most trusted circular steel ecosystem — the model that other African nations replicate to build sustainable construction industries."}
+                {about?.vision ?? "To build Africa's most trusted circular steel ecosystem, making quality construction materials accessible while transforming waste into opportunity for millions."}
               </p>
             </div>
           </div>
@@ -158,11 +157,18 @@ export default async function AboutPage() {
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-px stagger" style={{ background: '#E8DED1' }}>
-            {values.map((v) => (
+          <div
+            className={`grid grid-cols-1 sm:grid-cols-2 gap-px stagger ${displayValues.length === 3 ? 'lg:grid-cols-3' : 'xl:grid-cols-4'}`}
+            style={{ background: '#E8DED1' }}
+          >
+            {displayValues.map((v) => (
               <div key={v.title} className="p-8 cursor-default" style={{ background: '#FAF7F2' }}>
                 <div className="w-10 h-10 flex items-center justify-center border border-gold/30 text-gold mb-6">
-                  {v.icon}
+                  {v.icon ? (
+                    <span className="text-xl leading-none">{v.icon}</span>
+                  ) : (
+                    <svg viewBox="0 0 24 24" fill="none" className="w-6 h-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+                  )}
                 </div>
                 <h3 className="font-black text-[18px] text-ink mb-3">{v.title}</h3>
                 <p className="text-[13.5px] text-slate/65 leading-relaxed">{v.body}</p>

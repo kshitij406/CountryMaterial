@@ -4,17 +4,16 @@ import { client } from '@/sanity/lib/client'
 import { openCareersQuery, siteSettingsQuery } from '@/sanity/lib/queries'
 import type { Career } from '@/types'
 import CtaBanner from '@/components/sections/CtaBanner'
+import { buildMetadata } from '@/lib/metadata'
 
 export const revalidate = 60
 
-export async function generateMetadata(): Promise<Metadata> {
-  const settings = await client.fetch(siteSettingsQuery).catch(() => null)
-  const company = settings?.companyName ?? 'Country Materials'
-  return {
-    title: 'Careers',
-    description: `Join the ${company} team. Explore open positions in logistics, hardware, waste management, and operations in ${settings?.city ?? 'Dar es Salaam'}.`,
-  }
-}
+export const metadata: Metadata = buildMetadata({
+  title: 'Careers | Country Materials Ltd',
+  description:
+    "Join Country Materials Ltd in Dar es Salaam. Open roles across logistics, waste management, sales and technology in Tanzania's growing circular steel sector.",
+  path: '/careers',
+})
 
 const fallbackJobs: Career[] = [
   {

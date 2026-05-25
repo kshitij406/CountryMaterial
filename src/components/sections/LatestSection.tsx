@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import Link from 'next/link'
 
 interface Post {
@@ -85,7 +86,7 @@ export default function LatestSection({ announcement, posts }: LatestSectionProp
             {/* Background image */}
             {ann.imageUrl ? (
               <div className="absolute inset-0">
-                <img src={ann.imageUrl} alt="Country Materials factory" className="w-full h-full object-cover" />
+                <Image src={ann.imageUrl!} alt="Country Materials factory" fill className="object-cover" />
                 <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(15,30,45,.95) 0%, rgba(15,30,45,.75) 50%, rgba(15,30,45,.55) 100%)' }} />
               </div>
             ) : (
@@ -170,10 +171,11 @@ export default function LatestSection({ announcement, posts }: LatestSectionProp
                 >
                   {post.coverImageUrl && (
                     <div className="relative h-40 overflow-hidden">
-                      <img
-                        src={post.coverImageUrl}
+                      <Image
+                        src={post.coverImageUrl!}
                         alt={post.title}
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        fill
+                        className="object-cover transition-transform duration-500 group-hover:scale-105"
                       />
                       <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(23,40,56,.5) 0%, transparent 60%)' }} />
                     </div>

@@ -4,8 +4,6 @@
 
 @layer base {
   :root {
-    --font-jakarta:    'Plus Jakarta Sans', system-ui, sans-serif;
-    --font-space-mono: 'Space Mono', monospace;
     --ease-industrial: cubic-bezier(0.16, 1, 0.3, 1);
     --ease-smooth:     cubic-bezier(0.4, 0, 0.2, 1);
   }
@@ -64,6 +62,24 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+/* ─── Cookie banner slide-up ──────────────────────────────────────────────── */
+@keyframes cookieSlideUp {
+  from { transform: translateY(100%); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+.cookie-banner {
+  animation: cookieSlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* ─── 404 fade-in ─────────────────────────────────────────────────────────── */
+@keyframes notFoundFade {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.not-found-fade {
+  animation: notFoundFade 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 /* ─── Navbar scroll state ─────────────────────────────────────────────────── */
