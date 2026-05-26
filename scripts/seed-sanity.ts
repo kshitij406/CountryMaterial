@@ -61,7 +61,6 @@ const siteSettings = {
     twitter: 'https://x.com/countrymaterials',
   },
   erpIntegration: {
-    catalogUrl: 'https://comal-group.com/thlcatalog/1/4/',
     catalogLabel: 'View Full Catalog',
     erpApiEnabled: false,
   },

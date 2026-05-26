@@ -1,8 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import Image from 'next/image'
-import { client } from '@/sanity/lib/client'
-import { siteSettingsQuery } from '@/sanity/lib/queries'
+import { getSiteSettings } from '@/sanity/lib/queries'
 import { buildMetadata } from '@/lib/metadata'
 
 export const revalidate = 60
@@ -60,7 +59,9 @@ const PRODUCT_CATEGORIES = [
 ]
 
 export default async function ShopPage() {
-  await client.fetch(siteSettingsQuery).catch(() => null)
+  const siteSettings = await getSiteSettings().catch(() => null)
+  const catalogUrl   = siteSettings?.erpIntegration?.catalogUrl ?? null
+  const catalogLabel = siteSettings?.erpIntegration?.catalogLabel ?? 'View Price List'
 
   return (
     <>
@@ -110,6 +111,41 @@ export default async function ShopPage() {
           </div>
         </div>
       </div>
+
+      {/* ERP catalog banner — only rendered when catalogUrl is set in siteSettings */}
+      {catalogUrl && (
+        <div
+          style={{
+            background: '#07121F',
+            borderTop: '1px solid rgba(200,150,46,0.2)',
+            borderBottom: '1px solid rgba(200,150,46,0.2)',
+          }}
+        >
+          <div className="max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16 py-10 flex flex-col sm:flex-row sm:items-center gap-6 sm:gap-12">
+            <div className="flex-1 min-w-0">
+              <p className="font-mono text-[10px] tracking-[0.22em] uppercase mb-2" style={{ color: '#C8962E' }}>
+                ERP Price List
+              </p>
+              <h2 className="font-black text-[clamp(18px,2vw,26px)] text-white leading-tight mb-2">
+                Looking for our latest price list?
+              </h2>
+              <p className="text-[13.5px] leading-relaxed" style={{ color: 'rgba(255,255,255,0.45)' }}>
+                Our full product catalog with current pricing is available via our ERP system and updated weekly.
+              </p>
+            </div>
+            <a
+              href={catalogUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex-shrink-0 inline-flex items-center gap-2 font-bold text-[13px] px-7 py-3.5 transition-colors duration-200"
+              style={{ background: '#C8962E', color: '#07121F' }}
+            >
+              {catalogLabel}
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            </a>
+          </div>
+        </div>
+      )}
 
       {/* Editorial product category sections */}
       {PRODUCT_CATEGORIES.map((cat, i) => {
@@ -276,6 +312,17 @@ export default async function ShopPage() {
               <a href="tel:+255768500555" className="inline-flex items-center gap-2 border border-white/20 hover:border-white/40 text-white font-semibold text-[15px] px-8 py-4 transition-all duration-200 cursor-pointer">
                 +255 768 500 555
               </a>
+              {catalogUrl && (
+                <a
+                  href={catalogUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 border border-white/20 hover:border-white/40 text-white/70 hover:text-white font-semibold text-[15px] px-8 py-4 transition-all duration-200 cursor-pointer"
+                >
+                  {catalogLabel}
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                </a>
+              )}
             </div>
           </div>
         </div>

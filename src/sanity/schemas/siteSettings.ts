@@ -68,7 +68,7 @@ export const siteSettings = defineType({
           name: 'catalogUrl',
           title: 'Product Catalog URL',
           type: 'url',
-          description: 'Link to the ERP-generated product catalog (e.g. https://comal-group.com/thlcatalog/1/4/). Update this whenever the ERP generates a new catalog link.',
+          description: 'Link to the ERP-generated product catalog. Update this whenever the ERP generates a new catalog link.',
         }),
         defineField({
           name: 'catalogLabel',
