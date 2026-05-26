@@ -1,4 +1,5 @@
 import groq from 'groq'
+import { client } from './client'
 
 export const siteSettingsQuery = groq`
   *[_type == "siteSettings"][0] {
@@ -17,7 +18,12 @@ export const siteSettingsQuery = groq`
     shopPageTitle,
     shopPageSubtitle,
     socialLinks,
-    erpIntegration
+    erpIntegration {
+      catalogUrl,
+      catalogLabel,
+      erpApiEnabled,
+      erpLastSyncedAt
+    }
   }
 `
 
@@ -255,3 +261,17 @@ export const impactPageQuery = groq`
     impactStories, sdgGoals
   }
 `
+
+// ── Tagged fetch helpers (Next.js App Router cache tagging) ───────────────────
+
+export function getSiteSettings() {
+  return client.fetch(siteSettingsQuery, {}, { next: { tags: ['siteSettings'] } })
+}
+
+export function getProducts() {
+  return client.fetch(allProductsQuery, {}, { next: { tags: ['products'] } })
+}
+
+export function getProductCategories() {
+  return client.fetch(productCategoriesQuery, {}, { next: { tags: ['products'] } })
+}

@@ -1,3 +1,32 @@
+export interface SiteSettings {
+  companyName?: string
+  founded?: number
+  logo?: { asset?: { _ref: string } }
+  phone?: string
+  email?: string
+  whatsapp?: string
+  address?: string
+  poBox?: string
+  city?: string
+  country?: string
+  regions?: string[]
+  businessHours?: string
+  shopPageTitle?: string
+  shopPageSubtitle?: string
+  socialLinks?: {
+    facebook?: string
+    twitter?: string
+    instagram?: string
+    linkedin?: string
+  }
+  erpIntegration?: {
+    catalogUrl?: string
+    catalogLabel?: string
+    erpApiEnabled?: boolean
+    erpLastSyncedAt?: string
+  }
+}
+
 export interface Career {
   _id: string
   title: string
