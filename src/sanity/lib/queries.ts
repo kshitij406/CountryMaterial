@@ -16,7 +16,8 @@ export const siteSettingsQuery = groq`
     businessHours,
     shopPageTitle,
     shopPageSubtitle,
-    socialLinks
+    socialLinks,
+    erpIntegration
   }
 `
 

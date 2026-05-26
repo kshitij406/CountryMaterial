@@ -59,6 +59,40 @@ export const siteSettings = defineType({
         defineField({ name: 'linkedin', title: 'LinkedIn URL', type: 'url' }),
       ],
     }),
+    defineField({
+      name: 'erpIntegration',
+      title: 'ERP & Catalog Integration',
+      type: 'object',
+      fields: [
+        defineField({
+          name: 'catalogUrl',
+          title: 'Product Catalog URL',
+          type: 'url',
+          description: 'Link to the ERP-generated product catalog (e.g. https://comal-group.com/thlcatalog/1/4/). Update this whenever the ERP generates a new catalog link.',
+        }),
+        defineField({
+          name: 'catalogLabel',
+          title: 'Catalog Button Label',
+          type: 'string',
+          initialValue: 'View Full Catalog',
+          description: 'The label shown on the catalog CTA button.',
+        }),
+        defineField({
+          name: 'erpApiEnabled',
+          title: 'ERP API Sync Enabled',
+          type: 'boolean',
+          initialValue: false,
+          description: 'When enabled, product data will be pulled from the ERP API instead of manually entered Sanity records.',
+        }),
+        defineField({
+          name: 'erpLastSyncedAt',
+          title: 'Last ERP Sync',
+          type: 'datetime',
+          readOnly: true,
+          description: 'Timestamp of the last successful ERP data sync. Updated automatically.',
+        }),
+      ],
+    }),
   ],
   preview: {
     select: { title: 'companyName' },
