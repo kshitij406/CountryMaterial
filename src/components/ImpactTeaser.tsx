@@ -8,8 +8,8 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 interface Props {
   tonnesRecycled: number
   co2AvoidedTonnes: number
-  jobsCreated: number
-  landfillDivertedM3: number
+  vendorsOnboarded: number
+  activeClients: number
 }
 
 function fmt(n: number): string {
@@ -19,17 +19,17 @@ function fmt(n: number): string {
 export default function ImpactTeaser({
   tonnesRecycled,
   co2AvoidedTonnes,
-  jobsCreated,
-  landfillDivertedM3,
+  vendorsOnboarded,
+  activeClients,
 }: Props) {
   const sectionRef = useRef<HTMLElement>(null)
   const numRefs = useRef<(HTMLSpanElement | null)[]>([])
 
   const items = [
-    { label: 'Tonnes Recycled',   value: tonnesRecycled,    suffix: 't'    },
-    { label: 'CO₂ Avoided',       value: co2AvoidedTonnes,  suffix: 't CO₂' },
-    { label: 'Jobs Supported',    value: jobsCreated,        suffix: ''     },
-    { label: 'Landfill Diverted', value: landfillDivertedM3, suffix: 'm³'  },
+    { label: 'Tonnes Recycled',    value: tonnesRecycled,   suffix: '+'     },
+    { label: 'CO₂ Avoided',        value: co2AvoidedTonnes, suffix: 't CO₂' },
+    { label: 'Vendors Onboarded',  value: vendorsOnboarded, suffix: '+'     },
+    { label: 'Active Clients',     value: activeClients,    suffix: '+'     },
   ]
 
   useEffect(() => {
@@ -60,7 +60,7 @@ export default function ImpactTeaser({
       ScrollTrigger.getAll().forEach((t) => t.kill())
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [tonnesRecycled, co2AvoidedTonnes, jobsCreated, landfillDivertedM3])
+  }, [tonnesRecycled, co2AvoidedTonnes, vendorsOnboarded, activeClients])
 
   return (
     <section
@@ -141,6 +141,13 @@ export default function ImpactTeaser({
             </div>
           ))}
         </div>
+
+        <p
+          className="mt-5 font-mono text-[10px] tracking-[0.14em] uppercase"
+          style={{ color: 'rgba(136,150,167,0.6)' }}
+        >
+          CO₂ figure calculated from verified recycling volume · World Steel Association conversion factors
+        </p>
       </div>
     </section>
   )

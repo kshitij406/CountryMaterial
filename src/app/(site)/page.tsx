@@ -65,8 +65,8 @@ export default async function HomePage() {
       <ImpactTeaser
         tonnesRecycled={impact.tonnesRecycled}
         co2AvoidedTonnes={impact.co2AvoidedTonnes}
-        jobsCreated={impact.jobsCreated}
-        landfillDivertedM3={impact.landfillDivertedM3}
+        vendorsOnboarded={5000}
+        activeClients={320}
       />
 
       <ProductsGrid products={hp?.featuredProducts ?? undefined} />

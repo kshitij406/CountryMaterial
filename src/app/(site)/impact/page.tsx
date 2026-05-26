@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   ...buildMetadata({
     title: 'Climate & Social Impact | Country Materials Ltd',
     description:
-      "Discover how Country Materials Ltd's circular model avoids 92,500 tonnes of CO₂, diverts 28,500 m³ from landfill and supports 750 livelihoods in Tanzania.",
+      "Country Materials Ltd has recycled 50,000+ metric tonnes of scrap steel, avoiding 92,500 tonnes of CO₂, onboarding 5,000+ vendors and creating 104 direct jobs in Tanzania.",
     path: '/impact',
   }),
   keywords: ['recycling Tanzania', 'CO2 emissions', 'waste management Dar es Salaam', 'ESG'],
@@ -28,69 +28,16 @@ export const metadata: Metadata = {
 
 // UN SDG official colour palette
 const SDG_META: Record<string, { bg: string; label: string }> = {
-  '1':  { bg: '#E5243B', label: 'No Poverty' },
-  '2':  { bg: '#DDA63A', label: 'Zero Hunger' },
-  '3':  { bg: '#4C9F38', label: 'Good Health & Well-Being' },
-  '4':  { bg: '#C5192D', label: 'Quality Education' },
-  '5':  { bg: '#FF3A21', label: 'Gender Equality' },
-  '6':  { bg: '#26BDE2', label: 'Clean Water & Sanitation' },
-  '7':  { bg: '#FCC30B', label: 'Affordable & Clean Energy' },
   '8':  { bg: '#A21942', label: 'Decent Work & Economic Growth' },
-  '9':  { bg: '#FD6925', label: 'Industry, Innovation & Infrastructure' },
-  '10': { bg: '#DD1367', label: 'Reduced Inequalities' },
   '11': { bg: '#FD9D24', label: 'Sustainable Cities & Communities' },
   '12': { bg: '#BF8B2E', label: 'Responsible Consumption & Production' },
   '13': { bg: '#3F7E44', label: 'Climate Action' },
-  '14': { bg: '#0A97D9', label: 'Life Below Water' },
-  '15': { bg: '#56C02B', label: 'Life on Land' },
-  '16': { bg: '#00689D', label: 'Peace, Justice & Strong Institutions' },
-  '17': { bg: '#19486A', label: 'Partnerships for the Goals' },
 }
+
+const VERIFIED_SDG_GOALS = ['8', '11', '12', '13']
 
 function fmt(n: number, decimals = 0): string {
   return n.toLocaleString('en-US', { maximumFractionDigits: decimals })
-}
-
-function CircleArc({ pct, label }: { pct: number; label: string }) {
-  // CSS-only donut using conic-gradient — no chart library
-  return (
-    <div className="flex flex-col items-center gap-4">
-      <div className="relative" style={{ width: 112, height: 112 }}>
-        {/* Outer ring */}
-        <div
-          aria-hidden="true"
-          style={{
-            width: 112,
-            height: 112,
-            borderRadius: '50%',
-            background: `conic-gradient(#C8962E ${pct}%, #E8DED1 0%)`,
-          }}
-        />
-        {/* Inner donut mask */}
-        <div
-          style={{
-            position: 'absolute',
-            inset: 14,
-            borderRadius: '50%',
-            background: '#FAF7F2',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          <span
-            className="font-mono font-bold"
-            style={{ fontSize: 16, color: '#1A1A2E' }}
-          >
-            {pct}%
-          </span>
-        </div>
-      </div>
-      <p className="text-[13px] font-semibold text-center" style={{ color: '#2C3E50', maxWidth: 100 }}>
-        {label}
-      </p>
-    </div>
-  )
 }
 
 interface ImpactStory {
@@ -101,7 +48,6 @@ interface ImpactStory {
   icon?: string
 }
 
-// Icon glyphs by key — CSS-drawn SVG, no icon library; falls back to emoji if icon is not a known key
 function StoryIcon({ icon }: { icon?: string }) {
   if (icon === 'co2') return (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6" aria-hidden="true">
@@ -122,12 +68,24 @@ function StoryIcon({ icon }: { icon?: string }) {
       <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
     </svg>
   )
+  if (icon === 'vendors') return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6" aria-hidden="true">
+      <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+      <polyline points="9 22 9 12 15 12 15 22" />
+    </svg>
+  )
+  if (icon === 'clients') return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6" aria-hidden="true">
+      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+      <circle cx="9" cy="7" r="4" />
+      <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
+    </svg>
+  )
   if (icon === 'energy') return (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6" aria-hidden="true">
       <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
     </svg>
   )
-  // Emoji or any other string — render directly
   if (icon) return <span className="text-xl leading-none" aria-hidden="true">{icon}</span>
   return (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6" aria-hidden="true">
@@ -137,31 +95,41 @@ function StoryIcon({ icon }: { icon?: string }) {
   )
 }
 
+// Fallback impact stories — shown when Sanity has no data
+const FALLBACK_STORIES: ImpactStory[] = [
+  { _key: 'f1', stat: '50,000+', label: 'Metric Tons Recycled',  icon: 'energy',  description: 'Scrap steel collected, processed and returned to the supply chain since 2022.' },
+  { _key: 'f2', stat: '5,000+',  label: 'Vendors Onboarded',    icon: 'vendors', description: 'Informal collectors and scrap dealers integrated into a formal circular supply chain.' },
+  { _key: 'f3', stat: '320+',    label: 'Active Clients',        icon: 'clients', description: 'Construction companies, contractors and hardware dealers served across Tanzania.' },
+  { _key: 'f4', stat: '104',     label: 'Jobs Created',          icon: 'jobs',    description: 'Direct employment generated at our facility and logistics operations in Dar es Salaam.' },
+]
+
 export default async function ImpactPage() {
   const raw = await client.fetch(impactPageQuery).catch(() => null)
 
-  const tonnesRecycled = raw?.tonnesRecycled ?? 0
-  const reportingYear = raw?.reportingYear ?? new Date().getFullYear()
+  const tonnesRecycled = raw?.tonnesRecycled ?? 50000
+  const reportingYear  = raw?.reportingYear  ?? new Date().getFullYear()
 
   const impact = calculateImpact(tonnesRecycled, reportingYear, raw?.manualOverrides ?? undefined)
 
   const heroHeading = raw?.heroHeading ?? 'Turning Scrap\nInto a Better Future'
   const headingLines = heroHeading.replace(/\\n/g, '\n').split('\n')
 
+  // Verified + calculated metrics only — no fabricated estimates
   const metrics = [
-    { label: 'Tonnes Recycled',   value: fmt(impact.tonnesRecycled),      unit: 'metric tonnes'  },
-    { label: 'CO₂ Avoided',       value: fmt(impact.co2AvoidedTonnes),    unit: 'tonnes CO₂'    },
-    { label: 'Landfill Diverted', value: fmt(impact.landfillDivertedM3),  unit: 'm³'             },
-    { label: 'Energy Saved',      value: fmt(impact.energySavedKwh),      unit: 'kWh'            },
-    { label: 'Jobs Supported',    value: fmt(impact.jobsCreated),          unit: 'livelihoods'    },
-    { label: 'Reporting Year',    value: String(impact.reportingYear),     unit: 'fiscal year'    },
+    { label: 'Tonnes Recycled',   value: `${fmt(impact.tonnesRecycled)}+`,   unit: 'metric tonnes'  },
+    { label: 'CO₂ Avoided',       value: fmt(impact.co2AvoidedTonnes),       unit: 'tonnes CO₂'    },
+    { label: 'Landfill Diverted', value: fmt(impact.landfillDivertedM3),     unit: 'm³'             },
+    { label: 'Energy Saved',      value: fmt(impact.energySavedKwh),         unit: 'kWh'            },
+    { label: 'Jobs Created',      value: '104',                               unit: 'direct jobs'    },
+    { label: 'Vendors Onboarded', value: '5,000+',                            unit: 'supply partners' },
   ]
 
-  const impactStories: ImpactStory[] = raw?.impactStories ?? []
-  const sdgGoals: string[] = raw?.sdgGoals ?? []
+  // Use Sanity stories if present, otherwise fall back to the verified set
+  const rawStories: ImpactStory[] = raw?.impactStories ?? []
+  const impactStories = rawStories.length > 0 ? rawStories : FALLBACK_STORIES
 
-  const womenPct = impact.womenParticipationPct
-  const youthPct = impact.youthParticipationPct
+  // SDG goals — only claim goals with verified supporting data
+  const sdgGoals: string[] = raw?.sdgGoals ?? VERIFIED_SDG_GOALS
 
   return (
     <>
@@ -171,7 +139,6 @@ export default async function ImpactPage() {
         style={{ background: '#0B1D3A' }}
         aria-label="Impact hero"
       >
-        {/* Subtle rebar grid texture */}
         <div
           className="absolute inset-0 pointer-events-none"
           aria-hidden="true"
@@ -183,7 +150,6 @@ export default async function ImpactPage() {
         />
 
         <div className="relative max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16">
-          {/* Eyebrow */}
           <p
             className="reveal font-mono text-[11px] tracking-[0.22em] uppercase mb-6"
             style={{ color: '#C8962E' }}
@@ -191,7 +157,6 @@ export default async function ImpactPage() {
             Climate & Social Impact — {reportingYear}
           </p>
 
-          {/* Heading */}
           <h1 className="reveal font-black text-[clamp(42px,7vw,96px)] leading-[0.94] tracking-tight text-white mb-6">
             {headingLines.map((line: string, i: number) =>
               i === 0 ? (
@@ -209,7 +174,6 @@ export default async function ImpactPage() {
             aria-hidden="true"
           />
 
-          {/* Subtitle */}
           {raw?.heroSubtitle && (
             <p
               className="reveal text-[16px] leading-relaxed max-w-2xl mb-14"
@@ -219,12 +183,12 @@ export default async function ImpactPage() {
             </p>
           )}
 
-          {/* Three headline stats */}
+          {/* Three verified headline stats */}
           <div className="reveal grid grid-cols-3 gap-6 max-w-2xl" style={{ borderTop: '1px solid rgba(200,150,46,0.15)' }}>
             {[
-              { label: 'CO₂ Avoided',       value: `${fmt(impact.co2AvoidedTonnes)}t`   },
-              { label: 'Tonnes Recycled',   value: `${fmt(impact.tonnesRecycled)}`         },
-              { label: 'Jobs Supported',    value: fmt(impact.jobsCreated)                  },
+              { label: 'CO₂ Avoided',       value: `${fmt(impact.co2AvoidedTonnes)}t` },
+              { label: 'Tonnes Recycled',   value: `${fmt(impact.tonnesRecycled)}+`    },
+              { label: 'Jobs Created',      value: '104'                                },
             ].map((s) => (
               <div key={s.label} className="pt-6">
                 <p
@@ -242,7 +206,7 @@ export default async function ImpactPage() {
         </div>
       </section>
 
-      {/* ── 2. Primary Metrics Grid (GSAP stagger) ──────────────────────────── */}
+      {/* ── 2. Primary Metrics Grid ──────────────────────────────────────────── */}
       <section
         className="py-20 sm:py-28"
         style={{ background: '#FAF7F2' }}
@@ -259,12 +223,12 @@ export default async function ImpactPage() {
           </div>
           <ImpactMetricsGrid metrics={metrics} />
           <p className="mt-6 font-mono text-[11px] tracking-[0.14em] uppercase" style={{ color: '#8896A7' }}>
-            Based on {fmt(impact.tonnesRecycled)} metric tonnes recycled · FY {reportingYear}
+            CO₂, landfill & energy figures calculated from {fmt(impact.tonnesRecycled)}+ metric tonnes · World Steel Association / EPA conversion factors · FY {reportingYear}
           </p>
         </div>
       </section>
 
-      {/* ── 3. Social Impact ─────────────────────────────────────────────────── */}
+      {/* ── 3. People & Community ────────────────────────────────────────────── */}
       <section
         className="py-20 sm:py-28"
         style={{ background: '#0B1D3A' }}
@@ -280,52 +244,57 @@ export default async function ImpactPage() {
             </h2>
           </div>
 
-          {/* Circular arc indicators */}
-          {(womenPct > 0 || youthPct > 0) && (
-            <div className="flex flex-wrap gap-12 mb-16 reveal">
-              {womenPct > 0 && <CircleArc pct={womenPct} label="Women Participation" />}
-              {youthPct > 0 && <CircleArc pct={youthPct} label="Youth Participation (Under 35)" />}
-            </div>
-          )}
+          {/* Women & youth — narrative only, no unverified percentages */}
+          <div
+            className="reveal mb-16 pl-5 py-5 pr-6 max-w-2xl"
+            style={{
+              background: '#FAF7F2',
+              borderLeft: '4px solid #C8962E',
+            }}
+          >
+            <p className="italic text-[15px] leading-relaxed" style={{ color: '#4A5568' }}>
+              At Country Materials, women make up a significant part of our vendor network and workforce.
+              We are actively tracking gender and youth participation data and will publish verified
+              figures in our 2025 Impact Report.
+            </p>
+          </div>
 
-          {/* Impact stories */}
-          {impactStories.length > 0 && (
-            <div className="overflow-x-auto -mx-6 px-6 sm:overflow-visible sm:mx-0 sm:px-0">
-              <div className="flex sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 min-w-max sm:min-w-0 stagger">
-                {impactStories.map((story) => (
+          {/* Verified impact story cards */}
+          <div className="overflow-x-auto -mx-6 px-6 sm:overflow-visible sm:mx-0 sm:px-0">
+            <div className="flex sm:grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 min-w-max sm:min-w-0 stagger">
+              {impactStories.map((story) => (
+                <div
+                  key={story._key}
+                  className="w-[76vw] sm:w-auto flex-shrink-0 sm:flex-shrink p-6 sm:p-8"
+                  style={{
+                    background: 'rgba(255,255,255,0.04)',
+                    border: '1px solid rgba(200,150,46,0.18)',
+                  }}
+                >
                   <div
-                    key={story._key}
-                    className="w-[76vw] sm:w-auto flex-shrink-0 sm:flex-shrink p-6 sm:p-8"
-                    style={{
-                      background: 'rgba(255,255,255,0.04)',
-                      border: '1px solid rgba(200,150,46,0.18)',
-                    }}
+                    className="w-10 h-10 flex items-center justify-center mb-5"
+                    style={{ border: '1px solid rgba(200,150,46,0.3)', color: '#C8962E' }}
                   >
-                    <div
-                      className="w-10 h-10 flex items-center justify-center mb-5"
-                      style={{ border: '1px solid rgba(200,150,46,0.3)', color: '#C8962E' }}
-                    >
-                      <StoryIcon icon={story.icon} />
-                    </div>
-                    <p
-                      className="font-mono font-bold text-[clamp(24px,3vw,40px)] leading-none mb-1"
-                      style={{ color: '#C8962E' }}
-                    >
-                      {story.stat}
-                    </p>
-                    <p className="font-semibold text-[13px] uppercase tracking-wide text-white mb-3">
-                      {story.label}
-                    </p>
-                    {story.description && (
-                      <p className="text-[13.5px] leading-relaxed" style={{ color: '#8896A7' }}>
-                        {story.description}
-                      </p>
-                    )}
+                    <StoryIcon icon={story.icon} />
                   </div>
-                ))}
-              </div>
+                  <p
+                    className="font-mono font-bold text-[clamp(24px,3vw,40px)] leading-none mb-1"
+                    style={{ color: '#C8962E' }}
+                  >
+                    {story.stat}
+                  </p>
+                  <p className="font-semibold text-[13px] uppercase tracking-wide text-white mb-3">
+                    {story.label}
+                  </p>
+                  {story.description && (
+                    <p className="text-[13.5px] leading-relaxed" style={{ color: '#8896A7' }}>
+                      {story.description}
+                    </p>
+                  )}
+                </div>
+              ))}
             </div>
-          )}
+          </div>
         </div>
       </section>
 
@@ -353,10 +322,7 @@ export default async function ImpactPage() {
                   <div
                     key={goal}
                     className="flex items-center gap-3 px-5 py-3"
-                    style={{
-                      background: meta.bg,
-                      borderRadius: 2,
-                    }}
+                    style={{ background: meta.bg, borderRadius: 2 }}
                   >
                     <span
                       className="font-mono font-bold text-white text-[22px] leading-none"
@@ -381,27 +347,29 @@ export default async function ImpactPage() {
       )}
 
       {/* ── 5. Methodology footnote ──────────────────────────────────────────── */}
-      {raw?.methodologyNote && (
-        <section
-          className="py-14 sm:py-20"
-          style={{ background: '#FAF7F2' }}
-          aria-label="Methodology"
-        >
-          <div className="max-w-2xl mx-auto px-6 sm:px-10">
-            <div
-              className="pl-5 py-1"
-              style={{ borderLeft: '3px solid #C8962E' }}
-            >
-              <p className="font-mono text-[11px] tracking-[0.18em] uppercase mb-3" style={{ color: '#C8962E' }}>
-                Methodology
-              </p>
-              <p className="text-[13px] italic leading-relaxed" style={{ color: '#8896A7' }}>
-                {raw.methodologyNote}
-              </p>
-            </div>
+      <section
+        className="py-14 sm:py-20"
+        style={{ background: '#FAF7F2' }}
+        aria-label="Methodology"
+      >
+        <div className="max-w-2xl mx-auto px-6 sm:px-10">
+          <div
+            className="pl-5 py-1"
+            style={{ borderLeft: '3px solid #C8962E' }}
+          >
+            <p className="font-mono text-[11px] tracking-[0.18em] uppercase mb-3" style={{ color: '#C8962E' }}>
+              Methodology
+            </p>
+            <p className="text-[13px] italic leading-relaxed" style={{ color: '#8896A7' }}>
+              {raw?.methodologyNote ??
+                'CO₂ avoided calculated at 1.85 tonnes CO₂ per tonne of scrap recycled (World Steel Association, 2023). ' +
+                'Landfill diversion calculated at 0.57 m³ per tonne (US EPA). ' +
+                'Energy savings calculated at 642 kWh per tonne (World Steel Association). ' +
+                'Vendor, client and employment figures are verified company records as of FY ' + reportingYear + '.'}
+            </p>
           </div>
-        </section>
-      )}
+        </div>
+      </section>
     </>
   )
 }

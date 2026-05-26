@@ -48,7 +48,21 @@
       "WebFetch(domain:www.countrymaterials.co.tz)",
       "WebFetch(domain:countrymaterials.co.tz)",
       "WebFetch(domain:www.countrymaterials.com)",
-      "WebFetch(domain:countrymaterial.com)"
+      "WebFetch(domain:countrymaterial.com)",
+      "Bash(python3 *)",
+      "Bash(pnpm dev *)",
+      "Bash(pkill -f \"next dev\")",
+      "Bash(pnpm exec *)",
+      "Bash(pnpm start *)",
+      "Bash(echo \"Server PID: $!\")",
+      "Bash(lsof -i :3000 -sTCP:LISTEN)",
+      "Bash(kill 109314)",
+      "Bash(echo \"PID: $!\")",
+      "Bash(identify /home/kxitiz/Coding/CountryMaterial/public/images/company/group-photo.jpg)",
+      "Bash(pkill -f \"next start\")",
+      "Bash(pkill -f \"node.*next\")",
+      "Bash(fuser -k 3000/tcp)",
+      "Bash(pnpm test *)"
     ]
   }
 }

@@ -8,8 +8,6 @@ export interface ImpactOverrides {
   co2Avoided?: number
   landfillDiverted?: number
   jobsCreated?: number
-  womenParticipation?: number
-  youthParticipation?: number
 }
 
 export interface ImpactResult {
@@ -19,8 +17,6 @@ export interface ImpactResult {
   landfillDivertedM3: number
   energySavedKwh: number
   jobsCreated: number
-  womenParticipationPct: number
-  youthParticipationPct: number
   reportingYear: number
 }
 
@@ -46,8 +42,6 @@ export function calculateImpact(
     landfillDivertedM3,
     energySavedKwh,
     jobsCreated,
-    womenParticipationPct: overrides?.womenParticipation ?? 0,
-    youthParticipationPct: overrides?.youthParticipation ?? 0,
     reportingYear,
   }
 }
