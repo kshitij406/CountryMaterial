@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import dynamic from 'next/dynamic'
 import { client } from '@/sanity/lib/client'
 import { impactPageQuery } from '@/sanity/lib/queries'
@@ -26,12 +27,27 @@ export const metadata: Metadata = {
   keywords: ['recycling Tanzania', 'CO2 emissions', 'waste management Dar es Salaam', 'ESG'],
 }
 
-// UN SDG official colour palette
-const SDG_META: Record<string, { bg: string; label: string }> = {
-  '8':  { bg: '#A21942', label: 'Decent Work & Economic Growth' },
-  '11': { bg: '#FD9D24', label: 'Sustainable Cities & Communities' },
-  '12': { bg: '#BF8B2E', label: 'Responsible Consumption & Production' },
-  '13': { bg: '#3F7E44', label: 'Climate Action' },
+const SDG_META: Record<string, { bg: string; label: string; description: string }> = {
+  '8':  {
+    bg: '#A21942',
+    label: 'Decent Work & Economic Growth',
+    description: 'We create 104+ direct jobs and bring thousands of informal vendors into Tanzania\'s formal economy through our mobile platform.',
+  },
+  '11': {
+    bg: '#FD9D24',
+    label: 'Sustainable Cities & Communities',
+    description: 'BS 500-certified rebar delivered to construction sites nationwide supports the affordable, durable infrastructure Tanzania\'s cities need.',
+  },
+  '12': {
+    bg: '#BF8B2E',
+    label: 'Responsible Consumption & Production',
+    description: 'Our circular model transforms scrap into certified steel — eliminating waste, reducing virgin ore demand, and closing the supply chain loop.',
+  },
+  '13': {
+    bg: '#3F7E44',
+    label: 'Climate Action',
+    description: 'Recycling steel avoids 1.85 tonnes of CO₂ per tonne processed. We\'ve kept over 92,500 tonnes of CO₂ out of the atmosphere and counting.',
+  },
 }
 
 const VERIFIED_SDG_GOALS = ['8', '11', '12', '13']
@@ -48,59 +64,11 @@ interface ImpactStory {
   icon?: string
 }
 
-function StoryIcon({ icon }: { icon?: string }) {
-  if (icon === 'co2') return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6" aria-hidden="true">
-      <path d="M12 22C6.48 22 2 17.52 2 12S6.48 2 12 2s10 4.48 10 10" />
-      <path d="M15 9.5A3.5 3.5 0 0 0 8 12a3.5 3.5 0 0 0 3.5 3.5" />
-      <path d="M17 16h4M19 14v4" />
-    </svg>
-  )
-  if (icon === 'landfill') return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6" aria-hidden="true">
-      <path d="M3 6h18M3 12h18M3 18h18" />
-    </svg>
-  )
-  if (icon === 'jobs') return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6" aria-hidden="true">
-      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-      <circle cx="9" cy="7" r="4" />
-      <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
-    </svg>
-  )
-  if (icon === 'vendors') return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6" aria-hidden="true">
-      <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-      <polyline points="9 22 9 12 15 12 15 22" />
-    </svg>
-  )
-  if (icon === 'clients') return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6" aria-hidden="true">
-      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-      <circle cx="9" cy="7" r="4" />
-      <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
-    </svg>
-  )
-  if (icon === 'energy') return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6" aria-hidden="true">
-      <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
-    </svg>
-  )
-  if (icon) return <span className="text-xl leading-none" aria-hidden="true">{icon}</span>
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6" aria-hidden="true">
-      <circle cx="12" cy="12" r="10" />
-      <path d="M12 8v4M12 16h.01" />
-    </svg>
-  )
-}
-
-// Fallback impact stories — shown when Sanity has no data
 const FALLBACK_STORIES: ImpactStory[] = [
-  { _key: 'f1', stat: '50,000+', label: 'Metric Tons Recycled',  icon: 'energy',  description: 'Scrap steel collected, processed and returned to the supply chain since 2022.' },
-  { _key: 'f2', stat: '5,000+',  label: 'Vendors Onboarded',    icon: 'vendors', description: 'Informal collectors and scrap dealers integrated into a formal circular supply chain.' },
-  { _key: 'f3', stat: '320+',    label: 'Active Clients',        icon: 'clients', description: 'Construction companies, contractors and hardware dealers served across Tanzania.' },
-  { _key: 'f4', stat: '104',     label: 'Jobs Created',          icon: 'jobs',    description: 'Direct employment generated at our facility and logistics operations in Dar es Salaam.' },
+  { _key: 'f1', stat: '50,000+', label: 'Metric Tons Recycled',  description: 'Scrap steel collected, processed and returned to the supply chain since 2022.' },
+  { _key: 'f2', stat: '5,000+',  label: 'Vendors Onboarded',    description: 'Informal collectors and scrap dealers integrated into a formal circular supply chain.' },
+  { _key: 'f3', stat: '320+',    label: 'Active Clients',        description: 'Construction companies, contractors and hardware dealers served across Tanzania.' },
+  { _key: 'f4', stat: '104',     label: 'Jobs Created',          description: 'Direct employment generated at our facility and logistics operations in Dar es Salaam.' },
 ]
 
 export default async function ImpactPage() {
@@ -114,7 +82,6 @@ export default async function ImpactPage() {
   const heroHeading = raw?.heroHeading ?? 'Turning Scrap\nInto a Better Future'
   const headingLines = heroHeading.replace(/\\n/g, '\n').split('\n')
 
-  // Verified + calculated metrics only — no fabricated estimates
   const metrics = [
     { label: 'Tonnes Recycled',   value: `${fmt(impact.tonnesRecycled)}+`,   unit: 'metric tonnes'  },
     { label: 'CO₂ Avoided',       value: fmt(impact.co2AvoidedTonnes),       unit: 'tonnes CO₂'    },
@@ -124,32 +91,43 @@ export default async function ImpactPage() {
     { label: 'Vendors Onboarded', value: '5,000+',                            unit: 'supply partners' },
   ]
 
-  // Use Sanity stories if present, otherwise fall back to the verified set
   const rawStories: ImpactStory[] = raw?.impactStories ?? []
   const impactStories = rawStories.length > 0 ? rawStories : FALLBACK_STORIES
 
-  // SDG goals — only claim goals with verified supporting data
   const sdgGoals: string[] = raw?.sdgGoals ?? VERIFIED_SDG_GOALS
 
   return (
     <>
       {/* ── 1. Hero ─────────────────────────────────────────────────────────── */}
       <section
-        className="relative pt-32 pb-20 sm:pb-28 overflow-hidden"
+        className="relative min-h-[72vh] flex flex-col justify-end overflow-hidden pt-24"
         style={{ background: '#0B1D3A' }}
         aria-label="Impact hero"
       >
+        {/* Background image */}
+        <div className="absolute inset-0">
+          <Image
+            src="/images/company/company-profile.jpg"
+            alt="Country Materials facility"
+            fill
+            className="object-cover opacity-25"
+            priority
+          />
+          <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, #0B1D3A 30%, rgba(11,29,58,0.6) 100%)' }} />
+        </div>
+
+        {/* Grid texture */}
         <div
           className="absolute inset-0 pointer-events-none"
           aria-hidden="true"
           style={{
             backgroundImage:
-              'repeating-linear-gradient(0deg,rgba(200,150,46,0.04) 0 1px,transparent 1px 60px),' +
-              'repeating-linear-gradient(90deg,rgba(200,150,46,0.04) 0 1px,transparent 1px 60px)',
+              'repeating-linear-gradient(0deg,rgba(200,150,46,0.035) 0 1px,transparent 1px 80px),' +
+              'repeating-linear-gradient(90deg,rgba(200,150,46,0.035) 0 1px,transparent 1px 80px)',
           }}
         />
 
-        <div className="relative max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16">
+        <div className="relative max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16 pb-20 sm:pb-28">
           <p
             className="reveal font-mono text-[11px] tracking-[0.22em] uppercase mb-6"
             style={{ color: '#C8962E' }}
@@ -157,7 +135,7 @@ export default async function ImpactPage() {
             Climate & Social Impact — {reportingYear}
           </p>
 
-          <h1 className="reveal font-black text-[clamp(42px,7vw,96px)] leading-[0.94] tracking-tight text-white mb-6">
+          <h1 className="reveal font-black text-[clamp(52px,8vw,110px)] leading-[0.92] tracking-tight text-white mb-6">
             {headingLines.map((line: string, i: number) =>
               i === 0 ? (
                 <span key={i}>{line}</span>
@@ -176,28 +154,31 @@ export default async function ImpactPage() {
 
           {raw?.heroSubtitle && (
             <p
-              className="reveal text-[16px] leading-relaxed max-w-2xl mb-14"
-              style={{ color: '#8896A7' }}
+              className="reveal text-[17px] leading-relaxed max-w-2xl mb-14"
+              style={{ color: 'rgba(255,255,255,0.6)' }}
             >
               {raw.heroSubtitle}
             </p>
           )}
 
-          {/* Three verified headline stats */}
-          <div className="reveal grid grid-cols-3 gap-6 max-w-2xl" style={{ borderTop: '1px solid rgba(200,150,46,0.15)' }}>
+          {/* Headline stats */}
+          <div
+            className="reveal grid grid-cols-3 gap-6 max-w-2xl"
+            style={{ borderTop: '1px solid rgba(200,150,46,0.2)' }}
+          >
             {[
-              { label: 'CO₂ Avoided',       value: `${fmt(impact.co2AvoidedTonnes)}t` },
-              { label: 'Tonnes Recycled',   value: `${fmt(impact.tonnesRecycled)}+`    },
-              { label: 'Jobs Created',      value: '104'                                },
+              { label: 'CO₂ Avoided',     value: `${fmt(impact.co2AvoidedTonnes)}t` },
+              { label: 'Tonnes Recycled', value: `${fmt(impact.tonnesRecycled)}+`    },
+              { label: 'Jobs Created',    value: '104'                                },
             ].map((s) => (
-              <div key={s.label} className="pt-6">
+              <div key={s.label} className="pt-7">
                 <p
-                  className="font-mono font-bold text-[clamp(22px,3vw,38px)] leading-none"
+                  className="font-mono font-bold text-[clamp(26px,3.5vw,48px)] leading-none"
                   style={{ color: '#C8962E' }}
                 >
                   {s.value}
                 </p>
-                <p className="font-mono text-[11px] tracking-[0.16em] uppercase mt-2" style={{ color: '#8896A7' }}>
+                <p className="font-mono text-[11px] tracking-[0.18em] uppercase mt-2" style={{ color: 'rgba(255,255,255,0.45)' }}>
                   {s.label}
                 </p>
               </div>
@@ -206,7 +187,7 @@ export default async function ImpactPage() {
         </div>
       </section>
 
-      {/* ── 2. Primary Metrics Grid ──────────────────────────────────────────── */}
+      {/* ── 2. Metrics Grid ─────────────────────────────────────────────────── */}
       <section
         className="py-20 sm:py-28"
         style={{ background: '#FAF7F2' }}
@@ -217,7 +198,7 @@ export default async function ImpactPage() {
             <p className="font-mono text-[11px] tracking-[0.22em] uppercase mb-4" style={{ color: '#C8962E' }}>
               By the Numbers
             </p>
-            <h2 className="font-black text-[clamp(30px,4vw,58px)] text-ink leading-tight tracking-tight">
+            <h2 className="font-black text-[clamp(36px,5vw,68px)] text-ink leading-tight tracking-tight">
               Measured impact.<br />Verified results.
             </h2>
           </div>
@@ -228,114 +209,199 @@ export default async function ImpactPage() {
         </div>
       </section>
 
-      {/* ── 3. People & Community ────────────────────────────────────────────── */}
+      {/* ── 3. Full-width image break ────────────────────────────────────────── */}
+      <div className="relative h-[380px] sm:h-[480px] overflow-hidden" aria-hidden="true">
+        <Image
+          src="/images/company/group-photo-large.jpg"
+          alt="Country Materials team and operations"
+          fill
+          className="object-cover"
+        />
+        <div className="absolute inset-0" style={{ background: 'rgba(11,29,58,0.45)' }} />
+        <div className="absolute inset-0 flex items-center justify-center">
+          <p
+            className="font-black text-center text-white text-[clamp(28px,4vw,56px)] leading-tight tracking-tight px-6 max-w-3xl"
+            style={{ textShadow: '0 2px 24px rgba(0,0,0,0.5)' }}
+          >
+            Building Tanzania&apos;s circular economy —<br />
+            <span style={{ color: '#C8962E' }}>one tonne at a time.</span>
+          </p>
+        </div>
+      </div>
+
+      {/* ── 4. Impact Stories ───────────────────────────────────────────────── */}
       <section
         className="py-20 sm:py-28"
         style={{ background: '#0B1D3A' }}
-        aria-label="People and community impact"
+        aria-label="Community impact"
       >
         <div className="max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16">
           <div className="mb-14 reveal">
             <p className="font-mono text-[11px] tracking-[0.22em] uppercase mb-4" style={{ color: '#C8962E' }}>
               People & Community
             </p>
-            <h2 className="font-black text-[clamp(30px,4vw,58px)] text-white leading-tight tracking-tight">
+            <h2 className="font-black text-[clamp(36px,5vw,68px)] text-white leading-tight tracking-tight">
               Circular steel that<br />lifts communities.
             </h2>
           </div>
 
-          {/* Women & youth — narrative only, no unverified percentages */}
-          <div
-            className="reveal mb-16 pl-5 py-5 pr-6 max-w-2xl"
-            style={{
-              background: '#FAF7F2',
-              borderLeft: '4px solid #C8962E',
-            }}
-          >
-            <p className="italic text-[15px] leading-relaxed" style={{ color: '#4A5568' }}>
-              At Country Materials, women make up a significant part of our vendor network and workforce.
-              We are actively tracking gender and youth participation data and will publish verified
-              figures in our 2025 Impact Report.
-            </p>
-          </div>
-
-          {/* Verified impact story cards */}
-          <div className="overflow-x-auto -mx-6 px-6 sm:overflow-visible sm:mx-0 sm:px-0">
-            <div className="flex sm:grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 min-w-max sm:min-w-0 stagger">
-              {impactStories.map((story) => (
-                <div
-                  key={story._key}
-                  className="w-[76vw] sm:w-auto flex-shrink-0 sm:flex-shrink p-6 sm:p-8"
-                  style={{
-                    background: 'rgba(255,255,255,0.04)',
-                    border: '1px solid rgba(200,150,46,0.18)',
-                  }}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px stagger" style={{ background: 'rgba(200,150,46,0.1)' }}>
+            {impactStories.map((story) => (
+              <div
+                key={story._key}
+                className="p-8 sm:p-10"
+                style={{ background: '#0B1D3A' }}
+              >
+                <p
+                  className="font-mono font-bold text-[clamp(36px,4vw,56px)] leading-none mb-3"
+                  style={{ color: '#C8962E' }}
                 >
-                  <div
-                    className="w-10 h-10 flex items-center justify-center mb-5"
-                    style={{ border: '1px solid rgba(200,150,46,0.3)', color: '#C8962E' }}
-                  >
-                    <StoryIcon icon={story.icon} />
+                  {story.stat}
+                </p>
+                <p className="font-black text-[15px] uppercase tracking-wide text-white mb-4">
+                  {story.label}
+                </p>
+                {story.description && (
+                  <p className="text-[14px] leading-relaxed" style={{ color: 'rgba(255,255,255,0.45)' }}>
+                    {story.description}
+                  </p>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── 5. Women & Youth Empowerment ────────────────────────────────────── */}
+      <section
+        className="overflow-hidden"
+        style={{ background: '#FAF7F2' }}
+        aria-label="Women and youth empowerment"
+      >
+        <div className="max-w-[1440px] mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 min-h-[560px]">
+
+            {/* Image panel */}
+            <div className="relative min-h-[360px] lg:min-h-0 overflow-hidden">
+              <Image
+                src="/images/stock/team-workers.jpg"
+                alt="Country Materials team members"
+                fill
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+              />
+              <div
+                className="absolute inset-0"
+                style={{ background: 'linear-gradient(to right, rgba(250,247,242,0) 60%, rgba(250,247,242,0.95) 100%)' }}
+              />
+            </div>
+
+            {/* Content panel */}
+            <div className="flex flex-col justify-center px-8 sm:px-12 lg:px-16 xl:px-20 py-20 reveal">
+              <p className="font-mono text-[11px] tracking-[0.22em] uppercase mb-6" style={{ color: '#C8962E' }}>
+                Women & Youth Empowerment
+              </p>
+              <h2 className="font-black text-[clamp(32px,4vw,58px)] text-ink leading-tight tracking-tight mb-6">
+                Opportunity that<br />reaches everyone.
+              </h2>
+              <p className="text-[16px] leading-relaxed mb-8 max-w-lg" style={{ color: '#4A5568' }}>
+                Women are a vital part of our vendor network and yard workforce. Our mobile-first
+                vendor platform removes the traditional barriers — no office visit, no upfront cost —
+                making it equally accessible to women and young entrepreneurs across Tanzania.
+              </p>
+              <p className="text-[16px] leading-relaxed mb-10 max-w-lg" style={{ color: '#4A5568' }}>
+                We are actively tracking gender and youth participation data across all five branches
+                and will publish verified figures in our upcoming 2025 Impact Report.
+              </p>
+
+              <div
+                className="grid grid-cols-1 sm:grid-cols-3 gap-px"
+                style={{ background: '#E8DED1' }}
+              >
+                {[
+                  { title: 'Mobile-First Platform', body: 'Vendors register and transact from any phone — no barriers to entry.' },
+                  { title: 'Five Regional Branches', body: 'Presence in Dar es Salaam, Mbeya, Dodoma, Kahama, Pwani & Kilimanjaro.' },
+                  { title: '2025 Impact Report', body: 'Verified gender & youth data to be published in full.' },
+                ].map((item) => (
+                  <div key={item.title} className="p-5" style={{ background: '#FAF7F2' }}>
+                    <p className="font-black text-[13px] text-ink mb-2">{item.title}</p>
+                    <p className="text-[12.5px] leading-relaxed" style={{ color: '#8896A7' }}>{item.body}</p>
                   </div>
-                  <p
-                    className="font-mono font-bold text-[clamp(24px,3vw,40px)] leading-none mb-1"
-                    style={{ color: '#C8962E' }}
-                  >
-                    {story.stat}
-                  </p>
-                  <p className="font-semibold text-[13px] uppercase tracking-wide text-white mb-3">
-                    {story.label}
-                  </p>
-                  {story.description && (
-                    <p className="text-[13.5px] leading-relaxed" style={{ color: '#8896A7' }}>
-                      {story.description}
-                    </p>
-                  )}
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ── 4. SDG Strip ─────────────────────────────────────────────────────── */}
+      {/* ── 6. Second image break ───────────────────────────────────────────── */}
+      <div className="relative h-[300px] sm:h-[380px] overflow-hidden" aria-hidden="true">
+        <Image
+          src="/images/company/wastee.jpg"
+          alt="Scrap metal collection and processing"
+          fill
+          className="object-cover"
+        />
+        <div className="absolute inset-0" style={{ background: 'rgba(11,29,58,0.55)' }} />
+        <div className="absolute inset-0 flex items-end px-6 sm:px-10 lg:px-16 pb-12 max-w-[1440px] mx-auto">
+          <p
+            className="font-mono text-[11px] tracking-[0.22em] uppercase"
+            style={{ color: 'rgba(200,150,46,0.8)' }}
+          >
+            Scrap collection & processing — Dar es Salaam
+          </p>
+        </div>
+      </div>
+
+      {/* ── 7. UN SDG Goals ─────────────────────────────────────────────────── */}
       {sdgGoals.length > 0 && (
         <section
-          className="py-16 sm:py-20"
-          style={{ background: '#FAF7F2' }}
-          aria-label="Sustainable Development Goals"
+          className="py-20 sm:py-28"
+          style={{ background: '#0B1D3A' }}
+          aria-label="UN Sustainable Development Goals"
         >
           <div className="max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16">
-            <div className="mb-10 reveal">
-              <p className="font-mono text-[11px] tracking-[0.22em] uppercase mb-3" style={{ color: '#C8962E' }}>
-                UN Sustainable Development Goals
+
+            <div className="mb-16 reveal">
+              <p className="font-mono text-[11px] tracking-[0.22em] uppercase mb-5" style={{ color: '#C8962E' }}>
+                Global Standards
               </p>
-              <h2 className="font-black text-[clamp(22px,3vw,40px)] text-ink leading-tight">
-                Our work contributes to:
+              <h2 className="font-black text-[clamp(40px,6vw,80px)] text-white leading-tight tracking-tight mb-4">
+                UN Sustainable<br />Development Goals
               </h2>
+              <p className="text-[17px] max-w-xl leading-relaxed" style={{ color: 'rgba(255,255,255,0.5)' }}>
+                Our operations directly advance four of the United Nations&apos; 17 global goals for a better world by 2030.
+              </p>
             </div>
-            <div className="flex flex-wrap gap-4 stagger">
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 stagger">
               {sdgGoals.map((goal) => {
                 const meta = SDG_META[goal]
                 if (!meta) return null
                 return (
                   <div
                     key={goal}
-                    className="flex items-center gap-3 px-5 py-3"
-                    style={{ background: meta.bg, borderRadius: 2 }}
+                    className="relative overflow-hidden p-8 sm:p-10"
+                    style={{ background: meta.bg }}
                   >
+                    {/* Big watermark number */}
                     <span
-                      className="font-mono font-bold text-white text-[22px] leading-none"
+                      className="absolute top-4 right-6 font-black leading-none select-none pointer-events-none"
+                      style={{ fontSize: 'clamp(80px,10vw,140px)', color: 'rgba(255,255,255,0.1)', lineHeight: 1 }}
                       aria-hidden="true"
                     >
                       {goal}
                     </span>
-                    <div>
-                      <p className="font-mono text-[9px] tracking-[0.2em] uppercase text-white/70 leading-none mb-0.5">
-                        Goal {goal}
+
+                    <div className="relative">
+                      <p className="font-mono text-[11px] tracking-[0.22em] uppercase text-white/60 mb-3">
+                        SDG Goal {goal}
                       </p>
-                      <p className="font-semibold text-[12px] text-white leading-snug max-w-[160px]">
+                      <h3 className="font-black text-[clamp(22px,2.8vw,36px)] text-white leading-tight mb-5">
                         {meta.label}
+                      </h3>
+                      <p className="text-[15px] leading-relaxed text-white/70 max-w-md">
+                        {meta.description}
                       </p>
                     </div>
                   </div>
@@ -346,9 +412,9 @@ export default async function ImpactPage() {
         </section>
       )}
 
-      {/* ── 5. Methodology footnote ──────────────────────────────────────────── */}
+      {/* ── 8. Methodology ──────────────────────────────────────────────────── */}
       <section
-        className="py-14 sm:py-20"
+        className="py-16 sm:py-20"
         style={{ background: '#FAF7F2' }}
         aria-label="Methodology"
       >
