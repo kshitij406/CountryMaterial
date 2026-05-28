@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import Link from 'next/link'
+// external link only; no Next `Link` needed
 
 interface Partner {
   name: string
@@ -38,13 +38,15 @@ export default function ClientsMarquee({ partners }: { partners?: Partner[] }) {
               <span className="text-gold">One network.</span>
             </h2>
           </div>
-          <Link
-            href="/contact"
+          <a
+            href="https://play.google.com/store/apps/details?id=com.countrymaterialslimited.skrepachap"
+            target="_blank"
+            rel="noopener noreferrer"
             className="flex-shrink-0 self-start sm:self-end inline-flex items-center gap-2 bg-gold hover:bg-gold-light text-white font-bold text-[13px] px-6 py-3 transition-colors duration-200 cursor-pointer"
           >
             Become a Vendor
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-          </Link>
+          </a>
         </div>
 
         {/* Vendor value props — horizontal bordered row */}
