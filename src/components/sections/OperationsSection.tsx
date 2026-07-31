@@ -51,6 +51,7 @@ export default function OperationsSection() {
               alt="Country Materials fleet vehicles"
               fill
               className="object-cover transition-transform duration-700 group-hover:scale-105"
+              sizes="(max-width: 1024px) 100vw, 50vw"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-navy/80 via-navy/20 to-transparent" />
             <div className="absolute bottom-0 left-0 right-0 p-8">
@@ -82,12 +83,12 @@ export default function OperationsSection() {
             {/* Company photo grid */}
             <div className="grid grid-cols-2 gap-3 mt-1">
               <div className="relative h-36 overflow-hidden">
-                <Image src="/images/company/group-photo.jpg" alt="Country Materials team" fill className="object-cover" />
+                <Image src="/images/company/group-photo.jpg" alt="Country Materials team" fill className="object-cover" sizes="(max-width: 1024px) 50vw, 25vw" />
                 <div className="absolute inset-0 bg-navy/40" />
                 <span className="absolute bottom-3 left-3 text-[11px] font-bold text-white/70 tracking-wide">Our Team · 104 staff</span>
               </div>
               <div className="relative h-36 overflow-hidden">
-                <Image src="/images/stock/facility-main.jpg" alt="Country Materials main facility" fill className="object-cover" />
+                <Image src="/images/stock/facility-main.jpg" alt="Country Materials main facility" fill className="object-cover" sizes="(max-width: 1024px) 50vw, 25vw" />
                 <div className="absolute inset-0 bg-navy/40" />
                 <span className="absolute bottom-3 left-3 text-[11px] font-bold text-white/70 tracking-wide">Main Facility · DSM</span>
               </div>

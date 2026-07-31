@@ -112,6 +112,7 @@ export default async function ImpactPage() {
             fill
             className="object-cover opacity-25"
             priority
+            sizes="100vw"
           />
           <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, #0B1D3A 30%, rgba(11,29,58,0.6) 100%)' }} />
         </div>
@@ -216,6 +217,7 @@ export default async function ImpactPage() {
           alt="Country Materials team and operations"
           fill
           className="object-cover"
+          sizes="100vw"
         />
         <div className="absolute inset-0" style={{ background: 'rgba(11,29,58,0.45)' }} />
         <div className="absolute inset-0 flex items-center justify-center">
@@ -341,6 +343,7 @@ export default async function ImpactPage() {
           alt="Scrap metal collection and processing"
           fill
           className="object-cover"
+          sizes="100vw"
         />
         <div className="absolute inset-0" style={{ background: 'rgba(11,29,58,0.55)' }} />
         <div className="absolute inset-0 flex items-end px-6 sm:px-10 lg:px-16 pb-12 max-w-[1440px] mx-auto">

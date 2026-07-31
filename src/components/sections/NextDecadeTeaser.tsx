@@ -16,6 +16,7 @@ export default function NextDecadeTeaser() {
           alt=""
           fill
           className="object-cover opacity-20"
+          sizes="100vw"
         />
         <div
           className="absolute inset-0"

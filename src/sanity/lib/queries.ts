@@ -18,6 +18,10 @@ export const siteSettingsQuery = groq`
     shopPageTitle,
     shopPageSubtitle,
     socialLinks,
+    floatingVideo {
+      "videoUrl": video.asset->url,
+      label
+    },
     erpIntegration {
       catalogUrl,
       catalogLabel,
@@ -80,6 +84,7 @@ export const homepageQuery = groq`
       sub,
       "logoUrl": logo.asset->url
     },
+    becomeVendorHref,
 
     announcementTag,
     announcementHeading,
@@ -172,6 +177,29 @@ export const allProductsQuery = groq`
     standards,
     specSheet
   }
+`
+
+export const productBySlugQuery = groq`
+  *[_type == "product" && slug.current == $slug][0] {
+    _id,
+    name,
+    slug,
+    price,
+    priceRange,
+    category-> { name, slug },
+    "images": images[]{ "asset": asset->{ url } },
+    description,
+    inStock,
+    hasVariants,
+    grade,
+    unit,
+    standards,
+    specSheet
+  }
+`
+
+export const allProductSlugsQuery = groq`
+  *[_type == "product"] { "slug": slug.current }
 `
 
 export const productCategoriesQuery = groq`

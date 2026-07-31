@@ -60,6 +60,28 @@ export const siteSettings = defineType({
       ],
     }),
     defineField({
+      name: 'floatingVideo',
+      title: 'Floating Video Button',
+      type: 'object',
+      description:
+        'Optional persistent circular button (bottom-right, above the WhatsApp button) that links to an uploaded video. Leave the video empty to hide the button.',
+      fields: [
+        defineField({
+          name: 'video',
+          title: 'Video File',
+          type: 'file',
+          options: { accept: 'video/*' },
+        }),
+        defineField({
+          name: 'label',
+          title: 'Button Label',
+          type: 'string',
+          initialValue: 'Watch our video',
+          description: 'Used as the tooltip / accessible label for the button.',
+        }),
+      ],
+    }),
+    defineField({
       name: 'erpIntegration',
       title: 'ERP & Catalog Integration',
       type: 'object',

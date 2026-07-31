@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import type { Product } from '@/types'
+import CopyLinkButton from '@/components/shop/CopyLinkButton'
 
 interface ProductCardProps {
   product: Product
@@ -9,7 +10,7 @@ interface ProductCardProps {
 export default function ProductCard({ product }: ProductCardProps) {
   const imageUrl = product.images?.[0]?.asset?.url
   const slug = product.slug?.current ?? 'catalog-item'
-  const enquireHref = `/contact?product=${slug}`
+  const productPath = `/shop/${slug}`
 
   const displayPrice = product.priceRange
     ? `TZS ${product.priceRange}`
@@ -19,10 +20,10 @@ export default function ProductCard({ product }: ProductCardProps) {
 
   return (
     <div
-      className="group flex flex-col overflow-hidden border transition-all duration-300 cursor-default"
+      className="group flex flex-col overflow-hidden border transition-all duration-300 hover:shadow-lg"
       style={{ background: '#FAF7F2', borderColor: '#E8DED1' }}
     >
-
+      <Link href={productPath} className="contents cursor-pointer">
       {/* Image panel */}
       <div className="relative h-52 overflow-hidden flex-shrink-0" style={{ background: '#0B1D3A' }}>
         {imageUrl ? (
@@ -31,6 +32,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             alt={product.name}
             fill
             className="object-cover opacity-80 transition-transform duration-700 group-hover:scale-105"
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
           />
         ) : (
           <div className="absolute inset-0 flex items-center justify-center">
@@ -96,25 +98,34 @@ export default function ProductCard({ product }: ProductCardProps) {
           </div>
         )}
 
-        {/* Price + CTA */}
-        <div className="mt-4 pt-4 flex items-end justify-between gap-3" style={{ borderTop: '1px solid #E8DED1' }}>
-          <div>
-            {product.unit && (
-              <p className="text-[10px] font-semibold text-slate/40 uppercase tracking-wider mb-0.5">{product.unit}</p>
-            )}
-            {displayPrice ? (
-              <p className="text-[15px] font-bold text-ink">{displayPrice}</p>
-            ) : (
-              <p className="text-[13px] font-semibold text-gold-dark">Contact for pricing</p>
-            )}
-          </div>
-          <Link
-            href={enquireHref}
-            className="flex-shrink-0 inline-flex items-center gap-1 bg-gold hover:bg-gold-light text-white text-[12px] font-semibold px-4 py-2.5 transition-colors duration-200 cursor-pointer"
-          >
-            Enquire
-          </Link>
+        {/* Price */}
+        <div className="mt-4 pt-4" style={{ borderTop: '1px solid #E8DED1' }}>
+          {product.unit && (
+            <p className="text-[10px] font-semibold text-slate/40 uppercase tracking-wider mb-0.5">{product.unit}</p>
+          )}
+          {displayPrice ? (
+            <p className="text-[15px] font-bold text-ink">{displayPrice}</p>
+          ) : (
+            <p className="text-[13px] font-semibold text-gold-dark">Contact for pricing</p>
+          )}
         </div>
+      </div>
+      </Link>
+
+      {/* Buy Now + Copy Link */}
+      <div className="px-5 pb-5 grid grid-cols-2 gap-2.5">
+        <button
+          type="button"
+          disabled
+          title="Online checkout coming soon"
+          className="inline-flex items-center justify-center gap-1.5 bg-gold text-white text-[12px] font-semibold px-4 py-2.5 opacity-50 cursor-not-allowed"
+        >
+          Buy Now
+        </button>
+        <CopyLinkButton
+          path={productPath}
+          className="inline-flex items-center justify-center gap-1.5 border border-gold/40 text-gold-dark text-[12px] font-semibold px-4 py-2.5 transition-colors duration-200 hover:bg-gold/10 cursor-pointer"
+        />
       </div>
     </div>
   )

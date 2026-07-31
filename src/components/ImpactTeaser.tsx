@@ -35,30 +35,29 @@ export default function ImpactTeaser({
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger)
 
-    const tweens = items.map((item, i) => {
-      const el = numRefs.current[i]
-      if (!el) return null
+    const ctx = gsap.context(() => {
+      items.forEach((item, i) => {
+        const el = numRefs.current[i]
+        if (!el) return
 
-      const obj = { val: 0 }
-      return gsap.to(obj, {
-        val: item.value,
-        duration: 2,
-        ease: 'power2.out',
-        onUpdate() {
-          el.textContent = fmt(obj.val)
-        },
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top 80%',
-          once: true,
-        },
+        const obj = { val: 0 }
+        gsap.to(obj, {
+          val: item.value,
+          duration: 2,
+          ease: 'power2.out',
+          onUpdate() {
+            el.textContent = fmt(obj.val)
+          },
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'top 80%',
+            once: true,
+          },
+        })
       })
-    })
+    }, sectionRef)
 
-    return () => {
-      tweens.forEach((t) => t?.kill())
-      ScrollTrigger.getAll().forEach((t) => t.kill())
-    }
+    return () => ctx.revert()
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tonnesRecycled, co2AvoidedTonnes, vendorsOnboarded, activeClients])
 

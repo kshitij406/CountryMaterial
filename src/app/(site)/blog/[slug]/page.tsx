@@ -16,13 +16,13 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
   const post = await client.fetch(postBySlugQuery, { slug: params.slug }).catch(() => null)
-  if (!post?.title) return { title: 'News | Country Materials Ltd' }
+  if (!post?.title) return { title: 'Blog | Country Materials Ltd' }
   return buildMetadata({
     title: `${post.title} | Country Materials Ltd`,
     description:
       post.excerpt ??
       "Read the latest news and updates from Country Materials Ltd, Tanzania's leading circular steel manufacturer.",
-    path: `/news/${params.slug}`,
+    path: `/blog/${params.slug}`,
   })
 }
 
@@ -75,7 +75,7 @@ const ptComponents = {
       return (
         <figure className="my-10">
           <div className="relative w-full" style={{ aspectRatio: '16/9', border: '1px solid #D8E0E7' }}>
-            <Image src={urlFor(value).width(900).auto('format').url()} alt={value.alt ?? ''} fill className="object-cover" />
+            <Image src={urlFor(value).width(900).auto('format').url()} alt={value.alt ?? ''} fill className="object-cover" sizes="(max-width: 768px) 100vw, (max-width: 1024px) 90vw, 768px" />
           </div>
           {value.caption && (
             <figcaption className="mt-3 font-condensed text-[11px] tracking-[0.15em] uppercase text-slate/55 text-center">
@@ -88,7 +88,7 @@ const ptComponents = {
   },
 }
 
-export default async function PostPage({ params }: { params: { slug: string } }) {
+export default async function BlogPostPage({ params }: { params: { slug: string } }) {
   const post = await client.fetch(postBySlugQuery, { slug: params.slug }).catch(() => null)
   if (!post) notFound()
 
@@ -100,20 +100,20 @@ export default async function PostPage({ params }: { params: { slug: string } })
     <main style={{ background: '#F7F9FB', minHeight: '100vh' }}>
       {imageUrl && (
         <div className="relative h-[45vh] min-h-[300px] max-h-[560px] overflow-hidden" style={{ background: '#EEF2F5' }}>
-          <Image src={imageUrl} alt={post.title} fill className="object-cover opacity-80" priority />
+          <Image src={imageUrl} alt={post.title} fill className="object-cover opacity-80" priority sizes="100vw" />
           <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(247,249,251,1) 0%, rgba(247,249,251,0) 60%)' }} />
         </div>
       )}
 
       <div className={`max-w-3xl mx-auto px-8 lg:px-10 ${imageUrl ? '-mt-20 relative z-10' : 'pt-[140px]'} pb-24`}>
         <Link
-          href="/news"
+          href="/blog"
           className="inline-flex items-center gap-2 font-condensed text-[11px] tracking-[0.18em] uppercase text-gold/80 hover:text-gold transition-colors duration-200 mb-10"
         >
           <svg className="w-3.5 h-3.5 rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
             <path d="M5 12h14M13 5l7 7-7 7" />
           </svg>
-          All News
+          All Posts
         </Link>
 
         <div className="flex flex-wrap items-center gap-3 mb-6">
@@ -147,13 +147,13 @@ export default async function PostPage({ params }: { params: { slug: string } })
         <div className="mt-16 pt-8 flex items-center justify-between flex-wrap gap-4" style={{ borderTop: '1px solid #D8E0E7' }}>
           <span className="font-condensed text-[11px] tracking-[0.18em] uppercase text-gold/80">Country Materials Limited</span>
           <Link
-            href="/news"
+            href="/blog"
             className="inline-flex items-center gap-2 font-condensed text-[12px] tracking-[0.18em] uppercase text-gold hover:gap-4 transition-all duration-300"
           >
             <svg className="w-3.5 h-3.5 rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
               <path d="M5 12h14M13 5l7 7-7 7" />
             </svg>
-            Back to all news
+            Back to Blog
           </Link>
         </div>
       </div>

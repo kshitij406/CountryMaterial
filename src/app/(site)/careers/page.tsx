@@ -58,73 +58,30 @@ export default async function CareersPage() {
 
   return (
     <>
-      <section className="relative overflow-hidden pt-[150px] pb-[90px] px-8 lg:px-16 bg-navy" style={{ borderBottom: '1px solid rgba(216,224,231,.4)' }}>
+      <section className="relative overflow-hidden pt-[110px] pb-[56px] px-8 lg:px-16 bg-navy" style={{ borderBottom: '1px solid rgba(216,224,231,.4)' }}>
         <div className="relative max-w-[1440px] mx-auto">
-          <div className="flex items-center gap-3.5 mb-7">
+          <div className="flex items-center gap-3.5 mb-6">
             <span className="block h-px w-10 bg-gold" />
             <span className="font-condensed text-[12px] tracking-[0.18em] uppercase text-white/90">Join Our Team</span>
           </div>
-          <h1 className="font-display text-[clamp(44px,7vw,102px)] leading-[0.9] tracking-[0.03em] uppercase text-white max-w-4xl">
+          <h1 className="font-display text-[clamp(38px,6vw,84px)] leading-[0.9] tracking-[0.03em] uppercase text-white max-w-4xl">
             Build Your Career with <span className="text-gold-light">{company}</span>
           </h1>
-          <p className="mt-8 font-barlow text-[17px] text-white/75 max-w-2xl leading-[1.65]">
+          <p className="mt-6 font-barlow text-[16px] text-white/75 max-w-2xl leading-[1.65]">
             We are growing and looking for driven, capable people to join us in building Tanzania&apos;s industrial future.
           </p>
         </div>
       </section>
 
-      <section className="relative py-[100px] px-8 lg:px-16 bg-white" style={{ borderBottom: '1px solid #D8E0E7' }}>
-        <div className="max-w-[1440px] mx-auto">
-          <div className="flex items-end justify-between flex-wrap gap-8 mb-14 reveal">
-            <div>
-              <div className="flex items-center gap-3.5 mb-5">
-                <span className="block h-px w-10 bg-gold" />
-                <span className="font-condensed text-[12px] tracking-[0.18em] uppercase text-gold">Why Work Here</span>
-              </div>
-              <h2 className="font-display text-[clamp(36px,4vw,64px)] leading-[0.9] tracking-[0.03em] uppercase text-slate">
-                A Team That Takes Its <span className="text-gold">Work</span> Seriously
-              </h2>
-            </div>
-            <span className="font-space text-[12px] text-gold/70 tracking-[0.2em]">{'// CULTURE'}</span>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 stagger">
-            {WHY_ITEMS.map((item, i) => (
-              <div
-                key={i}
-                className="p-8 bg-charcoal"
-                style={{
-                  borderLeft: '3px solid rgba(200,150,46,0.55)',
-                  borderTop: '1px solid rgba(200,150,46,0.12)',
-                  borderRight: '1px solid rgba(200,150,46,0.08)',
-                  borderBottom: '1px solid rgba(200,150,46,0.08)',
-                }}
-              >
-                <span className="font-space text-[11px] text-gold/60 tracking-[0.2em]">{String(i + 1).padStart(2, '0')}</span>
-                <h3 className="font-display text-[clamp(22px,2vw,30px)] leading-[1] tracking-[0.04em] uppercase text-cream font-semibold mt-3 mb-3">{item.title}</h3>
-                <p className="font-barlow text-[15px] text-sand leading-[1.65]">{item.desc}</p>
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-10 reveal">
-            <p className="font-barlow text-[16px] text-slate/75 leading-[1.7] max-w-2xl">
-              Based in {settings?.city ?? 'Dar es Salaam'}, we are a growing company with ambitions to expand across the region.
-              Joining us now means growing alongside us.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <section className="relative py-[100px] px-8 lg:px-16 bg-charcoal" style={{ borderBottom: '1px solid #D8E0E7' }}>
+      <section className="relative py-[70px] px-8 lg:px-16 bg-charcoal" style={{ borderBottom: '1px solid #D8E0E7' }}>
         <div className="relative max-w-[1440px] mx-auto">
-          <div className="flex items-end justify-between flex-wrap gap-8 mb-14 reveal">
+          <div className="flex items-end justify-between flex-wrap gap-8 mb-10 reveal">
             <div>
               <div className="flex items-center gap-3.5 mb-5">
                 <span className="block h-px w-10 bg-gold" />
                 <span className="font-condensed text-[12px] tracking-[0.18em] uppercase text-gold">Open Positions</span>
               </div>
-              <h2 className="font-display text-[clamp(36px,4vw,64px)] leading-[0.9] tracking-[0.03em] uppercase text-slate">
+              <h2 className="font-display text-[clamp(32px,4vw,56px)] leading-[0.9] tracking-[0.03em] uppercase text-white">
                 Current <span className="text-gold">Opportunities</span>
               </h2>
             </div>
@@ -179,6 +136,49 @@ export default async function CareersPage() {
               </p>
             </div>
           )}
+        </div>
+      </section>
+
+      <section className="relative py-[100px] px-8 lg:px-16 bg-white" style={{ borderBottom: '1px solid #D8E0E7' }}>
+        <div className="max-w-[1440px] mx-auto">
+          <div className="flex items-end justify-between flex-wrap gap-8 mb-14 reveal">
+            <div>
+              <div className="flex items-center gap-3.5 mb-5">
+                <span className="block h-px w-10 bg-gold" />
+                <span className="font-condensed text-[12px] tracking-[0.18em] uppercase text-gold">Why Work Here</span>
+              </div>
+              <h2 className="font-display text-[clamp(36px,4vw,64px)] leading-[0.9] tracking-[0.03em] uppercase text-slate">
+                A Team That Takes Its <span className="text-gold">Work</span> Seriously
+              </h2>
+            </div>
+            <span className="font-space text-[12px] text-gold/70 tracking-[0.2em]">{'// CULTURE'}</span>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 stagger">
+            {WHY_ITEMS.map((item, i) => (
+              <div
+                key={i}
+                className="p-8 bg-charcoal"
+                style={{
+                  borderLeft: '3px solid rgba(200,150,46,0.55)',
+                  borderTop: '1px solid rgba(200,150,46,0.12)',
+                  borderRight: '1px solid rgba(200,150,46,0.08)',
+                  borderBottom: '1px solid rgba(200,150,46,0.08)',
+                }}
+              >
+                <span className="font-space text-[11px] text-gold/60 tracking-[0.2em]">{String(i + 1).padStart(2, '0')}</span>
+                <h3 className="font-display text-[clamp(22px,2vw,30px)] leading-[1] tracking-[0.04em] uppercase text-cream font-semibold mt-3 mb-3">{item.title}</h3>
+                <p className="font-barlow text-[15px] text-sand leading-[1.65]">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-10 reveal">
+            <p className="font-barlow text-[16px] text-slate/75 leading-[1.7] max-w-2xl">
+              Based in {settings?.city ?? 'Dar es Salaam'}, we are a growing company with ambitions to expand across the region.
+              Joining us now means growing alongside us.
+            </p>
+          </div>
         </div>
       </section>
 

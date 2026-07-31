@@ -21,16 +21,28 @@ export default function PageTransition({ children }: { children: ReactNode }) {
 
   // Load GSAP once then run the initial entrance animation
   useEffect(() => {
+    let cancelled = false
+
+    // Safety net: never leave page content permanently invisible if the tab
+    // is backgrounded/throttled or the GSAP chunk fails to load.
+    const fallback = window.setTimeout(() => {
+      if (ref.current) { ref.current.style.opacity = '1'; ref.current.style.transform = 'none' }
+    }, 2500)
+
     import('gsap').then(({ default: g }) => {
+      if (cancelled || !ref.current) return
       gsapRef.current = g
-      if (!ref.current) return
       activeTween.current?.kill()
       activeTween.current = g.fromTo(
         ref.current,
         { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out' },
+        { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out', onComplete: () => window.clearTimeout(fallback) },
       )
     })
+    return () => {
+      cancelled = true
+      window.clearTimeout(fallback)
+    }
   }, [])
 
   // Route change — exit → swap children → enter

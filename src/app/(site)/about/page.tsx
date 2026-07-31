@@ -60,7 +60,7 @@ export default async function AboutPage() {
         aria-label="About page hero"
       >
         <div className="absolute inset-0">
-          <Image src="/images/company/company-profile.jpg" alt="Country Materials facility" fill className="object-cover opacity-20" />
+          <Image src="/images/company/company-profile.jpg" alt="Country Materials facility" fill className="object-cover opacity-20" sizes="100vw" />
           <div className="absolute inset-0 bg-gradient-to-b from-navy/60 via-navy/50 to-navy" />
           <div className="absolute inset-0 bg-steel-texture" aria-hidden="true" />
         </div>
@@ -131,14 +131,14 @@ export default async function AboutPage() {
 
             <div className="space-y-3 reveal">
               <div className="relative h-72 overflow-hidden">
-                <Image src="/images/company/group-photo-large.jpg" alt="Country Materials team" fill className="object-cover" />
+                <Image src="/images/company/group-photo-large.jpg" alt="Country Materials team" fill className="object-cover" sizes="(max-width: 1024px) 100vw, 50vw" />
               </div>
               <div className="grid grid-cols-2 gap-3">
                 <div className="relative h-44 overflow-hidden">
-                  <Image src="/images/company/wastee.jpg" alt="Scrap collection" fill className="object-cover" />
+                  <Image src="/images/company/wastee.jpg" alt="Scrap collection" fill className="object-cover" sizes="(max-width: 1024px) 50vw, 25vw" />
                 </div>
                 <div className="relative h-44 overflow-hidden">
-                  <Image src="/images/company/hardware.jpg" alt="Hardware products" fill className="object-cover" />
+                  <Image src="/images/company/hardware.jpg" alt="Hardware products" fill className="object-cover" sizes="(max-width: 1024px) 50vw, 25vw" />
                 </div>
               </div>
             </div>
@@ -195,7 +195,7 @@ export default async function AboutPage() {
             <div className="relative min-h-[420px] lg:min-h-0 overflow-hidden order-2 lg:order-1">
               <Image
                 src="/images/stock/iron-ore-smelting.jpg"
-                alt="Industrial furnace — placeholder for factory renders"
+                alt="Molten steel being processed in an industrial furnace"
                 fill
                 className="object-cover"
                 sizes="(max-width: 1024px) 100vw, 50vw"
@@ -205,15 +205,6 @@ export default async function AboutPage() {
                 className="absolute inset-0"
                 style={{ background: 'linear-gradient(to right, rgba(7,18,31,0.25) 0%, rgba(7,18,31,0.1) 100%)' }}
               />
-              {/* Placeholder label — remove when real renders arrive */}
-              <div
-                className="absolute bottom-4 left-4 px-3 py-1.5"
-                style={{ background: 'rgba(7,18,31,0.88)', border: '1px solid rgba(200,150,46,0.35)' }}
-              >
-                <span className="font-mono text-[9px] tracking-[0.22em] uppercase text-gold/75">
-                  Placeholder — swap with factory renders
-                </span>
-              </div>
               {/* Watermark */}
               <span
                 className="absolute top-5 right-6 font-mono font-bold select-none pointer-events-none text-white/8"

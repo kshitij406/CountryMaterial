@@ -130,6 +130,13 @@ export const homepage = defineType({
       ],
     }),
 
+    defineField({
+      name: 'becomeVendorHref',
+      title: 'Become a Vendor — Button Link',
+      type: 'string',
+      description: 'URL the "Become a Vendor" button links to in the partner section. e.g. "/contact" or "https://forms.example.com/vendor"',
+    }),
+
     // ── Featured announcement / development plan ──────────────────────────────
     defineField({ name: 'announcementTag', title: 'Announcement Tag', type: 'string', description: 'e.g. "Upcoming · Next Decade"' }),
     defineField({ name: 'announcementHeading', title: 'Announcement Heading', type: 'string', description: 'e.g. "Next Decade Development Plan"' }),
@@ -142,7 +149,7 @@ export const homepage = defineType({
       description: 'Background image for the announcement card — use a modern factory or facility shot.',
     }),
     defineField({ name: 'announcementCtaLabel', title: 'Announcement CTA Label', type: 'string', description: 'e.g. "Read more"' }),
-    defineField({ name: 'announcementCtaHref', title: 'Announcement CTA Link', type: 'string', description: 'e.g. "/news/next-decade-plan"' }),
+    defineField({ name: 'announcementCtaHref', title: 'Announcement CTA Link', type: 'string', description: 'e.g. "/blog/next-decade-plan"' }),
 
     // ── Contact CTA ───────────────────────────────────────────────────────────
     defineField({ name: 'contactHeading', title: 'Contact CTA Heading', type: 'string', description: 'e.g. "Price your project." — contact info comes from Site Settings' }),

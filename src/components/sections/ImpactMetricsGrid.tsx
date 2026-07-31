@@ -20,27 +20,29 @@ export default function ImpactMetricsGrid({ metrics }: Props) {
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger)
 
-    const cards = gridRef.current?.querySelectorAll<HTMLElement>('.impact-metric-card')
-    if (!cards?.length) return
+    const ctx = gsap.context(() => {
+      const cards = gridRef.current?.querySelectorAll<HTMLElement>('.impact-metric-card')
+      if (!cards?.length) return
 
-    gsap.fromTo(
-      cards,
-      { opacity: 0, y: 44 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 0.72,
-        ease: 'power3.out',
-        stagger: 0.1,
-        scrollTrigger: {
-          trigger: gridRef.current,
-          start: 'top 80%',
-          once: true,
-        },
-      }
-    )
+      gsap.fromTo(
+        cards,
+        { opacity: 0, y: 44 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.72,
+          ease: 'power3.out',
+          stagger: 0.1,
+          scrollTrigger: {
+            trigger: gridRef.current,
+            start: 'top 80%',
+            once: true,
+          },
+        }
+      )
+    }, gridRef)
 
-    return () => { ScrollTrigger.getAll().forEach((t) => t.kill()) }
+    return () => ctx.revert()
   }, [])
 
   return (

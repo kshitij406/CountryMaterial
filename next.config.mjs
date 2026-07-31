@@ -8,6 +8,13 @@ const withBundleAnalyzer = bundleAnalyzer({
 const nextConfig = {
   poweredByHeader: false,
   compress: true,
+  async redirects() {
+    return [
+      { source: '/services', destination: '/shop#services', permanent: true },
+      { source: '/news', destination: '/blog', permanent: true },
+      { source: '/news/:slug', destination: '/blog/:slug', permanent: true },
+    ]
+  },
   images: {
     formats: ['image/avif', 'image/webp'],
     minimumCacheTTL: 3600,

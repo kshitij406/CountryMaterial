@@ -2,7 +2,7 @@ import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
 import PageTransition from '@/components/animations/PageTransition'
 import RevealObserver from '@/components/animations/RevealObserver'
-import CookieBanner from '@/components/CookieBanner'
+import FloatingActions from '@/components/FloatingActions'
 import { client, urlFor } from '@/sanity/lib/client'
 import { siteSettingsQuery } from '@/sanity/lib/queries'
 
@@ -33,7 +33,7 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
         <main>{children}</main>
       </PageTransition>
       <Footer contact={contact} />
-      <CookieBanner />
+      <FloatingActions whatsapp={settings?.whatsapp} video={settings?.floatingVideo} />
     </>
   )
 }

@@ -375,6 +375,64 @@ const productRebar20mm = {
   category: { _type: 'reference', _ref: 'productCategory-steel-metals' },
 }
 
+const productWireMesh = {
+  _id: 'product-wire-mesh-brc-a142',
+  _type: 'product',
+  name: 'Wire Mesh — BRC A142',
+  slug: { _type: 'slug', current: 'wire-mesh-brc-a142' },
+  grade: 'BRC A142',
+  unit: 'Per roll (2.4m x 30m)',
+  price: 185000,
+  inStock: true,
+  hasVariants: false,
+  description: 'Welded steel fabric mesh for slab and pavement reinforcement. Manufactured to BS 4483 with consistent wire spacing for reliable load distribution.',
+  standards: ['BS 4483', 'ISO 9001'],
+  specSheet: [
+    { _key: 'sp1', key: 'Wire Gauge', value: '6mm' },
+    { _key: 'sp2', key: 'Mesh Size', value: '200 x 200mm' },
+    { _key: 'sp3', key: 'Roll Size', value: '2.4m x 30m' },
+  ],
+  category: { _type: 'reference', _ref: 'productCategory-building-materials' },
+}
+
+const productBindingWire = {
+  _id: 'product-binding-wire-16g',
+  _type: 'product',
+  name: 'Binding Wire — 16 Gauge',
+  slug: { _type: 'slug', current: 'binding-wire-16-gauge' },
+  unit: 'Per roll (25kg)',
+  price: 95000,
+  inStock: true,
+  hasVariants: false,
+  description: 'Soft-annealed mild steel binding wire for tying rebar joints on site. Consistent gauge, easy to twist, corrosion-resistant coil wrap.',
+  standards: ['ISO 9001'],
+  specSheet: [
+    { _key: 'sp1', key: 'Gauge', value: '16 SWG' },
+    { _key: 'sp2', key: 'Roll Weight', value: '25kg' },
+    { _key: 'sp3', key: 'Material', value: 'Mild Steel' },
+  ],
+  category: { _type: 'reference', _ref: 'productCategory-steel-metals' },
+}
+
+const productAntiRustPrimer = {
+  _id: 'product-anti-rust-primer-20l',
+  _type: 'product',
+  name: 'Anti-Rust Steel Primer — 20L',
+  slug: { _type: 'slug', current: 'anti-rust-steel-primer-20l' },
+  unit: 'Per 20L drum',
+  price: 145000,
+  inStock: true,
+  hasVariants: false,
+  description: 'Red-oxide anti-corrosive primer for structural steel, rebar stockpiles, and fabricated hardware. Fast-drying, single-coat coverage.',
+  standards: ['ISO 9001'],
+  specSheet: [
+    { _key: 'sp1', key: 'Coverage', value: '~10 m²/L' },
+    { _key: 'sp2', key: 'Drying Time', value: '4–6 hrs' },
+    { _key: 'sp3', key: 'Base', value: 'Alkyd' },
+  ],
+  category: { _type: 'reference', _ref: 'productCategory-paints' },
+}
+
 // ─── Careers ──────────────────────────────────────────────────────────────────
 
 const careerLogistics = {
@@ -651,8 +709,11 @@ async function seed() {
       docs: [categoryBuildingMaterials, categorySteelMetals, categoryPaints],
     },
     {
-      label: 'Products (6)',
-      docs: [productRebar8mm, productRebar10mm, productRebar12mm, productRebar16mm, productSteelBillets, productRebar20mm],
+      label: 'Products (9)',
+      docs: [
+        productRebar8mm, productRebar10mm, productRebar12mm, productRebar16mm, productSteelBillets, productRebar20mm,
+        productWireMesh, productBindingWire, productAntiRustPrimer,
+      ],
     },
     {
       label: 'Careers (3)',

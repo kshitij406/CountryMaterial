@@ -38,10 +38,21 @@ export default function HeroSection({
       return
     }
 
+    let cancelled = false
     let ctx: { revert: () => void } | undefined
+
+    // Safety net: if the tab is backgrounded/throttled (rAF paused) or the GSAP
+    // chunk fails to load, never leave the hero text permanently invisible.
+    const fallback = window.setTimeout(() => {
+      refs.forEach((r) => {
+        if (r.current) { r.current.style.opacity = '1'; r.current.style.transform = 'none' }
+      })
+    }, 2500)
+
     import('gsap').then(({ default: gsap }) => {
+      if (cancelled) return
       ctx = gsap.context(() => {
-        const tl = gsap.timeline({ defaults: { ease: 'power3.out' } })
+        const tl = gsap.timeline({ defaults: { ease: 'power3.out' }, onComplete: () => window.clearTimeout(fallback) })
         tl.from(locationRef.current, { y: 20, opacity: 0, duration: 0.6 })
           .from(line1Ref.current,    { y: 80, opacity: 0, duration: 1.0 }, '-=0.3')
           .from(line2Ref.current,    { y: 80, opacity: 0, duration: 1.0 }, '-=0.7')
@@ -51,7 +62,11 @@ export default function HeroSection({
       }, containerRef)
     })
 
-    return () => ctx?.revert()
+    return () => {
+      cancelled = true
+      window.clearTimeout(fallback)
+      ctx?.revert()
+    }
   }, [])
 
   const bgImage = heroImageUrl ?? '/images/randos/molten_steel.jpeg'
@@ -76,6 +91,7 @@ export default function HeroSection({
           alt="Country Materials Limited steel operations"
           fill className="object-cover"
           priority quality={85}
+          sizes="100vw"
         />
       )}
 

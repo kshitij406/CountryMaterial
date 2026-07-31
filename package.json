@@ -13,7 +13,6 @@
     "test:report": "playwright show-report tests/playwright-report"
   },
   "dependencies": {
-    "@chenglou/pretext": "^0.0.4",
     "@fontsource/plus-jakarta-sans": "^5.2.8",
     "@fontsource/space-mono": "^5.2.9",
     "@portabletext/react": "^6.2.0",
@@ -21,17 +20,14 @@
     "@sanity/image-url": "^1.0.2",
     "@sanity/vision": "^3.99.0",
     "clsx": "^2.1.1",
-    "framer-motion": "^12.38.0",
     "groq": "^5.26.0",
     "gsap": "^3.12.5",
-    "lucide-react": "^1.7.0",
     "next": "14.2.35",
     "next-sanity": "^9.8.11",
     "react": "^18",
     "react-dom": "^18",
     "resend": "^6.9.4",
     "sanity": "^3.68.2",
-    "styled-components": "^6.1.13",
     "tailwind-merge": "^2.5.5"
   },
   "pnpm": {

@@ -13,6 +13,10 @@ export interface SiteSettings {
   businessHours?: string
   shopPageTitle?: string
   shopPageSubtitle?: string
+  floatingVideo?: {
+    videoUrl?: string
+    label?: string
+  }
   socialLinks?: {
     facebook?: string
     twitter?: string

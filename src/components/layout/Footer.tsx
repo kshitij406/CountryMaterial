@@ -10,10 +10,10 @@ const colCompany = [
 ]
 
 const colServices = [
-  { label: 'Scrap Collection',   href: '/services' },
-  { label: 'Steel Manufacturing', href: '/services' },
-  { label: 'Rebar & Billets',    href: '/shop' },
-  { label: 'Fleet Logistics',    href: '/services' },
+  { label: 'Scrap Collection',    href: '/services/waste-management' },
+  { label: 'Steel Manufacturing', href: '/services/steel' },
+  { label: 'Rebar & Billets',     href: '/shop' },
+  { label: 'Fleet Logistics',     href: '/services/transportation' },
 ]
 
 const colBranches = [

@@ -133,6 +133,7 @@ export default function ServicesSection({ services }: { services?: Service[] }) 
                     src={imgSrc}
                     alt={s.title}
                     fill className="object-cover opacity-45 transition-transform duration-700 group-hover:scale-105"
+                    sizes="(max-width: 768px) 100vw, 50vw"
                   />
                 )}
                 <div className="absolute inset-0 bg-gradient-to-t from-navy via-navy/50 to-navy/10" />
@@ -176,6 +177,7 @@ export default function ServicesSection({ services }: { services?: Service[] }) 
                     src={imgSrc}
                     alt={s.title}
                     fill className="object-cover opacity-40 transition-transform duration-700 group-hover:scale-105"
+                    sizes="(max-width: 768px) 100vw, 50vw"
                   />
                 )}
                 <div className="absolute inset-0 bg-gradient-to-t from-navy via-navy/60 to-transparent" />
@@ -224,6 +226,7 @@ export default function ServicesSection({ services }: { services?: Service[] }) 
                       src={imgSrc}
                       alt={s.title}
                       fill className="object-cover opacity-65 transition-transform duration-700 group-hover:scale-105"
+                      sizes="(max-width: 640px) 100vw, 40vw"
                     />
                   )}
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent to-navy/90 sm:block hidden" />

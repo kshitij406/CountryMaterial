@@ -8,10 +8,10 @@ import { buildMetadata } from '@/lib/metadata'
 export const revalidate = 30
 
 export const metadata: Metadata = buildMetadata({
-  title: 'News & Announcements | Country Materials Ltd',
+  title: 'Blog | Country Materials Ltd',
   description:
     "Read the latest news, project updates and announcements from Country Materials Ltd — Tanzania's leading circular steel manufacturer based in Dar es Salaam.",
-  path: '/news',
+  path: '/blog',
 })
 
 function formatDate(dateStr: string | null | undefined) {
@@ -19,7 +19,7 @@ function formatDate(dateStr: string | null | undefined) {
   return new Date(dateStr).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })
 }
 
-export default async function NewsPage() {
+export default async function BlogPage() {
   const posts = await client.fetch(allPostsQuery).catch(() => [] as any[])
 
   const featured = posts[0] ?? null
@@ -38,9 +38,7 @@ export default async function NewsPage() {
             <span className="font-condensed text-[12px] tracking-[0.18em] uppercase text-white/90">Latest from Country Materials</span>
           </div>
           <h1 className="font-display text-[clamp(44px,7vw,102px)] leading-[0.9] tracking-[0.03em] uppercase text-white">
-            News &
-            <br />
-            <span className="text-gold-light">Announcements</span>
+            The <span className="text-gold-light">Blog</span>
           </h1>
           <p className="mt-8 font-barlow text-[17px] text-white/75 max-w-xl leading-[1.65]">
             Stay up to date with our latest developments, product updates, and company announcements.
@@ -51,7 +49,7 @@ export default async function NewsPage() {
       <section className="relative py-[100px] px-8 lg:px-16 bg-white" style={{ borderBottom: '1px solid #D8E0E7' }}>
         <div className="max-w-[1440px] mx-auto">
           {posts.length === 0 ? (
-            <div className="text-center py-24 reveal bg-charcoal" style={{ border: '1px solid #D8E0E7' }}>
+            <div className="text-center py-24 reveal bg-cream" style={{ border: '1px solid #D8E0E7' }}>
               <div className="font-display text-[56px] text-gold/20 mb-4">◈</div>
               <p className="font-barlow text-[16px] text-slate/60">No posts yet - check back soon.</p>
             </div>
@@ -59,7 +57,7 @@ export default async function NewsPage() {
             <>
               {featured && (
                 <Link
-                  href={`/news/${featured.slug.current}`}
+                  href={`/blog/${featured.slug.current}`}
                   className="group grid lg:grid-cols-2 mb-16 reveal overflow-hidden"
                   style={{ border: '1px solid #D8E0E7' }}
                 >
@@ -78,7 +76,7 @@ export default async function NewsPage() {
                     <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, rgba(31,51,71,0.18), transparent)' }} />
                   </div>
 
-                  <div className="p-10 lg:p-14 flex flex-col justify-center bg-charcoal" style={{ borderLeft: '1px solid #D8E0E7' }}>
+                  <div className="p-10 lg:p-14 flex flex-col justify-center bg-cream" style={{ borderLeft: '1px solid #D8E0E7' }}>
                     <div className="flex items-center gap-3.5 mb-6">
                       <span className="font-condensed text-[11px] tracking-[0.18em] uppercase text-gold">Featured</span>
                       {featured.category && (
@@ -122,7 +120,7 @@ export default async function NewsPage() {
                     return (
                       <Link
                         key={post._id}
-                        href={`/news/${post.slug.current}`}
+                        href={`/blog/${post.slug.current}`}
                         className="group flex flex-col bg-white"
                         style={{ border: '1px solid #D8E0E7' }}
                       >
@@ -145,7 +143,7 @@ export default async function NewsPage() {
                           )}
                         </div>
 
-                        <div className="p-8 flex flex-col flex-1 bg-charcoal">
+                        <div className="p-8 flex flex-col flex-1 bg-cream">
                           {post.publishedAt && (
                             <p className="font-condensed text-[10px] tracking-[0.18em] uppercase text-slate/50 mb-3">
                               {formatDate(post.publishedAt)}

@@ -143,13 +143,13 @@ export default async function ServiceDetailPage({ params }: { params: { slug: st
           </div>
 
           {features.length > 0 && (
-            <div className="reveal p-8 bg-charcoal" style={{ border: '1px solid #D8E0E7' }}>
+            <div className="reveal p-8 bg-cream" style={{ border: '1px solid #D8E0E7' }}>
               <h3 className="font-display text-[clamp(20px,2vw,28px)] leading-[1] tracking-[0.04em] uppercase text-slate mb-8">
                 Key <span className="text-gold">Capabilities</span>
               </h3>
               <ul style={{ borderTop: '1px solid #D8E0E7' }}>
                 {features.map((f, i) => (
-                  <li key={i} className="flex items-start gap-5 py-4" style={{ borderBottom: '1px solid #D8E0E7' }}>
+                  <li key={`${f}-${i}`} className="flex items-start gap-5 py-4" style={{ borderBottom: '1px solid #D8E0E7' }}>
                     <span className="shrink-0 w-6 h-6 grid place-items-center bg-gold text-white font-space text-[11px] font-semibold mt-0.5">
                       {i + 1}
                     </span>
@@ -166,7 +166,7 @@ export default async function ServiceDetailPage({ params }: { params: { slug: st
         <section className="relative py-[80px] px-8 lg:px-16 bg-charcoal" style={{ borderBottom: '1px solid #D8E0E7' }}>
           <div className="relative max-w-[1440px] mx-auto grid grid-cols-1 sm:grid-cols-3 gap-5">
             {highlights.map((item, i) => (
-              <div key={i} className="text-center py-10 bg-white" style={{ border: '1px solid #D8E0E7' }}>
+              <div key={`${item.stat}-${item.label}-${i}`} className="text-center py-10 bg-white" style={{ border: '1px solid #D8E0E7' }}>
                 <div className="font-display text-[clamp(40px,5vw,72px)] leading-none text-gold mb-2">{item.stat}</div>
                 <div className="font-condensed text-[11px] tracking-[0.22em] uppercase text-slate/60">{item.label}</div>
               </div>

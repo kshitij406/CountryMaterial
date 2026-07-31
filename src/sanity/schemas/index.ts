@@ -6,7 +6,6 @@ import { product } from './product'
 import { productCategory } from './productCategory'
 import { career } from './career'
 import { post } from './post'
-import { motifLibrary } from './motifLibrary'
 import { legalPage } from './legalPage'
 import { impactPage } from './impactPage'
 
@@ -19,7 +18,6 @@ export const schemaTypes = [
   productCategory,
   career,
   post,
-  motifLibrary,
   legalPage,
   impactPage,
 ]

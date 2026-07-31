@@ -19,14 +19,15 @@ import * as fs from 'fs'
 const SCREENSHOT_DIR = path.join(__dirname, 'screenshots')
 
 /** All nav links that must appear in the navbar on every page */
-const NAV_LINKS = ['Home', 'About', 'Products', 'Services', 'Careers', 'Contact']
+const NAV_LINKS = ['Home', 'About', 'Impact', 'Products & Services', 'Blog', 'Careers', 'Contact']
 
 /** Pages under test */
 const PAGES = [
   { name: 'home',     url: '/' },
   { name: 'about',    url: '/about' },
+  { name: 'impact',   url: '/impact' },
   { name: 'products', url: '/shop' },
-  { name: 'services', url: '/services' },
+  { name: 'blog',     url: '/blog' },
   { name: 'contact',  url: '/contact' },
 ]
 
@@ -41,8 +42,15 @@ function ensureScreenshotDir() {
   }
 }
 
-/** Take a full-page screenshot and save it to tests/screenshots/ */
+/**
+ * Take a full-page screenshot and save it to tests/screenshots/.
+ * Uses 'load' + a short settle delay rather than 'networkidle', which is
+ * inherently racy on image-heavy pages (Playwright's own guidance) and was
+ * timing out here on pages with several Sanity/local images in flight.
+ */
 async function screenshot(page: Page, name: string) {
+  await page.waitForLoadState('load')
+  await page.waitForTimeout(300)
   ensureScreenshotDir()
   const file = path.join(SCREENSHOT_DIR, `${name}.png`)
   await page.screenshot({ path: file, fullPage: true })
@@ -51,10 +59,12 @@ async function screenshot(page: Page, name: string) {
 /**
  * Collect all local <img> src attributes then verify each returns HTTP 200.
  * Using page.request avoids naturalWidth timing issues with lazy/large images.
- * External CDN images (e.g. Sanity) are skipped.
+ * External CDN images (e.g. Sanity) are skipped. Waits for 'domcontentloaded'
+ * rather than 'networkidle' — the <img> tags are present in the initial HTML
+ * for these server-rendered pages, and each src is verified independently below.
  */
 async function assertImagesLoad(page: Page) {
-  await page.waitForLoadState('networkidle')
+  await page.waitForLoadState('domcontentloaded')
 
   const localSrcs: string[] = await page.evaluate(() => {
     const imgs = Array.from(document.querySelectorAll('img'))
@@ -137,7 +147,6 @@ test.describe('Site-wide smoke tests', () => {
     for (const pg of PAGES) {
       test(`screenshot: ${pg.name}`, async ({ page }) => {
         await page.goto(pg.url)
-        await page.waitForLoadState('networkidle')
         await screenshot(page, `${pg.name}-desktop`)
       })
     }
@@ -149,7 +158,6 @@ test.describe('Site-wide smoke tests', () => {
     for (const pg of PAGES) {
       test(`screenshot: ${pg.name} mobile`, async ({ page }) => {
         await page.goto(pg.url)
-        await page.waitForLoadState('networkidle')
         await screenshot(page, `${pg.name}-mobile`)
       })
     }
@@ -184,11 +192,7 @@ test.describe('Site-wide smoke tests', () => {
     test('homepage stats section is visible and shows numbers', async ({ page }) => {
       await page.goto('/')
 
-      // The hero stats bar sits right below the hero — check it first
-      const heroStats = page.locator('[aria-label="Key statistics"]')
-      await expect(heroStats).toBeVisible()
-
-      // Scroll to the full stats section (#impact) and verify numbers
+      // Scroll to the stats section (#impact) and verify numbers
       const statsSection = page.locator('#impact')
       await statsSection.scrollIntoViewIfNeeded()
       await expect(statsSection).toBeVisible()
@@ -285,38 +289,42 @@ test.describe('Site-wide smoke tests', () => {
     })
   })
 
-  test.describe('Services page sections', () => {
-    test('four editorial service sections render', async ({ page }) => {
+  test.describe('Products & Services page (/shop)', () => {
+    test('/services redirects to /shop', async ({ page }) => {
       await page.goto('/services')
-      for (let i = 1; i <= 4; i++) {
-        const section = page.locator(`#service-${i}`)
-        await section.scrollIntoViewIfNeeded()
-        await expect(section, `#service-${i} not visible`).toBeVisible()
-      }
+      await expect(page).toHaveURL(/\/shop/)
     })
 
-    test('quick-jump index shows service links', async ({ page }) => {
-      await page.goto('/services')
-      // The index strip contains anchors targeting #service-N
-      const indexLinks = page.locator('a[href^="#service-"]')
-      expect(await indexLinks.count()).toBeGreaterThanOrEqual(4)
-    })
-  })
-
-  test.describe('Products page sections', () => {
-    test('three editorial product sections render', async ({ page }) => {
+    test('products grid renders with product cards', async ({ page }) => {
       await page.goto('/shop')
-      for (let i = 1; i <= 3; i++) {
-        const section = page.locator(`#product-${i}`)
-        await section.scrollIntoViewIfNeeded()
-        await expect(section, `#product-${i} not visible`).toBeVisible()
-      }
+      const products = page.locator('#products')
+      await products.scrollIntoViewIfNeeded()
+      await expect(products).toBeVisible()
+      const cards = products.locator('a[href^="/shop/"]')
+      expect(await cards.count()).toBeGreaterThan(0)
     })
 
-    test('quick-jump index shows product category links', async ({ page }) => {
+    test('category filter is present', async ({ page }) => {
       await page.goto('/shop')
-      const indexLinks = page.locator('a[href^="#product-"]')
-      expect(await indexLinks.count()).toBeGreaterThanOrEqual(3)
+      const allFilter = page.getByRole('button', { name: 'All', exact: true })
+      await expect(allFilter).toBeVisible()
+    })
+
+    test('each product card has Buy Now and Copy Link actions', async ({ page }) => {
+      await page.goto('/shop')
+      const buyNow = page.getByRole('button', { name: 'Buy Now' }).first()
+      const copyLink = page.getByRole('button', { name: 'Copy Link' }).first()
+      await expect(buyNow).toBeVisible()
+      await expect(copyLink).toBeVisible()
+    })
+
+    test('services grid renders with service cards', async ({ page }) => {
+      await page.goto('/shop')
+      const services = page.locator('#services')
+      await services.scrollIntoViewIfNeeded()
+      await expect(services).toBeVisible()
+      const cards = services.locator('a[href^="/services/"]')
+      expect(await cards.count()).toBeGreaterThanOrEqual(4)
     })
   })
 
@@ -330,12 +338,12 @@ test.describe('Site-wide smoke tests', () => {
       }
     })
 
-    test('values section renders four cards', async ({ page }) => {
+    test('values section renders core value cards', async ({ page }) => {
       await page.goto('/about')
       const values = page.locator('#values')
       await values.scrollIntoViewIfNeeded()
       await expect(values).toBeVisible()
-      const titles = ['Circular First', 'Vendor First', 'Quality Uncompromised', 'Tanzania-Rooted']
+      const titles = ['People', 'Planet', 'Partnership']
       for (const t of titles) {
         const el = values.getByText(t, { exact: true })
         expect(await el.count(), `Value "${t}" not found`).toBeGreaterThan(0)

@@ -148,7 +148,7 @@ export default async function CareerDetailPage({ params }: { params: { slug: str
                   </div>
                   <ul className="space-y-3">
                     {post.requirements.map((req, i) => (
-                      <li key={i} className="flex items-start gap-4">
+                      <li key={`${req}-${i}`} className="flex items-start gap-4">
                         <span className="mt-[7px] shrink-0 block w-1.5 h-1.5 bg-gold" />
                         <span className="font-barlow text-[16px] text-slate/80 leading-[1.65]">{req}</span>
                       </li>
@@ -160,18 +160,18 @@ export default async function CareerDetailPage({ params }: { params: { slug: str
 
             {/* Sidebar */}
             <div className="reveal">
-              <div className="p-8 bg-charcoal sticky top-28" style={{ border: '1px solid #D8E0E7' }}>
-                <h3 className="font-display text-[22px] tracking-[0.04em] uppercase text-slate mb-6">
+              <div className="p-8 bg-charcoal sticky top-28" style={{ border: '1px solid rgba(255,255,255,0.08)' }}>
+                <h3 className="font-display text-[22px] tracking-[0.04em] uppercase text-white mb-6">
                   {isClosed ? 'This Role is Closed' : 'Apply for This Role'}
                 </h3>
 
                 {isClosed ? (
-                  <p className="font-barlow text-[14px] text-slate/60 leading-[1.65] mb-6">
+                  <p className="font-barlow text-[14px] text-white/65 leading-[1.65] mb-6">
                     This position is no longer accepting applications. Check our other open roles or send a general enquiry.
                   </p>
                 ) : (
-                  <p className="font-barlow text-[14px] text-slate/65 leading-[1.65] mb-6">
-                    Send your CV and a cover letter referencing <strong className="text-slate font-semibold">{post.title}</strong> in the subject line.
+                  <p className="font-barlow text-[14px] text-white/65 leading-[1.65] mb-6">
+                    Send your CV and a cover letter referencing <strong className="text-white font-semibold">{post.title}</strong> in the subject line.
                   </p>
                 )}
 
@@ -192,29 +192,29 @@ export default async function CareerDetailPage({ params }: { params: { slug: str
                 </Link>
 
                 {closingLabel && !isClosed && (
-                  <div className="mt-6 pt-6 border-t border-sand">
-                    <span className="font-space text-[11px] text-slate/40 tracking-[0.15em] uppercase block mb-1">Closing Date</span>
-                    <span className="font-barlow text-[14px] text-slate/70">{closingLabel}</span>
+                  <div className="mt-6 pt-6 border-t border-white/10">
+                    <span className="font-space text-[11px] text-white/55 tracking-[0.15em] uppercase block mb-1">Closing Date</span>
+                    <span className="font-barlow text-[14px] text-white/85">{closingLabel}</span>
                   </div>
                 )}
 
-                <div className="mt-6 pt-6 border-t border-sand space-y-3">
+                <div className="mt-6 pt-6 border-t border-white/10 space-y-3">
                   {post.department && (
                     <div>
-                      <span className="font-space text-[11px] text-slate/40 tracking-[0.15em] uppercase block mb-1">Department</span>
-                      <span className="font-barlow text-[14px] text-slate/70">{post.department}</span>
+                      <span className="font-space text-[11px] text-white/55 tracking-[0.15em] uppercase block mb-1">Department</span>
+                      <span className="font-barlow text-[14px] text-white/85">{post.department}</span>
                     </div>
                   )}
                   {post.location && (
                     <div>
-                      <span className="font-space text-[11px] text-slate/40 tracking-[0.15em] uppercase block mb-1">Location</span>
-                      <span className="font-barlow text-[14px] text-slate/70">{post.location}</span>
+                      <span className="font-space text-[11px] text-white/55 tracking-[0.15em] uppercase block mb-1">Location</span>
+                      <span className="font-barlow text-[14px] text-white/85">{post.location}</span>
                     </div>
                   )}
                   {post.employmentType && (
                     <div>
-                      <span className="font-space text-[11px] text-slate/40 tracking-[0.15em] uppercase block mb-1">Type</span>
-                      <span className="font-barlow text-[14px] text-slate/70 capitalize">{post.employmentType.replace('-', ' ')}</span>
+                      <span className="font-space text-[11px] text-white/55 tracking-[0.15em] uppercase block mb-1">Type</span>
+                      <span className="font-barlow text-[14px] text-white/85 capitalize">{post.employmentType.replace('-', ' ')}</span>
                     </div>
                   )}
                 </div>
