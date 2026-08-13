@@ -45,6 +45,7 @@ export const sw: Dictionary = {
     mobileNav: 'Urambazaji wa simu',
     logoAlt: 'Country Materials Limited',
     switchLanguage: 'Badilisha lugha',
+    switchTheme: 'Badilisha mwonekano mwepesi/giza',
   },
 
   footer: {
@@ -235,22 +236,6 @@ export const sw: Dictionary = {
       { name: 'Mabilleti ya Chuma',  description: 'Mabilleti ya mraba yanayotengenezwa kwa chuma chakavu kilichorejelezwa kwa asilimia 100. Hutumika kama malighafi kwa viwanda vya kusokota. Yanapatikana kwa ukubwa wa 100mm na 125mm.' },
       { name: 'Nondo za TMT — 20mm', description: 'Nondo nzito zaidi za TMT za 20mm kwa vichwa vya nguzo, kuta za kuzuia na miundombinu mikubwa. Bei ya jumla inapatikana.' },
     ],
-  },
-
-  nextDecade: {
-    sectionLabel: 'Mpango wa maendeleo wa muongo ujao',
-    eyebrow: 'Muongo Ujao',
-    headingLine1: 'Kiwanda cha Kwanza',
-    headingLine2: 'cha Chuma Kipya',
-    headingLine3: 'Tanzania.',
-    headingLine4: 'Kinakuja Hivi Karibuni.',
-    planEyebrow: 'Mpango wa Maendeleo',
-    planLine1: 'Cha pili',
-    planLine2: 'barani.',
-    planNote: 'Baada ya Afrika Kusini',
-    body:
-      'Country Materials inajenga kiwanda cha kisasa cha kuzalisha chuma kipya moja kwa moja kutoka madini ya chuma — bila kuchanganya, bila kuagiza nje, bila kupunguza ubora.',
-    learnMore: 'Jifunze Zaidi',
   },
 
   clients: {
@@ -575,15 +560,6 @@ export const sw: Dictionary = {
     standForEyebrow: 'Tunachokisimamia',
     principlesLine1: 'Misingi',
     principlesLine2: 'iliyo nyuma ya bidhaa.',
-    nextDecadeLabel: 'Mpango wa maendeleo wa muongo ujao',
-    furnaceAlt: 'Chuma kilichoyeyuka kikichakatwa katika tanuru la viwandani',
-    ndEyebrow: 'Mpango wa Maendeleo wa Muongo Ujao',
-    ndHeadingLine1: 'Mustakabali wa Chuma.',
-    ndHeadingLine2: 'Kimetengenezwa Tanzania.',
-    ndBody:
-      'Kiwanda kijacho cha Country Materials kitakuwa cha kisasa chenye mitambo ya hivi karibuni ya kuzalisha chuma kipya nchini Tanzania. Kitakuwa kiwanda cha pili barani Afrika chenye uwezo wa kuzalisha chuma kipya moja kwa moja kutoka madini ya chuma, baada ya Afrika Kusini. Mchakato huu hauhitaji kuchanganya na huzalisha mabilleti ya chuma ya ubora wa juu — ukiweka kiwango kipya cha vifaa vya ujenzi vinavyotengenezwa ndani. Maono yetu ni kuwapa Watanzania bidhaa bora zaidi zinazoinua viwanda vya ndani na kushindana moja kwa moja na chuma kinachoagizwa nje.',
-    ndQuoteLine1: '“Cha pili baada ya Afrika Kusini.',
-    ndQuoteLine2: 'Cha kwanza Tanzania.”',
     ctaLabel: 'Wito wa kuwasiliana',
     ctaHeadingLine1: 'Unataka kujua zaidi?',
     ctaHeadingLine2: 'Tuzungumze.',
@@ -599,11 +575,6 @@ export const sw: Dictionary = {
       { title: 'Watu',        icon: '🤝', body: 'Tupo ili kuinua jamii tunazozihudumia kwa kutengeneza ajira zenye heshima, kuwawezesha wachuuzi wa chuma chakavu, na kujenga fursa jumuishi za kiuchumi katika mnyororo mzima wa thamani.' },
       { title: 'Sayari',      icon: '🌍', body: 'Tumejitolea kugeuza taka kuwa thamani, kupunguza madhara ya kimazingira, na kujenga biashara inayoboresha maisha huku ikisonga mbele mustakabali endelevu wa mzunguko.' },
       { title: 'Ushirikiano', icon: '🔗', body: 'Tunaamini athari ya kudumu hujengwa pamoja. Tunashirikiana na wachuuzi, wadau wa sekta, na jamii kujenga uaminifu, thamani ya pamoja, na suluhisho zinazoweza kupanuka.' },
-    ],
-    ndCallouts: [
-      { title: 'Uzalishaji wa Chuma Kipya', sub: 'Bila kuchanganya. Bila kupunguza ubora.' },
-      { title: 'Mabilleti ya Ubora wa Juu',  sub: 'Daraja la juu. Yametengenezwa ndani.' },
-      { title: 'Kuchukua Nafasi ya Uagizaji', sub: 'Kimejengwa kwa Tanzania. Kimepanuliwa kwa Afrika.' },
     ],
   },
 

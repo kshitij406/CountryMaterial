@@ -48,7 +48,7 @@ export default function ProductCard({ product, locale, t }: ProductCardProps) {
         <div className="absolute inset-0 bg-gradient-to-t from-navy/70 to-transparent" />
 
         {product.grade && (
-          <span className="absolute top-3 left-3 px-2.5 py-1 bg-navy/80 border border-gold/40 text-gold text-[10px] font-bold tracking-wide font-mono">
+          <span className="absolute top-3 left-3 px-2.5 py-1 border border-gold/40 text-gold text-[10px] font-bold tracking-wide font-mono" style={{ background: 'rgba(11,29,58,0.8)' }}>
             {product.grade}
           </span>
         )}

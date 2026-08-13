@@ -59,7 +59,7 @@ export default async function ShopPage({ params }: { params: { locale: string } 
   return (
     <>
       {/* Compact marketplace header */}
-      <section className="relative overflow-hidden pt-[110px] pb-[56px] px-8 lg:px-16 bg-navy" style={{ borderBottom: '1px solid rgba(216,224,231,.4)' }}>
+      <section data-theme="dark" className="relative overflow-hidden pt-[110px] pb-[56px] px-8 lg:px-16 bg-navy" style={{ borderBottom: '1px solid rgba(216,224,231,.4)' }}>
         <div className="absolute inset-0 bg-steel-texture opacity-40" aria-hidden="true" />
         <div className="relative max-w-[1440px] mx-auto">
           <div className="flex items-center gap-3.5 mb-6">
@@ -77,11 +77,11 @@ export default async function ShopPage({ params }: { params: { locale: string } 
 
       {/* ERP catalog banner */}
       {catalogUrl && (
-        <div style={{ background: '#07121F', borderBottom: '1px solid rgba(200,150,46,0.2)' }}>
+        <div style={{ background: 'var(--navy-deep)', borderBottom: '1px solid rgba(200,150,46,0.2)' }}>
           <div className="max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16 py-8 flex flex-col sm:flex-row sm:items-center gap-5 sm:gap-10">
             <div className="flex-1 min-w-0">
               <p className="font-mono text-[10px] tracking-[0.22em] uppercase mb-1" style={{ color: '#C8962E' }}>{t.erpEyebrow}</p>
-              <p className="text-[13.5px] leading-relaxed" style={{ color: 'rgba(255,255,255,0.5)' }}>
+              <p className="text-[13.5px] leading-relaxed" style={{ color: 'rgb(var(--inverse-rgb) / 0.6)' }}>
                 {t.erpBody}
               </p>
             </div>
@@ -108,7 +108,7 @@ export default async function ShopPage({ params }: { params: { locale: string } 
                 <span className="block h-px w-10 bg-gold" />
                 <span className="font-condensed text-[12px] tracking-[0.18em] uppercase text-gold">{t.catalogueEyebrow}</span>
               </div>
-              <h2 className="font-display text-[clamp(32px,4vw,56px)] leading-[0.9] tracking-[0.03em] uppercase text-white">
+              <h2 className="font-display text-[clamp(32px,4vw,56px)] leading-[0.9] tracking-[0.03em] uppercase text-inverse">
                 {t.productsHeading}
               </h2>
             </div>
@@ -195,14 +195,14 @@ export default async function ShopPage({ params }: { params: { locale: string } 
       </section>
 
       {/* Quote CTA */}
-      <section className="py-20 sm:py-24 text-center relative overflow-hidden" style={{ background: '#0B1D3A' }} aria-label={t.ctaLabel}>
+      <section className="py-20 sm:py-24 text-center relative overflow-hidden" style={{ background: 'var(--navy)' }} aria-label={t.ctaLabel}>
         <div className="absolute inset-0 bg-steel-texture" aria-hidden="true" />
         <div className="relative max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16">
           <div className="max-w-2xl mx-auto reveal">
-            <h2 className="font-black text-[clamp(28px,4vw,56px)] text-white leading-tight mb-5">
+            <h2 className="font-black text-[clamp(28px,4vw,56px)] text-inverse leading-tight mb-5">
               {t.ctaHeadingLine1}<br />{t.ctaHeadingLine2}
             </h2>
-            <p className="text-[15px] text-white/45 mb-10 leading-relaxed max-w-md mx-auto">
+            <p className="text-[15px] text-inverse/60 mb-10 leading-relaxed max-w-md mx-auto">
               {t.ctaBody}
             </p>
             <div className="flex flex-wrap justify-center gap-4">
@@ -210,7 +210,7 @@ export default async function ShopPage({ params }: { params: { locale: string } 
                 {t.ctaButton}
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
               </Link>
-              <a href="tel:+255768500555" className="inline-flex items-center gap-2 border border-white/20 hover:border-white/40 text-white font-semibold text-[15px] px-8 py-4 transition-all duration-200 cursor-pointer">
+              <a href="tel:+255768500555" className="inline-flex items-center gap-2 border border-inverse/20 hover:border-inverse/40 text-inverse font-semibold text-[15px] px-8 py-4 transition-all duration-200 cursor-pointer">
                 +255 768 500 555
               </a>
             </div>

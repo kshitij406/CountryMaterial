@@ -5,6 +5,7 @@ import '@/app/globals.css'
 import { getDictionary, htmlLang, isLocale, locales } from '@/i18n'
 import { localeAlternates, siteUrl } from '@/lib/metadata'
 import { localePath } from '@/i18n/config'
+import { themeInitScript } from '@/lib/theme'
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ['latin'],
@@ -62,7 +63,12 @@ export default function LocaleLayout({
     <html
       lang={htmlLang[params.locale]}
       className={`${plusJakartaSans.variable} ${spaceMono.variable}`}
+      suppressHydrationWarning
     >
+      <head>
+        {/* Blocking, runs before paint — sets data-theme so there's no flash of the wrong theme. */}
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript() }} />
+      </head>
       <body>{children}</body>
     </html>
   )

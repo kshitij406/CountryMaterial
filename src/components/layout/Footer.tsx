@@ -58,11 +58,11 @@ export default function Footer({
   ]
 
   return (
-    <footer style={{ background: '#0B1D3A', borderTop: '1px solid rgba(200,150,46,0.12)' }}>
+    <footer style={{ background: 'var(--navy)', borderTop: '1px solid rgba(200,150,46,0.12)' }}>
       <div className="max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16 pt-16 pb-10">
 
         {/* Main grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[1.6fr_1fr_1fr_1fr] gap-12 pb-14" style={{ borderBottom: '1px solid rgba(255,255,255,0.07)' }}>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[1.6fr_1fr_1fr_1fr] gap-12 pb-14" style={{ borderBottom: '1px solid rgb(var(--inverse-rgb) / 0.07)' }}>
 
           {/* Brand column */}
           <div>
@@ -75,14 +75,14 @@ export default function Footer({
                 className="h-10 w-auto object-contain"
               />
             </div>
-            <p className="text-[14px] text-white/40 leading-relaxed max-w-xs">
+            <p className="text-[14px] text-inverse/55 leading-relaxed max-w-xs">
               {t.tagline}
             </p>
             <div className="mt-7 flex flex-col gap-2">
-              <a href={`tel:${phone.replace(/\s/g, '')}`} className="text-[13px] text-white/50 hover:text-white transition-colors duration-200">
+              <a href={`tel:${phone.replace(/\s/g, '')}`} className="text-[13px] text-inverse/60 hover:text-inverse transition-colors duration-200">
                 {phone}
               </a>
-              <a href={`mailto:${email}`} className="text-[13px] text-white/50 hover:text-white transition-colors duration-200">
+              <a href={`mailto:${email}`} className="text-[13px] text-inverse/60 hover:text-inverse transition-colors duration-200">
                 {email}
               </a>
             </div>
@@ -110,27 +110,27 @@ export default function Footer({
 
         {/* Bottom bar */}
         <div className="mt-8 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
-          <span className="font-mono tracking-widest uppercase text-white/60">
+          <span className="font-mono tracking-widest uppercase text-inverse/60">
             © {new Date().getFullYear()} Country Materials Ltd. {t.rights}
           </span>
-          <div className="flex items-center gap-1.5 text-white/60">
+          <div className="flex items-center gap-1.5 text-inverse/60">
             <Link
               href={to('/privacy-policy')}
-              className="hover:text-white transition-colors duration-200"
+              className="hover:text-inverse transition-colors duration-200"
             >
               {t.privacy}
             </Link>
-            <span className="text-white/20" aria-hidden="true">·</span>
+            <span className="text-inverse/20" aria-hidden="true">·</span>
             <Link
               href={to('/terms')}
-              className="hover:text-white transition-colors duration-200"
+              className="hover:text-inverse transition-colors duration-200"
             >
               {t.terms}
             </Link>
-            <span className="text-white/20" aria-hidden="true">·</span>
+            <span className="text-inverse/20" aria-hidden="true">·</span>
             <Link
               href={to('/cookies')}
-              className="hover:text-white transition-colors duration-200"
+              className="hover:text-inverse transition-colors duration-200"
             >
               {t.cookies}
             </Link>
@@ -150,7 +150,7 @@ function FooterColumn({ title, links }: { title: string; links: { label: string;
           <li key={link.label}>
             <Link
               href={link.href}
-              className="text-[14px] text-white/45 hover:text-white transition-colors duration-200"
+              className="text-[14px] text-inverse/60 hover:text-inverse transition-colors duration-200"
             >
               {link.label}
             </Link>
@@ -166,7 +166,7 @@ function SocialLink({ href, label, children }: { href: string; label: string; ch
     <a
       href={href}
       aria-label={label}
-      className="w-9 h-9 flex items-center justify-center border border-white/10 text-white/40 hover:text-gold hover:border-gold/40 transition-all duration-200 cursor-pointer"
+      className="w-9 h-9 flex items-center justify-center border border-inverse/10 text-inverse/55 hover:text-gold hover:border-gold/40 transition-all duration-200 cursor-pointer"
     >
       {children}
     </a>

@@ -14,7 +14,7 @@ export default function CertificationsSection({ t }: { t: Dictionary['certificat
     <section
       className="relative overflow-hidden"
       id="certifications"
-      style={{ background: '#0B1D3A' }}
+      style={{ background: 'var(--navy)' }}
       aria-label={t.sectionLabel}
     >
       <div className="absolute inset-0 bg-steel-texture" aria-hidden="true" />
@@ -25,12 +25,12 @@ export default function CertificationsSection({ t }: { t: Dictionary['certificat
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.4fr] gap-12 items-end mb-16 reveal">
           <div>
             <p className="font-mono text-[11px] tracking-[0.2em] uppercase text-gold mb-4">{t.eyebrow}</p>
-            <h2 className="font-black text-[clamp(36px,5vw,72px)] text-white leading-none tracking-tight">
+            <h2 className="font-black text-[clamp(36px,5vw,72px)] text-inverse leading-none tracking-tight">
               {t.headingLine1}<br />{t.headingLine2}<br />
               <span className="text-gold">{t.headingLine3}</span>
             </h2>
           </div>
-          <p className="text-[16px] text-white/50 leading-relaxed max-w-lg self-end">
+          <p className="text-[16px] text-inverse/60 leading-relaxed max-w-lg self-end">
             {t.intro}
           </p>
         </div>
@@ -41,7 +41,7 @@ export default function CertificationsSection({ t }: { t: Dictionary['certificat
             <div
               key={cert.code}
               className="relative flex flex-col p-8 overflow-hidden cursor-default"
-              style={{ background: '#0B1D3A' }}
+              style={{ background: 'var(--navy)' }}
             >
               {/* Top accent line */}
               <div className="absolute top-0 left-0 right-0 h-0.5" style={{ background: cert.accent }} aria-hidden="true" />
@@ -59,9 +59,9 @@ export default function CertificationsSection({ t }: { t: Dictionary['certificat
                 {cert.code}
               </div>
 
-              <h3 className="font-black text-[16px] text-white mb-1">{cert.name}</h3>
-              <p className="font-mono text-[10px] font-semibold text-white/35 uppercase tracking-[0.15em] mb-5">{cert.authority}</p>
-              <p className="text-[13.5px] text-white/50 leading-relaxed flex-1">{cert.description}</p>
+              <h3 className="font-black text-[16px] text-inverse mb-1">{cert.name}</h3>
+              <p className="font-mono text-[10px] font-semibold text-inverse/55 uppercase tracking-[0.15em] mb-5">{cert.authority}</p>
+              <p className="text-[13.5px] text-inverse/60 leading-relaxed flex-1">{cert.description}</p>
 
               <div className="mt-6 flex items-center gap-2">
                 <svg viewBox="0 0 24 24" fill="none" className="w-4 h-4 flex-shrink-0" stroke={cert.accent} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
@@ -78,10 +78,10 @@ export default function CertificationsSection({ t }: { t: Dictionary['certificat
         >
           <div className="flex-1 max-w-sm">
             <p className="font-mono text-[10px] tracking-[0.2em] uppercase text-gold mb-4">{t.qcEyebrow}</p>
-            <h3 className="font-black text-[22px] text-white leading-tight mb-3">
+            <h3 className="font-black text-[22px] text-inverse leading-tight mb-3">
               {t.qcHeading}
             </h3>
-            <p className="text-[14px] text-white/40 leading-relaxed">
+            <p className="text-[14px] text-inverse/55 leading-relaxed">
               {t.qcBody}
             </p>
           </div>
@@ -91,7 +91,7 @@ export default function CertificationsSection({ t }: { t: Dictionary['certificat
                 <span className="w-5 h-5 flex items-center justify-center border border-gold/30 flex-shrink-0 mt-0.5" aria-hidden="true">
                   <svg viewBox="0 0 24 24" fill="none" className="w-3 h-3 text-gold" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
                 </span>
-                <span className="text-[13.5px] text-white/60">{point}</span>
+                <span className="text-[13.5px] text-inverse/70">{point}</span>
               </li>
             ))}
           </ul>

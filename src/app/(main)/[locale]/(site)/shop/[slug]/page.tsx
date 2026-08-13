@@ -57,7 +57,7 @@ export default async function ProductDetailPage({
   return (
     <>
       {/* Breadcrumb bar */}
-      <section className="relative pt-[110px] pb-8 px-8 lg:px-16 bg-navy" style={{ borderBottom: '1px solid rgba(216,224,231,.4)' }}>
+      <section data-theme="dark" className="relative pt-[110px] pb-8 px-8 lg:px-16 bg-navy" style={{ borderBottom: '1px solid rgba(216,224,231,.4)' }}>
         <div className="relative max-w-[1440px] mx-auto">
           <Link
             href={localePath(locale, '/shop')}
@@ -87,7 +87,7 @@ export default async function ProductDetailPage({
                 </div>
               )}
               {product.grade && (
-                <span className="absolute top-5 left-5 px-3 py-1.5 bg-navy/80 border border-gold/40 text-gold text-[11px] font-bold tracking-wide font-mono">
+                <span className="absolute top-5 left-5 px-3 py-1.5 border border-gold/40 text-gold text-[11px] font-bold tracking-wide font-mono" style={{ background: 'rgba(11,29,58,0.8)' }}>
                   {product.grade}
                 </span>
               )}

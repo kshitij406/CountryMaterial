@@ -111,7 +111,7 @@ export default function StatsSection({
     <section
       className="relative overflow-hidden"
       id="impact"
-      style={{ background: '#0B1D3A' }}
+      style={{ background: 'var(--navy)' }}
     >
       {/* Industrial texture overlays */}
       <div className="absolute inset-0 bg-steel-texture" aria-hidden="true" />
@@ -123,7 +123,7 @@ export default function StatsSection({
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-16 reveal">
           <div>
             <p className="font-mono text-[11px] tracking-[0.2em] uppercase text-gold mb-4">{t.eyebrow}</p>
-            <h2 className="font-black text-[clamp(36px,5.5vw,80px)] text-white leading-none tracking-tight">
+            <h2 className="font-black text-[clamp(36px,5.5vw,80px)] text-inverse leading-none tracking-tight">
               {t.headingLine1}<br />{t.headingLine2}
             </h2>
           </div>
@@ -140,7 +140,7 @@ export default function StatsSection({
                 <path d="M5 12h14M13 5l7 7-7 7" />
               </svg>
             </a>
-            <span className="hidden sm:block font-mono text-[10px] text-white/15 tracking-widest text-right leading-relaxed">
+            <span className="hidden sm:block font-mono text-[10px] text-inverse/30 tracking-widest text-right leading-relaxed">
               {t.established}<br />{t.city}
             </span>
           </div>
@@ -155,7 +155,7 @@ export default function StatsSection({
           {data.map((s, i) => (
             <div
               key={s.label}
-              className="group py-8 px-3 sm:px-4 transition-colors duration-300 hover:bg-white/[0.03]"
+              className="group py-8 px-3 sm:px-4 transition-colors duration-300 hover:bg-inverse/[0.03]"
               style={{
                 borderRight: i < data.length - 1 ? '1px solid rgba(200,150,46,0.10)' : undefined,
               }}
@@ -164,8 +164,8 @@ export default function StatsSection({
                 <Counter count={s.count} suffix={s.suffix} />
               </div>
               <div className="mt-3 w-6 h-px bg-gold/30 transition-all duration-300 group-hover:w-10 group-hover:bg-gold/60" />
-              <div className="mt-2.5 text-[10px] font-bold tracking-[0.18em] uppercase text-white/45">{s.label}</div>
-              {s.sub && <div className="mt-1 text-[11px] text-white/25 leading-snug max-w-[160px]">{s.sub}</div>}
+              <div className="mt-2.5 text-[10px] font-bold tracking-[0.18em] uppercase text-inverse/55">{s.label}</div>
+              {s.sub && <div className="mt-1 text-[11px] text-inverse/45 leading-snug max-w-[160px]">{s.sub}</div>}
             </div>
           ))}
         </div>
@@ -177,10 +177,10 @@ export default function StatsSection({
         >
           <div className="flex-shrink-0">
             <p className="font-mono text-[10px] tracking-[0.18em] uppercase text-gold/60 mb-1">{t.annualRevenue}</p>
-            <p className="font-mono font-bold text-[52px] text-white leading-none">$11.2M</p>
+            <p className="font-mono font-bold text-[52px] text-inverse leading-none">$11.2M</p>
           </div>
           <div className="flex-1 max-w-sm">
-            <p className="text-[14px] text-white/45 leading-relaxed">
+            <p className="text-[14px] text-inverse/60 leading-relaxed">
               {t.revenueBody}
             </p>
           </div>

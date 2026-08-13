@@ -82,6 +82,11 @@ export default function HeroSection({
   return (
     <section
       ref={containerRef}
+      // Always a dark photo/video band regardless of page theme — pin so the
+      // bg-navy base layer (visible while the video loads) and the white
+      // text on top of it don't go reactive-light along with the rest of
+      // the site.
+      data-theme="dark"
       className="relative min-h-screen flex flex-col overflow-hidden bg-navy"
       aria-label={t.sectionLabel}
     >

@@ -41,7 +41,7 @@ export default async function BlogPage({ params }: { params: { locale: string } 
 
   return (
     <>
-      <section className="relative overflow-hidden pt-[150px] pb-[90px] px-8 lg:px-16 bg-navy" style={{ borderBottom: '1px solid rgba(216,224,231,.4)' }}>
+      <section data-theme="dark" className="relative overflow-hidden pt-[150px] pb-[90px] px-8 lg:px-16 bg-navy" style={{ borderBottom: '1px solid rgba(216,224,231,.4)' }}>
         <div className="relative max-w-[1440px] mx-auto">
           <div className="flex items-center gap-3.5 mb-7">
             <span className="block h-px w-10 bg-gold" />

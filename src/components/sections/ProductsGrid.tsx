@@ -63,7 +63,7 @@ export default function ProductsGrid({
     <section
       className="relative overflow-hidden"
       id="products"
-      style={{ background: '#0B1D3A' }}
+      style={{ background: 'var(--navy)' }}
       aria-label={t.sectionLabel}
     >
       <div className="absolute inset-0 bg-steel-texture" aria-hidden="true" />
@@ -74,7 +74,7 @@ export default function ProductsGrid({
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-14 reveal">
           <div>
             <p className="font-mono text-[11px] tracking-[0.2em] uppercase text-gold mb-4">{t.eyebrow}</p>
-            <h2 className="font-black text-[clamp(36px,5vw,72px)] text-white leading-none tracking-tight">
+            <h2 className="font-black text-[clamp(36px,5vw,72px)] text-inverse leading-none tracking-tight">
               {t.headingLine1}<br />{t.headingLine2}
             </h2>
           </div>
@@ -98,7 +98,7 @@ export default function ProductsGrid({
                 key={product._id}
                 href={localePath(locale, product.slug ? `/shop/${product.slug.current}` : '/shop')}
                 className="group flex flex-col overflow-hidden transition-all duration-300 cursor-pointer"
-                style={{ background: '#0B1D3A' }}
+                style={{ background: 'var(--navy)' }}
               >
                 {/* Image */}
                 <div className="relative h-52 overflow-hidden flex-shrink-0" style={{ background: '#070F1E' }}>
@@ -116,11 +116,11 @@ export default function ProductsGrid({
                       </svg>
                     </div>
                   )}
-                  <div className="absolute inset-0 bg-gradient-to-t from-navy/80 via-transparent to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0B1D3A]/80 via-transparent to-transparent" />
 
                   {/* Grade badge */}
                   {product.grade && (
-                    <div className="absolute top-3 left-3 px-2.5 py-1 bg-navy/80 border border-gold/40 text-gold text-[10px] font-bold tracking-wide font-mono">
+                    <div className="absolute top-3 left-3 px-2.5 py-1 border border-gold/40 text-gold text-[10px] font-bold tracking-wide font-mono" style={{ background: 'rgba(11,29,58,0.8)' }}>
                       {product.grade}
                     </div>
                   )}
@@ -137,7 +137,7 @@ export default function ProductsGrid({
 
                 {/* Body */}
                 <div className="flex-1 flex flex-col p-6 border-t border-gold/10">
-                  <h3 className="text-[15px] font-black text-white leading-snug mb-3 group-hover:text-gold transition-colors duration-300">
+                  <h3 className="text-[15px] font-black text-inverse leading-snug mb-3 group-hover:text-gold transition-colors duration-300">
                     {product.name}
                   </h3>
 
@@ -145,15 +145,15 @@ export default function ProductsGrid({
                   {product.specSheet?.length && (
                     <div className="flex flex-wrap gap-4 mb-3">
                       {product.specSheet.slice(0, 2).map((spec) => (
-                        <span key={spec.key} className="font-mono text-[11px] text-white/40">
-                          {spec.key}: <strong className="text-white/60">{spec.value}</strong>
+                        <span key={spec.key} className="font-mono text-[11px] text-inverse/55">
+                          {spec.key}: <strong className="text-inverse/70">{spec.value}</strong>
                         </span>
                       ))}
                     </div>
                   )}
 
                   {product.description && (
-                    <p className="text-[13px] text-white/40 leading-relaxed line-clamp-2 flex-1">{product.description}</p>
+                    <p className="text-[13px] text-inverse/55 leading-relaxed line-clamp-2 flex-1">{product.description}</p>
                   )}
 
                   {/* Standards */}
@@ -168,11 +168,11 @@ export default function ProductsGrid({
                   )}
 
                   {/* Price + CTA */}
-                  <div className="mt-5 flex items-center justify-between pt-4 border-t border-white/[0.07]">
+                  <div className="mt-5 flex items-center justify-between pt-4 border-t border-inverse/[0.07]">
                     <div>
-                      {product.unit && <p className="text-[10px] text-white/30 font-mono uppercase tracking-wider">{product.unit}</p>}
+                      {product.unit && <p className="text-[10px] text-inverse/50 font-mono uppercase tracking-wider">{product.unit}</p>}
                       {displayPrice ? (
-                        <p className="text-[15px] font-bold text-white">{displayPrice}</p>
+                        <p className="text-[15px] font-bold text-inverse">{displayPrice}</p>
                       ) : (
                         <p className="text-[13px] font-semibold text-gold">{t.contactForPricing}</p>
                       )}
@@ -190,7 +190,7 @@ export default function ProductsGrid({
 
         {/* Bottom CTA */}
         <div className="mt-12 flex flex-col sm:flex-row items-center justify-between gap-6 px-7 py-6 border-l-4 border-gold reveal" style={{ background: 'rgba(200,150,46,0.06)' }}>
-          <p className="text-[14px] text-white/50 max-w-sm leading-relaxed">
+          <p className="text-[14px] text-inverse/60 max-w-sm leading-relaxed">
             {t.ctaBody}
           </p>
           <Link

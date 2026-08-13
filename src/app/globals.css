@@ -6,6 +6,39 @@
   :root {
     --ease-industrial: cubic-bezier(0.16, 1, 0.3, 1);
     --ease-smooth:     cubic-bezier(0.4, 0, 0.2, 1);
+
+    /* ── Theme tokens — dark is the default/fallback (matches the site's
+       original design exactly, zero risk for anyone who never toggles).
+       [data-theme="light"] below is the only thing that changes. Only the
+       navy-family backgrounds + the white text that sits on them react —
+       cream/sand/ink/slate stay literal in both themes, they're already
+       light content patches that work either way. ────────────────────── */
+    --navy:        #0B1D3A;   /* was navy.DEFAULT */
+    --navy-mid:    #1A1A2E;   /* was navy.mid / charcoal */
+    --navy-deep:   #070F1E;   /* was navy.deep */
+    --navy-scroll: 11, 29, 58; /* r,g,b of --navy, for the navbar scroll-state rgba() */
+    --inverse-rgb: 255 255 255; /* text/borders sitting on the navy family — space-separated for Tailwind's rgb(var(..) / alpha) syntax */
+  }
+
+  [data-theme='light'] {
+    --navy:        #E7ECF2;
+    --navy-mid:    #EDF1F6;
+    --navy-deep:   #F7F9FB;
+    --navy-scroll: 231, 236, 242;
+    --inverse-rgb: 26 26 46; /* = #1A1A2E, "ink" */
+  }
+
+  /* Explicit dark block (not just the bare :root default) — lets a subtree
+     pin itself dark regardless of the page-wide theme by carrying its own
+     data-theme="dark" (e.g. the navbar floating over the hero). Without
+     this, an element's data-theme="dark" attribute has no rule to match
+     and it just inherits whatever [data-theme='light'] set upstream. */
+  [data-theme='dark'] {
+    --navy:        #0B1D3A;
+    --navy-mid:    #1A1A2E;
+    --navy-deep:   #070F1E;
+    --navy-scroll: 11, 29, 58;
+    --inverse-rgb: 255 255 255;
   }
 
   html {
@@ -21,7 +54,7 @@
   }
 
   ::-webkit-scrollbar { width: 5px; }
-  ::-webkit-scrollbar-track { background: #0B1D3A; }
+  ::-webkit-scrollbar-track { background: var(--navy); }
   ::-webkit-scrollbar-thumb { background: #C8962E; border-radius: 4px; }
   ::selection { background-color: #C8962E; color: #fff; }
 }
@@ -84,7 +117,7 @@
 
 /* ─── Navbar scroll state ─────────────────────────────────────────────────── */
 header.nav-scrolled {
-  background-color: rgba(11, 29, 58, 0.97) !important;
+  background-color: rgba(var(--navy-scroll), 0.97) !important;
   backdrop-filter: blur(20px) !important;
   -webkit-backdrop-filter: blur(20px) !important;
   border-bottom-color: rgba(200, 150, 46, 0.15) !important;

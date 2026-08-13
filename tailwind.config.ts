@@ -11,10 +11,10 @@ const config: Config = {
       colors: {
         // ── Brand palette ────────────────────────────────────────────────────
         navy: {
-          DEFAULT: '#0B1D3A',   // primary dark background
-          mid:     '#1A1A2E',   // charcoal — stats, hero overlays
-          light:   '#2C3E50',   // slate — body text on light bg
-          deep:    '#070F1E',   // near-black for darkest sections
+          DEFAULT: 'var(--navy)',       // primary dark background — themed, see globals.css
+          mid:     'var(--navy-mid)',   // charcoal — stats, hero overlays — themed
+          light:   '#2C3E50',           // slate — body text on light bg — NOT themed
+          deep:    'var(--navy-deep)',  // near-black for darkest sections — themed
         },
         gold: {
           DEFAULT: '#C8962E',   // primary accent
@@ -35,7 +35,7 @@ const config: Config = {
           mid:     '#F0E8DC',   // warm mid
           border:  '#E8DED1',   // sand
         },
-        charcoal: '#1A1A2E',    // legacy alias
+        charcoal: 'var(--navy-mid)', // legacy alias — themed, same as navy.mid
         // ── Legacy aliases (keep classes working in old pages) ───────────────
         sky: {
           DEFAULT: '#C8962E',   // remapped to gold
@@ -56,8 +56,11 @@ const config: Config = {
         'text-primary':       '#1A1A2E',
         'text-secondary':     '#4A5568',
         'text-muted':         '#8896A7',
-        'text-inverse':       '#FAF7F2',
-        'text-inverse-muted': '#8896A7',
+        // Text/borders sitting directly on a navy-family background — tracks
+        // --inverse-rgb (see globals.css) so `text-inverse`, `text-inverse/70`,
+        // `border-inverse` etc. replace what used to be literal `text-white/NN`,
+        // and stay legible whichever theme flips the navy family light or dark.
+        inverse: 'rgb(var(--inverse-rgb) / <alpha-value>)',
       },
       fontFamily: {
         sans:      ['var(--font-jakarta)', 'system-ui', 'sans-serif'],

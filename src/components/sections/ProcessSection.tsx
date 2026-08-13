@@ -1,9 +1,13 @@
 import type { Dictionary } from '@/i18n'
 
-// Step copy lives in the dictionary; the number and icon are language-independent.
+// Step copy lives in the dictionary; the number, icon and accent are
+// language-independent. Accents give the strip some color variety instead
+// of five identical gold icons — same pattern as CERT_VISUALS in
+// CertificationsSection.
 const stepVisuals = [
   {
     number: '01',
+    accent: '#C8962E',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" className="w-7 h-7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
         <rect x="1" y="3" width="15" height="13" rx="1"/>
@@ -15,6 +19,7 @@ const stepVisuals = [
   },
   {
     number: '02',
+    accent: '#3B7DBF',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" className="w-7 h-7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
         <polygon points="12 2 2 7 12 12 22 7 12 2"/>
@@ -25,6 +30,7 @@ const stepVisuals = [
   },
   {
     number: '03',
+    accent: '#C0562E',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" className="w-7 h-7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
         <path d="M8.5 14.5A6.5 6.5 0 0 0 15 21a6.5 6.5 0 0 0 0-13C12 8 9 5 9 2c0 0-3.5 4-3.5 7.5a5.5 5.5 0 0 0 3 4.9"/>
@@ -34,6 +40,7 @@ const stepVisuals = [
   },
   {
     number: '04',
+    accent: '#2E7D54',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" className="w-7 h-7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
         <circle cx="12" cy="12" r="3"/>
@@ -43,6 +50,7 @@ const stepVisuals = [
   },
   {
     number: '05',
+    accent: '#A37824',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" className="w-7 h-7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
         <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
@@ -59,7 +67,7 @@ export default function ProcessSection({ t }: { t: Dictionary['process'] }) {
   return (
     <section
       className="relative overflow-hidden"
-      style={{ background: '#0B1D3A' }}
+      style={{ background: 'var(--navy)' }}
       id="process"
       aria-label={t.sectionLabel}
     >
@@ -72,12 +80,12 @@ export default function ProcessSection({ t }: { t: Dictionary['process'] }) {
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.4fr] gap-12 items-end mb-16 reveal">
           <div>
             <p className="font-mono text-[11px] tracking-[0.2em] uppercase text-gold mb-4">{t.eyebrow}</p>
-            <h2 className="font-black text-[clamp(36px,5vw,72px)] text-white leading-none tracking-tight">
+            <h2 className="font-black text-[clamp(36px,5vw,72px)] text-inverse leading-none tracking-tight">
               {t.headingLine1}<br />{t.headingLine2}<br />
               <span className="text-gold">{t.headingLine3}</span>
             </h2>
           </div>
-          <p className="text-[16px] text-white/50 leading-relaxed max-w-lg self-end">
+          <p className="text-[16px] text-inverse/60 leading-relaxed max-w-lg self-end">
             {t.intro}
           </p>
         </div>
@@ -88,21 +96,24 @@ export default function ProcessSection({ t }: { t: Dictionary['process'] }) {
             <div
               key={step.number}
               className="relative flex flex-col p-7 cursor-default group"
-              style={{ background: '#0B1D3A' }}
+              style={{ background: 'var(--navy)' }}
             >
               {/* Icon area */}
-              <div className="w-12 h-12 flex items-center justify-center border border-gold/25 text-gold mb-5 group-hover:border-gold/60 group-hover:text-gold-light transition-colors duration-300">
+              <div
+                className="w-12 h-12 flex items-center justify-center border mb-5 transition-colors duration-300"
+                style={{ borderColor: `${step.accent}40`, color: step.accent }}
+              >
                 {step.icon}
               </div>
 
               {/* Number */}
-              <p className="font-mono text-[10px] tracking-[0.22em] text-gold/40 mb-2">{step.number}</p>
+              <p className="font-mono text-[10px] tracking-[0.22em] mb-2" style={{ color: `${step.accent}80` }}>{step.number}</p>
 
               {/* Title */}
-              <h3 className="font-black text-[18px] text-white leading-tight mb-3">{step.title}</h3>
+              <h3 className="font-black text-[18px] text-inverse leading-tight mb-3">{step.title}</h3>
 
               {/* Description */}
-              <p className="text-[13px] text-white/45 leading-relaxed flex-1">{step.description}</p>
+              <p className="text-[13px] text-inverse/55 leading-relaxed flex-1">{step.description}</p>
 
               {/* Connector arrow (hidden on last) */}
               {i < steps.length - 1 && (
@@ -123,7 +134,7 @@ export default function ProcessSection({ t }: { t: Dictionary['process'] }) {
             <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/>
             <path d="M8 16H3v5"/>
           </svg>
-          <p className="text-[14px] text-white/55 leading-relaxed">
+          <p className="text-[14px] text-inverse/65 leading-relaxed">
             <strong className="font-bold text-gold">{t.calloutLead}</strong>{' '}
             {t.calloutBody}
           </p>

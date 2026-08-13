@@ -39,6 +39,7 @@ export default async function AboutPage({ params }: { params: { locale: string }
     <>
       {/* Page hero */}
       <section
+        data-theme="dark"
         className="relative min-h-[52vh] flex flex-col justify-end overflow-hidden pt-20"
         style={{ background: '#0B1D3A' }}
         aria-label={t.heroLabel}
@@ -83,16 +84,16 @@ export default async function AboutPage({ params }: { params: { locale: string }
       </section>
 
       {/* Our Story / Milestones */}
-      <section className="py-20 sm:py-28" style={{ background: '#0B1D3A' }} aria-label={t.milestonesLabel}>
+      <section className="py-20 sm:py-28" style={{ background: 'var(--navy)' }} aria-label={t.milestonesLabel}>
         <div className="max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
             <div className="reveal">
               <p className="font-mono text-[11px] tracking-[0.2em] uppercase text-gold mb-6">{t.ourStory}</p>
-              <h2 className="font-black text-[clamp(32px,4vw,60px)] text-white leading-none tracking-tight mb-8">
+              <h2 className="font-black text-[clamp(32px,4vw,60px)] text-inverse leading-none tracking-tight mb-8">
                 {t.storyLine1}<br />{t.storyLine2}<br />{t.storyLine3}
               </h2>
-              <p className="text-[15px] text-white/50 leading-relaxed mb-10">
+              <p className="text-[15px] text-inverse/60 leading-relaxed mb-10">
                 {typeof about?.body === 'string' ? about.body : t.storyBody}
               </p>
 
@@ -105,7 +106,7 @@ export default async function AboutPage({ params }: { params: { locale: string }
                     style={{ borderBottom: '1px solid rgba(200,150,46,0.1)' }}
                   >
                     <span className="font-mono font-bold text-[13px] text-gold">{m.year}</span>
-                    <p className="text-[14px] text-white/50 leading-relaxed">{m.event}</p>
+                    <p className="text-[14px] text-inverse/60 leading-relaxed">{m.event}</p>
                   </div>
                 ))}
               </div>
@@ -160,111 +161,11 @@ export default async function AboutPage({ params }: { params: { locale: string }
         </div>
       </section>
 
-      {/* Next Decade Development Plan */}
-      <section
-        className="relative overflow-hidden"
-        id="next-decade"
-        style={{ background: '#07121F' }}
-        aria-label={t.nextDecadeLabel}
-      >
-        {/* Top rule */}
-        <div className="absolute top-0 left-0 right-0 h-px bg-gold/20" />
-
-        <div className="max-w-[1440px] mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 min-h-[640px]">
-
-            {/* Image panel — left */}
-            <div className="relative min-h-[420px] lg:min-h-0 overflow-hidden order-2 lg:order-1">
-              <Image
-                src="/images/stock/iron-ore-smelting.jpg"
-                alt={t.furnaceAlt}
-                fill
-                className="object-cover"
-                sizes="(max-width: 1024px) 100vw, 50vw"
-              />
-              {/* Dark overlay */}
-              <div
-                className="absolute inset-0"
-                style={{ background: 'linear-gradient(to right, rgba(7,18,31,0.25) 0%, rgba(7,18,31,0.1) 100%)' }}
-              />
-              {/* Watermark */}
-              <span
-                className="absolute top-5 right-6 font-mono font-bold select-none pointer-events-none text-white/8"
-                style={{ fontSize: '96px', lineHeight: 1 }}
-                aria-hidden="true"
-              >
-                ND
-              </span>
-            </div>
-
-            {/* Content panel — right */}
-            <div
-              className="flex flex-col justify-center px-8 sm:px-12 lg:px-16 xl:px-20 py-20 lg:py-28 order-1 lg:order-2"
-              style={{ background: '#07121F' }}
-            >
-              {/* Eyebrow */}
-              <div className="flex items-center gap-4 mb-8 reveal">
-                <span className="block w-8 h-px bg-gold" aria-hidden="true" />
-                <span className="font-mono text-[10px] tracking-[0.30em] uppercase text-gold">
-                  {t.ndEyebrow}
-                </span>
-              </div>
-
-              {/* Headline */}
-              <h2 className="font-black text-[clamp(30px,3.5vw,52px)] text-white leading-tight tracking-tight mb-7 reveal">
-                {t.ndHeadingLine1}<br />
-                <span className="text-gold">{t.ndHeadingLine2}</span>
-              </h2>
-
-              {/* Body */}
-              <p className="text-[15px] text-white/55 leading-relaxed mb-8 max-w-lg reveal">
-                {t.ndBody}
-              </p>
-
-              {/* Pull quote */}
-              <blockquote
-                className="mb-10 pl-5 reveal"
-                style={{ borderLeft: '2px solid rgba(200,150,46,0.6)' }}
-              >
-                <p className="font-black text-[clamp(20px,2.2vw,28px)] text-gold leading-tight">
-                  {t.ndQuoteLine1}<br />{t.ndQuoteLine2}
-                </p>
-              </blockquote>
-
-              {/* Three callouts */}
-              <div
-                className="grid grid-cols-1 sm:grid-cols-3 reveal"
-                style={{ borderTop: '1px solid rgba(200,150,46,0.12)' }}
-              >
-                {t.ndCallouts.map((item, i) => (
-                  <div
-                    key={item.title}
-                    className="pt-6 pb-2 pr-4"
-                    style={{
-                      borderRight: i < 2 ? '1px solid rgba(200,150,46,0.10)' : undefined,
-                      paddingLeft: i > 0 ? '1rem' : undefined,
-                    }}
-                  >
-                    <p className="font-mono text-[10px] tracking-[0.18em] uppercase text-gold/70 mb-1">
-                      {item.title}
-                    </p>
-                    <p className="text-[12px] text-white/35 leading-snug">{item.sub}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Bottom rule */}
-        <div className="absolute bottom-0 left-0 right-0 h-px bg-gold/10" />
-      </section>
-
       {/* CTA */}
-      <section className="py-20 sm:py-24 text-center" style={{ background: '#0B1D3A' }} aria-label={t.ctaLabel}>
+      <section className="py-20 sm:py-24 text-center" style={{ background: 'var(--navy)' }} aria-label={t.ctaLabel}>
         <div className="max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16">
           <div className="max-w-2xl mx-auto reveal">
-            <h2 className="font-black text-[clamp(28px,4vw,56px)] text-white leading-tight mb-5">
+            <h2 className="font-black text-[clamp(28px,4vw,56px)] text-inverse leading-tight mb-5">
               {t.ctaHeadingLine1}<br />
               <span className="text-gold">{t.ctaHeadingLine2}</span>
             </h2>
@@ -272,7 +173,7 @@ export default async function AboutPage({ params }: { params: { locale: string }
               <Link href={localePath(locale, '/contact')} className="inline-flex items-center gap-2 bg-gold hover:bg-gold-light text-white font-bold text-[15px] px-8 py-4 transition-colors duration-200 cursor-pointer">
                 {t.contactUs}
               </Link>
-              <Link href={localePath(locale, '/shop')} className="inline-flex items-center gap-2 border border-white/20 hover:border-white/40 text-white font-semibold text-[15px] px-8 py-4 transition-all duration-200 cursor-pointer">
+              <Link href={localePath(locale, '/shop')} className="inline-flex items-center gap-2 border border-inverse/20 hover:border-inverse/40 text-inverse font-semibold text-[15px] px-8 py-4 transition-all duration-200 cursor-pointer">
                 {t.viewProducts}
               </Link>
             </div>

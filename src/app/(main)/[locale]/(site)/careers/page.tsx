@@ -53,7 +53,7 @@ export default async function CareersPage({ params }: { params: { locale: string
 
   return (
     <>
-      <section className="relative overflow-hidden pt-[110px] pb-[56px] px-8 lg:px-16 bg-navy" style={{ borderBottom: '1px solid rgba(216,224,231,.4)' }}>
+      <section data-theme="dark" className="relative overflow-hidden pt-[110px] pb-[56px] px-8 lg:px-16 bg-navy" style={{ borderBottom: '1px solid rgba(216,224,231,.4)' }}>
         <div className="relative max-w-[1440px] mx-auto">
           <div className="flex items-center gap-3.5 mb-6">
             <span className="block h-px w-10 bg-gold" />
@@ -76,7 +76,7 @@ export default async function CareersPage({ params }: { params: { locale: string
                 <span className="block h-px w-10 bg-gold" />
                 <span className="font-condensed text-[12px] tracking-[0.18em] uppercase text-gold">{t.openPositions}</span>
               </div>
-              <h2 className="font-display text-[clamp(32px,4vw,56px)] leading-[0.9] tracking-[0.03em] uppercase text-white">
+              <h2 className="font-display text-[clamp(32px,4vw,56px)] leading-[0.9] tracking-[0.03em] uppercase text-inverse">
                 {t.currentPlain} <span className="text-gold">{t.currentAccent}</span>
               </h2>
             </div>
@@ -162,8 +162,8 @@ export default async function CareersPage({ params }: { params: { locale: string
                 }}
               >
                 <span className="font-space text-[11px] text-gold/60 tracking-[0.2em]">{String(i + 1).padStart(2, '0')}</span>
-                <h3 className="font-display text-[clamp(22px,2vw,30px)] leading-[1] tracking-[0.04em] uppercase text-cream font-semibold mt-3 mb-3">{item.title}</h3>
-                <p className="font-barlow text-[15px] text-sand leading-[1.65]">{item.desc}</p>
+                <h3 className="font-display text-[clamp(22px,2vw,30px)] leading-[1] tracking-[0.04em] uppercase text-inverse font-semibold mt-3 mb-3">{item.title}</h3>
+                <p className="font-barlow text-[15px] text-inverse/70 leading-[1.65]">{item.desc}</p>
               </div>
             ))}
           </div>

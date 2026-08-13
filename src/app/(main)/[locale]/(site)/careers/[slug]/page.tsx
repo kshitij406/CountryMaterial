@@ -82,7 +82,7 @@ export default async function CareerDetailPage({
   return (
     <>
       {/* Hero */}
-      <section className="relative overflow-hidden pt-[150px] pb-[90px] px-8 lg:px-16 bg-navy" style={{ borderBottom: '1px solid rgba(216,224,231,.4)' }}>
+      <section data-theme="dark" className="relative overflow-hidden pt-[150px] pb-[90px] px-8 lg:px-16 bg-navy" style={{ borderBottom: '1px solid rgba(216,224,231,.4)' }}>
         <div className="relative max-w-[1440px] mx-auto">
           <Link
             href={localePath(locale, '/careers')}
@@ -169,18 +169,18 @@ export default async function CareerDetailPage({
 
             {/* Sidebar */}
             <div className="reveal">
-              <div className="p-8 bg-charcoal sticky top-28" style={{ border: '1px solid rgba(255,255,255,0.08)' }}>
-                <h3 className="font-display text-[22px] tracking-[0.04em] uppercase text-white mb-6">
+              <div className="p-8 bg-charcoal sticky top-28" style={{ border: '1px solid rgb(var(--inverse-rgb) / 0.08)' }}>
+                <h3 className="font-display text-[22px] tracking-[0.04em] uppercase text-inverse mb-6">
                   {isClosed ? t.closedHeading : t.applyHeading}
                 </h3>
 
                 {isClosed ? (
-                  <p className="font-barlow text-[14px] text-white/65 leading-[1.65] mb-6">
+                  <p className="font-barlow text-[14px] text-inverse/70 leading-[1.65] mb-6">
                     {t.closedBody}
                   </p>
                 ) : (
-                  <p className="font-barlow text-[14px] text-white/65 leading-[1.65] mb-6">
-                    {t.applyBodyPre} <strong className="text-white font-semibold">{post.title}</strong> {t.applyBodyPost}
+                  <p className="font-barlow text-[14px] text-inverse/70 leading-[1.65] mb-6">
+                    {t.applyBodyPre} <strong className="text-inverse font-semibold">{post.title}</strong> {t.applyBodyPost}
                   </p>
                 )}
 
@@ -201,29 +201,29 @@ export default async function CareerDetailPage({
                 </Link>
 
                 {closingLabel && !isClosed && (
-                  <div className="mt-6 pt-6 border-t border-white/10">
-                    <span className="font-space text-[11px] text-white/55 tracking-[0.15em] uppercase block mb-1">{t.closingDate}</span>
-                    <span className="font-barlow text-[14px] text-white/85">{closingLabel}</span>
+                  <div className="mt-6 pt-6 border-t border-inverse/10">
+                    <span className="font-space text-[11px] text-inverse/60 tracking-[0.15em] uppercase block mb-1">{t.closingDate}</span>
+                    <span className="font-barlow text-[14px] text-inverse/85">{closingLabel}</span>
                   </div>
                 )}
 
-                <div className="mt-6 pt-6 border-t border-white/10 space-y-3">
+                <div className="mt-6 pt-6 border-t border-inverse/10 space-y-3">
                   {post.department && (
                     <div>
-                      <span className="font-space text-[11px] text-white/55 tracking-[0.15em] uppercase block mb-1">{t.department}</span>
-                      <span className="font-barlow text-[14px] text-white/85">{post.department}</span>
+                      <span className="font-space text-[11px] text-inverse/60 tracking-[0.15em] uppercase block mb-1">{t.department}</span>
+                      <span className="font-barlow text-[14px] text-inverse/85">{post.department}</span>
                     </div>
                   )}
                   {post.location && (
                     <div>
-                      <span className="font-space text-[11px] text-white/55 tracking-[0.15em] uppercase block mb-1">{t.location}</span>
-                      <span className="font-barlow text-[14px] text-white/85">{post.location}</span>
+                      <span className="font-space text-[11px] text-inverse/60 tracking-[0.15em] uppercase block mb-1">{t.location}</span>
+                      <span className="font-barlow text-[14px] text-inverse/85">{post.location}</span>
                     </div>
                   )}
                   {post.employmentType && (
                     <div>
-                      <span className="font-space text-[11px] text-white/55 tracking-[0.15em] uppercase block mb-1">{t.type}</span>
-                      <span className="font-barlow text-[14px] text-white/85 capitalize">{post.employmentType.replace('-', ' ')}</span>
+                      <span className="font-space text-[11px] text-inverse/60 tracking-[0.15em] uppercase block mb-1">{t.type}</span>
+                      <span className="font-barlow text-[14px] text-inverse/85 capitalize">{post.employmentType.replace('-', ' ')}</span>
                     </div>
                   )}
                 </div>

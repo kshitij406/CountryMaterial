@@ -118,7 +118,7 @@ export default function ServicesSection({
               <Link
                 href={serviceHref(s)}
                 className="group relative overflow-hidden md:row-span-2 min-h-[380px] md:min-h-[560px] flex flex-col justify-end cursor-pointer"
-                style={{ background: '#0B1D3A' }}
+                style={{ background: 'var(--navy)' }}
               >
                 {imgSrc && (
                   <Image
@@ -130,15 +130,15 @@ export default function ServicesSection({
                 )}
                 <div className="absolute inset-0 bg-gradient-to-t from-navy via-navy/50 to-navy/10" />
                 {/* Watermark icon */}
-                <div className="absolute top-8 right-8 w-24 h-24 text-white/5 pointer-events-none select-none">
+                <div className="absolute top-8 right-8 w-24 h-24 text-inverse/5 pointer-events-none select-none">
                   {icon}
                 </div>
                 <div className="relative p-8">
                   <p className="font-mono text-[10px] tracking-[0.18em] text-gold/60 uppercase mb-3">01</p>
-                  <h3 className="font-black text-[clamp(24px,3vw,40px)] text-white leading-tight mb-3 group-hover:text-gold transition-colors duration-300">
+                  <h3 className="font-black text-[clamp(24px,3vw,40px)] text-inverse leading-tight mb-3 group-hover:text-gold transition-colors duration-300">
                     {s.title}
                   </h3>
-                  <p className="text-[14px] text-white/50 max-w-md leading-relaxed mb-4">{s.excerpt}</p>
+                  <p className="text-[14px] text-inverse/60 max-w-md leading-relaxed mb-4">{s.excerpt}</p>
                   {s.specChips?.length && (
                     <div className="flex flex-wrap gap-2">
                       {s.specChips.slice(0, 2).map((c) => (
@@ -162,7 +162,7 @@ export default function ServicesSection({
                 key={s._id}
                 href={serviceHref(s)}
                 className="group relative overflow-hidden min-h-[260px] flex flex-col justify-end cursor-pointer"
-                style={{ background: '#0B1D3A' }}
+                style={{ background: 'var(--navy)' }}
               >
                 {imgSrc && (
                   <Image
@@ -174,17 +174,17 @@ export default function ServicesSection({
                 )}
                 <div className="absolute inset-0 bg-gradient-to-t from-navy via-navy/60 to-transparent" />
                 {/* Watermark icon */}
-                <div className="absolute top-5 right-5 w-16 h-16 text-white/5 pointer-events-none select-none">
+                <div className="absolute top-5 right-5 w-16 h-16 text-inverse/5 pointer-events-none select-none">
                   {icon}
                 </div>
                 <div className="relative p-6">
                   <p className="font-mono text-[10px] tracking-[0.18em] text-gold/50 uppercase mb-2">
                     {String(idx + 2).padStart(2, '0')}
                   </p>
-                  <h3 className="font-black text-[20px] sm:text-[22px] text-white leading-tight mb-2 group-hover:text-gold transition-colors duration-300">
+                  <h3 className="font-black text-[20px] sm:text-[22px] text-inverse leading-tight mb-2 group-hover:text-gold transition-colors duration-300">
                     {s.title}
                   </h3>
-                  <p className="text-[13px] text-white/40 leading-relaxed line-clamp-2">{s.excerpt}</p>
+                  <p className="text-[13px] text-inverse/55 leading-relaxed line-clamp-2">{s.excerpt}</p>
                   {s.specChips?.length && (
                     <div className="flex flex-wrap gap-1.5 mt-3">
                       {s.specChips.slice(0, 2).map((c) => (
@@ -209,7 +209,7 @@ export default function ServicesSection({
                 key={s._id}
                 href={serviceHref(s)}
                 className="group relative overflow-hidden md:col-span-2 min-h-[200px] flex flex-col sm:flex-row cursor-pointer"
-                style={{ background: '#0B1D3A' }}
+                style={{ background: 'var(--navy)' }}
               >
                 {/* Image half */}
                 <div className="relative w-full sm:w-2/5 min-h-[200px] overflow-hidden flex-shrink-0">
@@ -224,17 +224,17 @@ export default function ServicesSection({
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent to-navy/90 sm:block hidden" />
                   <div className="absolute inset-0 bg-gradient-to-b from-transparent to-navy/90 sm:hidden" />
                   {/* Watermark icon */}
-                  <div className="absolute top-5 left-5 w-16 h-16 text-white/8 pointer-events-none select-none">
+                  <div className="absolute top-5 left-5 w-16 h-16 text-inverse/8 pointer-events-none select-none">
                     {icon}
                   </div>
                 </div>
                 {/* Content half */}
                 <div className="flex flex-col justify-center px-8 py-8 flex-1">
                   <p className="font-mono text-[10px] tracking-[0.18em] text-gold/50 uppercase mb-3">04</p>
-                  <h3 className="font-black text-[clamp(20px,2.5vw,34px)] text-white leading-tight mb-3 group-hover:text-gold transition-colors duration-300">
+                  <h3 className="font-black text-[clamp(20px,2.5vw,34px)] text-inverse leading-tight mb-3 group-hover:text-gold transition-colors duration-300">
                     {s.title}
                   </h3>
-                  <p className="text-[14px] text-white/45 max-w-md leading-relaxed mb-4">{s.excerpt}</p>
+                  <p className="text-[14px] text-inverse/60 max-w-md leading-relaxed mb-4">{s.excerpt}</p>
                   {s.specChips?.length && (
                     <div className="flex flex-wrap gap-2">
                       {s.specChips.slice(0, 2).map((c) => (

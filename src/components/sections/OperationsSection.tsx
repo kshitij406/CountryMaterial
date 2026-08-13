@@ -84,12 +84,12 @@ export default function OperationsSection({ t }: { t: Dictionary['operations'] }
             <div className="grid grid-cols-2 gap-3 mt-1">
               <div className="relative h-36 overflow-hidden">
                 <Image src="/images/company/group-photo.jpg" alt={t.teamAlt} fill className="object-cover" sizes="(max-width: 1024px) 50vw, 25vw" />
-                <div className="absolute inset-0 bg-navy/40" />
+                <div className="absolute inset-0" style={{ background: 'rgba(11,29,58,0.4)' }} />
                 <span className="absolute bottom-3 left-3 text-[11px] font-bold text-white/70 tracking-wide">{t.teamCaption}</span>
               </div>
               <div className="relative h-36 overflow-hidden">
                 <Image src="/images/stock/facility-main.jpg" alt={t.facilityAlt} fill className="object-cover" sizes="(max-width: 1024px) 50vw, 25vw" />
-                <div className="absolute inset-0 bg-navy/40" />
+                <div className="absolute inset-0" style={{ background: 'rgba(11,29,58,0.4)' }} />
                 <span className="absolute bottom-3 left-3 text-[11px] font-bold text-white/70 tracking-wide">{t.facilityCaption}</span>
               </div>
             </div>

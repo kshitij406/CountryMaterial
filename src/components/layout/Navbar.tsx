@@ -6,6 +6,7 @@ import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
 import LanguageToggle from './LanguageToggle'
+import ThemeToggle from './ThemeToggle'
 import { localePath, stripLocale, type Locale } from '@/i18n/config'
 import type { Dictionary } from '@/i18n'
 
@@ -55,6 +56,11 @@ export default function Navbar({ logoUrl, locale, t, phone }: NavbarProps) {
   return (
     <>
       <header
+        // Unscrolled/unopened, this floats transparent over the homepage hero,
+        // which is a fixed-dark photo band regardless of theme — pin dark so
+        // the nav text stays readable there. Once scrolled/open it gets a
+        // real (theme-reactive) background via .nav-scrolled, so drop the pin.
+        data-theme={(scrolled || menuOpen) ? undefined : 'dark'}
         className={cn(
           'fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b border-transparent',
           (scrolled || menuOpen) && 'nav-scrolled'
@@ -84,7 +90,7 @@ export default function Navbar({ logoUrl, locale, t, phone }: NavbarProps) {
                   'text-[13.5px] font-semibold tracking-wide transition-colors duration-200 cursor-pointer',
                   isActive(link.href)
                     ? 'text-gold-light'
-                    : 'text-white/70 hover:text-white'
+                    : 'text-inverse/70 hover:text-inverse'
                 )}
               >
                 {t[link.key]}
@@ -94,10 +100,11 @@ export default function Navbar({ logoUrl, locale, t, phone }: NavbarProps) {
 
           {/* Desktop right actions */}
           <div className="hidden lg:flex items-center gap-5">
+            <ThemeToggle label={t.switchTheme} />
             <LanguageToggle locale={locale} label={t.switchLanguage} />
             <a
               href={`tel:${tel.replace(/\s/g, '')}`}
-              className="text-[13px] font-medium text-white/50 hover:text-white/90 transition-colors duration-200"
+              className="text-[13px] font-medium text-inverse/60 hover:text-inverse/90 transition-colors duration-200"
             >
               {tel}
             </a>
@@ -109,12 +116,13 @@ export default function Navbar({ logoUrl, locale, t, phone }: NavbarProps) {
             </Link>
           </div>
 
-          {/* Mobile: language toggle sits outside the drawer so it is reachable without opening it */}
+          {/* Mobile: language + theme toggles sit outside the drawer so they're reachable without opening it */}
           <div className="lg:hidden flex items-center gap-2">
+            <ThemeToggle label={t.switchTheme} />
             <LanguageToggle locale={locale} label={t.switchLanguage} />
             <button
               onClick={() => setMenuOpen(!menuOpen)}
-              className="w-10 h-10 flex items-center justify-center text-white cursor-pointer rounded-lg hover:bg-white/10 transition-colors duration-200"
+              className="w-10 h-10 flex items-center justify-center text-inverse cursor-pointer rounded-lg hover:bg-inverse/10 transition-colors duration-200"
               aria-label={menuOpen ? t.closeMenu : t.openMenu}
               aria-expanded={menuOpen}
             >
@@ -144,8 +152,8 @@ export default function Navbar({ logoUrl, locale, t, phone }: NavbarProps) {
                 key={link.href}
                 href={localePath(locale, link.href)}
                 className={cn(
-                  'text-2xl font-bold py-5 border-b border-white/10 transition-colors duration-200 cursor-pointer',
-                  isActive(link.href) ? 'text-gold-light' : 'text-white/80 hover:text-white'
+                  'text-2xl font-bold py-5 border-b border-inverse/10 transition-colors duration-200 cursor-pointer',
+                  isActive(link.href) ? 'text-gold-light' : 'text-inverse/80 hover:text-inverse'
                 )}
               >
                 {t[link.key]}
@@ -155,10 +163,10 @@ export default function Navbar({ logoUrl, locale, t, phone }: NavbarProps) {
 
           <div className="mt-10 flex flex-col gap-4">
             <div className="flex flex-col gap-2">
-              <a href={`tel:${tel.replace(/\s/g, '')}`} className="text-white/50 text-sm font-medium hover:text-white/80 transition-colors">
+              <a href={`tel:${tel.replace(/\s/g, '')}`} className="text-inverse/60 text-sm font-medium hover:text-inverse/85 transition-colors">
                 {tel}
               </a>
-              <a href="mailto:info@countrymaterial.com" className="text-white/50 text-sm font-medium hover:text-white/80 transition-colors">
+              <a href="mailto:info@countrymaterial.com" className="text-inverse/60 text-sm font-medium hover:text-inverse/85 transition-colors">
                 info@countrymaterial.com
               </a>
             </div>

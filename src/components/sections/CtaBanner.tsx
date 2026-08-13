@@ -33,11 +33,11 @@ export default function CtaBanner({
       <div className="relative max-w-[1440px] mx-auto text-center reveal">
         <div className="flex items-center justify-center gap-3.5 mb-8">
           <span className="block h-px w-10 bg-gold" />
-          <span className="font-condensed text-[12px] tracking-[0.18em] uppercase text-white/90">{t.eyebrow}</span>
+          <span className="font-condensed text-[12px] tracking-[0.18em] uppercase text-inverse/90">{t.eyebrow}</span>
           <span className="block h-px w-10 bg-gold" />
         </div>
 
-        <h2 className="font-display text-[clamp(44px,7vw,96px)] leading-[0.9] tracking-[0.03em] uppercase text-white mb-8">
+        <h2 className="font-display text-[clamp(44px,7vw,96px)] leading-[0.9] tracking-[0.03em] uppercase text-inverse mb-8">
           {lines.map((line, i) => (
             <span key={i} className="block">
               {i === lines.length - 1 ? <span className="text-gold-light">{line}</span> : line}
@@ -46,7 +46,7 @@ export default function CtaBanner({
         </h2>
 
         {body && (
-          <p className="font-barlow text-[16px] text-white/75 max-w-2xl mx-auto mb-10 leading-[1.65]">
+          <p className="font-barlow text-[16px] text-inverse/75 max-w-2xl mx-auto mb-10 leading-[1.65]">
             {body}
           </p>
         )}
@@ -65,13 +65,13 @@ export default function CtaBanner({
           {secondary.href && (
             <Link
               href={secondary.href}
-              className="group relative inline-flex items-center gap-3 overflow-hidden px-[34px] py-[16px] border border-cream/70 text-white font-condensed text-[14px] tracking-[0.22em] uppercase font-semibold"
+              className="group relative inline-flex items-center gap-3 overflow-hidden px-[34px] py-[16px] border border-inverse/70 text-inverse font-condensed text-[14px] tracking-[0.22em] uppercase font-semibold"
             >
               <span className="relative z-10">{secondary.label}</span>
               <svg className="relative z-10 w-3.5 h-3.5 transition-all duration-300 group-hover:translate-x-1.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
                 <path d="M5 12h14M13 5l7 7-7 7" />
               </svg>
-              <span className="absolute inset-0 bg-cream/20 -translate-x-full group-hover:translate-x-0 transition-transform duration-500" style={{ transitionTimingFunction: 'cubic-bezier(.16,1,.3,1)' }} />
+              <span className="absolute inset-0 bg-inverse/20 -translate-x-full group-hover:translate-x-0 transition-transform duration-500" style={{ transitionTimingFunction: 'cubic-bezier(.16,1,.3,1)' }} />
             </Link>
           )}
         </div>
