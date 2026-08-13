@@ -229,22 +229,6 @@ export const en = {
     ] as readonly { name: string; description: string }[],
   },
 
-  nextDecade: {
-    sectionLabel: 'Next decade development plan',
-    eyebrow: 'The Next Decade',
-    headingLine1: "Tanzania's First",
-    headingLine2: 'Virgin Steel',
-    headingLine3: 'Facility.',
-    headingLine4: 'Coming Soon.',
-    planEyebrow: 'Development Plan',
-    planLine1: '2nd on the',
-    planLine2: 'continent.',
-    planNote: 'After South Africa',
-    body:
-      'Country Materials is building a state-of-the-art plant to produce virgin steel directly from iron ore — no mixing, no imports, no compromise on quality.',
-    learnMore: 'Learn More',
-  },
-
   clients: {
     sectionLabel: 'Partners and vendor network',
     logosLabel: 'Partner company logos',
@@ -568,15 +552,6 @@ export const en = {
     standForEyebrow: 'What We Stand For',
     principlesLine1: 'The principles',
     principlesLine2: 'behind the product.',
-    nextDecadeLabel: 'Next decade development plan',
-    furnaceAlt: 'Molten steel being processed in an industrial furnace',
-    ndEyebrow: 'Next Decade Development Plan',
-    ndHeadingLine1: 'The Future of Steel.',
-    ndHeadingLine2: 'Made in Tanzania.',
-    ndBody:
-      'The upcoming Country Materials factory will be a state-of-the-art facility equipped with the latest machinery to produce virgin steel in Tanzania. It will be the second facility on the African continent capable of producing virgin steel directly from iron ore, after South Africa. This process requires no mixing and produces superior quality steel billets — setting a new standard for locally manufactured construction materials. Our vision is to provide Tanzanians with the highest quality products that uplift local industry and compete directly against imported steel.',
-    ndQuoteLine1: '“Second only to South Africa.',
-    ndQuoteLine2: 'First in Tanzania.”',
     ctaLabel: 'Contact call to action',
     ctaHeadingLine1: 'Want to know more?',
     ctaHeadingLine2: "Let's talk.",
@@ -593,11 +568,6 @@ export const en = {
       { title: 'Planet',      icon: '🌍', body: 'We are committed to transforming waste into value, reducing environmental harm, and building a business that improves lives while advancing a sustainable, circular future.' },
       { title: 'Partnership', icon: '🔗', body: 'We believe lasting impact is built together. We collaborate with vendors, industry players, and communities to create trust, shared value, and scalable solutions.' },
     ] as readonly { title: string; icon: string; body: string }[],
-    ndCallouts: [
-      { title: 'Virgin Steel Production', sub: 'No mixing. No compromise.' },
-      { title: 'Superior Quality Billets', sub: 'Highest grade. Locally made.' },
-      { title: 'Import Replacement',       sub: 'Built for Tanzania. Scaled for Africa.' },
-    ] as readonly { title: string; sub: string }[],
   },
 
   impact: {
