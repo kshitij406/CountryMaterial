@@ -79,6 +79,18 @@ function Counter({ count, suffix = '' }: { count: number; suffix?: string }) {
   return <span ref={spanRef} className="tabular-nums">0{suffix}</span>
 }
 
+// Tailwind scans source text for class names, not evaluated JS — literal
+// strings in this lookup are picked up at build time even though they're
+// selected dynamically at runtime.
+const SM_COLS: Record<number, string> = {
+  1: 'sm:grid-cols-1', 2: 'sm:grid-cols-2', 3: 'sm:grid-cols-3',
+  4: 'sm:grid-cols-4', 5: 'sm:grid-cols-5', 6: 'sm:grid-cols-6',
+}
+const XL_COLS: Record<number, string> = {
+  1: 'xl:grid-cols-1', 2: 'xl:grid-cols-2', 3: 'xl:grid-cols-3',
+  4: 'xl:grid-cols-4', 5: 'xl:grid-cols-5', 6: 'xl:grid-cols-6',
+}
+
 export default function StatsSection({
   stats,
   locale,
@@ -89,6 +101,11 @@ export default function StatsSection({
   t: Dictionary['stats']
 }) {
   const data = stats?.length ? stats.slice(0, 6) : defaultStats(t)
+  // Columns track the actual item count — a fixed 6-col grid left narrow,
+  // clipped cells whenever fewer than 6 stats were configured (the "+" in
+  // "50,000+" was landing past the cell's overflow-hidden edge).
+  const smCols = SM_COLS[Math.min(data.length, 3)]
+  const xlCols = XL_COLS[Math.min(data.length, 6)]
 
   return (
     <section
@@ -103,36 +120,50 @@ export default function StatsSection({
       <div className="relative max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16 py-20 sm:py-28">
 
         {/* Header */}
-        <div className="flex items-end justify-between gap-6 mb-16 reveal">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-16 reveal">
           <div>
             <p className="font-mono text-[11px] tracking-[0.2em] uppercase text-gold mb-4">{t.eyebrow}</p>
             <h2 className="font-black text-[clamp(36px,5.5vw,80px)] text-white leading-none tracking-tight">
               {t.headingLine1}<br />{t.headingLine2}
             </h2>
           </div>
-          <span className="hidden sm:block font-mono text-[10px] text-white/15 tracking-widest text-right leading-relaxed">
-            {t.established}<br />{t.city}
-          </span>
+          <div className="flex flex-col items-start sm:items-end gap-4">
+            <a
+              href={localePath(locale, '/impact')}
+              className="group inline-flex items-center gap-2 font-mono text-[12px] tracking-[0.18em] uppercase text-gold hover:text-gold-light transition-colors duration-200"
+            >
+              {t.viewImpactReport}
+              <svg
+                className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1"
+                viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"
+              >
+                <path d="M5 12h14M13 5l7 7-7 7" />
+              </svg>
+            </a>
+            <span className="hidden sm:block font-mono text-[10px] text-white/15 tracking-widest text-right leading-relaxed">
+              {t.established}<br />{t.city}
+            </span>
+          </div>
         </div>
 
         {/* Stats grid — no stagger class here; stagger hides items while counter
             runs invisibly, so users see the final value snap in without animation. */}
         <div
-          className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-6"
+          className={`reveal grid grid-cols-2 ${smCols} ${xlCols}`}
           style={{ borderTop: '1px solid rgba(200,150,46,0.12)' }}
         >
           {data.map((s, i) => (
             <div
               key={s.label}
-              className="py-8 px-3 sm:px-4 overflow-hidden"
+              className="group py-8 px-3 sm:px-4 transition-colors duration-300 hover:bg-white/[0.03]"
               style={{
                 borderRight: i < data.length - 1 ? '1px solid rgba(200,150,46,0.10)' : undefined,
               }}
             >
-              <div className="font-mono font-bold text-[clamp(26px,3vw,52px)] leading-none text-gold whitespace-nowrap">
+              <div className="font-mono font-bold text-[clamp(24px,2.6vw,48px)] leading-none text-gold whitespace-nowrap">
                 <Counter count={s.count} suffix={s.suffix} />
               </div>
-              <div className="mt-3 w-6 h-px bg-gold/30" />
+              <div className="mt-3 w-6 h-px bg-gold/30 transition-all duration-300 group-hover:w-10 group-hover:bg-gold/60" />
               <div className="mt-2.5 text-[10px] font-bold tracking-[0.18em] uppercase text-white/45">{s.label}</div>
               {s.sub && <div className="mt-1 text-[11px] text-white/25 leading-snug max-w-[160px]">{s.sub}</div>}
             </div>
@@ -155,10 +186,10 @@ export default function StatsSection({
           </div>
           <a
             href={localePath(locale, '/about')}
-            className="flex-shrink-0 inline-flex items-center gap-2 text-gold hover:text-gold-light text-[13px] font-semibold transition-colors duration-200 cursor-pointer"
+            className="group flex-shrink-0 inline-flex items-center gap-2 text-gold hover:text-gold-light text-[13px] font-semibold transition-colors duration-200 cursor-pointer"
           >
             {t.ourStory}
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-1"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
           </a>
         </div>
       </div>

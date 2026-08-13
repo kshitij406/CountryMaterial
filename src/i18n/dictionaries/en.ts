@@ -84,6 +84,7 @@ export const en = {
     revenueBody:
       'Built on a vendor-first model that turns informal scrap networks into a formalised, technology-driven supply chain — creating value at every step.',
     ourStory: 'Our Story',
+    viewImpactReport: 'View Full Impact Report',
     defaults: [
       { label: 'Metric Tons Recycled', sub: 'Scrap processed to date' },
       { label: 'Active Clients',       sub: 'Contractors & industrial buyers' },
@@ -256,21 +257,6 @@ export const en = {
       { title: 'Instant Payment', body: 'Mobile money transfer on the spot. No waiting, no cheques.' },
       { title: 'App-Enabled',     body: 'Track pickups, verify weights, and manage your account from your phone.' },
     ] as readonly { title: string; body: string }[],
-  },
-
-  impactTeaser: {
-    sectionLabel: 'Impact teaser',
-    eyebrow: 'Our Impact',
-    headingLine1: 'Scrap turned into',
-    headingLine2: 'measurable change.',
-    fullReport: 'See Full Impact Report',
-    note: 'CO₂ figure calculated from verified recycling volume · World Steel Association conversion factors',
-    labels: {
-      tonnesRecycled: 'Tonnes Recycled',
-      co2Avoided: 'CO₂ Avoided',
-      vendorsOnboarded: 'Vendors Onboarded',
-      activeClients: 'Active Clients',
-    },
   },
 
   productCard: {

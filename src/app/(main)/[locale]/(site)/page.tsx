@@ -1,23 +1,12 @@
 import type { Metadata } from 'next'
-import dynamic from 'next/dynamic'
 import { client } from '@/sanity/lib/client'
-import { homepageQuery, siteSettingsQuery, impactPageQuery } from '@/sanity/lib/queries'
-import { calculateImpact } from '@/lib/impactCalculations'
+import { homepageQuery, siteSettingsQuery } from '@/sanity/lib/queries'
 import { buildMetadata } from '@/lib/metadata'
 import { getDictionary, isLocale, defaultLocale } from '@/i18n'
 import HeroSection from '@/components/HeroSection'
 import StatsSection from '@/components/sections/StatsSection'
 import ProcessSection from '@/components/sections/ProcessSection'
 import ServicesSection from '@/components/sections/ServicesSection'
-
-const ImpactTeaser = dynamic(() => import('@/components/ImpactTeaser'), {
-  ssr: false,
-  loading: () => (
-    <div className="h-32 bg-navy-deep flex items-center justify-center">
-      <span className="w-3 h-3 rounded-full bg-gold animate-pulse" />
-    </div>
-  ),
-})
 import ProductsGrid from '@/components/sections/ProductsGrid'
 import OperationsSection from '@/components/sections/OperationsSection'
 import CertificationsSection from '@/components/sections/CertificationsSection'
@@ -42,17 +31,10 @@ export default async function HomePage({ params }: { params: { locale: string } 
   const locale = isLocale(params.locale) ? params.locale : defaultLocale
   const t = getDictionary(locale)
 
-  const [hp, settings, impactRaw] = await Promise.all([
+  const [hp, settings] = await Promise.all([
     client.fetch(homepageQuery, { locale }).catch(() => null),
     client.fetch(siteSettingsQuery, { locale }).catch(() => null),
-    client.fetch(impactPageQuery, { locale }).catch(() => null),
   ])
-
-  const impact = calculateImpact(
-    impactRaw?.tonnesRecycled ?? 50000,
-    impactRaw?.reportingYear ?? 2024,
-    impactRaw?.manualOverrides ?? undefined,
-  )
 
   return (
     <>
@@ -71,15 +53,6 @@ export default async function HomePage({ params }: { params: { locale: string } 
       <ProcessSection t={t.process} />
 
       <ServicesSection services={hp?.featuredServices ?? undefined} locale={locale} t={t.services} />
-
-      <ImpactTeaser
-        tonnesRecycled={impact.tonnesRecycled}
-        co2AvoidedTonnes={impact.co2AvoidedTonnes}
-        vendorsOnboarded={5000}
-        activeClients={320}
-        locale={locale}
-        t={t.impactTeaser}
-      />
 
       <ProductsGrid products={hp?.featuredProducts ?? undefined} locale={locale} t={t.products} />
 

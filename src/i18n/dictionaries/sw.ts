@@ -92,6 +92,7 @@ export const sw: Dictionary = {
     revenueBody:
       'Umejengwa juu ya mtindo unaowaweka wachuuzi mbele, unaobadilisha mitandao isiyo rasmi ya chuma chakavu kuwa mnyororo wa ugavi ulio rasmi unaoendeshwa na teknolojia — ukitengeneza thamani katika kila hatua.',
     ourStory: 'Hadithi Yetu',
+    viewImpactReport: 'Ona Ripoti Kamili ya Athari',
     defaults: [
       { label: 'Tani za Chuma Zilizorejelezwa', sub: 'Chuma chakavu kilichochakatwa hadi sasa' },
       { label: 'Wateja Hai',                    sub: 'Wakandarasi na wanunuzi wa viwandani' },
@@ -264,21 +265,6 @@ export const sw: Dictionary = {
       { title: 'Malipo ya Papo Hapo', body: 'Uhamisho wa fedha kwa simu papo hapo. Bila kusubiri, bila hundi.' },
       { title: 'Kupitia Programu',   body: 'Fuatilia ukusanyaji, thibitisha uzito, na simamia akaunti yako kwa simu yako.' },
     ],
-  },
-
-  impactTeaser: {
-    sectionLabel: 'Muhtasari wa athari',
-    eyebrow: 'Athari Zetu',
-    headingLine1: 'Chuma chakavu kilichogeuzwa',
-    headingLine2: 'kuwa mabadiliko yanayopimika.',
-    fullReport: 'Ona Ripoti Kamili ya Athari',
-    note: 'Takwimu ya CO₂ imehesabiwa kutokana na kiasi kilichothibitishwa cha urejelezaji · Vigezo vya ubadilishaji vya World Steel Association',
-    labels: {
-      tonnesRecycled: 'Tani Zilizorejelezwa',
-      co2Avoided: 'CO₂ Iliyoepukwa',
-      vendorsOnboarded: 'Wachuuzi Waliosajiliwa',
-      activeClients: 'Wateja Hai',
-    },
   },
 
   productCard: {
