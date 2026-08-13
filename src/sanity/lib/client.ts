@@ -13,6 +13,18 @@ export const client = createClient({
   token: undefined,
 })
 
+/**
+ * Every localized query in queries.ts references $locale. Defaulting it here
+ * means any call site that has no locale in scope keeps returning English
+ * instead of throwing on a missing GROQ param.
+ *
+ * ponytail: one wrapper instead of threading a param through ~20 call sites.
+ * Pages that render Kiswahili pass { locale } explicitly and it wins over this.
+ */
+const baseFetch = client.fetch.bind(client)
+client.fetch = ((query: string, params?: Record<string, unknown>, options?: unknown) =>
+  baseFetch(query, { locale: 'en', ...(params ?? {}) }, options as never)) as typeof client.fetch
+
 const builder = imageUrlBuilder(client)
 
 export function urlFor(source: SanityImageSource) {

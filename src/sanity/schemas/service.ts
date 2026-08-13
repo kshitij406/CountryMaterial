@@ -7,8 +7,12 @@ export const service = defineType({
   icon: () => '🔧',
   fields: [
     defineField({ name: 'title', title: 'Service Title', type: 'string' }),
+
+    defineField({ name: 'titleSw', title: 'Service Title — Kiswahili', type: 'string', description: 'Leave blank to fall back to the English text.' }),
     defineField({ name: 'slug', title: 'Slug', type: 'slug', options: { source: 'title', maxLength: 96 } }),
     defineField({ name: 'excerpt', title: 'Short Description', type: 'text', rows: 2 }),
+
+    defineField({ name: 'excerptSw', title: 'Short Description — Kiswahili', type: 'text', rows: 2, description: 'Leave blank to fall back to the English text.' }),
     defineField({
       name: 'cardImage',
       title: 'Service Card Image',
@@ -40,6 +44,8 @@ export const service = defineType({
           type: 'object',
           fields: [
             defineField({ name: 'heading', title: 'Section Heading', type: 'string' }),
+
+            defineField({ name: 'headingSw', title: 'Section Heading — Kiswahili', type: 'string', description: 'Leave blank to fall back to the English text.' }),
             defineField({
               name: 'body',
               title: 'Section Body',
@@ -74,6 +80,8 @@ export const service = defineType({
           fields: [
             defineField({ name: 'stat', title: 'Stat', type: 'string' }),
             defineField({ name: 'label', title: 'Label', type: 'string' }),
+
+            defineField({ name: 'labelSw', title: 'Label — Kiswahili', type: 'string', description: 'Leave blank to fall back to the English text.' }),
           ],
           preview: { select: { title: 'stat', subtitle: 'label' } },
         },

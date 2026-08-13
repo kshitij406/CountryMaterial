@@ -2,15 +2,19 @@ import Link from 'next/link'
 import Image from 'next/image'
 import type { Product } from '@/types'
 import CopyLinkButton from '@/components/shop/CopyLinkButton'
+import { localePath, type Locale } from '@/i18n/config'
+import type { Dictionary } from '@/i18n'
 
 interface ProductCardProps {
   product: Product
+  locale: Locale
+  t: Dictionary['productCard']
 }
 
-export default function ProductCard({ product }: ProductCardProps) {
+export default function ProductCard({ product, locale, t }: ProductCardProps) {
   const imageUrl = product.images?.[0]?.asset?.url
   const slug = product.slug?.current ?? 'catalog-item'
-  const productPath = `/shop/${slug}`
+  const productPath = localePath(locale, `/shop/${slug}`)
 
   const displayPrice = product.priceRange
     ? `TZS ${product.priceRange}`
@@ -60,7 +64,7 @@ export default function ProductCard({ product }: ProductCardProps) {
               : 'bg-white/10 border-white/20 text-white/50'
           }`}>
             <span className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${product.inStock !== false ? 'bg-emerald-DEFAULT' : 'bg-white/30'}`} />
-            {product.inStock !== false ? 'In stock' : 'Contact us'}
+            {product.inStock !== false ? t.inStock : t.contactUs}
           </span>
         </div>
       </div>
@@ -106,7 +110,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           {displayPrice ? (
             <p className="text-[15px] font-bold text-ink">{displayPrice}</p>
           ) : (
-            <p className="text-[13px] font-semibold text-gold-dark">Contact for pricing</p>
+            <p className="text-[13px] font-semibold text-gold-dark">{t.contactForPricing}</p>
           )}
         </div>
       </div>
@@ -117,13 +121,15 @@ export default function ProductCard({ product }: ProductCardProps) {
         <button
           type="button"
           disabled
-          title="Online checkout coming soon"
+          title={t.checkoutSoon}
           className="inline-flex items-center justify-center gap-1.5 bg-gold text-white text-[12px] font-semibold px-4 py-2.5 opacity-50 cursor-not-allowed"
         >
-          Buy Now
+          {t.buyNow}
         </button>
         <CopyLinkButton
           path={productPath}
+          label={t.copyLink}
+          copiedLabel={t.copied}
           className="inline-flex items-center justify-center gap-1.5 border border-gold/40 text-gold-dark text-[12px] font-semibold px-4 py-2.5 transition-colors duration-200 hover:bg-gold/10 cursor-pointer"
         />
       </div>

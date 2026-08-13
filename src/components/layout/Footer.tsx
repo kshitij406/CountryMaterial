@@ -1,28 +1,10 @@
 import Link from 'next/link'
 import Image from 'next/image'
+import { localePath, type Locale } from '@/i18n/config'
+import type { Dictionary } from '@/i18n'
 
-const colCompany = [
-  { label: 'About Us',       href: '/about' },
-  { label: 'Our Impact',     href: '/impact' },
-  { label: 'Operations',     href: '/about#operations' },
-  { label: 'Certifications', href: '/about#certifications' },
-  { label: 'Careers',        href: '/careers' },
-]
-
-const colServices = [
-  { label: 'Scrap Collection',    href: '/services/waste-management' },
-  { label: 'Steel Manufacturing', href: '/services/steel' },
-  { label: 'Rebar & Billets',     href: '/shop' },
-  { label: 'Fleet Logistics',     href: '/services/transportation' },
-]
-
-const colBranches = [
-  { label: 'Dar es Salaam — HQ', href: '/contact' },
-  { label: 'Mbeya',              href: '/contact' },
-  { label: 'Dodoma',             href: '/contact' },
-  { label: 'Kahama',             href: '/contact' },
-  { label: 'Pwani · Kilimanjaro', href: '/contact' },
-]
+// Branch names are place names — they read the same in both languages.
+const BRANCH_CITIES = ['Mbeya', 'Dodoma', 'Kahama', 'Pwani · Kilimanjaro']
 
 interface SocialLinks {
   facebook?: string
@@ -41,10 +23,39 @@ interface FooterContact {
   socialLinks?: SocialLinks
 }
 
-export default function Footer({ contact }: { contact?: FooterContact }) {
+export default function Footer({
+  contact,
+  locale,
+  t,
+}: {
+  contact?: FooterContact
+  locale: Locale
+  t: Dictionary['footer']
+}) {
   const phone = contact?.phone ?? '+255 768 500 555'
   const email = contact?.email ?? 'info@countrymaterial.com'
   const social = contact?.socialLinks
+  const to = (path: string) => localePath(locale, path)
+
+  const colCompany = [
+    { label: t.aboutUs,        href: to('/about') },
+    { label: t.ourImpact,      href: to('/impact') },
+    { label: t.operations,     href: to('/about') + '#operations' },
+    { label: t.certifications, href: to('/about') + '#certifications' },
+    { label: t.careers,        href: to('/careers') },
+  ]
+
+  const colServices = [
+    { label: t.scrapCollection,    href: to('/services/waste-management') },
+    { label: t.steelManufacturing, href: to('/services/steel') },
+    { label: t.rebarBillets,       href: to('/shop') },
+    { label: t.fleetLogistics,     href: to('/services/transportation') },
+  ]
+
+  const colBranches = [
+    { label: t.hq, href: to('/contact') },
+    ...BRANCH_CITIES.map((city) => ({ label: city, href: to('/contact') })),
+  ]
 
   return (
     <footer style={{ background: '#0B1D3A', borderTop: '1px solid rgba(200,150,46,0.12)' }}>
@@ -65,7 +76,7 @@ export default function Footer({ contact }: { contact?: FooterContact }) {
               />
             </div>
             <p className="text-[14px] text-white/40 leading-relaxed max-w-xs">
-              Tanzania&apos;s leading circular steel ecosystem — from scrap collection to BS 500-certified construction steel. Founded 2022, Dar es Salaam.
+              {t.tagline}
             </p>
             <div className="mt-7 flex flex-col gap-2">
               <a href={`tel:${phone.replace(/\s/g, '')}`} className="text-[13px] text-white/50 hover:text-white transition-colors duration-200">
@@ -92,36 +103,36 @@ export default function Footer({ contact }: { contact?: FooterContact }) {
             </div>
           </div>
 
-          <FooterColumn title="Company"  links={colCompany} />
-          <FooterColumn title="Services" links={colServices} />
-          <FooterColumn title="Branches" links={colBranches} />
+          <FooterColumn title={t.company}  links={colCompany} />
+          <FooterColumn title={t.services} links={colServices} />
+          <FooterColumn title={t.branches} links={colBranches} />
         </div>
 
         {/* Bottom bar */}
         <div className="mt-8 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
           <span className="font-mono tracking-widest uppercase text-white/60">
-            © {new Date().getFullYear()} Country Materials Ltd. All rights reserved.
+            © {new Date().getFullYear()} Country Materials Ltd. {t.rights}
           </span>
           <div className="flex items-center gap-1.5 text-white/60">
             <Link
-              href="/privacy-policy"
+              href={to('/privacy-policy')}
               className="hover:text-white transition-colors duration-200"
             >
-              Privacy Policy
+              {t.privacy}
             </Link>
             <span className="text-white/20" aria-hidden="true">·</span>
             <Link
-              href="/terms"
+              href={to('/terms')}
               className="hover:text-white transition-colors duration-200"
             >
-              Terms &amp; Conditions
+              {t.terms}
             </Link>
             <span className="text-white/20" aria-hidden="true">·</span>
             <Link
-              href="/cookies"
+              href={to('/cookies')}
               className="hover:text-white transition-colors duration-200"
             >
-              Cookie Policy
+              {t.cookies}
             </Link>
           </div>
         </div>

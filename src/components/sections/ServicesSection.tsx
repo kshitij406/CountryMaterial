@@ -1,5 +1,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
+import { localePath, type Locale } from '@/i18n/config'
+import type { Dictionary } from '@/i18n'
 
 interface Service {
   _id: string
@@ -11,36 +13,16 @@ interface Service {
   specChips?: string[]
 }
 
-const DEFAULT_SERVICES: Service[] = [
-  {
-    _id: '1',
-    title: 'Scrap Collection',
-    excerpt: "Tanzania's largest organised scrap collection network. 5,000+ vendors, verified daily.",
-    icon: 'waste',
-    specChips: ['5,000+ vendors', 'Mobile-enabled'],
-  },
-  {
-    _id: '2',
-    title: 'Steel Manufacturing',
-    excerpt: 'Electric arc furnace producing BS 500B-certified TMT rebar and billets from recycled scrap.',
-    icon: 'steel',
-    specChips: ['BS 500B', 'TBS certified'],
-  },
-  {
-    _id: '3',
-    title: 'Fleet Logistics',
-    excerpt: '30+ owned trucks. 24/7 operations. Same-day dispatch across 5 regional branches.',
-    icon: 'logistics',
-    specChips: ['30+ vehicles', 'Same-day dispatch'],
-  },
-  {
-    _id: '4',
-    title: 'Vendor Platform',
-    excerpt: 'Proprietary mobile platform connecting scrap vendors, buyers, and operations on one network.',
-    icon: 'hardware',
-    specChips: ['Digital payments', 'Trade accounts'],
-  },
-]
+/** Fallbacks shown when Sanity has no featured services configured. */
+function defaultServices(t: Dictionary['services']): Service[] {
+  const d = t.defaults
+  return [
+    { _id: '1', icon: 'waste',     title: d.scrap.title,     excerpt: d.scrap.excerpt,     specChips: [...d.scrap.chips] },
+    { _id: '2', icon: 'steel',     title: d.steel.title,     excerpt: d.steel.excerpt,     specChips: [...d.steel.chips] },
+    { _id: '3', icon: 'logistics', title: d.logistics.title, excerpt: d.logistics.excerpt, specChips: [...d.logistics.chips] },
+    { _id: '4', icon: 'hardware',  title: d.vendor.title,    excerpt: d.vendor.excerpt,    specChips: [...d.vendor.chips] },
+  ]
+}
 
 const SERVICE_IMAGES: Record<string, string> = {
   waste:     '/images/company/wastee.jpg',
@@ -81,31 +63,41 @@ const SERVICE_ICONS: Record<string, React.ReactNode> = {
   ),
 }
 
-export default function ServicesSection({ services }: { services?: Service[] }) {
-  const data = services?.length ? services.slice(0, 4) : DEFAULT_SERVICES
+export default function ServicesSection({
+  services,
+  locale,
+  t,
+}: {
+  services?: Service[]
+  locale: Locale
+  t: Dictionary['services']
+}) {
+  const data = services?.length ? services.slice(0, 4) : defaultServices(t)
+  const serviceHref = (s: Service) =>
+    localePath(locale, s.slug ? `/services/${s.slug.current}` : '/services')
 
   return (
     <section
       className="relative overflow-hidden"
       id="services"
       style={{ background: '#FAF7F2' }}
-      aria-label="Our services"
+      aria-label={t.sectionLabel}
     >
       <div className="max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16 py-20 sm:py-28">
 
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-14 reveal">
           <div>
-            <p className="font-mono text-[11px] tracking-[0.2em] uppercase text-gold mb-4">What We Do</p>
+            <p className="font-mono text-[11px] tracking-[0.2em] uppercase text-gold mb-4">{t.eyebrow}</p>
             <h2 className="font-black text-[clamp(36px,5vw,72px)] text-ink leading-none tracking-tight">
-              The complete<br />steel chain.
+              {t.headingLine1}<br />{t.headingLine2}
             </h2>
           </div>
           <Link
-            href="/services"
+            href={localePath(locale, '/services')}
             className="flex-shrink-0 self-start sm:self-end inline-flex items-center gap-2 text-gold hover:text-gold-dark font-semibold text-[13px] border-b border-gold/30 hover:border-gold pb-0.5 transition-all duration-200 cursor-pointer"
           >
-            All services
+            {t.allServices}
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
           </Link>
         </div>
@@ -124,7 +116,7 @@ export default function ServicesSection({ services }: { services?: Service[] }) 
             const icon = SERVICE_ICONS[s.icon ?? 'steel']
             return (
               <Link
-                href={s.slug ? `/services/${s.slug.current}` : '/services'}
+                href={serviceHref(s)}
                 className="group relative overflow-hidden md:row-span-2 min-h-[380px] md:min-h-[560px] flex flex-col justify-end cursor-pointer"
                 style={{ background: '#0B1D3A' }}
               >
@@ -168,7 +160,7 @@ export default function ServicesSection({ services }: { services?: Service[] }) 
             return (
               <Link
                 key={s._id}
-                href={s.slug ? `/services/${s.slug.current}` : '/services'}
+                href={serviceHref(s)}
                 className="group relative overflow-hidden min-h-[260px] flex flex-col justify-end cursor-pointer"
                 style={{ background: '#0B1D3A' }}
               >
@@ -215,7 +207,7 @@ export default function ServicesSection({ services }: { services?: Service[] }) 
             return (
               <Link
                 key={s._id}
-                href={s.slug ? `/services/${s.slug.current}` : '/services'}
+                href={serviceHref(s)}
                 className="group relative overflow-hidden md:col-span-2 min-h-[200px] flex flex-col sm:flex-row cursor-pointer"
                 style={{ background: '#0B1D3A' }}
               >

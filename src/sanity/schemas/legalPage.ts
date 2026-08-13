@@ -12,6 +12,12 @@ export const legalPage = defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: 'titleSw',
+      title: 'Title — Kiswahili',
+      type: 'string',
+      description: 'Leave blank to fall back to the English text.',
+    }),
+    defineField({
       name: 'slug',
       title: 'Slug',
       type: 'slug',
@@ -28,6 +34,13 @@ export const legalPage = defineType({
       title: 'Body',
       type: 'array',
       of: [{ type: 'block' }],
+    }),
+    defineField({
+      name: 'bodySw',
+      title: 'Body — Kiswahili',
+      type: 'array',
+      of: [{ type: 'block' }],
+      description: 'Leave blank to fall back to the English text.',
     }),
   ],
 })

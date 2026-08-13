@@ -1,43 +1,43 @@
 import Image from 'next/image'
+import type { Dictionary } from '@/i18n'
 
-const branches = [
-  { name: 'Dar es Salaam', role: 'Headquarters & Main Yard', flag: 'HQ' },
-  { name: 'Mbeya',         role: 'Southern Highlands Hub',   flag: 'MB' },
-  { name: 'Dodoma',        role: 'Central Region Branch',    flag: 'DO' },
-  { name: 'Kahama',        role: 'Lake Zone Operations',     flag: 'KA' },
-  { name: 'Pwani',         role: 'Coastal Collection Hub',   flag: 'PW' },
-  { name: 'Kilimanjaro',   role: 'Northern Zone Branch',     flag: 'KL' },
+// Place names and figures are language-independent; roles/labels come from the dictionary.
+const BRANCHES = [
+  { name: 'Dar es Salaam', flag: 'HQ' },
+  { name: 'Mbeya',         flag: 'MB' },
+  { name: 'Dodoma',        flag: 'DO' },
+  { name: 'Kahama',        flag: 'KA' },
+  { name: 'Pwani',         flag: 'PW' },
+  { name: 'Kilimanjaro',   flag: 'KL' },
 ]
 
-const fleetStats = [
-  { value: '30+',   label: 'Collection trucks' },
-  { value: '5',     label: 'Regional yards' },
-  { value: '24hrs', label: 'Operations' },
-  { value: '104',   label: 'Team members' },
-]
+const FLEET_VALUES = ['30+', '5', '24hrs', '104']
 
-export default function OperationsSection() {
+export default function OperationsSection({ t }: { t: Dictionary['operations'] }) {
+  const branches = BRANCHES.map((b, i) => ({ ...b, role: t.branchRoles[i] }))
+  const fleetStats = FLEET_VALUES.map((value, i) => ({ value, label: t.fleetStats[i] }))
+
   return (
     <section
       className="relative overflow-hidden"
       id="operations"
       style={{ background: '#FAF7F2' }}
-      aria-label="Operations and fleet"
+      aria-label={t.sectionLabel}
     >
       <div className="max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16 py-20 sm:py-28">
 
         {/* Asymmetric header */}
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.4fr] gap-12 items-end mb-16 reveal">
           <div>
-            <p className="font-mono text-[11px] tracking-[0.2em] uppercase text-gold mb-4">Operations & Fleet</p>
+            <p className="font-mono text-[11px] tracking-[0.2em] uppercase text-gold mb-4">{t.eyebrow}</p>
             <h2 className="font-black text-[clamp(36px,5vw,72px)] text-ink leading-none tracking-tight">
-              5 branches.<br />
-              <span className="text-gold">30+ vehicles.</span><br />
-              24 hours.
+              {t.headingLine1}<br />
+              <span className="text-gold">{t.headingLine2}</span><br />
+              {t.headingLine3}
             </h2>
           </div>
           <p className="text-[16px] text-slate/65 leading-relaxed max-w-lg self-end">
-            Our logistics network runs around the clock — collecting scrap, delivering steel, and keeping Tanzania&apos;s construction sector moving without interruption.
+            {t.intro}
           </p>
         </div>
 
@@ -48,15 +48,15 @@ export default function OperationsSection() {
           <div className="relative overflow-hidden min-h-[360px] reveal group">
             <Image
               src="/images/company/trans-large.jpg"
-              alt="Country Materials fleet vehicles"
+              alt={t.fleetAlt}
               fill
               className="object-cover transition-transform duration-700 group-hover:scale-105"
               sizes="(max-width: 1024px) 100vw, 50vw"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-navy/80 via-navy/20 to-transparent" />
             <div className="absolute bottom-0 left-0 right-0 p-8">
-              <p className="font-mono text-[10px] tracking-[0.18em] uppercase text-gold/60 mb-1">Our Fleet</p>
-              <p className="font-black text-[20px] text-white leading-tight">30+ owned vehicles — scrap in, steel out.</p>
+              <p className="font-mono text-[10px] tracking-[0.18em] uppercase text-gold/60 mb-1">{t.fleetEyebrow}</p>
+              <p className="font-black text-[20px] text-white leading-tight">{t.fleetCaption}</p>
             </div>
           </div>
 
@@ -83,14 +83,14 @@ export default function OperationsSection() {
             {/* Company photo grid */}
             <div className="grid grid-cols-2 gap-3 mt-1">
               <div className="relative h-36 overflow-hidden">
-                <Image src="/images/company/group-photo.jpg" alt="Country Materials team" fill className="object-cover" sizes="(max-width: 1024px) 50vw, 25vw" />
+                <Image src="/images/company/group-photo.jpg" alt={t.teamAlt} fill className="object-cover" sizes="(max-width: 1024px) 50vw, 25vw" />
                 <div className="absolute inset-0 bg-navy/40" />
-                <span className="absolute bottom-3 left-3 text-[11px] font-bold text-white/70 tracking-wide">Our Team · 104 staff</span>
+                <span className="absolute bottom-3 left-3 text-[11px] font-bold text-white/70 tracking-wide">{t.teamCaption}</span>
               </div>
               <div className="relative h-36 overflow-hidden">
-                <Image src="/images/stock/facility-main.jpg" alt="Country Materials main facility" fill className="object-cover" sizes="(max-width: 1024px) 50vw, 25vw" />
+                <Image src="/images/stock/facility-main.jpg" alt={t.facilityAlt} fill className="object-cover" sizes="(max-width: 1024px) 50vw, 25vw" />
                 <div className="absolute inset-0 bg-navy/40" />
-                <span className="absolute bottom-3 left-3 text-[11px] font-bold text-white/70 tracking-wide">Main Facility · DSM</span>
+                <span className="absolute bottom-3 left-3 text-[11px] font-bold text-white/70 tracking-wide">{t.facilityCaption}</span>
               </div>
             </div>
           </div>

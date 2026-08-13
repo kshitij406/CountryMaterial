@@ -1,8 +1,9 @@
-const steps = [
+import type { Dictionary } from '@/i18n'
+
+// Step copy lives in the dictionary; the number and icon are language-independent.
+const stepVisuals = [
   {
     number: '01',
-    title: 'Collection',
-    description: '5,000+ registered vendors bring scrap to our collection points. Mobile app — transparent weight, fair price, instant mobile money.',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" className="w-7 h-7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
         <rect x="1" y="3" width="15" height="13" rx="1"/>
@@ -14,8 +15,6 @@ const steps = [
   },
   {
     number: '02',
-    title: 'Sorting',
-    description: 'Material graded at our yards. Contaminants removed. Every batch logged by weight, type, and source vendor. Chain of custody intact.',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" className="w-7 h-7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
         <polygon points="12 2 2 7 12 12 22 7 12 2"/>
@@ -26,8 +25,6 @@ const steps = [
   },
   {
     number: '03',
-    title: 'Melting',
-    description: 'Sorted scrap fed into electric arc furnaces at 1,600°C. Energy-efficient, low-emission. Molten steel tested for chemistry before casting.',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" className="w-7 h-7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
         <path d="M8.5 14.5A6.5 6.5 0 0 0 15 21a6.5 6.5 0 0 0 0-13C12 8 9 5 9 2c0 0-3.5 4-3.5 7.5a5.5 5.5 0 0 0 3 4.9"/>
@@ -37,8 +34,6 @@ const steps = [
   },
   {
     number: '04',
-    title: 'Rolling',
-    description: 'Billets hot-rolled into BS 500B-grade TMT rebar. Rib pattern, diameter, and strength verified against spec on every run.',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" className="w-7 h-7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
         <circle cx="12" cy="12" r="3"/>
@@ -48,8 +43,6 @@ const steps = [
   },
   {
     number: '05',
-    title: 'Distribution',
-    description: '30+ owned trucks deliver TBS-certified steel to 320+ active clients across Tanzania. Same-day dispatch from in-stock inventory.',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" className="w-7 h-7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
         <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
@@ -60,13 +53,15 @@ const steps = [
   },
 ]
 
-export default function ProcessSection() {
+export default function ProcessSection({ t }: { t: Dictionary['process'] }) {
+  const steps = stepVisuals.map((v, i) => ({ ...v, ...t.steps[i] }))
+
   return (
     <section
       className="relative overflow-hidden"
       style={{ background: '#0B1D3A' }}
       id="process"
-      aria-label="Scrap to steel process"
+      aria-label={t.sectionLabel}
     >
       <div className="absolute inset-0 bg-steel-texture" aria-hidden="true" />
       <div className="absolute inset-0 bg-concrete-texture" aria-hidden="true" />
@@ -76,14 +71,14 @@ export default function ProcessSection() {
         {/* Header */}
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.4fr] gap-12 items-end mb-16 reveal">
           <div>
-            <p className="font-mono text-[11px] tracking-[0.2em] uppercase text-gold mb-4">How It Works</p>
+            <p className="font-mono text-[11px] tracking-[0.2em] uppercase text-gold mb-4">{t.eyebrow}</p>
             <h2 className="font-black text-[clamp(36px,5vw,72px)] text-white leading-none tracking-tight">
-              Scrap.<br />Steel.<br />
-              <span className="text-gold">Closed loop.</span>
+              {t.headingLine1}<br />{t.headingLine2}<br />
+              <span className="text-gold">{t.headingLine3}</span>
             </h2>
           </div>
           <p className="text-[16px] text-white/50 leading-relaxed max-w-lg self-end">
-            Tanzania&apos;s first fully integrated circular steel supply chain — connecting informal scrap vendors to certified construction steel in five steps. No intermediaries.
+            {t.intro}
           </p>
         </div>
 
@@ -129,8 +124,8 @@ export default function ProcessSection() {
             <path d="M8 16H3v5"/>
           </svg>
           <p className="text-[14px] text-white/55 leading-relaxed">
-            <strong className="font-bold text-gold">Circular by design.</strong>{' '}
-            Every tonne of steel we produce uses recycled scrap — reducing CO₂ emissions by up to 58% versus virgin steel production.
+            <strong className="font-bold text-gold">{t.calloutLead}</strong>{' '}
+            {t.calloutBody}
           </p>
         </div>
       </div>

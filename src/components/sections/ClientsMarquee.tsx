@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import type { Dictionary } from '@/i18n'
 // external link only; no Next `Link` needed
 
 interface Partner {
@@ -16,7 +17,13 @@ const FALLBACK_PARTNERS: Partner[] = [
   { name: 'Metro Group',  sub: 'Conglomerate',       logoUrl: '/images/partners/Metro-Group-updated-logo-removebg-preview.png' },
 ]
 
-export default function ClientsMarquee({ partners }: { partners?: Partner[] }) {
+export default function ClientsMarquee({
+  partners,
+  t,
+}: {
+  partners?: Partner[]
+  t: Dictionary['clients']
+}) {
   const data = partners?.length ? partners : FALLBACK_PARTNERS
   const doubled = [...data, ...data]
 
@@ -25,17 +32,17 @@ export default function ClientsMarquee({ partners }: { partners?: Partner[] }) {
       className="relative overflow-hidden"
       id="partners"
       style={{ background: '#FAF7F2', borderTop: '1px solid #E8DED1', borderBottom: '1px solid #E8DED1' }}
-      aria-label="Partners and vendor network"
+      aria-label={t.sectionLabel}
     >
       <div className="max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16 py-20 sm:py-28 mb-0">
 
         {/* Asymmetric header */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-14 reveal">
           <div>
-            <p className="font-mono text-[11px] tracking-[0.2em] uppercase text-gold mb-4">Vendor Network</p>
+            <p className="font-mono text-[11px] tracking-[0.2em] uppercase text-gold mb-4">{t.eyebrow}</p>
             <h2 className="font-black text-[clamp(36px,5vw,72px)] text-ink leading-none tracking-tight">
-              5,000+ vendors.<br />
-              <span className="text-gold">One network.</span>
+              {t.headingLine1}<br />
+              <span className="text-gold">{t.headingLine2}</span>
             </h2>
           </div>
           <a
@@ -44,7 +51,7 @@ export default function ClientsMarquee({ partners }: { partners?: Partner[] }) {
             rel="noopener noreferrer"
             className="flex-shrink-0 self-start sm:self-end inline-flex items-center gap-2 bg-gold hover:bg-gold-light text-white font-bold text-[13px] px-6 py-3 transition-colors duration-200 cursor-pointer"
           >
-            Become a Vendor
+            {t.becomeVendor}
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
           </a>
         </div>
@@ -54,11 +61,7 @@ export default function ClientsMarquee({ partners }: { partners?: Partner[] }) {
           className="grid grid-cols-1 sm:grid-cols-3 stagger mb-16"
           style={{ borderTop: '1px solid #E8DED1' }}
         >
-          {[
-            { title: 'Fair Pricing',    body: 'Real-time market rates for your scrap — no middlemen, no haggling.' },
-            { title: 'Instant Payment', body: 'Mobile money transfer on the spot. No waiting, no cheques.' },
-            { title: 'App-Enabled',     body: 'Track pickups, verify weights, and manage your account from your phone.' },
-          ].map((prop, i) => (
+          {t.valueProps.map((prop, i) => (
             <div
               key={prop.title}
               className="pt-8 pb-6"
@@ -75,7 +78,7 @@ export default function ClientsMarquee({ partners }: { partners?: Partner[] }) {
       </div>
 
       {/* Partner logos marquee */}
-      <div className="relative overflow-hidden py-4" aria-label="Partner company logos">
+      <div className="relative overflow-hidden py-4" aria-label={t.logosLabel}>
         <div
           className="flex items-center gap-px animate-marquee-slow whitespace-nowrap"
           style={{ width: 'max-content', background: '#E8DED1' }}

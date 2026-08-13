@@ -3,6 +3,8 @@
 import { useEffect, useRef } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { localePath, type Locale } from '@/i18n/config'
+import type { Dictionary } from '@/i18n'
 
 interface HeroSectionProps {
   videoSrc?: string
@@ -10,16 +12,22 @@ interface HeroSectionProps {
   headingLine1?: string
   headingLine2?: string
   subheading?: string
+  locale: Locale
+  t: Dictionary['hero']
 }
-
 
 export default function HeroSection({
   videoSrc,
   heroImageUrl,
-  headingLine1 = "Africa's Circular",
-  headingLine2 = 'Steel Ecosystem',
-  subheading = "From scrap collection to BS 500-certified construction steel — Tanzania's most integrated circular steel supply chain.",
+  headingLine1,
+  headingLine2,
+  subheading,
+  locale,
+  t,
 }: HeroSectionProps) {
+  const line1 = headingLine1 ?? t.headingLine1
+  const line2 = headingLine2 ?? t.headingLine2
+  const sub   = subheading ?? t.subheading
   const containerRef  = useRef<HTMLDivElement>(null)
   const locationRef   = useRef<HTMLParagraphElement>(null)
   const line1Ref      = useRef<HTMLSpanElement>(null)
@@ -75,7 +83,7 @@ export default function HeroSection({
     <section
       ref={containerRef}
       className="relative min-h-screen flex flex-col overflow-hidden bg-navy"
-      aria-label="Hero"
+      aria-label={t.sectionLabel}
     >
       {/* Background */}
       {videoSrc ? (
@@ -88,7 +96,7 @@ export default function HeroSection({
       ) : (
         <Image
           src={bgImage}
-          alt="Country Materials Limited steel operations"
+          alt={t.imageAlt}
           fill className="object-cover"
           priority quality={85}
           sizes="100vw"
@@ -109,7 +117,7 @@ export default function HeroSection({
           ref={locationRef}
           className="font-mono text-[11px] tracking-[0.22em] uppercase text-white/45 mb-8"
         >
-          Dar es Salaam, Tanzania · Est. 2022 · BS 500 Certified
+          {t.location}
         </p>
 
         {/* Main headline */}
@@ -118,14 +126,14 @@ export default function HeroSection({
             ref={line1Ref}
             className="block font-black text-[clamp(52px,8.5vw,124px)]"
           >
-            {headingLine1}
+            {line1}
           </span>
           {/* Second line in gold, not cyan */}
           <span
             ref={line2Ref}
             className="block font-black text-[clamp(52px,8.5vw,124px)] text-gold"
           >
-            {headingLine2}
+            {line2}
           </span>
         </h1>
 
@@ -134,23 +142,23 @@ export default function HeroSection({
           ref={subRef}
           className="text-[clamp(15px,1.6vw,18px)] text-white/60 font-medium leading-relaxed max-w-lg mb-10"
         >
-          {subheading}
+          {sub}
         </p>
 
         {/* CTAs */}
         <div ref={ctaRef} className="flex flex-wrap items-center gap-4 mb-16">
           <Link
-            href="/contact"
+            href={localePath(locale, '/contact')}
             className="inline-flex items-center gap-2 bg-gold hover:bg-gold-light text-white font-bold text-[15px] px-7 py-4 rounded-none transition-colors duration-200 cursor-pointer"
           >
-            Request a Quote
+            {t.requestQuote}
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
           </Link>
           <Link
-            href="/shop"
+            href={localePath(locale, '/shop')}
             className="inline-flex items-center gap-2 text-white/80 hover:text-white border border-white/20 hover:border-white/40 font-semibold text-[15px] px-7 py-4 rounded-none transition-all duration-200 cursor-pointer"
           >
-            View Products
+            {t.viewProducts}
           </Link>
         </div>
       </div>
@@ -163,7 +171,7 @@ export default function HeroSection({
       >
         <div className="w-px h-14 bg-gradient-to-b from-transparent via-white/20 to-white/40" />
         <span className="text-[9px] font-bold tracking-[0.25em] uppercase text-white/25 [writing-mode:vertical-lr]">
-          Scroll
+          {t.scroll}
         </span>
       </div>
     </section>

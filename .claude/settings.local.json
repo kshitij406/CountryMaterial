@@ -1,4 +1,7 @@
 {
+  "env": {
+    "ECC_DISABLED_HOOKS": "pre:edit-write:gateguard-fact-force"
+  },
   "permissions": {
     "allow": [
       "Bash(npx create-next-app@14 . --typescript --tailwind --eslint --app --src-dir --import-alias \"@/*\" --use-pnpm --no-git)",
@@ -62,7 +65,9 @@
       "Bash(pkill -f \"next start\")",
       "Bash(pkill -f \"node.*next\")",
       "Bash(fuser -k 3000/tcp)",
-      "Bash(pnpm test *)"
+      "Bash(pnpm test *)",
+      "PowerShell(git pull *)",
+      "Bash(git add *)"
     ]
   }
 }

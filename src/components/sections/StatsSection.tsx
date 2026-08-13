@@ -1,6 +1,8 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
+import { localePath, type Locale } from '@/i18n/config'
+import type { Dictionary } from '@/i18n'
 
 interface Stat {
   count: number
@@ -9,14 +11,19 @@ interface Stat {
   sub?: string
 }
 
-const DEFAULT_STATS: Stat[] = [
-  { count: 50000,  suffix: '+', label: 'Metric Tons Recycled',  sub: 'Scrap processed to date' },
-  { count: 320,    suffix: '+', label: 'Active Clients',         sub: 'Contractors & industrial buyers' },
-  { count: 5000,   suffix: '+', label: 'Vendors on Platform',    sub: 'Digitised scrap network' },
-  { count: 104,    suffix: '',  label: 'Team Members',           sub: 'Across all branches' },
-  { count: 30,     suffix: '+', label: 'Fleet Vehicles',         sub: 'Collection & dispatch' },
-  { count: 5,      suffix: '',  label: 'Regional Branches',      sub: 'Mbeya · Dodoma · Kahama · Pwani · KIL' },
+const DEFAULT_COUNTS = [
+  { count: 50000, suffix: '+' },
+  { count: 320,   suffix: '+' },
+  { count: 5000,  suffix: '+' },
+  { count: 104,   suffix: ''  },
+  { count: 30,    suffix: '+' },
+  { count: 5,     suffix: ''  },
 ]
+
+/** Counts are language-independent; only the labels come from the dictionary. */
+function defaultStats(t: Dictionary['stats']): Stat[] {
+  return DEFAULT_COUNTS.map((c, i) => ({ ...c, ...t.defaults[i] }))
+}
 
 function Counter({ count, suffix = '' }: { count: number; suffix?: string }) {
   const spanRef = useRef<HTMLSpanElement>(null)
@@ -72,8 +79,16 @@ function Counter({ count, suffix = '' }: { count: number; suffix?: string }) {
   return <span ref={spanRef} className="tabular-nums">0{suffix}</span>
 }
 
-export default function StatsSection({ stats }: { stats?: Stat[] }) {
-  const data = stats?.length ? stats.slice(0, 6) : DEFAULT_STATS
+export default function StatsSection({
+  stats,
+  locale,
+  t,
+}: {
+  stats?: Stat[]
+  locale: Locale
+  t: Dictionary['stats']
+}) {
+  const data = stats?.length ? stats.slice(0, 6) : defaultStats(t)
 
   return (
     <section
@@ -90,13 +105,13 @@ export default function StatsSection({ stats }: { stats?: Stat[] }) {
         {/* Header */}
         <div className="flex items-end justify-between gap-6 mb-16 reveal">
           <div>
-            <p className="font-mono text-[11px] tracking-[0.2em] uppercase text-gold mb-4">Our Impact</p>
+            <p className="font-mono text-[11px] tracking-[0.2em] uppercase text-gold mb-4">{t.eyebrow}</p>
             <h2 className="font-black text-[clamp(36px,5.5vw,80px)] text-white leading-none tracking-tight">
-              Numbers that<br />hold weight.
+              {t.headingLine1}<br />{t.headingLine2}
             </h2>
           </div>
           <span className="hidden sm:block font-mono text-[10px] text-white/15 tracking-widest text-right leading-relaxed">
-            EST. 2022<br />DAR ES SALAAM
+            {t.established}<br />{t.city}
           </span>
         </div>
 
@@ -130,19 +145,19 @@ export default function StatsSection({ stats }: { stats?: Stat[] }) {
           style={{ background: 'rgba(200,150,46,0.06)' }}
         >
           <div className="flex-shrink-0">
-            <p className="font-mono text-[10px] tracking-[0.18em] uppercase text-gold/60 mb-1">Annual Revenue</p>
+            <p className="font-mono text-[10px] tracking-[0.18em] uppercase text-gold/60 mb-1">{t.annualRevenue}</p>
             <p className="font-mono font-bold text-[52px] text-white leading-none">$11.2M</p>
           </div>
           <div className="flex-1 max-w-sm">
             <p className="text-[14px] text-white/45 leading-relaxed">
-              Built on a vendor-first model that turns informal scrap networks into a formalised, technology-driven supply chain — creating value at every step.
+              {t.revenueBody}
             </p>
           </div>
           <a
-            href="/about"
+            href={localePath(locale, '/about')}
             className="flex-shrink-0 inline-flex items-center gap-2 text-gold hover:text-gold-light text-[13px] font-semibold transition-colors duration-200 cursor-pointer"
           >
-            Our Story
+            {t.ourStory}
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
           </a>
         </div>

@@ -4,12 +4,16 @@ import { useEffect, useRef } from 'react'
 import Link from 'next/link'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { localePath, type Locale } from '@/i18n/config'
+import type { Dictionary } from '@/i18n'
 
 interface Props {
   tonnesRecycled: number
   co2AvoidedTonnes: number
   vendorsOnboarded: number
   activeClients: number
+  locale: Locale
+  t: Dictionary['impactTeaser']
 }
 
 function fmt(n: number): string {
@@ -21,15 +25,17 @@ export default function ImpactTeaser({
   co2AvoidedTonnes,
   vendorsOnboarded,
   activeClients,
+  locale,
+  t,
 }: Props) {
   const sectionRef = useRef<HTMLElement>(null)
   const numRefs = useRef<(HTMLSpanElement | null)[]>([])
 
   const items = [
-    { label: 'Tonnes Recycled',    value: tonnesRecycled,   suffix: '+'     },
-    { label: 'CO₂ Avoided',        value: co2AvoidedTonnes, suffix: 't CO₂' },
-    { label: 'Vendors Onboarded',  value: vendorsOnboarded, suffix: '+'     },
-    { label: 'Active Clients',     value: activeClients,    suffix: '+'     },
+    { label: t.labels.tonnesRecycled,   value: tonnesRecycled,   suffix: '+'     },
+    { label: t.labels.co2Avoided,       value: co2AvoidedTonnes, suffix: 't CO₂' },
+    { label: t.labels.vendorsOnboarded, value: vendorsOnboarded, suffix: '+'     },
+    { label: t.labels.activeClients,    value: activeClients,    suffix: '+'     },
   ]
 
   useEffect(() => {
@@ -64,7 +70,7 @@ export default function ImpactTeaser({
   return (
     <section
       ref={sectionRef}
-      aria-label="Impact teaser"
+      aria-label={t.sectionLabel}
       style={{
         background: '#0B1D3A',
         borderTop:    '1px solid rgba(200,150,46,0.12)',
@@ -79,18 +85,18 @@ export default function ImpactTeaser({
               className="font-mono text-[11px] tracking-[0.22em] uppercase mb-3"
               style={{ color: '#C8962E' }}
             >
-              Our Impact
+              {t.eyebrow}
             </p>
             <h2 className="font-black text-[clamp(26px,3.5vw,48px)] text-white leading-tight tracking-tight">
-              Scrap turned into<br />measurable change.
+              {t.headingLine1}<br />{t.headingLine2}
             </h2>
           </div>
           <Link
-            href="/impact"
+            href={localePath(locale, '/impact')}
             className="self-start sm:self-auto flex items-center gap-2 font-mono text-[12px] tracking-[0.18em] uppercase group whitespace-nowrap"
             style={{ color: '#C8962E' }}
           >
-            See Full Impact Report
+            {t.fullReport}
             <svg
               className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1"
               viewBox="0 0 24 24"
@@ -145,7 +151,7 @@ export default function ImpactTeaser({
           className="mt-5 font-mono text-[10px] tracking-[0.14em] uppercase"
           style={{ color: 'rgba(136,150,167,0.6)' }}
         >
-          CO₂ figure calculated from verified recycling volume · World Steel Association conversion factors
+          {t.note}
         </p>
       </div>
     </section>

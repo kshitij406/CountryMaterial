@@ -1,4 +1,5 @@
 import { PortableText, type PortableTextComponents } from '@portabletext/react'
+import type { Dictionary } from '@/i18n'
 
 interface LegalData {
   title: string
@@ -62,17 +63,18 @@ const ptComponents: PortableTextComponents = {
   },
 }
 
-function formatDate(dateStr: string): string {
+function formatDate(dateStr: string, dateLocale: string): string {
   const d = new Date(`${dateStr}T00:00:00`)
-  return d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })
+  return d.toLocaleDateString(dateLocale, { day: '2-digit', month: 'short', year: 'numeric' })
 }
 
 interface Props {
   data: LegalData | null
   fallbackTitle: string
+  t: Dictionary['legal']
 }
 
-export default function LegalPageLayout({ data, fallbackTitle }: Props) {
+export default function LegalPageLayout({ data, fallbackTitle, t }: Props) {
   const title = data?.title ?? fallbackTitle
 
   return (
@@ -81,14 +83,14 @@ export default function LegalPageLayout({ data, fallbackTitle }: Props) {
       <section
         className="relative pt-32 pb-16 sm:pb-20"
         style={{ background: '#0B1D3A' }}
-        aria-label="Page hero"
+        aria-label={t.heroLabel}
       >
         <div className="max-w-3xl mx-auto px-6 sm:px-10">
           <p
             className="font-mono text-[11px] tracking-[0.22em] uppercase mb-6"
             style={{ color: '#C8962E' }}
           >
-            Legal
+            {t.eyebrow}
           </p>
           <h1 className="font-black text-[clamp(34px,5vw,60px)] leading-tight text-white">
             {title}
@@ -100,7 +102,7 @@ export default function LegalPageLayout({ data, fallbackTitle }: Props) {
           />
           {data?.lastUpdated && (
             <p className="mt-5 text-[13px]" style={{ color: '#8896A7' }}>
-              Last updated: {formatDate(data.lastUpdated)}
+              {t.lastUpdated}: {formatDate(data.lastUpdated, t.dateLocale)}
             </p>
           )}
         </div>
@@ -112,7 +114,7 @@ export default function LegalPageLayout({ data, fallbackTitle }: Props) {
           {data?.body?.length ? (
             <PortableText value={data.body as Parameters<typeof PortableText>[0]['value']} components={ptComponents} />
           ) : (
-            <p className="text-slate text-[15px]">Content coming soon.</p>
+            <p className="text-slate text-[15px]">{t.comingSoon}</p>
           )}
         </div>
       </section>

@@ -7,7 +7,11 @@ export const aboutPage = defineType({
   icon: () => '📖',
   fields: [
     defineField({ name: 'heading', title: 'Page Heading', type: 'string' }),
+
+    defineField({ name: 'headingSw', title: 'Page Heading — Kiswahili', type: 'string', description: 'Leave blank to fall back to the English text.' }),
     defineField({ name: 'intro', title: 'Introduction', type: 'text', rows: 3 }),
+
+    defineField({ name: 'introSw', title: 'Introduction — Kiswahili', type: 'text', rows: 3, description: 'Leave blank to fall back to the English text.' }),
     defineField({
       name: 'body',
       title: 'Body Content',
@@ -15,7 +19,11 @@ export const aboutPage = defineType({
       of: [{ type: 'block' }],
     }),
     defineField({ name: 'vision', title: 'Vision Statement', type: 'text', rows: 3 }),
+
+    defineField({ name: 'visionSw', title: 'Vision Statement — Kiswahili', type: 'text', rows: 3, description: 'Leave blank to fall back to the English text.' }),
     defineField({ name: 'mission', title: 'Mission Statement', type: 'text', rows: 3 }),
+
+    defineField({ name: 'missionSw', title: 'Mission Statement — Kiswahili', type: 'text', rows: 3, description: 'Leave blank to fall back to the English text.' }),
     defineField({
       name: 'values',
       title: 'Core Values',
@@ -25,7 +33,11 @@ export const aboutPage = defineType({
           type: 'object',
           fields: [
             defineField({ name: 'title', title: 'Title', type: 'string' }),
+
+            defineField({ name: 'titleSw', title: 'Title — Kiswahili', type: 'string', description: 'Leave blank to fall back to the English text.' }),
             defineField({ name: 'description', title: 'Description', type: 'text', rows: 2 }),
+
+            defineField({ name: 'descriptionSw', title: 'Description — Kiswahili', type: 'text', rows: 2, description: 'Leave blank to fall back to the English text.' }),
             defineField({ name: 'icon', title: 'Icon (emoji)', type: 'string' }),
           ],
           preview: { select: { title: 'title' } },
@@ -41,7 +53,11 @@ export const aboutPage = defineType({
           type: 'object',
           fields: [
             defineField({ name: 'title', title: 'Title', type: 'string' }),
+
+            defineField({ name: 'titleSw', title: 'Title — Kiswahili', type: 'string', description: 'Leave blank to fall back to the English text.' }),
             defineField({ name: 'description', title: 'Description', type: 'text', rows: 2 }),
+
+            defineField({ name: 'descriptionSw', title: 'Description — Kiswahili', type: 'text', rows: 2, description: 'Leave blank to fall back to the English text.' }),
             defineField({ name: 'icon', title: 'Icon (emoji)', type: 'string' }),
           ],
           preview: { select: { title: 'title' } },
@@ -65,7 +81,11 @@ export const aboutPage = defineType({
         fields: [
           defineField({ name: 'stepNumber', title: 'Step Number', type: 'string', description: 'e.g. "01"' }),
           defineField({ name: 'title', title: 'Step Title', type: 'string' }),
+
+          defineField({ name: 'titleSw', title: 'Step Title — Kiswahili', type: 'string', description: 'Leave blank to fall back to the English text.' }),
           defineField({ name: 'description', title: 'Short Description', type: 'text', rows: 2 }),
+
+          defineField({ name: 'descriptionSw', title: 'Short Description — Kiswahili', type: 'text', rows: 2, description: 'Leave blank to fall back to the English text.' }),
           defineField({ name: 'image', title: 'Step Image (optional)', type: 'image', options: { hotspot: true } }),
         ],
         preview: { select: { title: 'title', subtitle: 'stepNumber' } },

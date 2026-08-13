@@ -8,7 +8,9 @@ export const homepage = defineType({
   fields: [
     // ── Hero ─────────────────────────────────────────────────────────────────
     defineField({ name: 'heroHeading', title: 'Hero Heading', type: 'string', description: 'e.g. "Built for Africa. Built to last."' }),
+    defineField({ name: 'heroHeadingSw', title: 'Hero Heading — Kiswahili', type: 'string', description: 'Leave blank to fall back to the English text.' }),
     defineField({ name: 'heroSubheading', title: 'Hero Subheading', type: 'text', rows: 2 }),
+    defineField({ name: 'heroSubheadingSw', title: 'Hero Subheading — Kiswahili', type: 'text', rows: 2, description: 'Leave blank to fall back to the English text.' }),
     defineField({
       name: 'heroVideo',
       title: 'Hero Background Video',
@@ -36,6 +38,7 @@ export const homepage = defineType({
           fields: [
             defineField({ name: 'num', title: 'Number / Value', type: 'string', description: 'e.g. "50,000+" or "ISO 9001"' }),
             defineField({ name: 'label', title: 'Label', type: 'string', description: 'e.g. "Tonnes / yr"' }),
+            defineField({ name: 'labelSw', title: 'Label — Kiswahili', type: 'string', description: 'Leave blank to fall back to the English text.' }),
           ],
           preview: { select: { title: 'num', subtitle: 'label' } },
         },
@@ -53,11 +56,15 @@ export const homepage = defineType({
 
     // ── About strip ───────────────────────────────────────────────────────────
     defineField({ name: 'aboutHeading', title: 'About — Section Heading', type: 'string', description: 'e.g. "Three decades. One standard."' }),
+    defineField({ name: 'aboutHeadingSw', title: 'About — Section Heading — Kiswahili', type: 'string', description: 'Leave blank to fall back to the English text.' }),
     defineField({ name: 'aboutLead', title: 'About — Lead Paragraph', type: 'text', rows: 3 }),
+    defineField({ name: 'aboutLeadSw', title: 'About — Lead Paragraph — Kiswahili', type: 'text', rows: 3, description: 'Leave blank to fall back to the English text.' }),
     defineField({ name: 'aboutBody', title: 'About — Body Paragraph', type: 'text', rows: 4 }),
+    defineField({ name: 'aboutBodySw', title: 'About — Body Paragraph — Kiswahili', type: 'text', rows: 4, description: 'Leave blank to fall back to the English text.' }),
     defineField({ name: 'founderInitials', title: 'Founder Initials', type: 'string', description: 'Displayed large, e.g. "HM"' }),
     defineField({ name: 'founderName', title: 'Founder Name', type: 'string' }),
     defineField({ name: 'founderRole', title: 'Founder Role', type: 'string', description: 'e.g. "Founder & Chairman"' }),
+    defineField({ name: 'founderRoleSw', title: 'Founder Role — Kiswahili', type: 'string', description: 'Leave blank to fall back to the English text.' }),
     defineField({
       name: 'aboutImage',
       title: 'About Section Image',
@@ -74,7 +81,9 @@ export const homepage = defineType({
         type: 'object',
         fields: [
           defineField({ name: 'label', title: 'Step Label', type: 'string', description: 'e.g. "Collection"' }),
+          defineField({ name: 'labelSw', title: 'Step Label — Kiswahili', type: 'string', description: 'Leave blank to fall back to the English text.' }),
           defineField({ name: 'note', title: 'Short Note', type: 'string', description: 'e.g. "5,000+ vendors"' }),
+          defineField({ name: 'noteSw', title: 'Short Note — Kiswahili', type: 'string', description: 'Leave blank to fall back to the English text.' }),
         ],
         preview: { select: { title: 'label', subtitle: 'note' } },
       }],
@@ -94,7 +103,9 @@ export const homepage = defineType({
             defineField({ name: 'count', title: 'Number', type: 'number', description: 'e.g. 50000' }),
             defineField({ name: 'suffix', title: 'Suffix', type: 'string', description: 'e.g. "+" or "T" — leave blank for none' }),
             defineField({ name: 'label', title: 'Label', type: 'string', description: 'e.g. "Tonnes Delivered"' }),
+            defineField({ name: 'labelSw', title: 'Label — Kiswahili', type: 'string', description: 'Leave blank to fall back to the English text.' }),
             defineField({ name: 'sub', title: 'Sub-label', type: 'string', description: 'Short supporting sentence' }),
+            defineField({ name: 'subSw', title: 'Sub-label — Kiswahili', type: 'string', description: 'Leave blank to fall back to the English text.' }),
           ],
           preview: { select: { title: 'label', subtitle: 'count' } },
         },
@@ -139,8 +150,11 @@ export const homepage = defineType({
 
     // ── Featured announcement / development plan ──────────────────────────────
     defineField({ name: 'announcementTag', title: 'Announcement Tag', type: 'string', description: 'e.g. "Upcoming · Next Decade"' }),
+    defineField({ name: 'announcementTagSw', title: 'Announcement Tag — Kiswahili', type: 'string', description: 'Leave blank to fall back to the English text.' }),
     defineField({ name: 'announcementHeading', title: 'Announcement Heading', type: 'string', description: 'e.g. "Next Decade Development Plan"' }),
+    defineField({ name: 'announcementHeadingSw', title: 'Announcement Heading — Kiswahili', type: 'string', description: 'Leave blank to fall back to the English text.' }),
     defineField({ name: 'announcementBody', title: 'Announcement Body', type: 'text', rows: 5 }),
+    defineField({ name: 'announcementBodySw', title: 'Announcement Body — Kiswahili', type: 'text', rows: 5, description: 'Leave blank to fall back to the English text.' }),
     defineField({
       name: 'announcementImage',
       title: 'Announcement Image',
@@ -149,12 +163,17 @@ export const homepage = defineType({
       description: 'Background image for the announcement card — use a modern factory or facility shot.',
     }),
     defineField({ name: 'announcementCtaLabel', title: 'Announcement CTA Label', type: 'string', description: 'e.g. "Read more"' }),
+    defineField({ name: 'announcementCtaLabelSw', title: 'Announcement CTA Label — Kiswahili', type: 'string', description: 'Leave blank to fall back to the English text.' }),
     defineField({ name: 'announcementCtaHref', title: 'Announcement CTA Link', type: 'string', description: 'e.g. "/blog/next-decade-plan"' }),
 
     // ── Contact CTA ───────────────────────────────────────────────────────────
     defineField({ name: 'contactHeading', title: 'Contact CTA Heading', type: 'string', description: 'e.g. "Price your project." — contact info comes from Site Settings' }),
+    defineField({ name: 'contactHeadingSw', title: 'Contact CTA Heading — Kiswahili', type: 'string', description: 'Leave blank to fall back to the English text.' }),
     defineField({ name: 'contactEyebrow', title: 'Contact CTA Eyebrow', type: 'string', description: 'e.g. "Speak to us"' }),
+    defineField({ name: 'contactEyebrowSw', title: 'Contact CTA Eyebrow — Kiswahili', type: 'string', description: 'Leave blank to fall back to the English text.' }),
     defineField({ name: 'contactPrimaryLabel', title: 'Contact CTA — Primary Button Label', type: 'string' }),
+    defineField({ name: 'contactPrimaryLabelSw', title: 'Contact CTA — Primary Button Label — Kiswahili', type: 'string', description: 'Leave blank to fall back to the English text.' }),
     defineField({ name: 'contactSecondaryLabel', title: 'Contact CTA — Secondary Button Label', type: 'string' }),
+    defineField({ name: 'contactSecondaryLabelSw', title: 'Contact CTA — Secondary Button Label — Kiswahili', type: 'string', description: 'Leave blank to fall back to the English text.' }),
   ],
 })

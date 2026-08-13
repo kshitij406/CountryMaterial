@@ -55,14 +55,32 @@ export const impactPage = defineType({
       type: 'string',
     }),
     defineField({
+      name: 'heroHeadingSw',
+      title: 'Hero Heading — Kiswahili',
+      type: 'string',
+      description: 'Leave blank to fall back to the English text.',
+    }),
+    defineField({
       name: 'heroSubtitle',
       title: 'Hero Subtitle',
       type: 'text',
     }),
     defineField({
+      name: 'heroSubtitleSw',
+      title: 'Hero Subtitle — Kiswahili',
+      type: 'text',
+      description: 'Leave blank to fall back to the English text.',
+    }),
+    defineField({
       name: 'methodologyNote',
       title: 'Methodology Note',
       type: 'text',
+    }),
+    defineField({
+      name: 'methodologyNoteSw',
+      title: 'Methodology Note — Kiswahili',
+      type: 'text',
+      description: 'Leave blank to fall back to the English text.',
     }),
     defineField({
       name: 'impactStories',
@@ -74,7 +92,11 @@ export const impactPage = defineType({
           fields: [
             defineField({ name: 'stat', title: 'Stat', type: 'string' }),
             defineField({ name: 'label', title: 'Label', type: 'string' }),
+
+            defineField({ name: 'labelSw', title: 'Label — Kiswahili', type: 'string', description: 'Leave blank to fall back to the English text.' }),
             defineField({ name: 'description', title: 'Description', type: 'text' }),
+
+            defineField({ name: 'descriptionSw', title: 'Description — Kiswahili', type: 'text', description: 'Leave blank to fall back to the English text.' }),
             defineField({ name: 'icon', title: 'Icon', type: 'string' }),
           ],
         },

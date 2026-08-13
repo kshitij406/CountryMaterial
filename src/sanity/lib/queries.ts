@@ -1,6 +1,25 @@
 import groq from 'groq'
 import { client } from './client'
 
+/**
+ * Kiswahili is stored inline: every translatable field has a `<field>Sw`
+ * sibling in the same document. Queries take a $locale param and return the
+ * Kiswahili value only when the locale is 'sw' AND the sibling is filled in,
+ * so a blank Sw field falls back to English automatically.
+ *
+ * `L('heroHeading')` emits:
+ *   "heroHeading": select($locale == "sw" && defined(heroHeadingSw) => heroHeadingSw, heroHeading)
+ */
+const L = (field: string) =>
+  `"${field}": select($locale == "sw" && defined(${field}Sw) => ${field}Sw, ${field})`
+
+const trTitle       = L('title')
+const trName        = L('name')
+const trExcerpt     = L('excerpt')
+const trDescription = L('description')
+const trBody        = L('body')
+const trField       = L
+
 export const siteSettingsQuery = groq`
   *[_type == "siteSettings"][0] {
     companyName,
@@ -33,12 +52,12 @@ export const siteSettingsQuery = groq`
 
 export const homepageQuery = groq`
   *[_type == "homepage"][0] {
-    heroHeading,
-    heroSubheading,
+    ${trField('heroHeading')},
+    ${trField('heroSubheading')},
     heroVideo { asset-> { url } },
     "heroImageUrl": heroImage.asset->url,
 
-    tickerItems,
+    tickerItems[] { num, ${L('label')} },
 
     featuredServices[]-> {
       _id,
@@ -51,16 +70,16 @@ export const homepageQuery = groq`
       specChips
     },
 
-    aboutHeading,
-    aboutLead,
-    aboutBody,
+    ${trField('aboutHeading')},
+    ${trField('aboutLead')},
+    ${trField('aboutBody')},
     founderInitials,
     founderName,
-    founderRole,
+    ${trField('founderRole')},
     "aboutImageUrl": aboutImage.asset->url,
-    processSteps,
+    processSteps[] { ${L('label')}, ${L('note')} },
 
-    stats,
+    stats[] { count, suffix, ${L('label')}, ${L('sub')} },
 
     featuredProducts[]-> {
       _id,
@@ -86,47 +105,47 @@ export const homepageQuery = groq`
     },
     becomeVendorHref,
 
-    announcementTag,
-    announcementHeading,
-    announcementBody,
+    ${trField('announcementTag')},
+    ${trField('announcementHeading')},
+    ${trField('announcementBody')},
     "announcementImageUrl": announcementImage.asset->url,
-    announcementCtaLabel,
+    ${trField('announcementCtaLabel')},
     announcementCtaHref,
 
-    contactHeading,
-    contactEyebrow,
-    contactPrimaryLabel,
-    contactSecondaryLabel,
+    ${trField('contactHeading')},
+    ${trField('contactEyebrow')},
+    ${trField('contactPrimaryLabel')},
+    ${trField('contactSecondaryLabel')},
   }
 `
 
 export const latestPostsQuery = groq`
   *[_type == "post"] | order(publishedAt desc)[0...3] {
     _id,
-    title,
+    ${trTitle},
     slug,
     category,
     publishedAt,
-    excerpt,
+    ${trExcerpt},
     "coverImageUrl": coverImage.asset->url
   }
 `
 
 export const aboutPageQuery = groq`
   *[_type == "aboutPage"][0] {
-    heading,
-    intro,
-    body,
-    vision,
-    mission,
-    values,
-    whyChooseUs,
+    ${trField('heading')},
+    ${trField('intro')},
+    ${trField('body')},
+    ${trField('vision')},
+    ${trField('mission')},
+    values[] { icon, ${L('title')}, ${L('description')} },
+    whyChooseUs[] { icon, ${L('title')}, ${L('description')} },
     images,
     "heroImageUrl": heroImage.asset->url,
     processSteps[] {
       stepNumber,
-      title,
-      description,
+      ${L('title')},
+      ${L('description')},
       "imageUrl": image.asset->url
     }
   }
@@ -135,9 +154,9 @@ export const aboutPageQuery = groq`
 export const allServicesQuery = groq`
   *[_type == "service"] | order(displayOrder asc) {
     _id,
-    title,
+    ${trTitle},
     slug,
-    excerpt,
+    ${trExcerpt},
     icon,
     coverImage,
     displayOrder,
@@ -149,9 +168,9 @@ export const allServicesQuery = groq`
 export const serviceBySlugQuery = groq`
   *[_type == "service" && slug.current == $slug][0] {
     _id,
-    title,
+    ${trTitle},
     slug,
-    excerpt,
+    ${trExcerpt},
     coverImage,
     contentSections,
     features,
@@ -163,13 +182,13 @@ export const serviceBySlugQuery = groq`
 export const allProductsQuery = groq`
   *[_type == "product"] | order(_createdAt asc) {
     _id,
-    name,
+    ${trName},
     slug,
     price,
     priceRange,
-    category-> { name, slug },
+    category-> { ${trName}, slug },
     "images": images[]{ "asset": asset->{ url } },
-    description,
+    ${trDescription},
     inStock,
     hasVariants,
     grade,
@@ -182,13 +201,13 @@ export const allProductsQuery = groq`
 export const productBySlugQuery = groq`
   *[_type == "product" && slug.current == $slug][0] {
     _id,
-    name,
+    ${trName},
     slug,
     price,
     priceRange,
-    category-> { name, slug },
+    category-> { ${trName}, slug },
     "images": images[]{ "asset": asset->{ url } },
-    description,
+    ${trDescription},
     inStock,
     hasVariants,
     grade,
@@ -205,7 +224,7 @@ export const allProductSlugsQuery = groq`
 export const productCategoriesQuery = groq`
   *[_type == "productCategory"] | order(name asc) {
     _id,
-    name,
+    ${trName},
     slug
   }
 `
@@ -216,12 +235,12 @@ export const allProductCategoriesQuery = productCategoriesQuery
 export const allPostsQuery = groq`
   *[_type == "post"] | order(publishedAt desc) {
     _id,
-    title,
+    ${trTitle},
     slug,
     category,
     publishedAt,
     author,
-    excerpt,
+    ${trExcerpt},
     coverImage
   }
 `
@@ -229,27 +248,27 @@ export const allPostsQuery = groq`
 export const postBySlugQuery = groq`
   *[_type == "post" && slug.current == $slug][0] {
     _id,
-    title,
+    ${trTitle},
     slug,
     category,
     publishedAt,
     author,
-    excerpt,
+    ${trExcerpt},
     coverImage,
-    body
+    ${trBody}
   }
 `
 
 export const openCareersQuery = groq`
   *[_type == "career" && expired != true] | order(_createdAt desc) {
     _id,
-    title,
+    ${trTitle},
     slug,
-    excerpt,
+    ${trExcerpt},
     department,
     location,
     employmentType,
-    description,
+    ${trDescription},
     requirements,
     closingDate,
     expired
@@ -259,13 +278,13 @@ export const openCareersQuery = groq`
 export const careerBySlugQuery = groq`
   *[_type == "career" && slug.current == $slug][0] {
     _id,
-    title,
+    ${trTitle},
     slug,
-    excerpt,
+    ${trExcerpt},
     department,
     location,
     employmentType,
-    description,
+    ${trDescription},
     requirements,
     closingDate,
     expired
@@ -278,28 +297,31 @@ export const allCareerSlugsQuery = groq`
 
 export const legalPageQuery = groq`
   *[_type == "legalPage" && slug.current == $slug][0]{
-    title, lastUpdated, body
+    ${trTitle}, lastUpdated, ${trBody}
   }
 `
 
 export const impactPageQuery = groq`
   *[_type == "impactPage"][0]{
     tonnesRecycled, reportingYear, manualOverrides,
-    heroHeading, heroSubtitle, methodologyNote,
-    impactStories, sdgGoals
+    ${trField('heroHeading')},
+    ${trField('heroSubtitle')},
+    ${trField('methodologyNote')},
+    impactStories[] { _key, stat, icon, ${L('label')}, ${L('description')} },
+    sdgGoals
   }
 `
 
 // ── Tagged fetch helpers (Next.js App Router cache tagging) ───────────────────
 
-export function getSiteSettings() {
-  return client.fetch(siteSettingsQuery, {}, { next: { tags: ['siteSettings'] } })
+export function getSiteSettings(locale: string = 'en') {
+  return client.fetch(siteSettingsQuery, { locale }, { next: { tags: ['siteSettings'] } })
 }
 
-export function getProducts() {
-  return client.fetch(allProductsQuery, {}, { next: { tags: ['products'] } })
+export function getProducts(locale: string = 'en') {
+  return client.fetch(allProductsQuery, { locale }, { next: { tags: ['products'] } })
 }
 
-export function getProductCategories() {
-  return client.fetch(productCategoriesQuery, {}, { next: { tags: ['products'] } })
+export function getProductCategories(locale: string = 'en') {
+  return client.fetch(productCategoriesQuery, { locale }, { next: { tags: ['products'] } })
 }

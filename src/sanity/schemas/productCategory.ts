@@ -7,6 +7,8 @@ export const productCategory = defineType({
   icon: () => '🏷️',
   fields: [
     defineField({ name: 'name', title: 'Category Name', type: 'string' }),
+
+    defineField({ name: 'nameSw', title: 'Category Name — Kiswahili', type: 'string', description: 'Leave blank to fall back to the English text.' }),
     defineField({ name: 'slug', title: 'Slug', type: 'slug', options: { source: 'name', maxLength: 96 } }),
   ],
   preview: {

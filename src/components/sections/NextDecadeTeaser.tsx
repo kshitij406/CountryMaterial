@@ -1,12 +1,20 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import { localePath, type Locale } from '@/i18n/config'
+import type { Dictionary } from '@/i18n'
 
-export default function NextDecadeTeaser() {
+export default function NextDecadeTeaser({
+  locale,
+  t,
+}: {
+  locale: Locale
+  t: Dictionary['nextDecade']
+}) {
   return (
     <section
       className="relative overflow-hidden"
       id="next-decade-teaser"
-      aria-label="Next decade development plan"
+      aria-label={t.sectionLabel}
       style={{ background: '#07121F' }}
     >
       {/* Background: industrial image + layered dark overlay */}
@@ -39,7 +47,7 @@ export default function NextDecadeTeaser() {
             <div className="flex items-center gap-4 mb-8">
               <span className="block w-8 h-px bg-gold" aria-hidden="true" />
               <span className="font-mono text-[11px] tracking-[0.30em] uppercase text-gold">
-                The Next Decade
+                {t.eyebrow}
               </span>
             </div>
 
@@ -47,10 +55,10 @@ export default function NextDecadeTeaser() {
               className="font-display uppercase leading-[0.88] tracking-[0.02em] text-white"
               style={{ fontSize: 'clamp(48px, 7.5vw, 116px)' }}
             >
-              Tanzania&apos;s First<br />
-              Virgin Steel<br />
-              Facility.<br />
-              <span className="text-gold">Coming Soon.</span>
+              {t.headingLine1}<br />
+              {t.headingLine2}<br />
+              {t.headingLine3}<br />
+              <span className="text-gold">{t.headingLine4}</span>
             </h2>
 
             <div className="mt-12 flex items-center gap-3">
@@ -67,27 +75,25 @@ export default function NextDecadeTeaser() {
               style={{ borderLeft: '2px solid rgba(200,150,46,0.45)' }}
             >
               <p className="font-mono text-[10px] tracking-[0.22em] uppercase text-gold/65 mb-2">
-                Development Plan
+                {t.planEyebrow}
               </p>
               <p className="font-mono font-bold text-[26px] text-white leading-tight">
-                2nd on the<br />continent.
+                {t.planLine1}<br />{t.planLine2}
               </p>
               <p className="font-mono text-[10px] tracking-[0.18em] uppercase text-white/30 mt-1">
-                After South Africa
+                {t.planNote}
               </p>
             </div>
 
             <p className="font-barlow text-[16px] leading-relaxed mb-10 text-white/55 max-w-sm">
-              Country Materials is building a state-of-the-art plant to produce
-              virgin steel directly from iron ore — no mixing, no imports, no
-              compromise on quality.
+              {t.body}
             </p>
 
             <Link
-              href="/about#next-decade"
+              href={`${localePath(locale, '/about')}#next-decade`}
               className="inline-flex items-center gap-3 bg-gold hover:bg-amber-light text-white font-condensed text-[13px] tracking-[0.18em] uppercase font-semibold px-8 py-4 transition-colors duration-200"
             >
-              Learn More
+              {t.learnMore}
               <svg
                 width="13"
                 height="13"

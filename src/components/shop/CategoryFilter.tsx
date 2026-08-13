@@ -6,11 +6,16 @@ interface CategoryFilterProps {
   categories: ProductCategory[]
   active: string
   onSelect: (category: string) => void
+  /** Display label for the "all categories" chip; the filter value stays ALL_VALUE. */
+  allLabel: string
 }
 
-const ALL: ProductCategory = { _id: 'all', name: 'All', slug: { current: 'all' } }
+/** Stable sentinel — never translated, so filtering keeps working in any language. */
+export const ALL_VALUE = '__all__'
 
-export default function CategoryFilter({ categories, active, onSelect }: CategoryFilterProps) {
+const ALL: ProductCategory = { _id: 'all', name: ALL_VALUE, slug: { current: 'all' } }
+
+export default function CategoryFilter({ categories, active, onSelect, allLabel }: CategoryFilterProps) {
   return (
     <div className="flex flex-wrap gap-3 mb-10">
       {[ALL, ...categories].map((cat) => {
@@ -26,7 +31,7 @@ export default function CategoryFilter({ categories, active, onSelect }: Categor
             }`}
             style={{ border: isActive ? '1px solid #C8962E' : '1px solid #E8DED1' }}
           >
-            {cat.name}
+            {cat.name === ALL_VALUE ? allLabel : cat.name}
           </button>
         )
       })}

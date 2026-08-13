@@ -7,6 +7,8 @@ export const product = defineType({
   icon: () => '📦',
   fields: [
     defineField({ name: 'name', title: 'Product Name', type: 'string' }),
+
+    defineField({ name: 'nameSw', title: 'Product Name — Kiswahili', type: 'string', description: 'Leave blank to fall back to the English text.' }),
     defineField({ name: 'slug', title: 'Slug', type: 'slug', options: { source: 'name', maxLength: 96 } }),
     defineField({ name: 'price', title: 'Price (TZS)', type: 'number' }),
     defineField({ name: 'priceRange', title: 'Price Range (for variants, e.g. "11,666 – 120,000")', type: 'string' }),
@@ -23,10 +25,14 @@ export const product = defineType({
       of: [{ type: 'image', options: { hotspot: true } }],
     }),
     defineField({ name: 'description', title: 'Description', type: 'text', rows: 3 }),
+
+    defineField({ name: 'descriptionSw', title: 'Description — Kiswahili', type: 'text', rows: 3, description: 'Leave blank to fall back to the English text.' }),
     defineField({ name: 'inStock', title: 'In Stock', type: 'boolean', initialValue: true }),
     defineField({ name: 'hasVariants', title: 'Has Variants (use Price Range)', type: 'boolean', initialValue: false }),
     defineField({ name: 'grade', title: 'Steel Grade', type: 'string', description: 'e.g. "BS 500B" or "TMT Fe-500". Shown as a badge on the card.' }),
     defineField({ name: 'unit', title: 'Unit of Measure', type: 'string', description: 'e.g. "Per tonne", "Per bundle", "Per piece".' }),
+
+    defineField({ name: 'unitSw', title: 'Unit of Measure — Kiswahili', type: 'string', description: 'Leave blank to fall back to the English text.' }),
     defineField({
       name: 'standards',
       title: 'Standards / Certifications',

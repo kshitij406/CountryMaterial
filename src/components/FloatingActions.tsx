@@ -1,14 +1,17 @@
+import type { Dictionary } from '@/i18n'
+
 interface FloatingActionsProps {
   whatsapp?: string
   video?: {
     videoUrl?: string
     label?: string
   }
+  t: Dictionary['floating']
 }
 
-export default function FloatingActions({ whatsapp, video }: FloatingActionsProps) {
+export default function FloatingActions({ whatsapp, video, t }: FloatingActionsProps) {
   const whatsappNumber = (whatsapp ?? '255768500555').replace(/[^0-9]/g, '')
-  const videoLabel = video?.label || 'Watch our video'
+  const videoLabel = video?.label || t.watchVideo
 
   return (
     <div className="fixed bottom-6 right-6 z-40 flex flex-col items-end gap-3">
@@ -28,8 +31,8 @@ export default function FloatingActions({ whatsapp, video }: FloatingActionsProp
         href={`https://wa.me/${whatsappNumber}`}
         target="_blank"
         rel="noopener noreferrer"
-        aria-label="Chat with us on WhatsApp"
-        title="Chat with us on WhatsApp"
+        aria-label={t.whatsapp}
+        title={t.whatsapp}
         className="flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg transition-transform duration-200 hover:scale-105"
       >
         <WhatsAppIcon />

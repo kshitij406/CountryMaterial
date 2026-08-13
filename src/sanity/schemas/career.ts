@@ -7,6 +7,8 @@ export const career = defineType({
   icon: () => '💼',
   fields: [
     defineField({ name: 'title', title: 'Job Title', type: 'string' }),
+
+    defineField({ name: 'titleSw', title: 'Job Title — Kiswahili', type: 'string', description: 'Leave blank to fall back to the English text.' }),
     defineField({ name: 'slug', title: 'Slug', type: 'slug', options: { source: 'title', maxLength: 96 } }),
     defineField({
       name: 'excerpt',
@@ -14,7 +16,15 @@ export const career = defineType({
       type: 'string',
       description: 'One-sentence summary shown on the job card (max ~160 characters). Falls back to the first line of the full description.',
     }),
+    defineField({
+      name: 'excerptSw',
+      title: 'Short Description — Kiswahili',
+      type: 'string',
+      description: 'Leave blank to fall back to the English text.',
+    }),
     defineField({ name: 'department', title: 'Department', type: 'string' }),
+
+    defineField({ name: 'departmentSw', title: 'Department — Kiswahili', type: 'string', description: 'Leave blank to fall back to the English text.' }),
     defineField({ name: 'location', title: 'Location', type: 'string' }),
     defineField({
       name: 'employmentType',
@@ -34,6 +44,13 @@ export const career = defineType({
       title: 'Job Description',
       type: 'array',
       of: [{ type: 'block' }],
+    }),
+    defineField({
+      name: 'descriptionSw',
+      title: 'Job Description — Kiswahili',
+      type: 'array',
+      of: [{ type: 'block' }],
+      description: 'Leave blank to fall back to the English text.',
     }),
     defineField({
       name: 'requirements',
