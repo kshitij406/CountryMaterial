@@ -1,26 +1,20 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import { Plus_Jakarta_Sans, Space_Mono } from 'next/font/google'
+// ponytail: self-hosted via @fontsource instead of next/font/google — the
+// latter fetches from fonts.gstatic.com at build time, which shared-hosting
+// build environments can't always reach (and shouldn't need to).
+import '@fontsource/plus-jakarta-sans/latin-300.css'
+import '@fontsource/plus-jakarta-sans/latin-400.css'
+import '@fontsource/plus-jakarta-sans/latin-500.css'
+import '@fontsource/plus-jakarta-sans/latin-600.css'
+import '@fontsource/plus-jakarta-sans/latin-700.css'
+import '@fontsource/plus-jakarta-sans/latin-800.css'
+import '@fontsource/space-mono/latin-400.css'
+import '@fontsource/space-mono/latin-700.css'
 import '@/app/globals.css'
 import { getDictionary, htmlLang, isLocale, locales } from '@/i18n'
 import { localeAlternates, siteUrl } from '@/lib/metadata'
 import { localePath } from '@/i18n/config'
-
-const plusJakartaSans = Plus_Jakarta_Sans({
-  subsets: ['latin'],
-  weight: ['300', '400', '500', '600', '700', '800'],
-  variable: '--font-jakarta',
-  display: 'swap',
-  preload: true,
-})
-
-const spaceMono = Space_Mono({
-  subsets: ['latin'],
-  weight: ['400', '700'],
-  variable: '--font-space-mono',
-  display: 'swap',
-  preload: true,
-})
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }))
@@ -61,7 +55,10 @@ export default function LocaleLayout({
   return (
     <html
       lang={htmlLang[params.locale]}
-      className={`${plusJakartaSans.variable} ${spaceMono.variable}`}
+      style={{
+        '--font-jakarta': "'Plus Jakarta Sans', system-ui, sans-serif",
+        '--font-space-mono': "'Space Mono', monospace",
+      } as React.CSSProperties}
     >
       <body>{children}</body>
     </html>
