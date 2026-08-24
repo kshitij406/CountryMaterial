@@ -2,13 +2,19 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@sanity/client'
 import { revalidateTag } from 'next/cache'
 
-const writeClient = createClient({
-  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
-  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'production',
-  apiVersion: process.env.NEXT_PUBLIC_SANITY_API_VERSION || '2024-03-01',
-  token: process.env.SANITY_WRITE_TOKEN || process.env.SANITY_API_TOKEN,
-  useCdn: false,
-})
+// ponytail: built lazily, not at module load — Next's build step imports every
+// route to collect page data, and createClient() throws hard on a missing
+// projectId. Constructing it inside the handler keeps a misconfigured/absent
+// env var a request-time 503 instead of an unrelated build-time failure.
+function getWriteClient() {
+  return createClient({
+    projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
+    dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'production',
+    apiVersion: process.env.NEXT_PUBLIC_SANITY_API_VERSION || '2024-03-01',
+    token: process.env.SANITY_WRITE_TOKEN || process.env.SANITY_API_TOKEN,
+    useCdn: false,
+  })
+}
 
 interface ProductUpdate {
   sanityId: string
@@ -32,7 +38,12 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
+  if (!process.env.NEXT_PUBLIC_SANITY_PROJECT_ID) {
+    return NextResponse.json({ error: 'Sanity is not configured' }, { status: 503 })
+  }
+
   try {
+    const writeClient = getWriteClient()
     const body: SyncBody = await req.json()
     const timestamp = new Date().toISOString()
     let catalogUrlSynced = false

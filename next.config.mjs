@@ -1,13 +1,10 @@
-import bundleAnalyzer from '@next/bundle-analyzer'
-
-const withBundleAnalyzer = bundleAnalyzer({
-  enabled: process.env.ANALYZE === 'true',
-})
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   poweredByHeader: false,
   compress: true,
+  // ponytail: cPanel's production install strips devDependencies, so eslint
+  // isn't present on the server. Lint locally/in CI instead of during build.
+  eslint: { ignoreDuringBuilds: true },
   async redirects() {
     return [
       { source: '/services', destination: '/shop#services', permanent: true },
@@ -25,4 +22,9 @@ const nextConfig = {
   },
 }
 
-export default withBundleAnalyzer(nextConfig)
+// ponytail: bundle-analyzer is a devDependency, absent on production installs
+// (cPanel's NODE_ENV=production skips devDependencies). Only load it when
+// actually analyzing, so a normal build never needs it installed.
+export default process.env.ANALYZE === 'true'
+  ? (await import('@next/bundle-analyzer')).default({ enabled: true })(nextConfig)
+  : nextConfig
