@@ -112,6 +112,16 @@ export default function Footer({
         <div className="mt-8 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
           <span className="font-mono tracking-widest uppercase text-white/60">
             © {new Date().getFullYear()} Country Materials Ltd. {t.rights}
+            <span className="text-white/20 mx-1.5" aria-hidden="true">·</span>
+            Crafted by{' '}
+            <a
+              href="https://kshitijj.me"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-white transition-colors duration-200"
+            >
+              Kshitij Jha
+            </a>
           </span>
           <div className="flex items-center gap-1.5 text-white/60">
             <Link
