@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "seed": "tsx scripts/seed-sanity.ts",
+    "seed": "npx tsx scripts/seed-sanity.ts",
     "test": "playwright test",
     "test:ui": "playwright test --ui",
     "test:report": "playwright show-report tests/playwright-report"
@@ -49,7 +49,6 @@
     "postcss": "^8",
     "sharp": "^0.34.5",
     "tailwindcss": "^3.4.1",
-    "tsx": "^4.21.0",
     "typescript": "^5"
   }
 }
